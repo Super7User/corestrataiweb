@@ -1,0 +1,66 @@
+
+/*---========================
+        17. Contact css 
+=======================----*/
+
+.form-control{
+    padding: 15px 30px;
+    margin-bottom: 30px;
+    color: #BEBEBF;
+    &::placeholder{
+        color: #BEBEBF;
+    }
+}
+
+.contact-form{
+    & .form-control{
+        padding: 15px 30px;
+        margin-bottom: 30px;
+        color: #BEBEBF;
+        &::placeholder{
+            color: #BEBEBF;
+        }
+    }
+    & .theme-btn{
+        padding: 18px
+    }
+}
+
+
+.user-form{
+    & label{
+        color: $heading-color;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 13px;
+        & a{
+            color: $blue-color;
+        }
+    }
+    & .theme-btn{
+        padding: 16px 20px;
+        width: 100%;
+        line-height: 26px;
+        &.style-one{
+            background-color: #E0EFFE;
+            @extend %blue-color;
+            & img{
+                margin-right: 10px;
+            }
+            &:hover{
+                @extend %primary-gradient-bg;
+                @extend %white-color;
+            }
+        }
+    }
+    & .form-text{
+        margin-top: 23px;
+        & span{
+            & a{
+                font-weight: 600;
+                @extend %primary-bgc;
+                margin-left: 10px;
+            }
+        }
+    }
+}

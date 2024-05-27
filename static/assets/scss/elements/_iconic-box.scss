@@ -1,0 +1,197 @@
+
+/*---========================
+        06. Iconic Box css 
+=======================----*/
+
+
+.iconic-info-box{
+    &.style-one{
+        padding: 30px 40px 23px;
+        border: 1px solid $border-color;
+        border-radius: 10px;
+        @media #{$lg}{
+            padding: 30px 30px 23px;
+        }
+        &:hover{
+            & .icon{
+                animation: ac-translateX .3s infinite linear;
+            }
+        }
+        & .icon{
+            flex: 0 0 auto;
+            width: 65px;
+            height: 65px;
+            @include border-radius(28px);
+            background: linear-gradient(90deg, rgb(247 98 216 / 20%) -8.37%, rgb(129 74 255 / 20%) 52.7%, rgb(74 182 254 / 20%) 110.76%);
+            font-size: 30px;
+            margin-right: 20px;
+            @extend %flex-center;
+            display: inline-flex;
+            margin-bottom: 22px;
+            & i{
+                @extend %primary-bgc;
+            }
+        }
+        & .content{
+            & h4{
+                font-size: 22px;
+                margin-bottom: 18px;
+                &:hover{
+                    @extend %primary-bgc;
+                }
+                @media #{$lg}{
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+    &.style-two{
+        display: flex;
+        align-items: start;
+        & .icon{
+            flex: 0 0 auto;
+            width: 65px;
+            height: 65px;
+            @include border-radius(28px);
+            background: linear-gradient(90deg, rgb(247 98 216 / 20%) -8.37%, rgb(129 74 255 / 20%) 52.7%, rgb(74 182 254 / 20%) 110.76%);
+            font-size: 30px;
+            margin-right: 20px;
+            @extend %flex-center;
+            margin-top: 8px;
+            & i{
+                @extend %primary-bgc;
+            }
+        }
+        & .content{
+            & h4{
+                font-size: 22px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    &.style-three{
+        display: flex;
+        align-items: start;
+        & .icon{
+            flex: 0 0 auto;
+            width: 65px;
+            height: 65px;
+            @include border-radius(17px);
+            @extend %blue-bg;
+            font-size: 30px;
+            margin-right: 20px;
+            @extend %flex-center;
+            & i{
+                @extend %white-color;
+            }
+        }
+        & .content{
+            & h6{
+                font-size: 18px;
+                line-height: 26px;
+                margin-bottom: 5px;
+            }
+            & p{
+                font-size: 16px;
+            }
+        }
+    }
+    &.style-four{
+        display: flex;
+        align-items: flex-start;
+        & .icon{
+            flex: 0 0 auto;
+            width: 57px;
+            height: 57px;
+            @extend %primary-bgc;
+            font-size: 55px;
+            margin-right: 40px;
+        }
+        & .content{
+            & h5{
+                margin-bottom: 28px;
+            }
+        }
+    }
+    &.style-five{
+        padding: 40px 40px 30px;
+        background-color: $black-dark-color;
+        border-radius: 13px;
+        @media #{$lg}{
+            padding: 40px 25px 30px;
+        }
+        & .icon{
+            position: relative;
+            margin-top: -84px;
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 4px solid $white-color;
+            @extend %flex-center;
+            font-size: 32px;
+            @extend %white-color;
+            background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
+            margin-bottom: 40px;
+        }
+        & .content{
+            & h5{
+                font-size: 22px;
+                @extend %white-color; 
+                margin-bottom: 20px;
+            }
+            & p{
+                @extend %white-color;
+                &:hover{
+                    & a{
+                        @extend %primary-bgc;
+                    }
+                }
+                & a{
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+
+.iconic-number-box{
+    &.style-one{
+        display: flex;
+        align-items: flex-start;
+        & .number{
+            font: 700 56px $font;
+            line-height: 1;
+            -webkit-text-stroke: 1px $green-color;
+            color: transparent;
+            flex: 0 0 auto;
+            width: 60px;
+            margin-right: 25px;
+        }
+        & .content{
+            & h6{
+                margin-bottom: 20px;
+            }
+        }
+    }
+    &.style-two{
+        display: flex;
+        & .number{
+            flex: 0 0 auto;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font: 600 27px $font;
+            @extend %flex-center;
+            @extend %primary-gradient-bg;
+            @extend %white-color;
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+        & .content{
+            & h5{
+                margin-bottom: 10px;
+            }
+        }
+    }
+}

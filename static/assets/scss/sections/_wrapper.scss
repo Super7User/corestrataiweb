@@ -1,0 +1,348 @@
+/*---========================
+        20. Wrapper css 
+=======================----*/
+
+.intro-wrapper {
+    padding: 50px 55px 0;
+    @extend %primary-gradient-bg;
+    @include border-radius(14px);
+
+    @media #{$xs} {
+        padding: 50px 35px 0;
+    }
+
+    & .section-content-box {
+        padding-left: 30px;
+
+        @media #{$xs} {
+            padding-left: 0;
+        }
+
+        & p {
+            margin-bottom: 30px;
+        }
+
+        & ul.circle-list {
+            &.style-one {
+                & li {
+                    @extend %white-color;
+                    font-size: 18px;
+
+                    &:before {
+                        @extend %white-bg;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cta-wrapper_one {
+    @extend %black-dark-bg;
+    padding: 40px 70px;
+    // border-radius: 30px;
+    background-image: url(../images/bg/call-to-action-bg.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border-radius: 36px;
+    @media #{$xl,$lg,$md,$sm,$xs} {
+        background-size: cover;
+    }
+    @media #{$md,$sm,$xs} {
+        background-color: var(--black-dark-color);
+    }
+    .cta-one_content-box {
+        padding-top: 55px;
+        @media #{$xl,$lg,$md,$sm,$xs} {
+            padding-top: 0;
+        }
+    }
+
+    @media #{$xs} {
+        padding: 40px 40px;
+    }
+}
+
+.cta-wrapper_one .row {
+    align-items: start !important;
+}
+
+.case-wrapper {
+    & .shape {
+        position: absolute;
+        z-index: -1;
+
+        &.shape-one {
+            top: 0;
+            left: 0;
+        }
+    }
+}
+
+.work-bg-wrapper {
+    position: relative;
+    background-color: #fafafa;
+    z-index: 2;
+
+    & .step-box {
+        margin: 0 auto -255px;
+        max-width: 907px;
+
+        & img {
+            border-radius: 10px;
+        }
+    }
+
+    & .shape {
+        position: absolute;
+        z-index: -1;
+
+        &.shape-one {
+            top: 0;
+            left: 0;
+        }
+
+        &.shape-two {
+            top: 60px;
+            right: 0;
+        }
+    }
+}
+
+.video-bg-wrapper {
+    position: relative;
+    padding-top: 370px;
+    background-color: #F1F3FA;
+    z-index: 1;
+
+    & .shape {
+        position: absolute;
+        z-index: -1;
+
+        &.shape-one {
+            top: 218px;
+            right: 0;
+        }
+
+        &.shape-tow {
+            bottom: 30%;
+            left: 0;
+        }
+
+        &.shape-three {
+            bottom: 0;
+            right: 0;
+        }
+    }
+}
+
+
+.customization-wrapper {
+    position: relative;
+    z-index: 2;
+
+    & .shape {
+        position: absolute;
+        z-index: -1;
+
+        &.shape-one {
+            bottom: -115px;
+            left: 0;
+        }
+
+        &.shape-two {
+            top: 0;
+            right: 0;
+        }
+    }
+}
+
+.voiceover-wrapper {
+    & .voiceover-bg {
+        position: absolute;
+        right: 60px;
+        top: 125px;
+        z-index: -1;
+    }
+}
+
+
+.cta-bg-wrapper {
+    &:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(181deg, rgba(28, 28, 36, 0.36) 13.99%, #1D1D1D 97.03%);
+        z-index: -1;
+    }
+
+    & .section-title {
+        & h2 {
+            @extend %white-color;
+            margin-bottom: 27px;
+        }
+    }
+}
+
+.cta-bg-wrapper-two {
+    position: relative;
+    z-index: 1;
+
+    & .shape {
+        position: absolute;
+        z-index: -1;
+
+        @media #{$lg} {
+            display: none;
+        }
+
+        @media #{$md} {
+            display: none;
+        }
+
+        @media #{$xs} {
+            display: none;
+        }
+
+        & span {
+            width: 280px;
+            height: 280px;
+            @include border-radius(50%);
+            filter: blur(100px);
+            background-color: #854BFE;
+        }
+
+        &.shape-one {
+            top: 135px;
+            left: 80px;
+
+            @media #{$xl} {
+                left: 30px;
+                top: 80px;
+            }
+        }
+
+        &.shape-two {
+            right: 95px;
+            bottom: 160px;
+        }
+    }
+
+    & .cta-one_content-box {
+        & .theme-btn {
+            &.gradient-btn {
+                padding: 16px 16px;
+                font-size: 16px;
+                line-height: 23px;
+            }
+        }
+    }
+}
+
+.user-wrapper {
+    padding: 45px 75px;
+    @extend %white-bg;
+    border-radius: 9.026px;
+    box-shadow: 0px 0px 67.692px 0px rgba(0, 0, 0, 0.10);
+
+    & h3 {
+        font-size: 36px;
+
+        @media #{$xs} {
+            font-size: 22px;
+        }
+    }
+
+    @media #{$xs} {
+        padding: 45px 30px;
+    }
+}
+
+.pricing-bg-wrapper {
+    clip-path: polygon(0 2%, 100% 0, 100% 100%, 0% 100%);
+}
+
+.pricing-wrapper {
+    &.black-dark-bg {
+        & .pricing-tabs {
+            & .nav-link {
+                color: $text-color;
+
+                &.active {
+                    color: $white-color;
+                }
+            }
+        }
+
+        & .pricing-item {
+            &.style-one {
+                & .pricing-head {
+                    & .theme-btn {
+                        &.style-two {
+                            &:hover {
+                                border-color: #333;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.blog-bg-wrapper {
+    background-color: #FAFAFA;
+    position: relative;
+    z-index: 1;
+
+    & .shape {
+        position: absolute;
+        z-index: -1;
+
+        &.shape-one {
+            top: 0;
+            left: 0;
+        }
+
+        &.shape-two {
+            bottom: 0;
+            right: 0;
+        }
+    }
+}
+
+.client-bg-wrapper {
+    position: relative;
+
+    &:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+        width: 100%;
+        height: 100%;
+        transform: rotate(-2deg);
+        background-color: #2BE30C;
+    }
+}
+
+.client-wrapper {
+    position: relative;
+    z-index: 1;
+    padding: 25px 50px;
+
+    &:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        @extend %green-bg;
+    }
+}

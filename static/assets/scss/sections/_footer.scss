@@ -1,0 +1,252 @@
+
+
+/*---========================
+        18. Footer css 
+=======================----*/
+
+
+.footer-widget{
+    & h4.footer-title{
+        @extend %h6;
+        margin-bottom: 40px;
+    }
+    & .footer-content{
+        & p{
+            font-size: 16px;
+            line-height: 24px;
+        }
+    }
+}
+
+.footer_about_widget{
+    max-width: 370px;
+    & .footer-content{
+        & p{
+            margin-bottom: 30px;
+        }
+        & ul.social-link{
+            & li{
+                &:not(:last-child){
+                    margin-right: 4px;
+                }
+                & a{
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    font-size: 14px;
+                    border: 1px solid $border-color;
+                    @extend %flex-center;
+                    @include transition(.3s);
+                }
+            }
+        }
+    }
+}
+
+.footer_widget_nav_menu{
+    padding-left: 40px;
+    @media #{$md}{
+        padding-left: 0;
+    }
+    @media #{$xs}{
+        padding-left: 0;
+    }
+    & ul{
+        & li{
+            &:not(:last-child){
+                margin-bottom: 13px;
+            }
+            & a{
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+.footer-newsletter-widget{
+    max-width: 310px;
+    & .newsletter-content{
+        & form{
+            & .form-group{
+                position: relative;
+                & input{
+                    width: 100%;
+                    padding: 7px 113px 7px 15px;
+                    text-transform: capitalize;
+                    line-height: 27px;
+                    border: 1px solid $border-color;
+                    font-size: 14px;
+                    &::placeholder{
+                        color: $text-color;
+                    }
+                    @media #{$lg}{
+                        padding: 7px 15px 7px 15px;
+                    }
+                }
+                & .theme-btn{
+                    padding: 12px 20px;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    border-radius: 0;
+                    font-size: 14px;
+                    line-height: 19px;
+                    @media #{$lg}{
+                        position: relative;
+                        top: auto;
+                        right: auto;
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
+        & p{
+            font-size: 16px;
+            line-height: 24px;
+            max-width: 310px;
+        }
+    }
+}
+
+.copyright-area{
+    padding: 15px 0;
+    border-top: 1px solid $border-color;
+}
+
+.footer-default{
+    & .footer_about_widget{
+        & .footer-content{
+            & ul.social-link{
+                & li{
+                    & a{
+                        position: relative;
+                        z-index: 1;
+                        border: none;
+                        background: #E0E0E0;
+                        &:after{
+                            position: absolute;
+                            top: 3px;
+                            left: 3px;
+                            width: 95%;
+                            height: 95%;
+                            content: "";
+                            z-index: -1;
+                            background: #f0f3fa;
+                            border-radius: 50%;
+                            transform: translate(-2px, -2px);
+                            @include transition(.3s);
+                        }
+                        &:hover{
+                            @extend %primary-gradient-bg;
+                            & i{
+                                @extend %primary-bgc;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    & .footer_widget_nav_menu ul li a{
+        &:hover{
+            @extend %primary-bgc;
+        }
+    }
+}
+
+
+.footer-v2{
+    background-color: #1D1D1D;
+    & .footer-widget{
+        & h4.footer-title{
+            @extend %white-color;
+        }
+        &.footer_about_widget{
+            & .footer-content{
+                & p{
+                    @extend %white-color; 
+                }
+                & ul.social-link{
+                    & li{
+                        & a{
+                            width: 54px;
+                            height: 49px;
+                            background: url(../images/shape/social1.png) no-repeat center;
+                            background-size: contain;
+                            border: none;
+                            @extend %white-color;
+                            border-radius: 0;
+                            &:hover{
+                                @extend %green-color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.footer_widget_nav_menu {
+            & ul{
+                & li{
+                    & a{
+                        @extend %white-color; 
+                        &:hover{
+                            @extend %green-color;
+                        }
+                    }
+                }
+            }
+        }
+        &.footer-newsletter-widget{
+            & .newsletter-content{
+                & form{
+                    & .form-group{
+                        & input{
+                            padding: 15px 110px 15px 17px;
+                            font-size: 14px;
+                            border-radius: 4px;
+                            background-color: transparent;
+                            border: 1px solid #4F4F4F;
+                            color: $white-color;
+                            line-height: 23px;
+                            &::placeholder{
+                                color: $white-color;
+                            }
+                            @media #{$lg}{
+                                padding: 15px 17px 15px 17px;
+                            }
+                        }
+                    }
+                }
+                & .theme-btn{
+                    padding: 18px 17px;
+                    border-radius: 0px 4px 4px 0px;
+                    &:hover{
+                        @extend %green-bg;
+                        color: $heading-color;
+                    }
+                }
+                & p{
+                    @extend %white-color; 
+                }
+            }
+        }
+    }
+    & .copyright-area{
+        border-color:#242424;
+    }
+}
+
+
+.footer-v3{
+    & .footer-newsletter-widget{
+        & .newsletter-content{
+            & form{
+                & .form-group{
+                    & .theme-btn{
+                        padding: 12px 16px;
+                    }
+                }
+            }
+        }
+    }
+}

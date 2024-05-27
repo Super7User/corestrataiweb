@@ -1,0 +1,86 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 80%; /* Set the width of the container */
+    background-color: #a5aead; /* Set the background color you want */
+    margin: 0 auto; /* Center the container on the page */
+    gap: 20px; /* Adjust the space between cards */
+    padding: 10px; /* Add some padding inside the container */
+}
+
+.card {
+    cursor: pointer; /* Changes cursor to indicate it's clickable */
+    /* Other styles... */
+    background: #121C4F;
+    border-radius: 15px;
+    /*width: calc(33.333% - 40px); /* Adjust the width as needed, subtracting twice the gap */
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover effects */
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.card-logo {
+    text-align: center;
+    padding: 10px;
+    background: #121C4F;
+}
+
+.card-logo img {
+    height: 60px; /* Adjust based on your actual logo sizes */
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.card-title {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #333;
+}
+
+.card-description {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.card-category,
+.card-plan {
+    background: #eee;
+    padding: 5px 5px;
+    border-radius: 20px;
+}
+
+.card-plan {
+    background: #3a59f5;
+    padding: 5px 5px;
+    border-radius: 20px;
+}
+
+
+.card-link {
+    text-decoration: none; /* Removes the underline from links */
+    color: inherit; /* The link will use the text color from its parent */
+    display: flex; /* Make it a flex container to not disturb inner flex items */
+    flex: 0 1 calc(33.333% - 40px); /* Adjust the percentage and subtraction to fit 3 cards per row including the gap */
+    box-sizing: border-box; /* Ensures that padding and border are included in the width */
+}
+
+
+.card-link:hover .card {
+    transform: translateY(-5px); /* Optional: Lift card slightly on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Optional: Increase shadow for lifting effect */
+    border: 2px solid #007BFF; /* Adds border on hover */
+}
+

@@ -1,0 +1,31 @@
+main {
+    display: flex;
+    justify-content: space-between;
+    /* padding: 20px; */
+    /* margin-top: 20px; */
+}
+
+.left-pane, .right-pane {
+    flex: 1; /* Makes both panes take up equal space */
+    padding: 10px;
+}
+
+.left-pane {
+    max-width: 50%; /* Ensures the left pane doesn't grow beyond half of the main container */
+}
+
+.right-pane {
+    max-width: 50%; /* Ensures the right pane doesn't grow beyond half of the main container */
+    padding-left: 20px; /* Gives some space between the panes */
+}
+
+#input-text, #output-text {
+    width: 100%; /* Makes input and textarea take full width of their parent */
+    padding: 8px;
+    box-sizing: border-box; /* Ensures padding does not add to the width */
+    margin-bottom: 10px; /* Provides margin for spacing below the input */
+}
+
+#output-text {
+    height: 400px; /* Set a fixed height for the textarea */
+}

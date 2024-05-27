@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--====== Required meta tags ======-->
+    <!--====== Required meta tags ======-->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="Insurance, Health, Agency">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--====== Title ======-->
+    <title>AIcraft - AI Application & Generator HTML Template</title>
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.png')}}" type="image/png">
+    <!--====== Google Fonts ======-->
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!--====== FontAwesome css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/flaticon/flaticon_mycollection.css')}}">
+    <!--====== FontAwesome css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/fontawesome/css/all.min.css')}}">
+    <!--====== Bootstrap css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}">
+    <!--====== magnific-popup css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/magnific-popup/dist/magnific-popup.css')}}">
+    <!--====== Animate css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/wow/animate.css')}}">
+    <!--====== Slick-popup css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/slick/slick.css')}}">
+    <!--====== Default css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/default.css')}}">
+    <!--====== Style css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css')}}">
+</head>
+<body>
+    <!-- <main> -->
+        <section>
+            <h2>Discover Our Tools</h2>  
+            <a href="/index-m">Go to Home Two</a>     
+                        <p>Welcome to the home of innovation at CorestratAI Solutions. Explore our tools and services.</p>
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" id="search-box" placeholder="Search by title..." oninput="searchItems()">
+                <button id="search-button">🔍</button>
+            </div>
+    
+            <!-- Button Container -->
+            <div class="button-container">
+                {% for category in categories %}
+                    <!--   <button class="category-button">{{ category }}</button> -->
+                    <button class="category-button" data-category="{{ category }}" onclick="filterCategory(this)">{{ category }}</button>
+                {% endfor %}
+            </div>
+        </section>
+            <section>
+                <!-- Code for iterating over categories to create a menu or buttons -->
+                
+                <!-- Code for iterating over tools_data to create cards -->
+                <div class="card-container">
+                    {% for tool in tools_data %}
+                        <a href="/tool-detail/{{ tool['ID'] }}" class="card-link">
+
+                            <div class="card">
+                                <div class="card-logo">
+                                    <img src="{{ url_for('static', filename=tool['Image']) }}" alt="{{ tool['Title'] }} Logo">
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title">{{ tool['Title'] }}</h3>
+                                    <p class="card-description">{{ tool['Description'] }}</p>
+                                    <div class="card-footer">
+                                        <span class="card-category">{{ tool['Category'] }}</span>
+                                        <span class="card-plan">{{ tool['Plan'] }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </section>
+    <!-- </main> -->
+    <footer>
+        <button onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+
+    </footer>
+    
+</body>
+</html>

@@ -1,0 +1,393 @@
+$flaticon_mycollection-font: "flaticon_mycollection";
+
+@font-face {
+    font-family: $flaticon_mycollection-font;
+    src: url("./flaticon_mycollection.ttf?b0a5a494b63f07d55892af64e27fe0f4") format("truetype"),
+url("./flaticon_mycollection.woff?b0a5a494b63f07d55892af64e27fe0f4") format("woff"),
+url("./flaticon_mycollection.woff2?b0a5a494b63f07d55892af64e27fe0f4") format("woff2"),
+url("./flaticon_mycollection.eot?b0a5a494b63f07d55892af64e27fe0f4#iefix") format("embedded-opentype"),
+url("./flaticon_mycollection.svg?b0a5a494b63f07d55892af64e27fe0f4#flaticon_mycollection") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon_mycollection !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$flaticon_mycollection-map: (
+    "notification": "\f101",
+    "edit": "\f102",
+    "copy": "\f103",
+    "dislike": "\f104",
+    "like": "\f105",
+    "send": "\f106",
+    "envato": "\f107",
+    "themeforest": "\f108",
+    "codecanyon": "\f109",
+    "graphicriver": "\f10a",
+    "communication": "\f10b",
+    "description": "\f10c",
+    "content-marketing": "\f10d",
+    "box": "\f10e",
+    "stats": "\f10f",
+    "product": "\f110",
+    "data-analytics": "\f111",
+    "spinner-of-dots": "\f112",
+    "picture": "\f113",
+    "arrow-down-sign-to-navigate": "\f114",
+    "document": "\f115",
+    "layout": "\f116",
+    "insert-picture-icon": "\f117",
+    "chatting": "\f118",
+    "microphone-black-shape": "\f119",
+    "check": "\f11a",
+    "play-button-arrowhead": "\f11b",
+    "down-arrow": "\f11c",
+    "chevron": "\f11d",
+    "google": "\f11e",
+    "image": "\f11f",
+    "shield": "\f120",
+    "photo-editing": "\f121",
+    "download": "\f122",
+    "palette": "\f123",
+    "image-1": "\f124",
+    "magic-wand": "\f125",
+    "premium": "\f126",
+    "eraser": "\f127",
+    "magic-wand-1": "\f128",
+    "compare": "\f129",
+    "text-font": "\f12a",
+    "dark-mode": "\f12b",
+    "paint-bucket": "\f12c",
+    "bin": "\f12d",
+    "expand": "\f12e",
+    "add": "\f12f",
+    "image-2": "\f130",
+    "avatar": "\f131",
+    "reload": "\f132",
+    "search-1": "\f133",
+    "setting": "\f134",
+    "clock": "\f135",
+    "dashboard": "\f136",
+    "user": "\f137",
+    "close-caption": "\f138",
+    "font": "\f139",
+    "image-3": "\f13a",
+    "background": "\f13b",
+    "video-camera": "\f13c",
+    "musical-note": "\f13d",
+    "energy": "\f13e",
+    "play-button": "\f13f",
+    "stop": "\f140",
+    "speaker-filled-audio-tool": "\f141",
+    "user-1": "\f142",
+    "web": "\f143",
+    "cloud-computing": "\f144",
+    "font-adjustment": "\f145",
+    "powerpoint": "\f146",
+    "video-file": "\f147",
+    "sharing": "\f148",
+    "megaphone": "\f149",
+    "location": "\f14a",
+    "black-back-closed-envelope-shape": "\f14b",
+    "viber": "\f14c",
+    "next": "\f14d",
+    "back-arrow": "\f14e",
+    "facebook": "\f14f",
+    "youtube": "\f150",
+    "pinterest": "\f151",
+    "instagram": "\f152",
+    "linkedin": "\f153",
+    "tik-tok": "\f154",
+    "plus-positive-add-mathematical-symbol": "\f155",
+    "motion-sensor": "\f156",
+    "writing-tool": "\f157",
+    "time": "\f158",
+    "user-2": "\f159",
+    "price-tag": "\f15a",
+    "share": "\f15b",
+    "magnifiying-glass": "\f15c",
+);
+
+.flaticon-notification:before {
+    content: map-get($flaticon_mycollection-map, "notification");
+}
+.flaticon-edit:before {
+    content: map-get($flaticon_mycollection-map, "edit");
+}
+.flaticon-copy:before {
+    content: map-get($flaticon_mycollection-map, "copy");
+}
+.flaticon-dislike:before {
+    content: map-get($flaticon_mycollection-map, "dislike");
+}
+.flaticon-like:before {
+    content: map-get($flaticon_mycollection-map, "like");
+}
+.flaticon-send:before {
+    content: map-get($flaticon_mycollection-map, "send");
+}
+.flaticon-envato:before {
+    content: map-get($flaticon_mycollection-map, "envato");
+}
+.flaticon-themeforest:before {
+    content: map-get($flaticon_mycollection-map, "themeforest");
+}
+.flaticon-codecanyon:before {
+    content: map-get($flaticon_mycollection-map, "codecanyon");
+}
+.flaticon-graphicriver:before {
+    content: map-get($flaticon_mycollection-map, "graphicriver");
+}
+.flaticon-communication:before {
+    content: map-get($flaticon_mycollection-map, "communication");
+}
+.flaticon-description:before {
+    content: map-get($flaticon_mycollection-map, "description");
+}
+.flaticon-content-marketing:before {
+    content: map-get($flaticon_mycollection-map, "content-marketing");
+}
+.flaticon-box:before {
+    content: map-get($flaticon_mycollection-map, "box");
+}
+.flaticon-stats:before {
+    content: map-get($flaticon_mycollection-map, "stats");
+}
+.flaticon-product:before {
+    content: map-get($flaticon_mycollection-map, "product");
+}
+.flaticon-data-analytics:before {
+    content: map-get($flaticon_mycollection-map, "data-analytics");
+}
+.flaticon-spinner-of-dots:before {
+    content: map-get($flaticon_mycollection-map, "spinner-of-dots");
+}
+.flaticon-picture:before {
+    content: map-get($flaticon_mycollection-map, "picture");
+}
+.flaticon-arrow-down-sign-to-navigate:before {
+    content: map-get($flaticon_mycollection-map, "arrow-down-sign-to-navigate");
+}
+.flaticon-document:before {
+    content: map-get($flaticon_mycollection-map, "document");
+}
+.flaticon-layout:before {
+    content: map-get($flaticon_mycollection-map, "layout");
+}
+.flaticon-insert-picture-icon:before {
+    content: map-get($flaticon_mycollection-map, "insert-picture-icon");
+}
+.flaticon-chatting:before {
+    content: map-get($flaticon_mycollection-map, "chatting");
+}
+.flaticon-microphone-black-shape:before {
+    content: map-get($flaticon_mycollection-map, "microphone-black-shape");
+}
+.flaticon-check:before {
+    content: map-get($flaticon_mycollection-map, "check");
+}
+.flaticon-play-button-arrowhead:before {
+    content: map-get($flaticon_mycollection-map, "play-button-arrowhead");
+}
+.flaticon-down-arrow:before {
+    content: map-get($flaticon_mycollection-map, "down-arrow");
+}
+.flaticon-chevron:before {
+    content: map-get($flaticon_mycollection-map, "chevron");
+}
+.flaticon-google:before {
+    content: map-get($flaticon_mycollection-map, "google");
+}
+.flaticon-image:before {
+    content: map-get($flaticon_mycollection-map, "image");
+}
+.flaticon-shield:before {
+    content: map-get($flaticon_mycollection-map, "shield");
+}
+.flaticon-photo-editing:before {
+    content: map-get($flaticon_mycollection-map, "photo-editing");
+}
+.flaticon-download:before {
+    content: map-get($flaticon_mycollection-map, "download");
+}
+.flaticon-palette:before {
+    content: map-get($flaticon_mycollection-map, "palette");
+}
+.flaticon-image-1:before {
+    content: map-get($flaticon_mycollection-map, "image-1");
+}
+.flaticon-magic-wand:before {
+    content: map-get($flaticon_mycollection-map, "magic-wand");
+}
+.flaticon-premium:before {
+    content: map-get($flaticon_mycollection-map, "premium");
+}
+.flaticon-eraser:before {
+    content: map-get($flaticon_mycollection-map, "eraser");
+}
+.flaticon-magic-wand-1:before {
+    content: map-get($flaticon_mycollection-map, "magic-wand-1");
+}
+.flaticon-compare:before {
+    content: map-get($flaticon_mycollection-map, "compare");
+}
+.flaticon-text-font:before {
+    content: map-get($flaticon_mycollection-map, "text-font");
+}
+.flaticon-dark-mode:before {
+    content: map-get($flaticon_mycollection-map, "dark-mode");
+}
+.flaticon-paint-bucket:before {
+    content: map-get($flaticon_mycollection-map, "paint-bucket");
+}
+.flaticon-bin:before {
+    content: map-get($flaticon_mycollection-map, "bin");
+}
+.flaticon-expand:before {
+    content: map-get($flaticon_mycollection-map, "expand");
+}
+.flaticon-add:before {
+    content: map-get($flaticon_mycollection-map, "add");
+}
+.flaticon-image-2:before {
+    content: map-get($flaticon_mycollection-map, "image-2");
+}
+.flaticon-avatar:before {
+    content: map-get($flaticon_mycollection-map, "avatar");
+}
+.flaticon-reload:before {
+    content: map-get($flaticon_mycollection-map, "reload");
+}
+.flaticon-search-1:before {
+    content: map-get($flaticon_mycollection-map, "search-1");
+}
+.flaticon-setting:before {
+    content: map-get($flaticon_mycollection-map, "setting");
+}
+.flaticon-clock:before {
+    content: map-get($flaticon_mycollection-map, "clock");
+}
+.flaticon-dashboard:before {
+    content: map-get($flaticon_mycollection-map, "dashboard");
+}
+.flaticon-user:before {
+    content: map-get($flaticon_mycollection-map, "user");
+}
+.flaticon-close-caption:before {
+    content: map-get($flaticon_mycollection-map, "close-caption");
+}
+.flaticon-font:before {
+    content: map-get($flaticon_mycollection-map, "font");
+}
+.flaticon-image-3:before {
+    content: map-get($flaticon_mycollection-map, "image-3");
+}
+.flaticon-background:before {
+    content: map-get($flaticon_mycollection-map, "background");
+}
+.flaticon-video-camera:before {
+    content: map-get($flaticon_mycollection-map, "video-camera");
+}
+.flaticon-musical-note:before {
+    content: map-get($flaticon_mycollection-map, "musical-note");
+}
+.flaticon-energy:before {
+    content: map-get($flaticon_mycollection-map, "energy");
+}
+.flaticon-play-button:before {
+    content: map-get($flaticon_mycollection-map, "play-button");
+}
+.flaticon-stop:before {
+    content: map-get($flaticon_mycollection-map, "stop");
+}
+.flaticon-speaker-filled-audio-tool:before {
+    content: map-get($flaticon_mycollection-map, "speaker-filled-audio-tool");
+}
+.flaticon-user-1:before {
+    content: map-get($flaticon_mycollection-map, "user-1");
+}
+.flaticon-web:before {
+    content: map-get($flaticon_mycollection-map, "web");
+}
+.flaticon-cloud-computing:before {
+    content: map-get($flaticon_mycollection-map, "cloud-computing");
+}
+.flaticon-font-adjustment:before {
+    content: map-get($flaticon_mycollection-map, "font-adjustment");
+}
+.flaticon-powerpoint:before {
+    content: map-get($flaticon_mycollection-map, "powerpoint");
+}
+.flaticon-video-file:before {
+    content: map-get($flaticon_mycollection-map, "video-file");
+}
+.flaticon-sharing:before {
+    content: map-get($flaticon_mycollection-map, "sharing");
+}
+.flaticon-megaphone:before {
+    content: map-get($flaticon_mycollection-map, "megaphone");
+}
+.flaticon-location:before {
+    content: map-get($flaticon_mycollection-map, "location");
+}
+.flaticon-black-back-closed-envelope-shape:before {
+    content: map-get($flaticon_mycollection-map, "black-back-closed-envelope-shape");
+}
+.flaticon-viber:before {
+    content: map-get($flaticon_mycollection-map, "viber");
+}
+.flaticon-next:before {
+    content: map-get($flaticon_mycollection-map, "next");
+}
+.flaticon-back-arrow:before {
+    content: map-get($flaticon_mycollection-map, "back-arrow");
+}
+.flaticon-facebook:before {
+    content: map-get($flaticon_mycollection-map, "facebook");
+}
+.flaticon-youtube:before {
+    content: map-get($flaticon_mycollection-map, "youtube");
+}
+.flaticon-pinterest:before {
+    content: map-get($flaticon_mycollection-map, "pinterest");
+}
+.flaticon-instagram:before {
+    content: map-get($flaticon_mycollection-map, "instagram");
+}
+.flaticon-linkedin:before {
+    content: map-get($flaticon_mycollection-map, "linkedin");
+}
+.flaticon-tik-tok:before {
+    content: map-get($flaticon_mycollection-map, "tik-tok");
+}
+.flaticon-plus-positive-add-mathematical-symbol:before {
+    content: map-get($flaticon_mycollection-map, "plus-positive-add-mathematical-symbol");
+}
+.flaticon-motion-sensor:before {
+    content: map-get($flaticon_mycollection-map, "motion-sensor");
+}
+.flaticon-writing-tool:before {
+    content: map-get($flaticon_mycollection-map, "writing-tool");
+}
+.flaticon-time:before {
+    content: map-get($flaticon_mycollection-map, "time");
+}
+.flaticon-user-2:before {
+    content: map-get($flaticon_mycollection-map, "user-2");
+}
+.flaticon-price-tag:before {
+    content: map-get($flaticon_mycollection-map, "price-tag");
+}
+.flaticon-share:before {
+    content: map-get($flaticon_mycollection-map, "share");
+}
+.flaticon-magnifiying-glass:before {
+    content: map-get($flaticon_mycollection-map, "magnifiying-glass");
+}

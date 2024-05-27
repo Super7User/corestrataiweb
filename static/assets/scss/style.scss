@@ -1,0 +1,71 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: AIcraft - AI Application & Generator HTML Template
+    Author:  SolverWp
+    Support: support.solverwp@gmail.com
+    Description: AIcraft - AI Application & Generator HTML Template
+    Version: 1.0
+
+--------------------------
+   CSS INDEX
+--------------------------
+    01. Common css
+    02. Home css
+    03. Default css
+    04. Header css
+    05. Hero css
+    06. Iconic Box css
+    07. Pricing css
+    08. Item css
+    09. Post css
+    10. Tabs css
+    11. Sidebar css
+    12. Faqs css
+    13. Gallery css
+    14. images css
+    15. Team css
+    16. Blog css
+    17. Contact css
+    18. Footer css
+    19. Section css
+    20. Wrapper css
+
+-------------------------------------------------------*/
+
+
+// IMPORT ALL SASS DIRECTORY FILES
+
+// Global variables
+
+@import 'variables';
+
+// Global Mixins
+
+@import 'mixin';
+
+// base directories
+
+@import 'extend';
+@import 'common';
+
+// All Sections css
+
+@import 'sections/home';
+@import 'sections/header';
+@import 'sections/hero';
+@import 'sections/default';
+@import 'elements/iconic-box';
+@import 'elements/pricings';
+@import 'elements/item';
+@import 'elements/post';
+@import 'elements/tabs';
+@import 'elements/sidebar';
+@import 'sections/gallery';
+@import 'elements/faqs';
+@import 'sections/images';
+@import 'sections/team';
+@import 'sections/blog';
+@import 'sections/contact';
+@import 'sections/footer';
+@import 'sections/sections';
+@import 'sections/wrapper';

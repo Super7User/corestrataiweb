@@ -1,0 +1,224 @@
+
+/*---========================
+        09. Post css 
+=======================----*/
+
+.post-meta{
+    & span{
+        display: inline-flex;
+        &:not(:last-child){
+            &:after{
+                content: "|";
+                margin-left: 10px;
+                margin-right: 10px;
+                color: $border-color;
+            }
+        }
+        & i{
+            margin-right: 10px;
+        }
+    }
+    &.style-two{
+        & span{
+            & i{
+                @extend %primary-bgc;
+            }
+        }
+    }
+}
+
+.blog-post-item{
+    &.style-one{
+        & .post-thumbnail{
+            position: relative;
+            & a{
+                display: block;
+            }
+            & img{
+                width: 100%;
+                border-radius: 8px;
+            }
+            & .post-categories{
+                position: absolute;
+                top: 28px;
+                left: 28px;
+                & a{
+                    padding: 4px 16px;
+                    @extend %green-bg;
+                    @extend %white-color;
+                    font-size: 14px;
+                    line-height: 20px;
+                    color: $heading-color;
+                    border-radius: 4px;
+                }
+            }
+        }
+        & .post-content{
+            & .entry-content{
+                padding-top: 25px;
+                & h3.title{
+                    font-size: 20px;
+                    line-height: 22px;
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+    &.style-two{
+        & .post-thumbnail{
+            & a{
+                display: block;
+            }
+            & img{
+                width: 100%;
+                border-radius: 11px 11px 0 0; 
+            }
+        }
+        & .post-content{
+            position: relative;
+            border: 1px solid $border-color;
+            border-radius: 0 0 11px 11px;
+            border-top: none;
+            & .entry-content{
+                padding: 25px 35px 35px;
+                @media #{$xs}{
+                    padding: 25px 25px 35px;
+                }
+                & h3.title{
+                    font-size: 36px;
+                    margin-bottom: 20px;
+                    @media #{$sm}{
+                        font-size: 27px;
+                        line-height: 35px;
+                    }
+                    @media #{$xs}{
+                        font-size: 22px;
+                        line-height: 35px;
+                    }
+                    &:hover{
+                        @extend %primary-bgc;
+                    }
+                }
+                & p{
+                    margin-bottom: 25px;
+                }
+                & .read-more{
+                    &.style-one{
+                        position: relative;
+                        padding: 18px 20px;
+                        border-radius: 37px;
+                        font: 700 15px $font;
+                        line-height: 22px;
+                        z-index: 1;
+                        overflow: hidden;
+                        @extend %primary-gradient-bg;
+                        &:before{
+                            position: absolute;
+                            top: 1.5px;
+                            left: 1.6px;
+                            content: "";
+                            width: 97.5%;
+                            height: 94%;
+                            z-index: -1;
+                            background: #fff;
+                            border-radius: 37px;
+                            @include transition(.3s);
+                        }
+                        & span{
+                            @extend %primary-bgc;
+                        }
+                        &:hover{
+                            &::before{
+                                visibility: hidden;
+                                opacity: 0;
+                            }
+                            & span{
+                                @extend %white-color;
+                                -webkit-text-fill-color: inherit;
+                            }
+                        }
+                    }
+                }
+            }
+            & .post-meta-wrap{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 15px 35px;
+                border-top: 1px solid $border-color;
+                @media #{$xs}{
+                    padding: 15px 25px; 
+                }
+                & .post-share{
+                    position: relative;
+                    &:hover{
+                        & ul.social-link{
+                            transform: translateY(0px);
+                            visibility: visible;
+                            opacity: 1;
+                        }
+                    }
+                    & .share-btn{
+                        width: 35px;
+                        height: 35px;
+                        border-radius: 50%;
+                        @extend %flex-center;
+                        font-size: 14px;
+                        border: 1px solid $border-color;
+                        cursor: pointer;
+                        line-height: 1;
+                    }
+                    & ul.social-link{
+                        position: absolute;
+                        bottom: 45px;
+                        right: -15px;
+                        background-color: #fff;
+                        box-shadow: 0px 0px 33.82px 0px rgba(0, 0, 0, 0.10);
+                        padding: 18px 13px;
+                        transform: translateY(-20px);
+                        border-radius: 10px;
+                        visibility: hidden;
+                        opacity: 0;
+                        @include transition(.3s);
+                        &:after{
+                            content: '';
+                            width: 0;
+                            height: 0;
+                            border-left: 8px solid transparent;
+                            border-right: 8px solid transparent;
+                            border-top: 10px solid #fff;
+                            box-shadow: 0px 0px 33.82px 0px rgba(0, 0, 0, 0.10);
+                            position: absolute;
+                            bottom: -10px;
+                            left: 22px;
+                        }
+                        & li{
+                            display: block;
+                            &:not(:last-child){
+                                margin-bottom: 9px;
+                            }
+                            & a{
+                                width: 35px;
+                                height: 35px;
+                                border-radius: 50%;
+                                @extend %flex-center;
+                                font-size: 14px;
+                                border: 1px solid $border-color;
+                            }
+                        }
+                    }
+                }
+                & .post-meta{
+                    & span{
+                        @media #{$xs}{
+                            font-size: 14px;
+                        }
+                        & i{
+                            @extend %primary-bgc;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

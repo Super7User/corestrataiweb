@@ -1,0 +1,110 @@
+
+
+/*---========================
+        11. Sidebar css 
+=======================----*/
+
+
+.sidebar-widget-area{
+    padding: 30px 20px;
+    background-color: #FAFAFA;
+    @include border-radius(12px);
+}
+
+.sidebar-widget{
+    padding: 28px 35px 35px;
+    border: 1px solid $border-color;
+    @extend %white-bg;
+    @include border-radius(5px);
+    & h3.widget-title{
+        font-size: 27px;
+        margin-bottom: 17px;
+    }
+    &.sidebar-search-widget{
+        padding: 0;
+        & form{
+            & .search-input{
+                position: relative;
+                & input{
+                    width: 100%;
+                    border: none;
+                    @extend %white-bg;
+                    padding: 29px 60px 29px 35px;
+                    @include border-radius(5px);
+                }
+                & button{
+                    position: absolute;
+                    top: 29px;
+                    right: 30px;
+                    font-size: 27px;
+                    background-color: transparent;
+                    color: $text-color;
+                }
+            }
+        }
+    }
+    &.sidebar-category-widget{
+        & .sidebar-widget-content{
+            & ul{
+                & li{
+                    &:not(:last-child){
+                        margin-bottom: 15px;
+                    }
+                    & a{
+                        &:hover{
+                            @extend %primary-bgc;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.sidebar-recent-widget{
+        padding: 28px 35px 39px;
+        & .post-thumbnail-content{
+            &:not(:last-child){
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid $border-color;
+            }
+            & img{
+                flex: 0 0 auto;
+                width: 85px;
+                height: 85px;
+                @include border-radius(5px);
+                margin-right: 20px;
+            }
+            & .post-title-date{
+                & h6{
+                    font-weight: 700;
+                    line-height: 28px;
+                    &:hover{
+                        @extend %primary-bgc;
+                    }
+                }
+            }
+        }
+    }
+    &.tag-cloud-widget{
+        padding: 28px 35px 26px;
+        & h3.widget-title{
+            margin-bottom: 23px;
+        }
+        & .tagcloud{
+            margin-right: -12px;
+            & a{
+                padding: 12px 30px;
+                border: 1px solid $border-color;
+                font: 400 16px $font;
+                border-radius: 50px;
+                margin-bottom: 13px;
+                margin-right: 7px;
+                &:hover{
+                    border-color: transparent;
+                    @extend %white-color;
+                    @extend %primary-gradient-bg;
+                }
+            }
+        }
+    }
+}

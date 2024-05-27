@@ -1,0 +1,55 @@
+
+/*---========================
+        15. Team css 
+=======================----*/
+
+
+.team-details-wrapper{
+    & .member-image{
+        & img{
+            border-radius: 10px;
+        }
+    }
+    & .member-info{
+        & h4{
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        & span.position{
+            margin-bottom: 40px;
+        }
+        & p{
+            margin-bottom: 22px;
+            font-size: 16px;
+            line-height: 24px;
+            color: #777;
+        }
+        & ul.social-link{
+            margin-top: 110px;
+            & li{
+                &:not(:last-child){
+                    margin-right: 9px;
+                }
+                & a{
+                    width: 35px;
+                    height: 35px;
+                    border-radius: 50%;
+                    font-size: 14px;
+                    border: 1px solid var(--border-color);
+                    @extend %flex-center;
+                    &:hover{
+                        @extend %primary-gradient-bg;
+                        @extend %white-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.skill-content-box{
+    margin-right: 20px;
+    @media #{$xs}{
+        margin-right: 0;
+    }
+}

@@ -1,0 +1,370 @@
+
+/*====================
+    02. Home css 
+======================*/
+
+.home-one{
+    & .header-navigation{
+        &.sticky{
+            @extend %white-bg;
+            border-bottom: 1px solid $border-color;
+        }
+    }
+    & .footer-default{
+        & .footer_about_widget{
+            & .footer-content{
+                & ul.social-link{
+                    & li{
+                        & a{
+                            background: #E0E0E0;
+                            &:after{
+                                background: #fff;
+                            }
+                            &:hover{
+                                @extend %primary-gradient-bg;
+                                & i{
+                                    @extend %primary-bgc;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+.home-one-dark{
+    background-color: #000;
+    & .header-navigation{
+        & .main-menu{
+            & ul{
+                & > li{
+                    & > a{
+                        @extend %white-color;
+                    }
+                    & .submenu{
+                        & li{
+                            & a{
+                                @extend %heading-color;
+                            }
+                        }
+                    }
+                    &:hover{
+                        & > a{
+                            @extend %primary-bgc;
+                        }
+                        &:hover {
+                            & > a{
+                                @extend %primary-bgc;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        & .ac-header-one__right-btn{
+            & .ac-header-bnt-1{
+                & a{
+                    @extend %white-color;
+                }
+            }
+        }
+        & .navbar-toggler{
+            border-color: rgba(255, 255, 255, .8);
+            & span {
+                @extend %white-bg;
+            }
+        }
+    }
+    & .section-title{
+        & h2{
+            @extend %white-color;
+        }
+    }
+    & .hero-wrapper{
+        & .hero-content{
+            & h1{
+                @extend %white-color;
+            }
+            & p{
+                color: #BDBDBD;
+            }
+        }
+    }
+    .clients-text p{
+        @extend %primary-bgc;
+    }
+    .iconic-info-box.style-one{
+        border-color: rgba(255, 255, 255, 0.10);
+    }
+    .accordion-card.style-one .accordion-header h6.accordion-title,
+    .iconic-info-box.style-two .content h4,
+    .ac-process-item .content h5{
+        @extend %white-color;
+    }
+    .footer_widget_nav_menu ul li a{
+        color: #BDBDBD;
+        &:hover{
+            @extend %primary-bgc;
+        }
+    }
+    .footer-newsletter-widget .newsletter-content p,
+    .footer-widget .footer-content p,
+    .accordion-card.style-one .accordion-content p,
+    .iconic-info-box.style-two .content p,
+    .ac-process-item .content p,
+    .iconic-info-box.style-one .content h4{
+        color: #BDBDBD;
+    }
+    & .footer-widget h4.footer-title{
+        @extend %white-color;
+    }
+    & .footer-default{
+        & .footer_about_widget{
+            & .footer-content{
+                & ul.social-link{
+                    & li{
+                        & a{
+                            background: #fff;
+                            &:after{
+                                background: #000;
+                            }
+                            &:hover{
+                                @extend %primary-gradient-bg;
+                                & i{
+                                    @extend %primary-bgc;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }    
+    .footer-newsletter-widget .newsletter-content form .form-group input{
+        background-color: transparent;
+        border-color: #E0E0E0;
+        color: #BDBDBD;
+    }
+    & .copyright-area{
+        border-color: rgba(255, 255, 255, 0.10);
+    }
+}
+
+.home-two{
+    font-size: 16px;
+    line-height: 24px;
+    & .ac-header-one__right-btn{
+        & .ac-dark-btn a{
+            @extend %green-color;
+            &:hover{
+                @extend %green-color;
+            }
+        }
+    } 
+    & .header-navigation{                            
+        & .main-menu{
+            & ul{
+                & > li{
+                    & > a{
+                        @extend %white-color;
+                    }
+                    & .submenu{
+                        & li{
+                            & a{
+                                @extend %heading-color;
+                            }
+                        }
+                    }
+                    &:hover{
+                        & > a{
+                            @extend %green-color;
+                        }
+                        &:hover {
+                            & > a{
+                                @extend %green-color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        & .ac-header-one__right-btn{
+            & .ac-header-bnt-1{
+                & a{
+                    &:hover{
+                        @extend %green-color;
+                    }
+                }
+            }
+        }
+    }
+    & .sub-title{
+        color: $green-color;
+    }
+    & .theme-btn{
+        padding: 12px 16px;
+        &.style-one{
+            @extend %green-bg;
+            @extend %heading-color;
+            &:hover{
+                @extend %black-dark-bg;
+                @extend %green-color;
+            }
+        }
+    }
+    & .check-list{
+        &.style-one{
+            & li{
+                font-size: 16px;
+                &:not(:last-child){
+                    margin-bottom: 5px;
+                }
+                & i{
+                    @extend %green-color;
+                }
+            }
+        }
+    }
+    & .section-title{
+        & h2{
+            font: 700 40px $font;
+            line-height: 44px;
+            @media #{$xs}{
+                font-size: 27px;
+                line-height: 35px;
+            }
+        }
+    }
+    & .blog-post-item{
+        &.style-one{
+            & .post-content{
+                & .entry-content{
+                    & h3.title{
+                        &:hover{
+                            @extend %green-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    & .post-meta{
+        & span{
+            & i{
+                @extend %green-color;
+            }
+        }
+    }
+    & .client-bg-wrapper{
+        margin-top: -200px;
+    }
+    & .pricing-tabs{
+        & .nav-link{
+            color: #828282;
+            border-color: #333;
+            &.active{
+                color: $heading-color;
+                border-color: transparent;
+                @extend %green-bg;
+            }
+        }
+    }
+    .testimonial-shape-section .shape span{
+        background-color: $green-color;
+    }
+}
+
+.home-three{
+    & .header-navigation{
+        &.sticky{
+            background-color: #F1F3FA;
+        }
+        & .main-menu{
+            & ul{
+                & > li{
+                    &:hover{
+                        & > a{
+                            @extend %blue-color;
+                        }
+                        &:hover {
+                            & > a{
+                                @extend %blue-color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        & .ac-header-one__right-btn{
+            & .ac-dark-btn{
+                & a{
+                    @extend %blue-color;
+                }
+            }
+            & .ac-header-bnt-1{
+                & a{
+                    &:hover{
+                        @extend %blue-color;
+                    }
+                }
+            }
+        }
+    }
+    & .theme-btn{
+        &.style-one{
+            &:hover{
+                @extend %black-dark-bg;
+                @extend %white-color;
+            }
+        }
+    }
+    & span.sub-title{
+        @extend %blue-color;
+    }
+    & .text-white{
+        & .sub-title{
+            @extend %white-color;
+        }
+    }
+    & .container{
+        @media (min-width: 1400px){
+            max-width: 1400px;
+            & .row{
+                --bs-gutter-x: 1.8rem;
+            }
+        }
+    }
+    & .footer_widget_nav_menu ul li a{
+        &:hover{
+            @extend %blue-color;
+        }
+    }
+    & .footer-newsletter-widget{
+        & .newsletter-content{
+            & form{
+                & .form-group{
+                    & .theme-btn{
+                        padding: 12px 17px;
+                    }
+                }
+            }
+        }
+    }
+    & .footer_about_widget{
+        & .footer-content{
+            & ul.social-link{
+                & li{
+                    & a{
+                        &:hover{
+                            border-color: $blue-color;
+                            @extend %blue-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

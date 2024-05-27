@@ -1,0 +1,178 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.vertical-menu {
+    width: 20%;
+    height: 100vh;
+    position: fixed;
+    background-color: #A5AEAD;
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.vertical-menu a {
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    color: black;
+}
+
+.vertical-menu a:hover {
+    background-color: #ddd;
+}
+
+.vertical-menu .logo img {
+    padding-top: 20px;
+    width: 100%; /* Adjust this to control the width of the logo */
+    height: auto; /* Keep aspect ratio */
+    max-height: 100px; /* Example height to align visually with header, adjust as necessary */
+    margin-bottom: 50px; /* Space below the logo */
+}
+
+.tool-detail-container {
+    margin-left: 20%;
+    padding: 20px;
+    width: 60%; /* Adjust based on the desired width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: white;
+}
+
+.tool-detail-logo {
+    display: block;
+    max-width: 100%;
+    margin: 20px auto;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+
+header {
+    /* padding: 20px; */
+    text-align: center;
+    background-color: #121C4F;
+    color: white;
+    /* margin-left: 20%; */
+}
+
+
+section {
+    padding: 10px;
+    text-align: left;
+    margin-left: 10%;
+}
+
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    /* margin-left: 10%; Set this to the width of your vertical menu */
+    /* padding: 10px; Adds padding inside the main section */
+    width: 80%; /* Adjusts the width to fill the remaining space */
+    box-sizing: border-box; /* Ensures padding is included in the width calculation */
+    height: 90%;
+    gap: 20px; /* Space between the two panes */
+}
+
+
+.dark-mode {
+    background-color: #333;
+    color: white;
+}
+
+.dark-mode .vertical-menu {
+    background-color: #555;
+}
+
+
+
+.left-pane, .right-pane {
+    flex: 1; /* Allows both panes to take up equal space within the main section */
+    padding: 5px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-height: 600px;
+    margin: 10px;
+}
+
+.left-pane {
+    max-width: calc(50% - 10px); /* Adjust the width and ensure there is a gap between the panes */
+}
+
+.right-pane {
+    max-width: calc(50% - 10px);
+    height: 500px;
+    overflow: auto;
+}
+
+#input-text{
+    width: 100%; /* Makes input and textarea take full width of their parent */
+    padding: 10px;
+    margin-top: 10%;
+    margin-bottom: 10px; /* Provides space below the input */
+}
+
+.input-label {
+    /* margin-bottom: 10px;  /* Adds some space between the label and the input */
+    color: #333;          /* Sets the text color, making sure it's readable */
+    font-size: 14px;      /* Sets a suitable font size */
+}
+
+#output-text {
+    height: 600px; /* Sets a fixed height for the textarea */
+    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+    border: 1px solid #ccc; /* Sets a subtle border color */
+    background-color: #f8f8f8; /* Sets a light background color */
+    font-family: Arial, sans-serif; /* Uses a more readable, professional font family */
+    font-size: 16px; /* Sets an appropriate font size for reading and writing */
+    color: #333; /* Dark gray color for text for better readability */
+    resize: vertical; /* Allows the user to resize the textarea vertically only */
+    outline: none; /* Removes the default focus outline to style your own */
+}
+
+   
+#output-text:focus {
+    border-color: #0056b3; /* Changes border color when focused */
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.25); /* Adds subtle shadow around the textarea when focused */
+}
+/*
+#output-text {
+    height: 600px; 
+    box-sizing: border-box;
+}
+*/
+
+
+/* commenting foot as it is not in sync with containers.
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-left: 20%;
+    background-color: #121C4F;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+*/
+

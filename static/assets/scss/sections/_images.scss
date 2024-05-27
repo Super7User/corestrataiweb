@@ -1,0 +1,305 @@
+
+/*---========================
+        14. Images css 
+=======================----*/
+
+.section-image-box{
+    &.style-one{
+        position: relative;
+        z-index: -1;
+        padding-left: 45px;
+        max-width: 715px;
+        padding-top: 100px;
+        & img{
+            border-radius: 13px;
+            box-shadow: 0px 0px 22.509px 0px rgba(0, 0, 0, 0.05);
+        }
+        @media #{$xs}{
+            padding-top: 70px;
+        }
+        &:after{
+            position: absolute;
+            top: 0;
+            right: 0;
+            content: '';
+            width: 635px;
+            height: 515px;
+            @extend %primary-gradient-bg;
+            border-radius: 13px;
+            z-index: -1;
+            @media #{$xs}{
+                width: 335px;
+                height: 215px;
+            }
+        }
+    }
+    &.style-two{
+        @extend %green-bg;
+        padding: 95px 50px 35px;
+        border-radius: 12px;
+        margin-right: 35px;
+    }
+}
+
+.video-one_image-box{
+    position: relative;
+    & img{
+        width: 100%;
+        border-radius: 10px;
+    }
+    & .play-button{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include transform(translate(-50%,-50%));
+    }
+}
+
+.video-two_image-box{
+    position: relative;
+    & .country{
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        & img{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+    }
+    & .tab-image{
+        @include border-radius(8px);
+    }
+    & .video-popup{
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        @extend %blue-bg;
+        @extend %white-color;
+        font-size: 14px;
+    }
+}
+
+
+.cta-one_image-box{
+    @media #{$md}{
+        display: none;
+    }
+    @media #{$xs}{
+        display: none;
+    }
+    & .image-one{
+        position: absolute;
+        top: -165px;
+        left: 57%;
+        @include transform(translateX(-57%));
+        animation: updown 2s infinite;
+    }
+    & .image-two{
+        margin-top: 30px;
+    }
+}
+
+.work-one_image-box{
+    max-width: 625px;
+    & .work-image{
+        position: relative;
+        z-index: 1;
+        padding-top: 100px;
+        padding-left: 100px;
+        @media #{$xs}{
+            padding-top: 50px;
+            padding-left: 50px;
+        }
+        & img{
+            border-radius: 15px;
+        }
+        &:after{
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+            width: 85%;
+            height: 85%;
+            z-index: -1;
+            border: 1px solid $green-color;
+            border-radius: 15px;
+        }
+    }
+}
+
+.text-one_image-box{
+    background-color: $green-color;
+    padding: 60px;
+    @include border-radius(12px);
+}
+
+.skill-one_image-box{
+    position: relative;
+    overflow: hidden;
+    & img{
+        width: 100%;
+        border-radius: 10px;
+    }
+    & .image-overlay{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        background-color: rgba(27, 34, 45, 0.40);
+        display: flex;
+        align-items: flex-end;
+        padding: 60px;
+        @media #{$xs}{
+            padding: 60px 20px;
+        }
+    }
+    & .play-button{
+        & .video-popup{
+            position: relative;
+            @extend %primary-gradient-bg;
+            width: 65px;
+            height: 65px;
+            &:after{
+                position: absolute;
+                border-radius: 50%;
+                content: '';
+                width: 87px;
+                height: 87px;
+                background-color: rgba(255, 255, 255, 0.17);
+            }
+        }
+        & .text{
+            margin-left: 30px;
+            font: 600 27px $font;
+            @extend %white-color;
+        }
+    }
+}
+
+
+.signup-image-box{
+    min-height: 615px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    & .image-one{
+        position: absolute;
+        top: 0;
+        left: 50%;
+        @include transform(translateX(-50%));
+        animation: updown 2s infinite;
+    }
+}
+@keyframes updown {
+    0%{
+        @include transform(translateX(-50%)translateY(-10px));
+    }
+    50%{
+        @include transform(translateX(-50%)translateY(5px));
+    }
+    100%{
+        @include transform(translateX(-50%)translateY(-10px));
+    }
+}
+
+.about-image-box{
+    margin-right: 60px;
+    @media #{$xs}{
+        margin-right: 0;
+    }
+    & img{
+        width: 100%;
+        border-radius: 20px;
+    }
+}
+
+
+.video-one_image-box{
+    & img{
+        @include border-radius(10px);
+    }
+    & .play-button{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include transform(translate(-50%,-50%));
+        @include border-radius(50%);
+    }
+}
+
+.contact-one_image-box{
+    max-width: 514px;
+    min-height: 490px;
+    position: relative;
+    padding-top: 90px;
+    & .shape-one{
+        position: absolute;
+        top: 0;
+        left: 90px;
+    }
+    & img{
+        border-radius: 10px;
+        &.image-two{
+            position: absolute;
+            top: 60px;
+            right: 0;
+            border: 4px solid $white-color;
+        }
+        &.image-three{
+            position: absolute;
+            left: 38%;
+            @include transform(translateX(-38%));
+            bottom: 0;
+            filter: drop-shadow(12.41px 10.154px 13.538px rgba(0, 0, 0, 0.10));
+            border-radius: 13px;
+        }
+    }
+}
+
+.contact-two_image-box{
+    max-width: 623px;
+    min-height: 600px;
+    position: relative;
+    padding-top: 110px;
+    & .shape-one{
+        position: absolute;
+        top: 0;
+        left: 90px;
+    }
+    & img{
+        border-radius: 10px;
+        &.image-two{
+            position: absolute;
+            top: 70px;
+            right: 0;
+            border: 4px solid $white-color;
+        }
+        &.image-three{
+            position: absolute;
+            left: 27%;
+            filter: drop-shadow(12.41px 10.154px 13.538px rgba(0, 0, 0, 0.10));
+            bottom: 0;
+        }
+    }
+}
+
+.faq-one_image-box{
+    margin-left: -160px;
+    @media #{$xl}{
+        margin-left: -100px;
+    }
+    @media #{$lg}{
+        margin-left: 0;
+    }
+    @media #{$md}{
+        margin-left: 0;
+    }
+    @media #{$xs}{
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,88 @@
+
+//Color
+
+%blue-color{
+    color: $blue-color;
+}
+
+%green-color{
+    color: $green-color;
+}
+
+%heading-color{
+    color: $heading-color;
+}
+
+%white-color{
+    color: $white-color;
+}
+
+%primary-bgc{
+    background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+//BG COLOR
+
+%primary-gradient-bg{
+    background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
+}
+
+
+%blue-bg{
+    background-color: $blue-color;
+}
+
+%green-bg{
+    background: $green-color;
+}
+
+%black-dark-bg{
+    background-color: $black-dark-color;
+}
+
+%white-bg{
+    background-color: $white-color;   
+}
+
+//Typography
+
+%h1{
+    font-size: $h1-font;
+    line-height: 61.6px;
+}
+
+%h2{
+    font-size: $h2-font;
+    line-height: 52.8px;
+}
+
+%h3{
+    font-size: $h3-font;
+    line-height: 44px;
+}
+%h4{
+    font-size: $h4-font;
+    line-height: 35.2px;
+}
+%h5{
+    font-size: $h5-font;
+    line-height: 26.4px;
+}
+%h6{
+    font-weight: 600;
+    font-size: $h6-font;
+    line-height: 22px;
+}
+
+
+// Flex Center 
+
+%flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

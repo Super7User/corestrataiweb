@@ -1,0 +1,92 @@
+
+/*---========================
+        12. Tabs css 
+=======================----*/
+
+.accordion-card{
+    &.style-one{
+        &:not(:first-child){
+            padding-top: 15px;
+        }
+        &:not(:last-child){
+            border-bottom: 1px solid $border-color;
+            padding-bottom: 30px;
+        }
+        & .accordion-header{
+            & h6.accordion-title{
+                display: flex;
+                align-items: center;
+                font: 600 27px $font;
+                cursor: pointer;
+                margin-bottom: 3px;
+                @media #{$xs}{
+                    font-size: 20px;
+                    line-height: 30px;
+                }
+                &:before{
+                    content: '\f11d';
+                    font-family: flaticon_mycollection !important;
+                    font-weight: 400;
+                    font-size: 18px;
+                    flex: 0 0 auto;
+                    width: 45px;
+                    height: 45px;
+                    @include border-radius(50%);
+                    border: 1px solid $border-color;
+                    color: $text-color;
+                    margin-right: 30px;
+                    @extend %flex-center;
+                    @include transition(.4s);
+                }
+                &[aria-expanded=true]{
+                    border-color: transparent;
+                    &:before{
+                        content: '\f11c';
+                        @include transition(.4s);
+                    }
+                }
+            }
+        }
+        & .accordion-content{
+            padding-left: 75px;
+        }
+    }
+    &.style-two{
+        &:not(:first-child){
+            padding-top: 15px;
+        }
+        &:not(:last-child){
+            border-bottom: 1px solid $border-color;
+            padding-bottom: 36px;
+        }
+        & .accordion-header{
+            & h6{
+                display: flex;
+                align-items: center;
+                font: 600 23px $font;
+                cursor: pointer;
+                @media #{$xs}{
+                    font-size: 20px;
+                    line-height: 30px;
+                }
+                &:after{
+                    content: '\f11c';
+                    font-family: flaticon_mycollection !important;
+                    font-weight: 400;
+                    font-size: 22px;
+                    color: $text-color;
+                    margin-left: auto;
+                    @include transition(.4s);
+                }
+                &[aria-expanded=true]{
+                    &:after{
+                        @include transform(rotate(-180deg));
+                    }
+                }
+            }
+        }
+        & .accordion-content{
+            padding-top: 34px;
+        }
+    }
+}

@@ -1,0 +1,61 @@
+
+/*---========================
+        13. Gallery css 
+=======================----*/
+
+.filter-nav{
+    & .filter-nav-items{
+        & li{
+            display: inline-block;
+            padding: 12px 16px;
+            font-size: 18px;
+            @extend %heading-color;
+            cursor: pointer;
+            &.active{
+                font-weight: 600;
+                font-size: 16px;
+                @extend %green-bg;
+                @extend %heading-color;
+                border-radius: 4px;
+            }
+        }
+    }
+}
+
+.ac-isotope{
+    & .isotope-wrapper{
+        @media (min-width: 1200px){
+            justify-content: space-between;
+            & .col-lg-3{
+                width: 20%;
+            }
+        }
+        @media (min-width: 992px){
+            justify-content: space-between;
+            & .col-lg-3{
+                width: 20%;
+            }
+        }
+        & .col-lg-3,
+        & .col-md-6{
+            &:nth-child(odd){
+                margin-top: 60px;
+                @media #{$md}{
+                    margin-top: 0;
+                }
+                @media #{$xs}{
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+}
+
+.gallery-item{
+    & .gallery-img{
+        & img{
+            width: 100%;
+            @include border-radius(12px);
+        }
+    }
+}

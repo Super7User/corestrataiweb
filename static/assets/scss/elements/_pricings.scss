@@ -1,0 +1,231 @@
+
+/*---========================
+        07. Pricing css 
+=======================----*/
+
+
+.pricing-item{
+    & .pricing-body{
+        & .check-list{
+            &.style-one{
+                @media #{$xl}{
+                    font-size:15px;
+                }
+            }
+        }
+    }
+    &.style-one{
+        padding: 40px 30px;
+        border: 1px solid $border-color;
+        border-radius: 14px;
+        @media #{$lg}{
+            padding: 40px 80px 40px;
+        }
+        @media #{$xs}{
+            padding: 40px 50px 40px;
+        }
+        & .pricing-head{
+            margin-bottom: 43px;
+            & span{
+                font: 600 22px $font;
+                margin-bottom: 3px;
+            }
+            & h3{
+                @extend %primary-bgc;
+                font-size: 36px;
+                line-height: 40px;
+                margin-bottom: 22px;
+                & span.currency{
+                    font-size: 36px;
+                    line-height: 40px;
+                }
+            }
+            & .theme-btn{
+                &.style-two{
+                    padding: 17px 40px;
+                    &:hover{
+                        @extend %white-color;
+                    }
+                }
+            }
+        }
+    }
+    &.style-two{
+        background-color: $white-color;
+        & .pricing-head{
+            padding: 35px 20px 40px;
+            @extend %blue-bg;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            &:after,
+            &:before{
+                position: absolute;
+                content: "";
+                width: 0;
+                height: 0;
+            }
+            &:after{
+                border-top: 165px solid transparent;
+                border-left: 330px solid #0044E8;
+                border-bottom: 280px solid transparent;
+                top: -225px;
+                left: 0;
+                z-index: -2;
+            }
+            &:before{
+                bottom: 0;
+                left: 0;
+                border-bottom: 140px solid #003FD6;
+                border-right: 260px solid transparent;
+                z-index: -1;
+            }
+            & span{
+                &.package{
+                    font: 600 16px $font;
+                    line-height: 22px;
+                    @extend %white-color;
+                    margin-bottom: 6px;
+                }
+            }
+            & h3{
+                font-size: 32px;
+                line-height: 35px;
+                @extend %white-color;
+            }
+        }
+        & .pricing-body{
+            position: relative;
+            padding: 30px 45px;
+            @extend %white-bg;
+            border-radius: 0 0 12px 12px;
+            z-index: 1;
+            @media #{$xl}{
+                padding: 30px 30px;
+            }
+            &:after{
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+                @include transform(translateX(-50%));
+                content: '';
+                width: 0;
+                height: 0;
+                border-left: 80px solid transparent;
+                border-right: 80px solid transparent;
+                border-bottom: 90px solid rgba(0, 75, 255, 0.05);
+                z-index: -1;
+            }
+            & .check-list{
+                & li{
+                    font-size: 16px;
+                    &:not(:last-child){
+                        margin-bottom: 10px;
+                    }
+                    & i{
+                        @extend %blue-color;
+                    }
+                }
+            }
+        }
+        & .pricing-button{
+            & .theme-btn{
+                padding: 8px 37px;
+                font: 400 16px $font;
+                border: .5px solid $blue-color;
+                @extend %blue-color;
+                line-height: 22px;
+                &:hover{
+                    @extend %white-color;
+                    background: $blue-color;
+                }
+            }
+        }
+    }
+    &.style-three{
+        border-radius: 14.222px;
+        background-color: #222;
+        padding: 40px 22px 45px;
+        & .pricing-head{
+            padding-bottom: 27px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            margin-bottom: 30px;
+            & span.package{
+                font: 600 18px $font;
+                @extend %white-color;
+                margin-bottom: 13px;
+            }
+            & h3{
+                @extend %white-color;
+            }
+        }
+        & .pricing-body{
+            padding: 0 7px;
+            padding-bottom: 27px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            margin-bottom: 30px;
+            & .check-list{
+                &.style-one{
+                    & li{
+                        &:not(:last-child){
+                            margin-bottom: 15px;
+                        }
+                        & i{
+                            @extend %green-color;
+                        }
+                    }
+                }
+            }
+        }
+        & .pricing-button{
+            & .theme-btn{
+                &.style-two{
+                    border-color: $green-color;
+                    @extend %green-color;
+                    &:hover{
+                        @extend %green-bg;
+                        @extend %heading-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.pricing-tabs{
+    padding: 10px;
+    max-width: 370px;
+    border-radius: 100px;
+    margin: 0 auto 40px;
+    &.style-one{
+        background-color: $heading-color;
+    }
+    & .nav-tabs{
+        border: none;
+        & li{
+            &:not(:first-child){
+                margin-left: 12px;
+            }
+        }
+    }
+    & .nav-link{
+        padding: 16px 36px;
+        border-radius: 50px;
+        border: 1px solid #333;
+        color: $white-color;
+        font: 600 16px $font;
+        line-height: 22px;
+        @media #{$xs}{
+            padding: 16px 30px; 
+        }
+        &:hover{
+            border-color: #333;
+        }
+        &.active{
+            @extend %white-color;
+            border-color: transparent;
+            @extend %primary-gradient-bg;
+        }
+    }
+}

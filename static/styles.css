@@ -1,0 +1,145 @@
+body {
+    font-family: Arial, sans-serif;
+    margin-top: 5px;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.vertical-menu {
+    width: 20%;
+    height: 100vh;
+    position: fixed;
+    background-color: #A5AEAD;
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.vertical-menu .logo img {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.vertical-menu a {
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    color: black;
+}
+
+.vertical-menu a.active, .vertical-menu a:hover {
+    background-color: #ddd;
+}
+
+.vertical-menu .logo img {
+    padding-top: 20px;
+    width: 100%; /* Adjust this to control the width of the logo */
+    height: auto; /* Keep aspect ratio */
+    max-height: 100px; /* Example height to align visually with header, adjust as necessary */
+    margin-bottom: 50px; /* Space below the logo */
+}
+
+header {
+    padding: 20px;
+    text-align: center;
+    background-color: #121C4F;
+    color: white;
+    margin-left: 20%;
+}
+
+
+
+section {
+    padding: 10px;
+    text-align: left;
+    margin-left: 10%;
+}
+
+main {
+    /* margin-left: 8%; */
+    padding: 10px;
+}
+/* commenting foot as it is not in sync with containers.
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-left: 20%;
+    background-color: #121C4F;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+*/
+/* Styling for the search bar and button */
+.search-container {
+    display: flex;
+    justify-content: left;
+    margin: 20px;
+}
+
+#search-box {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    width: 50%; /* Adjust width as needed */
+}
+
+#search-button {
+    padding: 10px;
+    margin-left: -45px; /* Adjust to align with the search box */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007BFF;
+    font-size: 20px;
+}
+
+/* Styling for category buttons */
+.button-container {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-button {
+    padding: 10px 15px;
+    background-color: #f0f0f0; /* Light grey background */
+    color: #121c7f; /* Blue text */
+    border: none;
+    border-radius: 20px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.category-button:hover {
+    background-color: #e8e8e8; /* Slightly darker on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Active category button style */
+.category-button.active {
+    background-color: #007BFF;
+    color: white;
+}
+
+/* Rest of the existing styles... */
+
+
+.dark-mode {
+    background-color: #333;
+    color: white;
+}
+
+.dark-mode .vertical-menu {
+    background-color: #555;
+}
+
+.dark-mode header, .dark-mode footer {
+    background-color: #222;
+}

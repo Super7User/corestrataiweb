@@ -1,0 +1,259 @@
+
+/*---========================
+        05. Hero css 
+=======================----*/
+
+
+.hero-wrapper{
+    padding: 197px 0 65px;
+    & .hero-content{
+        & .heading-title{
+            font-weight: 700;
+            line-height: 70px;
+            margin-bottom: 25px;
+            & span{
+                @extend %primary-bgc;
+            }
+            @media #{$lg}{
+                font-size: 48px;
+                line-height: 60px;
+            }
+            @media #{$xs}{
+                font-size: 28px;
+                line-height: 40px;
+            }
+        }
+        & p{
+            line-height: 25px;
+            color: #4F4F4F;
+            &.para-one{
+                margin-bottom: 37px;
+            }
+            &.para-two{
+                margin-bottom: 35px;
+                font-size: 16px;
+            }
+        }
+        & .hero-button{
+            margin-bottom: 23px;
+            & .theme-btn{
+                padding: 18px 16px;
+            }
+        }
+    }
+}
+
+.hero-wrapper-two{
+    padding: 200px 0 190px;
+    @media #{$md}{
+        padding: 220px 0 250px;
+    }
+    @media #{$xs}{
+        padding: 180px 0 190px;
+    }
+    & .hero-content{
+        & .heading-title{
+            @extend %white-color;
+            font-weight: 700;
+            margin-bottom: 40px;
+            & span{
+                color: $green-color;
+            }
+            @media #{$xl}{
+                font-size: 52px;
+            }
+            @media #{$lg}{
+                font-size: 48px;
+                line-height: 60px;
+            }
+            @media #{$md}{
+                font-size: 32px;
+                line-height: 40px;
+            }
+            @media #{$xs}{
+                font-size: 24px;
+                line-height: 35px;
+            }
+        }
+        & p{
+            line-height: 25px;
+            @extend %white-color;
+            margin-bottom: 60px;
+            @media #{$xs}{
+                font-size: 16px;
+                line-height: 30px;
+            }
+        }
+        & .hero-form{
+            max-width: 530px;
+            margin: 0 auto;
+            & form{
+                & .form-group{
+                    position: relative;
+                    & .form-control{
+                        padding: 15px 100px 15px 30px;
+                        border-color: $green-color;
+                        border-radius: 4px;
+                        background-color: #121E33;
+                        &::placeholder{
+                            color: $text-color;
+                        }
+                        &:focus{
+                            color: $text-color;
+                            box-shadow: 0 0 0 0.25rem rgb(101 255 75 / 10%);
+                        }
+                    }
+                    & .theme-btn{
+                        position: absolute;
+                        top: 5px;
+                        right: 5px;
+                        padding: 13px 16px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+.hero-wrapper-three{
+    padding: 210px 0 65px;
+    @media #{$xs}{
+        padding: 160px 0 110px;
+    }
+    & .hero-content{
+        & .heading-title{
+            margin-bottom: 23px;
+            @media #{$xl}{
+                font-size: 52px;
+            }
+            @media #{$xs}{
+                font-size: 28px;
+                line-height: 40px;
+            }
+        }
+        & p{
+            font-size: 20px;
+            line-height: 28px;
+            margin-bottom: 32px;
+            max-width: 430px;
+            color: #4F4F4F;
+        }
+        & .circle-list{
+            & li{
+                color: #000;
+                font-weight: 400;
+                &:not(:last-child){
+                    margin-bottom: 20px;
+                }
+            }
+        }
+        & .theme-btn{
+            &.style-one{
+                padding: 18px 17px;
+            }
+        }
+    }
+}
+
+.hero-image-wrapper{
+    max-width: 1620px;
+    margin: 0 auto;
+    margin-top: -150px;
+    @media #{$xxl}{
+        max-width: 1320px;
+    }
+    @media #{$xl}{
+        max-width: 1220px;
+    }
+    @media #{$lg}{
+        max-width: 920px;
+        margin-top: -100px;
+    }
+    @media #{$md}{
+        display: none;
+    }
+    @media #{$xs}{
+        display: none;
+    }
+    & .hero-img{
+        & img{
+            border-radius: 15px;
+        }
+    }
+}
+
+.hero-one_image-box{
+    max-width: 840px;
+    margin: 0 auto 50px;
+    & img{
+        border-radius: 12px;
+    }
+}
+
+
+.page-banner{
+    & .page-banner-wrapper{
+        position: relative;
+        background-color: $black-dark-color;
+        padding: 215px 0 130px;
+        z-index: 1;
+        @media #{$xs}{
+            padding: 175px 0 140px;
+        }
+        & .shape{
+            position: absolute;
+            z-index: -1;
+            & span{
+                &.circle{
+                    width: 225px;
+                    height: 225px;
+                    border-radius: 50%;
+                    background-color: #854BFE;
+                    filter: blur(100px);
+                }
+            }
+            &.shape-one{
+                left: 7%;
+                top: 17%;
+            }
+            &.shape-two{
+                right: 60px;
+                top: 25px;
+            }
+        }
+    }
+}
+
+.ac-breadcrumb__content{
+    & h3.ac-breadcrumb__title{
+        font: 700 40px $font;
+        line-height: 50px;
+        background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 15px;
+        @media #{$xs}{
+            font-size: 27px;
+            line-height: 35px;
+        }
+    }
+    & .ac-breadcrumb__list{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        & span{
+            @extend %white-color;
+            &.dot{
+                margin-left: 10px;
+                margin-right: 10px;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                @extend %white-bg;
+            }
+        }
+    }
+}
