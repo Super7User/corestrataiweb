@@ -13,7 +13,7 @@
     <!--====== Required meta tags ======-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--====== Title ======-->
-  
+
     <!--====== Favicon Icon ======-->
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.png') }}" type="image/png">
     <!--====== Google Fonts ======-->
@@ -311,44 +311,46 @@ MEDIAQUERIES
             background-color: #A8D1D1 !important;
 
         }
+
         .btn-space {
-      flex: 1 0 0;
-      /* margin: 5px; */
-    }
-             
-    .btn {
-            background-image: linear-gradient(to right, #314755 0%, #26a0da  51%, #314755  100%);
+            flex: 1 0 0;
+            /* margin: 5px; */
+        }
+
+        .category-button {
+            background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);
             margin: 10px;
             /* padding: 15px 45px; */
             text-align: center;
             text-transform: uppercase;
             transition: 0.5s;
             background-size: 200% auto;
-            color: white;            
+            color: white;
             box-shadow: 0 0 40px #f3efef;
             border-radius: 10px;
             /* display: block; */
-          }
+        }
 
-          .btn:hover {
-            background-position: right center; /* change the direction of the change here */
+        .category-button:hover {
+            background-position: right center;
+            /* change the direction of the change here */
             color: #fff;
             text-decoration: none;
-          }
-          .card{
-    border-radius: 4px;
-    /* background: #fff; */
-    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
-      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
-  /* padding: 14px 80px 18px 36px; */
-  cursor: pointer;
-}
+        }
 
-.card:hover{
-     transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-}
-         
+        .card {
+            border-radius: 4px;
+            /* background: #fff; */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+            transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+            /* padding: 14px 80px 18px 36px; */
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+        }
     </style>
 </head>
 
@@ -373,11 +375,13 @@ MEDIAQUERIES
                                 style="margin-left: 15px;"></span>Article</a>
                     </li>
                     <li>
-                        <a href="image_gen"><i class="fa-solid fa-image"></i><span style="margin-left: 15px;"></span>Image
+                        <a href="image_gen"><i class="fa-solid fa-image"></i><span
+                                style="margin-left: 15px;"></span>Image
                             Generation</a>
                     </li>
                     <li>
-                        <a href="gifgeneration"><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video
+                        <a href="gifgeneration"><i class="fa-solid fa-video"></i><span
+                                style="margin-left: 15px;"></span>Video
                             Generation</a>
                     </li>
                     <li>
@@ -401,8 +405,8 @@ MEDIAQUERIES
                                             <i class="fas fa-align-left"></i>
                                         </button>
                                         <a href="index.html"><img
-                                                src="{{ url_for('static', filename='images/logo.png')}}"
-                                                alt="logo" style="width: 200px;height:40px"></a>
+                                                src="{{ url_for('static', filename='images/logo.png')}}" alt="logo"
+                                                style="width: 200px;height:40px"></a>
                                     </div>
                                 </div>
                                 <div class="ac-header-one__right">
@@ -476,7 +480,8 @@ MEDIAQUERIES
                             </div>
 
                             <!-- Button Container -->
-                            <div class="btn-space" role="group" style="font-family:system-ui !important; font-weight: bolder;">
+                            <div class="btn-space" role="group"
+                                style="font-family:system-ui !important; font-weight: bolder;">
                                 {% for category in categories %}
                                 <button type="button" class="btn btn-secondary category-button"
                                     data-category="{{ category }}" onclick="filterCategory(this)">{{ category
@@ -488,7 +493,8 @@ MEDIAQUERIES
                             <div class="row">
                                 {% for tool in tools_data %}
                                 <div class="col-md-4 mb-4">
-                                    <div class="card h-100 shadow p-3 mb-5 bg-body rounded" style="background-color: #EAF6F6 !important">
+                                    <div class="card h-100 shadow p-3 mb-5 bg-body rounded"
+                                        style="background-color: #EAF6F6 !important">
                                         <a href="/tool-detail/{{ tool['ID'] }}" class="stretched-link">
                                             <img src="{{ url_for('static', filename=tool['Image']) }}"
                                                 class="card-img-top" alt="{{ tool['Title'] }} Logo"
@@ -501,11 +507,17 @@ MEDIAQUERIES
                                         <div class="card-footer">
                                             <small class="text-muted">{{ tool['Category'] }}</small>
                                             {% if tool['Plan'] == 'Professional' %}
-                                            <small class="text-muted float-right" style="background-color: #FBA834;padding: 3px;">{{ tool['Plan'] }}</small>
+                                            <small class="text-muted float-right"
+                                                style="background-color: #FBA834;padding: 3px; border-radius: 10px;">{{ tool['Plan']
+                                                }}</small>
                                             {% elif tool['Plan'] == 'Starter' %}
-                                            <small class="text-muted float-right" style="background-color: #836FFF;padding: 3px;">{{ tool['Plan'] }}</small>
+                                            <small class="text-muted float-right"
+                                                style="background-color: #836FFF;padding: 3px; border-radius: 10px;">{{ tool['Plan']
+                                                }}</small>
                                             {% elif tool['Plan'] == 'Free' %}
-                                            <small class="text-muted float-right" style="background-color: #A5DD9B;padding: 3px;">{{ tool['Plan'] }}</small>
+                                            <small class="text-muted float-right"
+                                                style="background-color: #A5DD9B;padding: 3px; border-radius: 10px;">{{ tool['Plan']
+                                                }}</small>
 
                                             {% endif %}
                                         </div>
@@ -516,7 +528,7 @@ MEDIAQUERIES
                         </div>
                         <footer>
                             <!-- <button class="btn btn-primary" onclick="toggleTheme()">Toggle Dark/Light Mode</button> -->
-                    
+
                         </footer>
                     </div>
                 </div>
