@@ -1,16 +1,22 @@
-from flask import Flask, request, render_template, jsonify, Response, flash, redirect, url_for
+from flask import Flask, request, render_template, jsonify, Response, flash, redirect, url_for, send_file
 import pandas as pd
 from openai import OpenAI
+import requests
 import time
 import ast
+import json
+from io import BytesIO
 
 app = Flask(__name__)
 
-@app.route('/')
-def index_m():
-    return render_template('index-m.html')
+# @app.route('/')
+# def index_m():
+#     return render_template('index-m.html')
+@app.route('/gif')
+def index():
+    return render_template('gifgeneration.html')
 
-@app.route('/tools')
+@app.route('/')
 def tools():
     category = request.args.get('category', None)
     search_query = request.args.get('search', None)
@@ -139,6 +145,111 @@ def index3():
 @app.route('/Home_One_Dark')
 def index1dark():
     return render_template('index-dark.html.html')
+
+
+#  copied
+
+
+# app = Flask(__name__)
+#CORS(app)
+
+# @app.route('/')
+# def index():
+#     return render_template('index.html')
+
+
+
+
+@app.route('/image')
+def image():
+    return render_template('image_gen.html')
+
+
+@app.route('/generate-headers', methods=['POST'])
+def generate_headers_old():
+    print("In generate headers")
+    data = request.get_json()
+    topic = data['topic']
+    # Dummy data for headers; replace with actual generation logic
+    headers = [f"Header {i} for {topic}" for i in range(1, 11)]
+    return jsonify({'headers': headers})
+
+
+
+
+@app.route('/generate-description', methods=['POST'])
+def generate_description():
+    data = request.get_json()
+    prompt = data.get('prompt')
+    print(prompt)
+    negative_prompt = data.get('negativePrompt')
+    # Process the prompts to generate an image URL
+    # Example: Generate image and return URL
+
+
+    url = "https://modelslab.com/api/v6/realtime/text2img"
+
+    payload = json.dumps({
+        "key" : "4bwTSqIbyTxTdTUhJxOFFKF1TS3XxqcgrcF1IWtvBOHlKGy636yMhSxUvqc6",
+        "prompt": prompt,
+        "negative_prompt": "Bad quality" if negative_prompt is None else negative_prompt,
+        "width": "512",
+        "height": "512",
+        "safety_checker": False,
+        "seed": None,
+        "samples":1,
+        "base64":False,
+        "webhook": None,
+        "track_id": None
+    })
+    print(payload,"data")
+
+    headers = {
+    'Content-Type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    print(response.text)
+    """
+    # Convert the string response to a dictionary
+    response_data = json.loads(response.text)
+
+    # Check if 'output' is in the response and if it contains at least one URL
+    if 'output' in response_data and len(response_data['output']) > 0:
+        image_url = response_data['output'][0]  # Get the first image URL from the output array
+        print("image url =======",image_url)
+        return jsonify({'status': 'success', 'image_url': image_url})
+    else:
+        return jsonify({'status': 'error', 'message': 'No image URL found'})
+
+    return jsonify({'imageUrl': image_url})
+    """
+    response_data = json.loads(response.text)
+
+    # Check if 'output' is in the response and if it contains at least one URL
+    if 'output' in response_data and len(response_data['output']) > 0:
+        image_url = response_data['output'][0]  # Get the first image URL from the output array
+        print("Image URL =======", image_url)
+
+        # Retrieve the image from the URL
+        image_response = requests.get(image_url)
+        if image_response.status_code == 200:
+            # Save the image to a buffer
+            image_buffer = BytesIO(image_response.content)
+            image_buffer.seek(0)
+
+            # Serve the image directly
+            return send_file(image_buffer, mimetype='image/png', as_attachment=True, download_name='generated_image.png')
+        else:
+            return jsonify({'status': 'error', 'message': 'Failed to download the image'})
+
+    else:
+        return jsonify({'status': 'error', 'message': 'No image URL found'})
+def process_generation(prompt, negative_prompt):
+    # Dummy function to simulate image generation
+    return 'http://example.com/path/to/generated/image.png'
+
 
 if __name__ == '__main__':
     app.run(debug=True)
