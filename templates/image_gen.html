@@ -310,15 +310,19 @@
                 <ul class="list-unstyled components">
                     <p></p>
                     <li>
-                        <a href="landing_page.html"><i class="fa-solid fa-newspaper"></i><span
+                        <a href="/"><i class="fa-brands fa-microsoft"></i><span
+                                style="margin-left: 15px;"></span>All Tools</a>
+                    </li>
+                    <li>
+                        <a href="landingpage"><i class="fa-solid fa-newspaper"></i><span
                                 style="margin-left: 15px;"></span>Article</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa-solid fa-image"></i><span style="margin-left: 15px;"></span>Image
+                        <a href="image"><i class="fa-solid fa-image"></i><span style="margin-left: 15px;"></span>Image
                             Generation</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video
+                        <a href="gif"><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video
                             Generation</a>
                     </li>
                     <li>
@@ -342,8 +346,8 @@
                                             <i class="fas fa-align-left"></i>
                                         </button>
                                         <a href="index.html"><img
-                                                src="{{ url_for('static', filename='assets/images/logo/main-logo.png')}}"
-                                                alt="logo"></a>
+                                            src="{{ url_for('static', filename='images/logo.png')}}" alt="logo"
+                                            style="width: 200px;height:40px"></a>
                                     </div>
                                 </div>
                                 <div class="ac-header-one__right">
@@ -378,7 +382,7 @@
                                                 <a href="index-dark.html"><i class="fas fa-moon"></i></a>
                                             </div>
                                             <div class="ac-header-bnt-1">
-                                                <a href="login">Login</a>
+                                                <a href="newlogin">Login</a>
                                             </div>
                                             <div class="ac-header-bnt-2 d-none d-md-block">
                                                 <a href="contact.html" class="theme-btn gradient-btn">Start Writing</a>
@@ -439,6 +443,7 @@
     <script>
         $(document).ready(function () {
             // Function to toggle sidebar
+            $('#sidebar').addClass('active');
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });

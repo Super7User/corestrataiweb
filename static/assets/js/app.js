@@ -31,3 +31,25 @@ function generateDescription() {
         alert('Error fetching the image.');
     });
 }
+function addText() {
+    const blogCanvas = document.getElementById('blogCanvas');
+    const existingText = blogCanvas.querySelector('p');
+    if (existingText) {
+        blogCanvas.removeChild(existingText);
+    }
+    const newText = document.createElement('p');
+    newText.textContent = 'Our AI Consulting service is designed to empower businesses by offering expert guidance in General AI, Computer Vision, and Machine Learning. By leveraging our deep industry knowledge and technical expertise, we help organizations navigate the complex landscape of AI implementation. From strategy development to operational execution, we provide tailored solutions that align with your business objectives, ensuring that you stay ahead in the competitive market.';
+    blogCanvas.appendChild(newText);
+    blogCanvas.focus(); 
+}
+function addImage() {
+    const blogCanvas = document.getElementById('blogCanvas');
+    const existingText = blogCanvas.querySelector('img');
+    if (existingText) {
+        blogCanvas.removeChild(existingText);
+    }
+    const newImg = document.createElement('img');
+    newImg.src = 'static/images/image.png';
+    blogCanvas.appendChild(newImg);
+    blogCanvas.focus(); 
+}

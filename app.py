@@ -16,6 +16,19 @@ app = Flask(__name__)
 def index():
     return render_template('gifgeneration.html')
 
+@app.route('/newlogin')
+def newlogin():
+    return render_template('new_login.html')
+
+@app.route('/newblog')
+def newblog():
+    return render_template('new_blog.html')
+
+@app.route('/landingpage')
+def landing():
+    return render_template('landing_page.html')
+
+
 @app.route('/')
 def tools():
     category = request.args.get('category', None)
@@ -107,11 +120,6 @@ def generate_stream():
         return jsonify({'error': str(e)}), 500
 
 
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
 @app.route('/login1', methods=['POST'])
 def log_in():
     username = request.form['username']
@@ -126,26 +134,6 @@ def log_in():
         flash('Invalid credentials, please try again!')
         return redirect(url_for('login'))  # sRedirect back to the home/login page if credentials are incorrect
     """
-@app.route('/contact')
-def contect():
-    return render_template('contact.html')
-   
-@app.route('/Home_One')
-def index1():
-    return render_template('index.html')
-
-@app.route('/Home_Two')
-def index2():
-    return render_template('index-2.html')
-
-@app.route('/Home_Three')
-def index3():
-    return render_template('index-3.html')
-
-@app.route('/Home_One_Dark')
-def index1dark():
-    return render_template('index-dark.html.html')
-
 
 #  copied
 
