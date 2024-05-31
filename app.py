@@ -28,6 +28,10 @@ def newblog():
 def landing():
     return render_template('landing_page.html')
 
+@app.route('/imageLanding')
+def imageLanding():
+    return render_template('image_landingPage.html')
+
 
 @app.route('/')
 def tools():

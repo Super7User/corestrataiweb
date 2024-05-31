@@ -56,7 +56,7 @@
         }
 
         .container1 {
-            background-color: white;
+            background-color:#D3E0EA !important;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
@@ -351,6 +351,17 @@ MEDIAQUERIES
             transform: scale(1.05);
             box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
         }
+        .numberCircle {
+            width: 39.6px;
+            height: 39.6px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 21.6px;
+            border: 2px solid #3498db;
+            color:white;
+            background:#3498db;
+
+        }
     </style>
 </head>
 
@@ -360,7 +371,7 @@ MEDIAQUERIES
             <!--======  Start Preloader  ======-->
             <div class="ac-preloader">
                 <div class="loader">
-                    <img src="{{ url_for('static', filename='assets/images/icons-pre.png')}}" alt="Preloader">
+                    <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
                 </div>
             </div><!--======  End Preloader  ======-->
             <!--======  Start Header  ======-->
@@ -379,12 +390,12 @@ MEDIAQUERIES
                                 style="margin-left: 15px;"></span>Article</a>
                     </li>
                     <li>
-                        <a href="image"><i class="fa-solid fa-image"></i><span
+                        <a href="imageLanding"><i class="fa-solid fa-image"></i><span
                                 style="margin-left: 15px;"></span>Image
                             Generation</a>
                     </li>
                     <li>
-                        <a href="gif"><i class="fa-solid fa-video"></i><span
+                        <a href=""><i class="fa-solid fa-video"></i><span
                                 style="margin-left: 15px;"></span>Video
                             Generation</a>
                     </li>
@@ -420,7 +431,7 @@ MEDIAQUERIES
                                             <!--===  Mobile Logo  ===-->
                                             <div class="site-branding d-block d-xl-none text-center mb-30">
                                                 <a href="index.html"><img
-                                                        src="{{ url_for('static', filename='assets/images/logo/main-logo.png')}}"
+                                                        src="{{ url_for('static', filename='assets/images/loader.png')}}"
                                                         alt="logo"></a>
                                             </div>
                                             <!--===  Header Nav  ===-->
@@ -466,7 +477,7 @@ MEDIAQUERIES
             <div class="bg_cover" style="width:100% !important ;margin-top: 0px;">
                 <div id="content" class="wow">
 
-                    <div class="container1" style="background-color: #DFDFDE;">
+                    <div class="container1">
                         <!-- <main> -->
                         <!-- <section> -->
                         <div class="container my-5 mt-5">
@@ -498,7 +509,7 @@ MEDIAQUERIES
                                 {% for tool in tools_data %}
                                 <div class="col-md-4 mb-4">
                                     <div class="card h-100 shadow p-3 mb-5 bg-body rounded"
-                                        style="background-color: #EAF6F6 !important">
+                                        style="background-color: #EAF6F6 !important;text-align:center">
                                         <a href="/tool-detail/{{ tool['ID'] }}" class="stretched-link">
                                             <img src="{{ url_for('static', filename=tool['Image']) }}"
                                                 class="card-img-top" alt="{{ tool['Title'] }} Logo"
@@ -530,6 +541,8 @@ MEDIAQUERIES
                                 {% endfor %}
                             </div>
                         </div>
+                        
+                        
                         <footer>
                             <!-- <button class="btn btn-primary" onclick="toggleTheme()">Toggle Dark/Light Mode</button> -->
 

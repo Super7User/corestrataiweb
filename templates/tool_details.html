@@ -285,7 +285,7 @@
             color: red;
         }
         .btn-generate {
-            background-image: linear-gradient(to right, #00d2ff 0%, #928DAB  51%, #00d2ff  100%);
+            background-image: linear-gradient(to right, #4CA1AF 0%, #C4E0E5  51%, #4CA1AF  100%);
             margin: 10px;
             padding: 15px 45px;
             text-align: center;
@@ -293,7 +293,7 @@
             font-family: Arial, sans-serif;
             transition: 0.5s;
             background-size: 200% auto;
-            color: rgb(29, 27, 27);            
+            color:#292828;            
             box-shadow: 0 0 20px #eee;
             border-radius: 10px;
             /* display: block; */
@@ -314,7 +314,7 @@
         <div class="wrapper">
             <div class="ac-preloader">
                 <div class="loader">
-                    <img src="{{ url_for('static', filename='assets/images/icons-pre.png')}}" alt="Preloader">
+                    <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
                 </div>
             </div>
             <nav id="sidebar">
@@ -328,10 +328,10 @@
                         <a href="landingpage"><i class="fa-solid fa-newspaper"></i><span style="margin-left: 15px;"></span>Article</a>
                     </li>
                     <li>
-                        <a href="image"><i class="fa-solid fa-image"></i><span style="margin-left: 15px;"></span>Image Generation</a>
+                        <a href="imageLanding"><i class="fa-solid fa-image"></i><span style="margin-left: 15px;"></span>Image Generation</a>
                     </li>
                     <li>
-                        <a href="gif"><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video Generation</a>
+                        <a href="#"><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video Generation</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa-regular fa-folder-closed"></i><span style="margin-left: 15px;"></span>My Repository</a>
@@ -398,7 +398,7 @@
                 <div id="content" class="wow">
                     <p class="text-end mt-3"><a href="/"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
                     <main style="width:100%">
-                        <div class="left-pane" style="background-color: #DFDFDE;">
+                        <div class="left-pane" style="background-color: #DAE5EF;">
                             {% if tool_id == tool.ID %}
                             {% for f in tool.Fields %}
                             <div class="mb-3">
@@ -413,9 +413,9 @@
                             {% endfor %}
                             {% endif %}
                                             
-                            <button class="btn btn-primary btn-generate" style="color:#292828 ; font-size: large;" id="generate-button" onclick="generate()" disabled>Generate</button>
+                            <button class="btn btn-generate" style="color:#292828 ; font-size: large;" id="generate-button" onclick="generate()" disabled>Generate</button>
                         </div>
-                        <div class="right-pane" style="background-color: #DFDFDE;">
+                        <div class="right-pane" style="background-color: #DAE5EF;">
                             <textarea id="output-text" placeholder="Output will appear here..." rows="30" readonly></textarea>
                         </div>
                     </main>

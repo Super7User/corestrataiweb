@@ -54,7 +54,7 @@
         }
 
         .button {
-            background: linear-gradient(to right, #f0a5d9, #e18bfc);
+            background: linear-gradient(to right, #4CA1AF, #C4E0E5,#4CA1AF);
             border: none;
             color: rgb(31, 30, 30);
             padding: 15px 32px;
@@ -69,7 +69,7 @@
 
         /* Hover state */
         .button:hover {
-            background: linear-gradient(to right, #92cef7, #f883d5);
+            background: linear-gradient(to right, #4CA1AF, #C4E0E5,#4CA1AF);
             color: black
         }
 
@@ -289,6 +289,13 @@
         .ac-header-one__main{
             background-color: #A8D1D1 !important;
         }
+        .border {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            margin: 6px;
+            background-color: #E0E7E8;
+        }
     </style>
 
 </head>
@@ -299,7 +306,7 @@
             <!--======  Start Preloader  ======-->
             <div class="ac-preloader">
                 <div class="loader">
-                    <img src="{{ url_for('static', filename='assets/images/icons-pre.png')}}" alt="Preloader">
+                    <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
                 </div>
             </div><!--======  End Preloader  ======-->
             <!--======  Start Header  ======-->
@@ -318,11 +325,11 @@
                                 style="margin-left: 15px;"></span>Article</a>
                     </li>
                     <li>
-                        <a href="image"><i class="fa-solid fa-image"></i><span style="margin-left: 15px;"></span>Image
+                        <a href="imageLanding"><i class="fa-solid fa-image"></i><span style="margin-left: 15px;"></span>Image
                             Generation</a>
                     </li>
                     <li>
-                        <a href="gif"><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video
+                        <a href=""><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video
                             Generation</a>
                     </li>
                     <li>
@@ -371,7 +378,7 @@
                                                 </ul>
                                             </nav>
                                             <!--===  Nav Button  ===-->
-                                            <div class="nav-button d-block d-xl-none mt-30">
+                                            <div class="nav-button d-block d-xl-none mt-30 ">
                                                 <a href="contact.html" class="theme-btn gradient-btn">Start
                                                     Generating</a>
                                             </div>
@@ -402,10 +409,11 @@
             </header><!--======  End Header  ======-->
             <div class="bg_cover" style="width:100% !important ;margin-top: 0px;">
                 <div id="content" class="wow">
+                    <p class="text-end mt-2"><a href="imageLanding"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
                     <div class="container-fluid">
                         <div class="row">
                             <!-- Input and button area -->
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div class="mb-3">
                                     <label for="promptInput" class="form-label">Prompt</label>
                                     <input type="text" class="form-control" id="promptInput" placeholder="Enter prompt">
@@ -415,13 +423,15 @@
                                     <input type="text" class="form-control" id="negativePromptInput"
                                         placeholder="Enter negative prompt">
                                 </div>
-                                <button id="generateBtn" class="btn btn-primary"
+                                <button id="generateBtn" class="btn btn-primary button"
                                     onclick="generateDescription()">Generate
                                     Description</button>
                             </div>
                             <!-- Canvas area -->
-                            <div class="col-md-8">
-                                <img id="outputImage" style="max-width: 100%; height: auto; display: block;">
+                            <div class="col-md-7">
+                                <span class="border border-dark">
+                                    <img id="outputImage" style="width:100%; height: 100%; text-align: center;">
+                                </span>
                             </div>
                         </div>
                     </div>

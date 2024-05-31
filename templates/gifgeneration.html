@@ -53,18 +53,18 @@
 
         }
 
-        .container1 {
-            background-color: white;
+        /* .container1 {
+            background-color: #D4DEE7;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
             align-items: center;
             justify-content: center;
             margin-top: 100px;
-            margin-left: 60px;
-            width:100%;
+            margin-left: 40px;
+            width:100% !important;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+        } */
 
         .input-group {
             margin-bottom: 20px;
@@ -96,7 +96,7 @@
 
         .video-container {
             position: relative;
-            width: 300px;
+            width: 500px;
             height: 300px;
         }
 
@@ -347,6 +347,26 @@ MEDIAQUERIES
         .ac-header-one__main{
             background-color: #A8D1D1 !important;
         }
+        .button {
+            background: linear-gradient(to right, #4CA1AF, #C4E0E5,#4CA1AF);
+            border: none;
+            color: rgb(31, 30, 30);
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        /* Hover state */
+        .button:hover {
+            background: linear-gradient(to right, #627f85, #C4E0E5,#627f85);
+            color: black
+        }
+        
     </style>
 </head>
 
@@ -356,7 +376,7 @@ MEDIAQUERIES
             <!--======  Start Preloader  ======-->
             <div class="ac-preloader">
                 <div class="loader">
-                    <img src="{{ url_for('static', filename='assets/images/icons-pre.png')}}" alt="Preloader">
+                    <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
                 </div>
             </div><!--======  End Preloader  ======-->
             <!--======  Start Header  ======-->
@@ -375,11 +395,11 @@ MEDIAQUERIES
                                 style="margin-left: 15px;"></span>Article</a>
                     </li>
                     <li>
-                        <a href="image"><i class="fa-solid fa-image"></i><span style="margin-left: 15px;"></span>Image
+                        <a href="imageLanding"><i class="fa-solid fa-image"></i><span style="margin-left: 15px;"></span>Image
                             Generation</a>
                     </li>
                     <li>
-                        <a href="gif"><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video
+                        <a href=""><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video
                             Generation</a>
                     </li>
                     <li>
@@ -457,40 +477,49 @@ MEDIAQUERIES
                     </div>
                 </div>
             </header><!--======  End Header  ======-->
-            <div class="bg_cover" style="width:100% !important ;margin-top: 0px;">
-                <div id="content" class="wow">
-
-                    <div class="container1">
-                        <div class="row">
+            <div class="hero-wrapper bg_cover" style="background-image: url(assets/images/hero/hero-bg-1.png);padding: 100px !important;">
+                <div id="content" class=" wow">
+                    <p class="text-end mt-2"><a href="imageLanding"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
+                    <div class="card-group">
+                        <div class="row" >
+                            
                             <div class="col-sm-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <img id="image-display" src="{{ url_for('static', filename='images/up.png')}}"
-                                            style="width:400px;height:350px">
+                                
+                                    <div class="card" style="background-color: #C1CEDB;">
+                                        <div class="card-body">
+                                            <img id="image-display" src="{{ url_for('static', filename='images/upload.png')}}"
+                                            style="width:500px;height:350px">
                                         <input type="file" id="image-upload" accept="image/*">
-                                        <a href="#" id="upload-button" class="btn btn-primary mt-3">Upload Image</a>
+                                        <a href="#" id="upload-button" class="btn btn-primary mt-3 button">Upload Image</a>
+                                        </div>
                                     </div>
-                                </div>
+                                
                             </div>
                             <div class="col-sm-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="videos">
-                                            <div class="video-container">
-                                                <img id="gif1" style="display: none;" alt="Generated GIF">
-                                                <div class="play-button" id="playButton1" onclick="playGif('gif1')">
-                                                    <img src="/static/images/play-icon.png" alt="Play Button">
-                                                </div>
-                                                <div id="loading" class="loading">Generating GIF, please wait...</div>
-                                            </div>
+                                
+                                    <div class="card" style="background-color: #C1CEDB;">
+                                        <div class="card-body">
+                                                <p class="card-text">
+                                                    <div class="videos">
+                                                        <div class="video-container">
+                                                            <img id="gif1" style="display: none;" alt="Generated GIF">
+                                                            <div class="play-button" id="playButton1" onclick="playGif('gif1')">
+                                                                <img src="/static/images/play-icon.png" alt="Play Button">
+                                                            </div>
+                                                            <div id="loading" class="loading">Generating GIF, please wait...</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <input type="text" id="imageUrl" placeholder="Enter init_image URL">
+                                                    </div>
+                                                    <a href="#" onclick="generateVideo()" class="btn btn-primary button">Generate</a>
+            
+                                                </p>
                                         </div>
-                                        <div class="input-group">
-                                            <input type="text" id="imageUrl" placeholder="Enter init_image URL">
-                                        </div>
-                                        <a href="#" onclick="generateVideo()" class="btn btn-primary">Generate</a>
                                     </div>
-                                </div>
-                            </div>
+                                
+                            
+                        </div>
                         </div>
                     </div>
                 </div>
