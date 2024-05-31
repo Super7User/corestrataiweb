@@ -395,7 +395,7 @@ MEDIAQUERIES
                             Generation</a>
                     </li>
                     <li>
-                        <a href=""><i class="fa-solid fa-video"></i><span
+                        <a href="#"><i class="fa-solid fa-video"></i><span
                                 style="margin-left: 15px;"></span>Video
                             Generation</a>
                     </li>
@@ -519,19 +519,19 @@ MEDIAQUERIES
                                             <h5 class="card-title">{{ tool['Title'] }}</h5>
                                             <p class="card-text">{{ tool['Description'] }}</p>
                                         </div>
-                                        <div class="card-footer">
-                                            <small class="text-muted" style="background-color:#8ECDDD;padding: 5px; border-radius: 10px;">{{ tool['Category'] }}</small>
+                                        <div class="card-footer" style="gap: 10px;">
+                                            <small class="text-muted" style="background-color:#8ECDDD;padding: 5px; border-radius: 10px;margin-right: 10px;">{{ tool['Category'] }}</small>
                                             {% if tool['Plan'] == 'Professional' %}
                                             <small class="text-muted float-right"
-                                                style="background-color: #FBA834;padding: 3px; border-radius: 10px;">{{ tool['Plan']
+                                                style="background-color: #FBA834;padding: 3px; border-radius: 10px;margin-left: 10px;">{{ tool['Plan']
                                                 }}</small>
                                             {% elif tool['Plan'] == 'Starter' %}
                                             <small class="text-muted float-right"
-                                                style="background-color: #836FFF;padding: 3px; border-radius: 10px;">{{ tool['Plan']
+                                                style="background-color: #836FFF;padding: 3px; border-radius: 10px;margin-left: 10px;">{{ tool['Plan']
                                                 }}</small>
                                             {% elif tool['Plan'] == 'Free' %}
                                             <small class="text-muted float-right"
-                                                style="background-color: #A5DD9B;padding: 3px; border-radius: 10px;">{{ tool['Plan']
+                                                style="background-color: #A5DD9B;padding: 3px; border-radius: 10px;margin-left: 10px;">{{ tool['Plan']
                                                 }}</small>
 
                                             {% endif %}
