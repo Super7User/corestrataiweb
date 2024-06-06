@@ -375,7 +375,7 @@
 </head>
 
 <body class="home-one">
-    <div class="ac-page-wrapper">
+    <div class="ac-page-wrapper" style="width: 100%;">
         <div class="wrapper">
             <!--======  Start Preloader  ======-->
             <div class="ac-preloader">
@@ -384,104 +384,7 @@
                 </div>
             </div>
             <!--======  Start Header  ======-->
-            <nav id="sidebar">
-                <div class="sidebar-header">
-                    <!-- <h3>Sidebar</h3> -->
-                </div>
-                <ul class="list-unstyled components">
-                    <p></p>
-                    <li>
-                        <a href="/"><i class="fa-brands fa-microsoft"></i><span style="margin-left: 15px;"></span>All
-                            Tools</a>
-                    </li>
-                    <li>
-                        <a href="landingpage"><i class="fa-solid fa-newspaper"></i><span
-                                style="margin-left: 15px;"></span>Article</a>
-                    </li>
-                    <li>
-                        <a href="imageLanding"><i class="fa-solid fa-image"></i><span
-                                style="margin-left: 15px;"></span>Image
-                            Generation</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video
-                            Generation</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa-regular fa-folder-closed"></i><span
-                                style="margin-left: 15px;"></span>My
-                            Repository</a>
-                    </li>
-                </ul>
-            </nav>
-            <header class="transparent-header">
-                <!--=== Header Navigation ==-->
-                <div class="header-navigation navigation-default">
-                    <div class="nav-overlay"></div>
-                    <!-- main header start  -->
-                    <div class="ac-header-one__main">
-                        <div class="container">
-                            <div class="ac-header-one__main-wrapper">
-                                <div class="ac-header-one__left">
-                                    <div class="ac-header-one__logo">
-                                        <button type="button" id="sidebarCollapse" class="btn">
-                                            <i class="fas fa-align-left"></i>
-                                        </button>
-                                        <a href="index.html"><img
-                                                src="{{ url_for('static', filename='images/logo.png')}}" alt="logo"
-                                                style="width: 200px;height:40px"></a>
-                                    </div>
-                                </div>
-                                <div class="ac-header-one__right">
-                                    <div class="ac-header-one__right-menu d-flex align-items-center">
-                                        <!--===  Header Nav  ===-->
-                                        <div class="ac-nav-menu">
-                                            <!--===  Mobile Logo  ===-->
-                                            <div class="site-branding d-block d-xl-none text-center mb-30">
-                                                <a href="index.html"><img
-                                                        src="{{ url_for('static', filename='assets/images/logo/main-logo.png')}}"
-                                                        alt="logo"></a>
-                                            </div>
-                                            <!--===  Header Nav  ===-->
-                                            <nav class="main-menu">
-                                                <ul>
-                                                    <li><a href="index.html">Home</a></li>
-                                                    <li><a href="about.html">About</a></li>
-                                                    <li>
-                                                        <a href="contact.html">Contact</a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
-                                            <!--===  Nav Button  ===-->
-                                            <div class="nav-button d-block d-xl-none mt-30 ">
-                                                <a href="contact.html" class="theme-btn gradient-btn">Start
-                                                    Generating</a>
-                                            </div>
-                                        </div>
-                                        <!--===  Header Right  ===-->
-                                        <div class="ac-header-one__right-btn style-one d-flex">
-                                            <div class="ac-dark-btn">
-                                                <a href="index-dark.html"><i class="fas fa-moon"></i></a>
-                                            </div>
-                                            <div class="ac-header-bnt-1">
-                                                <a href="newlogin">Login</a>
-                                            </div>
-                                            <div class="ac-header-bnt-2 d-none d-md-block">
-                                                <a href="contact.html" class="theme-btn gradient-btn">Start Writing</a>
-                                            </div>
-                                            <div class="navbar-toggler">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            {% include 'header.html' %}
             <div class="bg_cover" style="width:100% !important ;margin-top: 0px;">
                 <div id="content" class="wow">
                     <div class="container-fluid">
