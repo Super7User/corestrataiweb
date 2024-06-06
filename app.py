@@ -9,9 +9,50 @@ from io import BytesIO
 
 app = Flask(__name__)
 
-# @app.route('/')
-# def index_m():
-#     return render_template('index-m.html')
+@app.route('/sam')
+def sam():
+    return render_template('sample.html')
+
+@app.route('/sam1')
+def sam1():
+    return render_template('sample1.html')
+
+@app.route('/title')
+def title():
+    return render_template('title.html')
+
+@app.route('/theme')
+def theme():
+    return render_template('theme.html')
+
+@app.route('/trendy')
+def trendy():
+    return render_template('trendy_blog_template.html')
+
+@app.route('/casual')
+def casual():
+    return render_template('casual_template.html')
+
+@app.route('/bold')
+def bold():
+    return render_template('bold_template.html')
+
+@app.route('/elegant')
+def elegant():
+    return render_template('elegant_template.html')
+
+@app.route('/minimalist')
+def minimalist():
+    return render_template('minimalist_template.html')
+
+@app.route('/formal')
+def formal():
+    return render_template('formal_template.html')
+
+@app.route('/vintage')
+def vintage():
+    return render_template('vintage_template.html')
+
 @app.route('/gif')
 def index():
     return render_template('gifgeneration.html')
@@ -50,6 +91,7 @@ def tools():
     print("It is in tools   1")
 
     return render_template('tools2.html', tools_data=tools_data, categories=categories)
+
 
 @app.route('/tool-detail/<string:tool_id_str>')
 def tool_detail(tool_id_str):
@@ -142,16 +184,6 @@ def log_in():
 #  copied
 
 
-# app = Flask(__name__)
-#CORS(app)
-
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
-
-
-
-
 @app.route('/image')
 def image():
     return render_template('image_gen.html')
@@ -165,8 +197,6 @@ def generate_headers_old():
     # Dummy data for headers; replace with actual generation logic
     headers = [f"Header {i} for {topic}" for i in range(1, 11)]
     return jsonify({'headers': headers})
-
-
 
 
 @app.route('/generate-description', methods=['POST'])

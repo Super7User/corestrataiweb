@@ -29,7 +29,7 @@ function searchItems() {
 function filterCategory(button) {
     var category = button.getAttribute('data-category');
 
-    fetch(`/tools?category=${encodeURIComponent(category)}`)
+    fetch(`/?category=${encodeURIComponent(category)}`)
         .then(response => response.text())
         .then(html => {
             var parser = new DOMParser();
@@ -51,3 +51,7 @@ function setActiveCategory(activeButton) {
     });
     activeButton.classList.add('active');
 }
+
+
+
+

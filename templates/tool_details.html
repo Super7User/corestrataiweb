@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ tool.title }} - CorestratAI Solutions</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.png') }}" type="image/png">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='tooldetailstyles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='toolsdetailmain.css') }}">
     <script src="{{ url_for('static', filename='tooldetailscripts.js') }}"></script>
@@ -137,6 +139,7 @@
         }
 
         #sidebar {
+            position:fixed;
             min-width: 250px;
             max-width: 250px;
             background: #A8D1D1;
@@ -267,7 +270,7 @@
 
         .row {
             display: flex;
-            justify-content: space-between;
+            /* justify-content: space-between; */
         }
 
         .ac-header-one__main,
@@ -305,6 +308,65 @@
             color:  rgb(29, 27, 27);
             text-decoration: none;
           }
+          .textarea-container {
+    position: relative;
+}
+
+.loading-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+
+.dot-typing {
+    position: relative;
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    background-color: #000;
+    color: #000;
+    animation: dot-typing 1.5s infinite linear;
+    animation-delay: .25s;
+}
+
+.dot-typing::before, .dot-typing::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    background-color: #000;
+    color: #000;
+}
+
+.dot-typing::before {
+    left: -10px;
+    animation: dot-typing 1.5s infinite linear;
+    animation-delay: 0s;
+}
+
+.dot-typing::after {
+    left: 10px;
+    animation: dot-typing 1.5s infinite linear;
+    animation-delay: .5s;
+}
+
+@keyframes dot-typing {
+    0% {
+        background-color: #000;
+    }
+    50%,
+    100% {
+        background-color: #fff;
+    }
+}
 
     </style>
 </head>
@@ -314,6 +376,7 @@
         <div class="wrapper">
             <div class="ac-preloader">
                 <div class="loader">
+                  
                     <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
                 </div>
             </div>
@@ -412,11 +475,13 @@
                             </div>
                             {% endfor %}
                             {% endif %}
-                                            
-                            <button class="btn btn-generate" style="color:#292828 ; font-size: large;" id="generate-button" onclick="generate()" disabled>Generate</button>
+                            <button class="btn btn-generate" style="color:#292828; font-size: large;" id="generate-button" onclick="generate()">Generate</button>
                         </div>
-                        <div class="right-pane" style="background-color: #DAE5EF;">
-                            <textarea id="output-text" placeholder="Output will appear here..." rows="30" readonly></textarea>
+                        <div class="right-pane" style="background-color: #DAE5EF; position: relative;">
+                            <div class="textarea-container" style="position: relative;">
+                                <textarea id="output-text" placeholder="Output will appear here..." rows="30" readonly></textarea>
+                                <div id="loading-indicator" class="loading-indicator" style="display: none;">     <div class="spinner-grow spinner-grow-sm"></div></div>
+                            </div>
                         </div>
                     </main>
                 </div>
@@ -449,6 +514,7 @@
             $('#textarea-input').on('input', validateFields);
         });
     </script>
+    
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/vendor/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/vendor/popper/popper.min.js') }}"></script>

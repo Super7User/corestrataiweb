@@ -3,16 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CorestratAI Solutions</title>
-    <!--====== Title ======-->
+    <title>Tech Designer</title>
+    <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Include FontAwesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
     <!--====== Required meta tags ======-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--====== Title ======-->
-
+    <title>Tech Designer</title>
     <!--====== Favicon Icon ======-->
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.png') }}" type="image/png">
     <!--====== Google Fonts ======-->
@@ -43,62 +42,67 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #d0e3f4;
-            display: flex;
-            /* align-items: center; */
-            /* justify-content: center; */
-            height: 100vh;
-            margin: 0;
+        /* body { */
+        /* margin-top: 150px; */
+        /* } */
 
-        }
-
-        .container1 {
-            background-color: #D3E0EA !important;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-            margin-top: 100px;
-            margin-left: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .input-group input {
+        #outputCanvas {
             width: 80%;
-            padding: 10px;
-            margin-right: 10px;
+            height: 512px;
+            /* Adjust height as needed */
             border: 1px solid #ccc;
-            border-radius: 5px;
         }
 
-        .input-group button {
-            padding: 10px 20px;
+        .button {
+            background: linear-gradient(to right, #4CA1AF, #C4E0E5,#4CA1AF);
             border: none;
-            /* background-color: #ff7f50; */
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .loading {
-            display: none;
+            color: rgb(31, 30, 30);
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
             font-size: 16px;
-            /* color: #ff7f50; */
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
-        .button-container {
-            display: flex;
-            gap: 10px;
-            /* Adjusts the space between the buttons */
-            margin-top: 20px;
+        /* Hover state */
+        .button:hover {
+            background: linear-gradient(to right, #4CA1AF, #C4E0E5,#4CA1AF);
+            color: black
+        }
+
+        .grand {
+            background: linear-gradient(to right, #a4fce9, #94cbf8);
+            border: none;
+            color: rgb(31, 30, 30);
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        /* Hover state */
+        .grand:hover {
+            background: linear-gradient(to right, #92cef7, #d783fd);
+            color: black
+        }
+
+        .back-link {
+            color: #9164e6;
+            margin-left: 40px;
+            font-size: larger;
+
+        }
+
+        .back-link:hover {
+            color: #f083c2;
+            /* Change color on hover (blue) */
         }
 
         @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
@@ -147,7 +151,7 @@
         }
 
         /* ---------------------------------------------------
-SIDEBAR STYLE
+    SIDEBAR STYLE
 ----------------------------------------------------- */
 
         .wrapper {
@@ -245,11 +249,11 @@ SIDEBAR STYLE
         }
 
         /* ---------------------------------------------------
-CONTENT STYLE
+    CONTENT STYLE
 ----------------------------------------------------- */
 
         .container-fluid {
-            margin-top: 150px;
+            margin-top: 100px;
             /* Increased top margin */
         }
 
@@ -261,7 +265,7 @@ CONTENT STYLE
         }
 
         /* ---------------------------------------------------
-MEDIAQUERIES
+    MEDIAQUERIES
 ----------------------------------------------------- */
 
         @media (max-width: 768px) {
@@ -282,183 +286,73 @@ MEDIAQUERIES
             /* background-color: #e6e3e3; */
             background-color: #A8D1D1 !important;
         }
-
-        #image-container {
-            display: none;
-            margin-top: 20px;
-        }
-
-        #image-upload {
-            display: none;
-        }
-
-        #image-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .row {
-            display: flex;
-            /* justify-content: space-between; */
-            /* gap: 5px; */
-            /* width: 80%; */
-        }
-
-        .ac-header-one__main,
-        .header-navigation {
+        .ac-header-one__main{
             background-color: #A8D1D1 !important;
-
         }
-
-        .btn-space {
-            flex: 1 0 0;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-            /* margin: 5px; */
-        }
-
-        .category-button {
-            background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);
-            margin: 10px;
-            /* padding: 15px 45px; */
-            text-align: center;
-            text-transform: uppercase;
-            transition: 0.5s;
-            background-size: 200% auto;
-            color: white;
-            box-shadow: 0 0 40px #f3efef;
-            border-radius: 10px;
-            /* display: block; */
-        }
-
-        .category-button:hover {
-            background-position: right center;
-            /* change the direction of the change here */
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .category-button.active {
-            background-position: right center;
-            color: #fff;
-            background-image: linear-gradient(to right, #8a8e91 0%, #314755 51%, #8a8e91 100%);
-
-        }
-
-        /* .card {
-            border-radius: 4px;           
-            box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
-            transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);           
-            cursor: pointer;
-        } */
-
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
-        }
-
-        .numberCircle {
-            width: 39.6px;
-            height: 39.6px;
-            border-radius: 50%;
-            text-align: center;
-            font-size: 21.6px;
-            border: 2px solid #3498db;
-            color: white;
-            background: #3498db;
-
-        }
-
-        .input-group {
-            position: relative;
-        }
-
-        .input-group .form-control {
-            padding-right: 50px;
-            /* Adjust the padding to fit the button inside */
-        }
-
-        .input-group-append {
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            z-index: 1;
-        }
-
-        .search {
-            position: relative;
-            box-shadow: 0 0 40px rgba(51, 51, 51, .1);
-
-        }
-
-        .search input {
-
-            height: 60px;
-            text-indent: 25px;
-            border: 2px solid #d6d4d4;
-
-
-        }
-
-
-        .search input:focus {
-
-            box-shadow: none;
-            border: 2px solid blue;
-
-
-        }
-
-        .search .fa-search {
-
-            position: absolute;
-            top: 20px;
-            left: 16px;
-
-        }
-
-        .card {
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            max-width: 350px;
-            text-align: center;
-            margin-top: 60px;
-            height: 250px;
-        }
-
-        .card_img {
-            background-color: #fff;
-            width: 50px;
-            height: 50px;
-            overflow: hidden;
-            border-radius: 100%;
-            margin: -60px auto 0;
-        }
-
-        .card_img img {
+        .border {
+            display: inline-block;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            margin: 6px;
+            background-color: #E0E7E8;
         }
-
-        .card_info {
-            padding-bottom: 20px;
+        .container-card {
+            text-align: center;
+            width:50%;
+            margin-left: 25%;
+            margin-right:25%;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .title {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .textarea-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 20px;
+            border-radius: 50px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            outline: none;
+            resize: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            background-color: #f4f4f9;
+        }
+        .submit-button {
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #e05a50;
         }
     </style>
+
 </head>
 
 <body class="home-one">
     <div class="ac-page-wrapper">
         <div class="wrapper">
             <!--======  Start Preloader  ======-->
-            <div class="ac-preloader">
+            <!-- <div class="ac-preloader">
                 <div class="loader">
                     <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
                 </div>
-            </div><!--======  End Preloader  ======-->
+            </div>======  End Preloader  ====== -->
             <!--======  Start Header  ======-->
             <nav id="sidebar">
                 <div class="sidebar-header">
@@ -467,16 +361,15 @@ MEDIAQUERIES
                 <ul class="list-unstyled components">
                     <p></p>
                     <li>
-                        <a href="/"><i class="fa-brands fa-microsoft"></i><span style="margin-left: 15px;"></span>All
-                            Tools</a>
+                        <a href="/"><i class="fa-brands fa-microsoft"></i><span
+                                style="margin-left: 15px;"></span>All Tools</a>
                     </li>
                     <li>
                         <a href="landingpage"><i class="fa-solid fa-newspaper"></i><span
                                 style="margin-left: 15px;"></span>Article</a>
                     </li>
                     <li>
-                        <a href="imageLanding"><i class="fa-solid fa-image"></i><span
-                                style="margin-left: 15px;"></span>Image
+                        <a href="imageLanding"><i class="fa-solid fa-image"></i><span style="margin-left: 15px;"></span>Image
                             Generation</a>
                     </li>
                     <li>
@@ -495,7 +388,7 @@ MEDIAQUERIES
                 <div class="header-navigation navigation-default">
                     <div class="nav-overlay"></div>
                     <!-- main header start  -->
-                    <div class="ac-header-one__main">
+                    <div class="ac-header-one__main" >
                         <div class="container">
                             <div class="ac-header-one__main-wrapper">
                                 <div class="ac-header-one__left">
@@ -504,8 +397,8 @@ MEDIAQUERIES
                                             <i class="fas fa-align-left"></i>
                                         </button>
                                         <a href="index.html"><img
-                                                src="{{ url_for('static', filename='images/logo.png')}}" alt="logo"
-                                                style="width: 200px;height:40px"></a>
+                                            src="{{ url_for('static', filename='images/logo.png')}}" alt="logo"
+                                            style="width: 200px;height:40px"></a>
                                     </div>
                                 </div>
                                 <div class="ac-header-one__right">
@@ -515,7 +408,7 @@ MEDIAQUERIES
                                             <!--===  Mobile Logo  ===-->
                                             <div class="site-branding d-block d-xl-none text-center mb-30">
                                                 <a href="index.html"><img
-                                                        src="{{ url_for('static', filename='assets/images/loader.png')}}"
+                                                        src="{{ url_for('static', filename='assets/images/logo/main-logo.png')}}"
                                                         alt="logo"></a>
                                             </div>
                                             <!--===  Header Nav  ===-->
@@ -529,7 +422,7 @@ MEDIAQUERIES
                                                 </ul>
                                             </nav>
                                             <!--===  Nav Button  ===-->
-                                            <div class="nav-button d-block d-xl-none mt-30">
+                                            <div class="nav-button d-block d-xl-none mt-30 ">
                                                 <a href="contact.html" class="theme-btn gradient-btn">Start
                                                     Generating</a>
                                             </div>
@@ -560,145 +453,40 @@ MEDIAQUERIES
             </header><!--======  End Header  ======-->
             <div class="bg_cover" style="width:100% !important ;margin-top: 0px;">
                 <div id="content" class="wow">
-
-                    <div class="container1">
-                        <!-- <main> -->
-                        <!-- <section> -->
-                        <div class="container my-5 mt-5">
-                            <h2>Discover Our Tools</h2>
-                            <p>Welcome to the home of innovation at CorestratAI Solutions. Explore our tools and
-                                services.</p>
-
-                            <!-- Search Bar -->
-                            <!-- <div class="input-group mb-3">
-                                <input type="text" class="form-control" id="search-box" placeholder="Search by title..."
-                                    oninput="searchItems()">
-                                <div class="input-group-append">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <div class="container-fluid">
+                        <p class="text-end mt-2"><a href="imageLanding"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
+                        <div class="container-card">
+                            <div class="title">Title</div>
+                            <form action="theme" method="get">
+                                <div class="textarea-container">
+                                    <textarea name="content" id="input-text" name="input-text" placeholder="Enter your text here..."></textarea>
                                 </div>
-                            </div> -->
-                            <div class="row height d-flex justify-content-center align-items-center">
-                                <div class="col-md-10">
-                                    <div class="search">
-                                        <i class="fa fa-search"></i>
-                                        <input type="text" class="form-control" id="search-box"
-                                            placeholder="Search by title..." oninput="searchItems()">
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <!-- Button Container -->
-                            <div class="btn-space" role="group"
-                                style="font-family:system-ui !important; font-weight: bolder;">
-                                <button type="button" class="btn btn-secondary category-button active"
-                                    data-category="{{ category }}" onclick="filterCategory(this)">All</button>
-                                {% for category in categories %}
-                                <button type="button" class="btn btn-secondary category-button"
-                                    data-category="{{ category }}" onclick="filterCategory(this)">{{ category
-                                    }}</button>
-                                {% endfor %}
-                            </div>
+                                <button type="submit" class="submit-button" onclick="submit()" >Submit </button>
+                            </form>
                         </div>
-                        <!-- <div class="card-container my-5">
-                            <div class="row">
-                                {% for tool in tools_data %}
-                                <div class="col-md-4 mb-4">
-                                    <div class="card h-100 shadow p-3 mb-5 bg-body rounded"
-                                        style="background-color: #EAF6F6 !important;text-align:center">
-                                        <a href="/tool-detail/{{ tool['ID'] }}" class="stretched-link">
-                                            <img src="{{ url_for('static', filename=tool['Image']) }}"
-                                                class="card-img-top" alt="{{ tool['Title'] }} Logo"
-                                                style="width: 30px; height: 30px;">
-                                        </a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ tool['Title'] }}</h5>
-                                            <p class="card-text">{{ tool['Description'] }}</p>
-                                        </div>
-                                        <div class="card-footer" style="gap: 10px;">
-                                            <small class="text-muted"
-                                                style="background-color:#8ECDDD;padding: 5px; border-radius: 10px;margin-right: 10px;">{{
-                                                tool['Category'] }}</small>
-                                            {% if tool['Plan'] == 'Professional' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #FBA834;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-                                            {% elif tool['Plan'] == 'Starter' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #836FFF;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-                                            {% elif tool['Plan'] == 'Free' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #A5DD9B;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div> -->
-
-                        <div class="card-container my-5">
-                            <div class="row">
-                                {% for tool in tools_data %}
-                                <div class="col-md-4 mb-4">
-                                    <div class="card">
-                                        <div class="card_img">
-                                            <a href="/tool-detail/{{ tool['ID'] }}" class="stretched-link">
-                                                <img src="{{ url_for('static', filename=tool['Image']) }}"
-                                                    class="card-img-top" alt="{{ tool['Title'] }} Logo"
-                                                    style="width: 30px; height: 30px;">
-                                            </a>
-                                        </div>
-                                        <div class="card-body mt-5">
-                                            <h5 class="card-title">{{ tool['Title'] }}</h5>
-                                            <p class="card-text">{{ tool['Description'] }}</p>
-                                        </div>
-                                        <div class="card-footer" style="gap: 10px;">
-                                            <small class="text-muted"
-                                                style="background-color:#8ECDDD;padding: 5px; border-radius: 10px;margin-right: 10px;">{{
-                                                tool['Category'] }}</small>
-                                            {% if tool['Plan'] == 'Professional' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #FBA834;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-                                            {% elif tool['Plan'] == 'Starter' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #836FFF;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-                                            {% elif tool['Plan'] == 'Free' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #A5DD9B;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-
-                        <footer>
-                            <!-- <button class="btn btn-primary" onclick="toggleTheme()">Toggle Dark/Light Mode</button> -->
-
-                        </footer>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function submit() {
+            
+            const input = document.getElementById('input-text').value;
 
+            if (!input) {
+                alert('Please enter input.');
+                return;
+            }
+
+            // Pass input to the content page
+        
+            // window.location.href = `theme?input=${input}`;
+            console.log(input)
+            window.location.href = `theme?input=${encodeURIComponent(input)}`;
+        
+        }
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
@@ -709,11 +497,10 @@ MEDIAQUERIES
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="{{ url_for('static', filename='cardscripts.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
     <script>
         $(document).ready(function () {
             // Function to toggle sidebar
+            $('#sidebar').addClass('active');
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
@@ -725,7 +512,8 @@ MEDIAQUERIES
         });
     </script>
 
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <!--===  End Page Wrapper  ===-->
+    <script src="{{ url_for('static', filename='assets/js/app.js') }}"></script>
 
     <script src="{{ url_for('static', filename='assets/vendor/jquery-3.6.0.min.js') }}"></script>
     <!--====== Popper js for Bootstrap ======-->
@@ -745,7 +533,9 @@ MEDIAQUERIES
     <script src="{{ url_for('static', filename='assets/vendor/wow/wow.min.js') }}"></script>
     <!--====== Main Custom js ======-->
     <script src="{{ url_for('static', filename='assets/js/theme.js') }}"></script>
-
 </body>
 
 </html>
+
+
+
