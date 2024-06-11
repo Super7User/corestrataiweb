@@ -108,6 +108,123 @@
             border-bottom: 1px dashed #ddd;
             margin: 40px 0;
         }
+        .navbar {
+            padding: 15px 10px;
+            background: #fff;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 40px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-btn {
+            box-shadow: none;
+            outline: none !important;
+            border: none;
+        }
+
+        .line {
+            width: 100%;
+            height: 1px;
+            border-bottom: 1px dashed #ddd;
+            margin: 40px 0;
+        }
+
+        .wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: #A8D1D1;
+            color: #292828;
+            transition: all 0.3s;
+            font-family: Arial, sans-serif;
+        }
+
+        #sidebar.active {
+            margin-left: -250px;
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: #A8D1D1;
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+        }
+
+        #sidebar ul p {
+            color: #fff;
+            padding: 10px;
+        }
+
+        #sidebar ul li a {
+            padding: 20px;
+            font-size: 1.1em;
+            display: block;
+        }
+
+        #sidebar ul li a:hover {
+            color: #7386D5;
+            background: #fff;
+        }
+
+        #sidebar ul li.active>a,
+        a[aria-expanded="true"] {
+            color: #fff;
+            background: #6d7fcc;
+        }
+
+        a[data-toggle="collapse"] {
+            position: relative;
+        }
+
+        .dropdown-toggle::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        ul ul a {
+            font-size: 0.9em !important;
+            padding-left: 30px !important;
+            background: #6d7fcc;
+        }
+
+        ul.CTAs {
+            padding: 20px;
+        }
+
+        ul.CTAs a {
+            text-align: center;
+            font-size: 0.9em !important;
+            display: block;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        a.download {
+            background: #fff;
+            color: #7386D5;
+        }
+
+        a.article,
+        a.article:hover {
+            background: #6d7fcc !important;
+            color: #fff !important;
+        }
+
+        .container-fluid {
+            margin-top: 150px;
+        }
+
 
         .container-fluid {
             margin-top: 150px;
@@ -252,7 +369,88 @@
                     <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
                 </div>
             </div>
-            {% include 'header.html' %}
+            <nav id="sidebar">
+                <div class="sidebar-header"></div>
+                <ul class="list-unstyled components">
+                    <p></p>
+                    <li>
+                        <a href="/"><i class="fa-brands fa-microsoft"></i><span style="margin-left: 15px;"></span>All
+                            Tools</a>
+                    </li>
+                    <li>
+                        <a href="/landingpage"><i class="fa-solid fa-newspaper"></i><span
+                                style="margin-left: 15px;"></span>Article</a>
+                    </li>
+                    <li>
+                        <a href="/imageLanding"><i class="fa-solid fa-image"></i><span
+                                style="margin-left: 15px;"></span>Image
+                            Generation</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video
+                            Generation</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa-regular fa-folder-closed"></i><span
+                                style="margin-left: 15px;"></span>My
+                            Repository</a>
+                    </li>
+                </ul>
+            </nav>
+            <header class="transparent-header">
+                <div class="header-navigation navigation-default">
+                    <div class="nav-overlay"></div>
+                    <div class="ac-header-one__main">
+                        <div class="container">
+                            <div class="ac-header-one__main-wrapper">
+                                <div class="ac-header-one__left">
+                                    <div class="ac-header-one__logo">
+                                        <button type="button" id="sidebarCollapse" class="btn">
+                                            <i class="fas fa-align-left"></i>
+                                        </button>
+                                        <a href="index.html"><img src="{{ url_for('static', filename='assets/images/logo/main-logo.png')}}" alt="logo"></a>
+                                    </div>
+                                </div>
+                                <div class="ac-header-one__right">
+                                    <div class="ac-header-one__right-menu d-flex align-items-center">
+                                        <div class="ac-nav-menu">
+                                            <div class="site-branding d-block d-xl-none text-center mb-30">
+                                                <a href="index.html"><img src="{{ url_for('static', filename='assets/images/logo/main-logo.png')}}" alt="logo"></a>
+                                            </div>
+                                            <nav class="main-menu">
+                                                <ul>
+                                                    <li><a href="index.html">Home</a></li>
+                                                    <li><a href="about.html">About</a></li>
+                                                    <li><a href="contact.html">Contact</a></li>
+                                                </ul>
+                                            </nav>
+                                            <div class="nav-button d-block d-xl-none mt-30">
+                                                <a href="contact.html" class="theme-btn gradient-btn">Start Generating</a>
+                                            </div>
+                                        </div>
+                                        <div class="ac-header-one__right-btn style-one d-flex">
+                                            <div class="ac-dark-btn">
+                                                <a href="index-dark.html"><i class="fas fa-moon"></i></a>
+                                            </div>
+                                            <div class="ac-header-bnt-1">
+                                                <a href="login">Login</a>
+                                            </div>
+                                            <div class="ac-header-bnt-2 d-none d-md-block">
+                                                <a href="contact.html" class="theme-btn gradient-btn">Start Writing</a>
+                                            </div>
+                                            <div class="navbar-toggler">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
             <div class="bg_cover" style="width:100% !important ;margin-top: 50px;">
                 <div id="content" class="wow">
                     <p class="text-end mt-3"><a href="/"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
