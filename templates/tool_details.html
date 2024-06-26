@@ -28,14 +28,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/default.css') }}">
     <!--====== Style css ======-->
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+   
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #d0e3f4;
+            /* background-color: #d0e3f4; */
             height: 100vh;
             margin: 0;
         }
@@ -262,11 +261,6 @@
             /* justify-content: space-between; */
         }
 
-        .ac-header-one__main,
-        .header-navigation {
-            background-color: #A8D1D1 !important;
-        }
-
         .btn-space {
             flex: 1 0 0;
             margin: 5px;
@@ -363,13 +357,14 @@
 <body class="home-one">
     <div class="ac-page-wrapper" style="width:100%">
         <div class="wrapper">
+            {% include 'header.html' %}
             <div class="ac-preloader">
                 <div class="loader">
                   
                     <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
                 </div>
             </div>
-            <nav id="sidebar">
+            <!-- <nav id="sidebar">
                 <div class="sidebar-header"></div>
                 <ul class="list-unstyled components">
                     <p></p>
@@ -430,7 +425,7 @@
                                         </div>
                                         <div class="ac-header-one__right-btn style-one d-flex">
                                             <div class="ac-dark-btn">
-                                                <a href="index-dark.html"><i class="fas fa-moon"></i></a>
+                                                <a id="toggleDarkMode"><i class="fas fa-moon"></i></a>
                                             </div>
                                             <div class="ac-header-bnt-1">
                                                 <a href="login">Login</a>
@@ -450,7 +445,7 @@
                         </div>
                     </div>
                 </div>
-            </header>
+            </header> -->
             <div class="bg_cover" style="width:100% !important ;margin-top: 50px;">
                 <div id="content" class="wow">
                     <p class="text-end mt-3"><a href="/"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
@@ -508,6 +503,7 @@
             $('#textarea-input').on('input', validateFields);
         });
     </script>
+    
     
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/vendor/jquery-3.6.0.min.js') }}"></script>

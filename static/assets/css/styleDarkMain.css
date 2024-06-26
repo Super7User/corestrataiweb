@@ -1,4 +1,44 @@
-/*-----------------------------------------------------------------------------------
+  body {
+            font-family: Arial, sans-serif;
+            background-color: #131414 !important;
+            display: flex;
+            /* align-items: center; */
+            /* justify-content: center; */
+            height: 100vh;
+            margin: 0;
+
+        }
+        .card{
+          background-color: #767779 !important;
+          color: #252525 !important;
+          height: 300px
+        }
+        .right-pane,.left-pane{
+          background-color: #767779 !important;
+          color: #252525 !important;
+        }
+        .container1 {
+          background-color: #4e5050 !important;
+          padding: 20px;
+          border-radius: 10px;
+          text-align: center;
+          align-items: center;
+          justify-content: center;
+          margin-top: 100px;
+          margin-left: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      p,h1{
+        color:#cccbcb !important;
+      }
+      .ac-header-one__main,.header-navigation,#sidebar{
+        background-color:#767779 !important
+      }
+      .main-menu,.ac-nav-menu{
+        color:#f7f3f3 !important
+      }
+
+      /*-----------------------------------------------------------------------------------
 
     Template Name: AIcraft - AI Application & Generator HTML Template
     Author:  SolverWp
@@ -58,7 +98,8 @@
 }
 
 .intro-wrapper, .sidebar-nav-widget a.active, .sidebar-nav-widget .nav-link.active, .sidebar-nav-widget a:hover, .sidebar-nav-widget h6:after, .sidebar-nav-widget.style-two .nav-tabs .nav-link.active, .author-card .author-thumb-item .thumb, .footer-default .footer_about_widget .footer-content ul.social-link li a:hover, .user-form .theme-btn.style-one:hover, .team-details-wrapper .member-info ul.social-link li a:hover, .skill-one_image-box .play-button .video-popup, .section-image-box.style-one:after, .sidebar-widget.tag-cloud-widget .tagcloud a:hover, .blog-post-item.style-two .post-content .entry-content .read-more.style-one, .skill-item.style-one .skill-bar, .team-item.style-one .member-info .share-button ul.social-link li a:hover, .team-item.style-one .member-info .share-button .icon:hover, .pricing-tabs .nav-link.active, .iconic-number-box.style-two .number, .home-one-dark .footer-default .footer_about_widget .footer-content ul.social-link li a:hover, .home-one .footer-default .footer_about_widget .footer-content ul.social-link li a:hover {
-  background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
+  background-image: linear-gradient(to right, #4CA1AF 0%, #C4E0E5  51%, #4CA1AF  100%);
+  /* background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%); */
 }
 
 .video-two_image-box .video-popup, .theme-tabs.style-three .nav-link.active, .theme-tabs.style-two .nav-link.active, .pricing-item.style-two .pricing-head, .iconic-info-box.style-three .icon, .theme-btn.style-one, .circle-list.style-one li:before {
@@ -78,7 +119,6 @@
 }
 
 h1 {
-  /* color:#000 !important; */
   font-size: 56px;
   line-height: 61.6px;
 }
@@ -135,6 +175,7 @@ h5 {
 
 html {
   font-size: 100%;
+  
 }
 
 * {
@@ -218,7 +259,6 @@ img {
 }
 
 body {
-  background-color: #E4EFF1 !important ;
   font-weight: normal;
   font-style: normal;
   font-weight: 400;
@@ -579,10 +619,9 @@ ul.social-link li {
 =================----*/
 /* Transparent Header  */
 .transparent-header {
-  position: absolute !important;
-  background-color: #A8D1D1 !important;
+  position: absolute;
   /* background-color: transparent; */
-  /* top: 28px; */
+  /* background-color: 	#aeb9b9 !important; */
   left: 0;
   width: 100%;
   z-index: 999;
@@ -657,7 +696,7 @@ ul.social-link li {
   z-index: 99;
   font-size: 16px;
   padding: 20px 0;
-  height: auto;
+  /* height: auto; */
   text-align: left;
   background-color: #fff;
   border-radius: 10px;
@@ -1234,7 +1273,7 @@ ul.social-link li {
 .theme-btn.gradient-btn {
   padding: 12px 16px;
   background-size: 150% 100%;
-  background-image: linear-gradient(to right, #4CA1AF 0%, #81a2a8 51%, #4CA1AF  100%);
+  background-image: linear-gradient(to right, #4CA1AF 0%, #81a2a8  51%, #4CA1AF  100%);
   /* background-image: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%); */
   transition: all 0.3s ease-in-out;
 }
@@ -3271,7 +3310,7 @@ ul.social-link li {
 .footer-v2 .footer-widget.footer_about_widget .footer-content ul.social-link li a {
   width: 54px;
   height: 49px;
-  background: url(../static/images/shape/social1.png) no-repeat center;
+  background: url(../images/shape/social1.png) no-repeat center;
   background-size: contain;
   border: none;
   border-radius: 0;
@@ -3577,7 +3616,7 @@ ul.social-link li {
 }
 .cta-wrapper_one {
   padding: 40px 70px;
-  background-image: url(../static/assets/images/bg/call-to-action-bg.png);
+  background-image: url(../images/bg/call-to-action-bg.png);
   background-color: transparent;
   background-repeat: no-repeat;
   border-radius: 36px;
@@ -3836,10 +3875,3 @@ ul.social-link li {
 }
 
 /*# sourceMappingURL=style.css.map */
-.card{
-  background-color: #A8D1D1;
-}
-.ac-header-one__main,
-.header-navigation,#sidebar {
-    background-color: #A8D1D1 ;
-}
