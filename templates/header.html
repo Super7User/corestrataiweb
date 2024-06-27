@@ -339,6 +339,9 @@
         background-color: #fff;
     }
 }
+li{
+  color:rgb(24, 24, 24) !important
+}
 
     </style>
 </head>
@@ -378,7 +381,7 @@
                 <div class="container">
                     <div class="ac-header-one__main-wrapper">
                         <div class="ac-header-one__left">
-                            <div class="ac-header-one__logo" style="margin-left: 100px;">            
+                            <div class="ac-header-one__logo" style="margin-left: 115px;">            
                                 <button type="button" id="sidebarCollapse" class="btn">
                                     <i class="fas fa-align-left"></i>
                                 </button>
@@ -391,26 +394,32 @@
                                     <div class="site-branding d-block d-xl-none text-center mb-30">
                                         <a href="index.html"><img src="{{ url_for('static', filename='assets/images/loader.png') }}" alt="logo"></a>
                                     </div>
-                                    <nav class="main-menu">
+                                    <nav class="main-menu" >
                                         <ul>
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li ><a style="color:rgb(24, 24, 24) !important" href="index.html">Home</a></li>
+                                            <li><a style="color:rgb(24, 24, 24) !important" href="about.html">About</a></li>
+                                            <li><a style="color:rgb(24, 24, 24) !important" href="contact.html">Contact</a></li>
                                         </ul>
                                     </nav>
-                                    <div class="nav-button d-block d-xl-none mt-30">
+                                    <!-- <div class="nav-button d-block d-xl-none mt-30">
                                         <a href="contact.html" class="theme-btn gradient-btn">Start Generating</a>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="ac-header-one__right-btn style-one d-flex">
-                                    <div class="ac-dark-btn">
-                                        <a id="toggleDarkMode"><i class="fas fa-moon"></i></a>
-                                    </div>
-                                    <div class="ac-header-bnt-1">
-                                        <a href="newlogin"  style="color: #414040 !important;">Logout</a>
-                                    </div>
+                                    
                                     <div class="ac-header-bnt-2 d-none d-md-block">
                                         <a href="contact.html" class="theme-btn gradient-btn">Start Writing</a>
+                                    </div>
+                                    <div class="ac-dark-btn" style="margin-left: 25px;">
+                                        <a id="toggleDarkMode"><i class="fas fa-moon"></i></a>
+                                    </div>
+                                    <!-- <div class="ac-header-bnt-1" style="margin-left: 10px;">
+                                        <a href="newlogin" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+                                    </div> -->
+                                    <div class="ac-header-bnt-1" style="margin-left: 10px;color:#000 !important">
+                                        <a id="auth-button" href="newlogin" title="Login/Logout">
+                                            <i style="color: #000 !important;" id="auth-icon" class="fa-solid"></i>
+                                        </a> 
                                     </div>
                                     <div class="navbar-toggler">
                                         <span></span>
@@ -493,6 +502,22 @@
             } else {
                 console.error('Toggle button or stylesheet element not found!');
             }
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            var authButton = document.getElementById('auth-button');
+            var authIcon = document.getElementById('auth-icon');
+
+            if (window.location.pathname === '/index') {
+                authButton.href = "newlogin";
+                authIcon.classList.add('fa-right-from-bracket');
+                authButton.title = "Login";
+             
+            } else {
+                authButton.href = "newlogin";
+                authIcon.classList.add('fa-right-to-bracket');
+                authButton.title = "Logout";
+               
+            } 
         });
     </script>
 </body>

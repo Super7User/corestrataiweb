@@ -34,10 +34,13 @@
       .ac-header-one__main,.header-navigation,#sidebar{
         background-color:#767779 !important
       }
-      .main-menu,.ac-nav-menu{
+      .ac-nav-menu{
         color:#f7f3f3 !important
       }
-
+      #auth-button,ul, li,.main-menu{
+        color:#2e2f31 !important;
+      }
+      
       /*-----------------------------------------------------------------------------------
 
     Template Name: AIcraft - AI Application & Generator HTML Template
