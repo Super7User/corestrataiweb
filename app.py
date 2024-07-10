@@ -1,7 +1,10 @@
 from flask import Flask, request, render_template, jsonify, Response, flash, redirect, url_for, send_file
+from dotenv import load_dotenv, find_dotenv
 import pandas as pd
-from openai import OpenAI
+# from openai import OpenAI
 import requests
+import openai
+import os
 import time
 import ast
 import json
@@ -16,7 +19,10 @@ import logging
 
 
 app = Flask(__name__)
-
+ 
+OPENAI_API_KEY = "sk-proj-yD1vWVA1mWuSArCSrUqJT3BlbkFJMbhkUHGmr3f3HrgPvpba"
+load_dotenv(find_dotenv())
+openai.api_key = openai.api_key = 'sk-proj-yD1vWVA1mWuSArCSrUqJT3BlbkFJMbhkUHGmr3f3HrgPvpba'
 
 app.secret_key = 'your_secret_key'
 app.config['MAIL_SERVER'] = 'smtp.example.com'
@@ -41,9 +47,40 @@ firebaseConfig = {
 cred = credentials.Certificate("serviceAccountKey.json")  
 firebase_admin.initialize_app(cred)
 
-@app.route('/index')
+
+def get_completion(prompt, model="gpt-4"):
+    messages = [{"role": "user", "content": prompt}]
+    try:
+        response = openai.ChatCompletion.create(
+            model=model,
+            messages=messages,
+            temperature=0,  # this is the degree of randomness of the model's output
+        )
+        return response.choices[0].message["content"]
+    except Exception as e:
+        logging.error(f"Error during OpenAI API call: {e}")
+        return f"Error: {e}"
+
+
+@app.route('/sampleData')
+def sampleData():
+    return render_template('sampleData.html')
+
+@app.route('/get_info', methods=['POST'])
+def get_info():
+    product_name = request.form['product_name']
+    prompt = f"Tell me about {product_name}"
+    response = get_completion(prompt)
+    return response
+
+
+@app.route('/')
 def index_dark():
     return render_template('index.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/login')
 def home():
@@ -214,7 +251,7 @@ def imageLanding():
     return render_template('image_landingPage.html')
 
 
-@app.route('/')
+@app.route('/tools')
 def tools():
     category = request.args.get('category', None)
     search_query = request.args.get('search', None)
@@ -270,7 +307,7 @@ def generate_content():
 @app.route('/generate-stream', methods=['POST'])
 def generate_stream():
 
-    client = OpenAI(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
+    client = openai(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
     
     data = request.get_json()  # Get JSON data sent from the JavaScript fetch
     prompt = data['prompt']

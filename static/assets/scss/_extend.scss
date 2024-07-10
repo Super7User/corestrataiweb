@@ -18,7 +18,8 @@
 }
 
 %primary-bgc{
-    background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
+    // background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
+    background: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%) !important;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -28,7 +29,8 @@
 //BG COLOR
 
 %primary-gradient-bg{
-    background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
+    background: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%) !important
+    // background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
 }
 
 

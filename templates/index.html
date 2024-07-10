@@ -970,24 +970,25 @@
     <script src="{{ url_for('static', filename='assets/js/theme.js') }}"></script>
      
     <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-        }
-
         $(document).ready(function () {
             $('#sidebar').addClass('active');
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
+                var icon = $('#toggleIcon');
+                icon.toggleClass('icon-move-right icon-move-left');
+
+                if ($('#sidebar').hasClass('active')) {
+                    icon.removeClass('fa-align-right').addClass('fa-align-left');
+                } else {
+                    icon.removeClass('fa-align-left').addClass('fa-align-right');
+                }
             });
 
             // Close sidebar when clicking on an item
             $('#sidebar .list-unstyled li').on('click', function () {
                 $('#sidebar').removeClass('active');
+                $('#toggleIcon').removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
             });
-
-            // Add event listeners to input fields
-            $('#input-text').on('input', validateFields);
-            $('#textarea-input').on('input', validateFields);
         });
     </script>
     

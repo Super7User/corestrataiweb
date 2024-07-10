@@ -223,15 +223,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Function to toggle sidebar
             $('#sidebar').addClass('active');
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
+                var icon = $('#toggleIcon');
+                icon.toggleClass('icon-move-right icon-move-left');
+
+                if ($('#sidebar').hasClass('active')) {
+                    icon.removeClass('fa-align-right').addClass('fa-align-left');
+                } else {
+                    icon.removeClass('fa-align-left').addClass('fa-align-right');
+                }
             });
 
             // Close sidebar when clicking on an item
             $('#sidebar .list-unstyled li').on('click', function () {
                 $('#sidebar').removeClass('active');
+                $('#toggleIcon').removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
             });
         });
     </script>
