@@ -174,19 +174,13 @@
 
         input[type=text],
         input[type=password] {
-            width: 90% !important;
+            width: 90%;
             padding: 10px;
             margin: 5px 0 15px 0;
             display: inline-block;
             border: 1px solid #EDF1FF;
             border-radius: 50px;
             box-sizing: border-box;
-        }
-
-        .input-group-text {
-            border-radius: 50px;
-            border: 1px solid #EDF1FF;
-            background: #F8F9FF;
         }
 
         button {
@@ -227,15 +221,15 @@
             margin: 0 auto;
         }
 
-        .login {
+        .register {
             text-align: center !important;
             margin-left: 20%;
             margin-right: 30%;
             width: 50%
         }
 
-        .row {
-            --bs-gutter-x: 0rem !important;
+        .row{
+            --bs-gutter-x: 0rem;
         }
     </style>
 </head>
@@ -269,76 +263,45 @@
                     </div>
                 </div>
                 <p class="light-text">
-
-                    <span style="cursor: pointer;" onclick="location.href='/'">Home</span>
-                    <span style="cursor: pointer;" href="">Ecosystem</span>
-                    <span style="cursor: pointer;" href="">Blog</span>
+                    <span style="cursor: pointer;"  onclick="location.href='/'">Home</span>
+                    <span style="cursor: pointer;"  href="">Ecosystem</span>
+                    <span style="cursor: pointer;"  href="">Blog</span>
                     <span style="cursor: pointer;"  onclick="window.open('//www.corestratai.com/', '_blank')"
-                    >Company</span>
+                    >Company</span>                
                 </p>
             </div>
         </div>
-        <div class="col-6 p-4 mt-3">
-            <h3 class="text-left mt-3"><strong>Welcome back</strong></h3>
-            <h6>Enter the credentials to access your account</h6>
+        <div class="col-6 mt-5 p-4">
+            <h3 class="text-left mt-3"><strong>Create a new account</strong></h3>
+            <h6>Enter your details to register</h6>
             <div class="mt-5">
-                <form name="login_form" id="login_form" method="post" action="/login" enctype="multipart/form-data"
-                    onsubmit="return validateForm()">
-                    <label for="login_email">Email Address</label>
-                    <input type="text" id="login_email" name="login_email" class="form-control"
-                        placeholder="Enter your email" required>
-                    <!-- <p id="errorMessage" class="error"></p> -->
-
-                    <label for="login_password">Password</label>
-                    <!-- <div class="input-group"> -->
-                    <input type="password" id="login_password" name="login_password" class="form-control"
-                        placeholder="Enter your password" required>
-                    <!-- <span class="input-group-text" onclick="togglePassword()">
-                            <i class="fas fa-eye" id="togglePasswordIcon"></i>
-                        </span> -->
-                    <!-- </div> -->
-                    <p id="errorMessage" class="error"></p>
-
-                    <div class="row">
-                        <div class="col-8">
-                            <p class="text-left" style="display: inline;"><input type="checkbox" id="checkbox"
-                                    name="checkbox">&nbsp;Keep me logged in </p>
-                        </div>
-                        <div class="col-4">
-                            <p class="text-right"><a href="{{ url_for('send_password_reset') }}">Forgot Password ?</a>
-                            </p>
-                        </div>
-                    </div>
-                    <button type="submit"
-                        style="background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);"
-                        class="login">Login</button>
+                <form name="registration_form" id="registration_form" method="post" action="/register"
+                    enctype="multipart/form-data" onsubmit="return validateRegistrationForm()">
+                    <label for="email">Email Address</label>
+                    <input type="text" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                    <button type="submit" style="background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);" class="register">Register Now</button>
                 </form>
+                <p id="registerErrorMessage" class="error"></p>
             </div>
-            <!-- <div class="row text-center">
-                <div class="col">
-                    <p class="text-left"> <a href="landing_page.html">Customer Demo</a></p>
-                </div>
-                <div class="col">
-                    <p class="text-right">Action Demo</p>
-                </div>
-            </div> -->
-            <div class="mt-4 text-center">Don't have an account ? <a href="register">Sign Up</a></div>
+            <div class="mt-4 text-center">Already have an account? <a href="login">Login</a></div>
         </div>
     </div>
 
     <script>
-        function validateForm() {
-            var email = document.getElementById("login_email").value;
-            var password = document.getElementById("login_password").value;
+        function validateRegistrationForm() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
             var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; // Email regex pattern
 
             if (!email.match(emailPattern)) {
-                document.getElementById("errorMessage").innerHTML = "Invalid email format";
+                document.getElementById("registerErrorMessage").innerHTML = "Invalid email format";
                 return false;
             }
 
             if (password.length < 6) {
-                document.getElementById("errorMessage").innerHTML = "Password must be at least 6 characters long";
+                document.getElementById("registerErrorMessage").innerHTML = "Password must be at least 6 characters long";
                 return false;
             }
 
@@ -346,18 +309,14 @@
         }
 
         $(document).ready(function () {
-            $('#login_form').on('submit', function (event) {
+            $('#registration_form').on('submit', function (event) {
                 event.preventDefault();
                 $.ajax({
                     type: 'POST',
-                    url: '/login',
+                    url: '/register',
                     data: $(this).serialize(),
                     success: function (response) {
-                        if (response.status === "success") {
-                            window.location.href = "/tools";  // Redirect to the dashboard page on successful login
-                        } else {
-                            alert(response.message);
-                        }
+                        alert(response.message);
                     },
                     error: function (xhr, status, error) {
                         alert('An error occurred: ' + error);
@@ -365,21 +324,6 @@
                 });
             });
         });
-
-
-        function togglePassword() {
-            var passwordField = document.getElementById("login_password");
-            var passwordIcon = document.getElementById("togglePasswordIcon");
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                passwordIcon.classList.remove("fa-eye");
-                passwordIcon.classList.add("fa-eye-slash");
-            } else {
-                passwordField.type = "password";
-                passwordIcon.classList.remove("fa-eye-slash");
-                passwordIcon.classList.add("fa-eye");
-            }
-        }
     </script>
 </body>
 

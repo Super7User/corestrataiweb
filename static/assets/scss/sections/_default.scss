@@ -101,7 +101,8 @@
     width: 90px;
     height: 90px;
     @include border-radius(50%);
-    background-color: #B893FD;
+    // background-color: #B893FD;
+    background-color: #A8D1D1 !important;
     font-size: 22px;
     line-height: 1;
     @extend %white-color;

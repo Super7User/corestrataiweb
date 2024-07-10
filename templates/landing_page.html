@@ -49,15 +49,13 @@
     
 
     <style>
-        /*
-    DEMO STYLE
-*/
 
         @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
         body {
             font-family: 'Poppins', sans-serif;
             background: #fafafa;
+            position: fixed;
         }
 
         p {
@@ -68,136 +66,11 @@
             color: #999;
         }
 
-        a,
-        a:hover,
-        a:focus {
-            color: inherit;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .navbar {
-            padding: 15px 10px;
-            background: #fff;
-            border: none;
-            border-radius: 0;
-            margin-bottom: 40px;
-            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-btn {
-            box-shadow: none;
-            outline: none !important;
-            border: none;
-        }
-
         .line {
             width: 100%;
             height: 1px;
             border-bottom: 1px dashed #ddd;
             margin: 40px 0;
-        }
-
-        /* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
-
-        .wrapper {
-            display: flex;
-            width: 100%;
-            align-items: stretch;
-        }
-
-        #sidebar {
-            min-width: 250px;
-            max-width: 250px;
-            /* background: #ec8ee8; */
-            background: #A8D1D1;
-            /* background: linear-gradient(to right, #eeb6f3, #b5aef1); */
-            color: #292828;
-            transition: all 0.3s;
-            /* font-family: Arial, Helvetica, sans-serif; */
-            font-family:Arial, sans-serif;
-        }
-
-        #sidebar.active {
-            margin-left: -250px;
-        }
-
-        #sidebar .sidebar-header {
-            padding: 20px;
-            background: #A8D1D1;
-            /* background: linear-gradient(to right, #eeb6f3, #b5aef1); */
-
-        }
-
-        #sidebar ul.components {
-            padding: 20px 0;
-            margin-top: 20px;
-            /* border-bottom: 1px solid #47748b; */
-        }
-
-        #sidebar ul p {
-            color: #fff;
-            padding: 10px;
-        }
-
-        #sidebar ul li a {
-            padding: 20px;
-            font-size: 1.1em;
-            display: block;
-        }
-
-        #sidebar ul li a:hover {
-            color: #7386D5;
-            background: #fff;
-        }
-
-        #sidebar ul li.active>a,
-        a[aria-expanded="true"] {
-            color: #fff;
-            background: #6d7fcc;
-        }
-
-        a[data-toggle="collapse"] {
-            position: relative;
-        }
-
-        .dropdown-toggle::after {
-            display: block;
-            position: absolute;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-        }
-
-        ul ul a {
-            font-size: 0.9em !important;
-            padding-left: 30px !important;
-            background: #6d7fcc;
-        }
-
-        ul.CTAs {
-            padding: 20px;
-        }
-
-        ul.CTAs a {
-            text-align: center;
-            font-size: 0.9em !important;
-            display: block;
-            border-radius: 5px;
-            margin-bottom: 5px;
-        }
-
-        a.download {
-            background: #fff;
-            color: #7386D5;
-        }
-
-        a.article,
-        a.article:hover {
-            background: #6d7fcc !important;
-            color: #fff !important;
         }
 
         /* ---------------------------------------------------
@@ -209,24 +82,6 @@
             padding: 20px;
             min-height: 100vh;
             transition: all 0.3s;
-        }
-
-        /* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
-
-        @media (max-width: 768px) {
-            #sidebar {
-                margin-left: -250px;
-            }
-
-            #sidebar.active {
-                margin-left: 0;
-            }
-
-            #sidebarCollapse span {
-                display: none;
-            }
         }
 
         .transparent-header {
@@ -242,6 +97,7 @@
             width: 100%;
             padding: 20px;
             border-radius: 10px;
+            height: 200px !important;
             /* background: linear-gradient(to right, #f7a7b3, #9ec7f7); */
             background-color: #D4DEE7;
             color: rgb(34, 32, 32);
@@ -258,99 +114,13 @@
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
-
-    <div class="wrapper">
-        <!-- <div class="ac-preloader">
-            <div class="loader">
-                <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
-            </div>
-        </div> -->
-        <nav id="sidebar">
-            <div class="sidebar-header"></div>
-            <ul class="list-unstyled components">
-                <li>
-                    <a href="/"><i class="fa-brands fa-microsoft"></i><span
-                            style="margin-left: 15px;"></span>All Tools</a>
-                </li>
-                <li>
-                    <a href="landingpage"><i class="fa-solid fa-newspaper"></i><span style="margin-left: 15px;"></span>Article</a>
-                </li>
-                <li>
-                    <a href="imageLanding"><i class="fa-solid fa-image"></i><span style="margin-left: 15px;"></span>Image Generation</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa-solid fa-video"></i><span style="margin-left: 15px;"></span>Video Generation</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa-regular fa-folder-closed"></i><span style="margin-left: 15px;"></span>My Repository</a>
-                </li>
-            </ul>
-        </nav>
-        <header class="transparent-header">
-            <div class="header-navigation navigation-default">
-                <div class="nav-overlay"></div>
-                <div class="ac-header-one__main">
-                    <div class="container">
-                        <div class="ac-header-one__main-wrapper">
-                            <div class="ac-header-one__left">
-                                <div class="ac-header-one__logo">
-                                    <button type="button" id="sidebarCollapse" class="btn">
-                                        <i class="fas fa-align-left"></i>
-                                    </button>
-                                    <a href="index.html"><img
-                                        src="{{ url_for('static', filename='images/logo.png')}}" alt="logo"
-                                        style="width: 200px;height:40px"></a>
-                                </div>
-                            </div>
-                            <div class="ac-header-one__right">
-                                <div class="ac-header-one__right-menu d-flex align-items-center">
-                                    <div class="ac-nav-menu">
-                                        <div class="site-branding d-block d-xl-none text-center mb-30">
-                                            <a href="index.html"><img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="logo"></a>
-                                        </div>
-                                        <nav class="main-menu">
-                                            <ul>
-                                                <li><a href="index.html">Home</a></li>
-                                                <li><a href="about.html">About</a></li>
-                                                <li><a href="contact.html">Contact</a></li>
-                                            </ul>
-                                        </nav>
-                                        <div class="nav-button d-block d-xl-none mt-30">
-                                            <a href="contact.html" class="theme-btn gradient-btn">Start Generating</a>
-                                        </div>
-                                    </div>
-                                    <div class="ac-header-one__right-btn style-one d-flex">
-                                        <div class="ac-dark-btn">
-                                            <a href="index-dark.html"><i class="fas fa-moon"></i></a>
-                                        </div>
-                                        <div class="ac-header-bnt-1">
-                                            <a href="newlogin">Login</a>
-                                        </div>
-                                        <div class="ac-header-bnt-2 d-none d-md-block">
-                                            <a href="contact.html" class="theme-btn gradient-btn">Start Writing</a>
-                                        </div>
-                                        <div class="navbar-toggler">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+       <div class="wrapper">
+           <!-- <div class="ac-preloader">
+               <div class="loader">
+                   <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
                 </div>
-            </div>
-        </header>
+            </div> -->
+            {% include 'header.html' %}
         <div class="hero-wrapper bg_cover" style="background-image: url(assets/images/hero/hero-bg-1.png);">
             <div id="content" class=" wow">
                 <div class="card-group">
@@ -384,19 +154,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <script>
-
         $(document).ready(function () {
-            // Function to toggle sidebar
             $('#sidebar').addClass('active');
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
+                var icon = $('#toggleIcon');
+                icon.toggleClass('icon-move-right icon-move-left');
+
+                if ($('#sidebar').hasClass('active')) {
+                    icon.removeClass('fa-align-right').addClass('fa-align-left');
+                } else {
+                    icon.removeClass('fa-align-left').addClass('fa-align-right');
+                }
             });
 
             // Close sidebar when clicking on an item
             $('#sidebar .list-unstyled li').on('click', function () {
                 $('#sidebar').removeClass('active');
+                $('#toggleIcon').removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
             });
         });
+    </script>
 
     </script>
 </body>

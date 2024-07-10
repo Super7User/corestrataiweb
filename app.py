@@ -1,13 +1,190 @@
 from flask import Flask, request, render_template, jsonify, Response, flash, redirect, url_for, send_file
+from dotenv import load_dotenv, find_dotenv
 import pandas as pd
-from openai import OpenAI
+# from openai import OpenAI
 import requests
+import openai
+import os
 import time
 import ast
 import json
 from io import BytesIO
+# from flask import Flask, render_template, request, jsonify
+import firebase_admin
+from firebase_admin import credentials, auth
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature,BadSignature
+from flask_mail import Mail, Message
+from firebase_admin.exceptions import FirebaseError
+import logging
+
 
 app = Flask(__name__)
+ 
+OPENAI_API_KEY = "sk-proj-yD1vWVA1mWuSArCSrUqJT3BlbkFJMbhkUHGmr3f3HrgPvpba"
+load_dotenv(find_dotenv())
+openai.api_key = openai.api_key = 'sk-proj-yD1vWVA1mWuSArCSrUqJT3BlbkFJMbhkUHGmr3f3HrgPvpba'
+
+app.secret_key = 'your_secret_key'
+app.config['MAIL_SERVER'] = 'smtp.example.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = 'your_email@example.com'
+app.config['MAIL_PASSWORD'] = 'your_email_password'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+
+mail = Mail(app)
+s = URLSafeTimedSerializer(app.secret_key)
+
+firebaseConfig = {
+    "apiKey": "AIzaSyDQ9Ym9NRCPiC-wLNsmg7PozMA7xedfwfA",
+    "authDomain": "holygrail07-3bc90.firebaseapp.com",
+    "projectId": "holygrail07-3bc90",
+    "storageBucket": "holygrail07-3bc90.appspot.com",
+    "messagingSenderId": "1007986562323",
+    "appId": "1:1007986562323:web:5a670e323b70f710d9b6e6"
+}
+
+cred = credentials.Certificate("serviceAccountKey.json")  
+firebase_admin.initialize_app(cred)
+
+
+def get_completion(prompt, model="gpt-4"):
+    messages = [{"role": "user", "content": prompt}]
+    try:
+        response = openai.ChatCompletion.create(
+            model=model,
+            messages=messages,
+            temperature=0,  # this is the degree of randomness of the model's output
+        )
+        return response.choices[0].message["content"]
+    except Exception as e:
+        logging.error(f"Error during OpenAI API call: {e}")
+        return f"Error: {e}"
+
+
+@app.route('/sampleData')
+def sampleData():
+    return render_template('sampleData.html')
+
+@app.route('/get_info', methods=['POST'])
+def get_info():
+    product_name = request.form['product_name']
+    prompt = f"Tell me about {product_name}"
+    response = get_completion(prompt)
+    return response
+
+
+@app.route('/')
+def index_dark():
+    return render_template('index.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/login')
+def home():
+    return render_template('new_login.html')
+
+@app.route('/register')
+def register():
+    return render_template('register.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    email = request.form['login_email']
+    password = request.form['login_password']
+
+    try:
+        # Verify the user's email and password using Firebase Authentication REST API
+        url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + firebaseConfig["apiKey"]
+        payload = {
+            "email": email,
+            "password": password,
+            "returnSecureToken": True
+        }
+        response = requests.post(url, json=payload)
+        response_data = response.json()
+
+        if response.status_code == 200:
+            return jsonify({"status": "success", "message": f"User {email} logged in successfully."})
+        else:
+            return jsonify({"status": "error", "message": response_data.get("error", {}).get("message", "Invalid login credentials.")})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)})
+
+@app.route('/register', methods=['POST'])
+def register_user():
+    email = request.form['email']
+    password = request.form['password']
+    
+    try:
+        user = auth.create_user(
+            email=email,
+            password=password
+        )
+              
+        # Set custom claims to indicate the user is signed in
+        auth.set_custom_user_claims(user.uid, {'signed_in': True})
+        return jsonify({"status": "success", "message": f"User {email} registered successfully."})
+    except firebase_admin.auth.AuthError as e:
+        return jsonify({"status": "error", "message": str(e)})
+
+# @app.route('/password', methods=['GET', 'POST'])
+# def password():
+#     if request.method == 'POST':
+#         email = request.form.get('email')
+#         new_password = request.form.get('password')
+        
+#         if email and new_password:
+#             try:
+#                 user = auth.get_user_by_email(email)
+#                 auth.update_user(user.uid, password=new_password)
+#                 return redirect(url_for('password', success=True))
+#             except firebase_admin.auth.UserNotFoundError:
+#                 return redirect(url_for('password', error=True))
+#             except Exception as e:
+#                 return redirect(url_for('password', error=True))
+    
+#     success = request.args.get('success')
+#     error = request.args.get('error')
+#     return render_template('password.html', success=success, error=error)
+
+logging.basicConfig(level=logging.DEBUG)
+
+@app.route('/password-reset', methods=['GET', 'POST'])
+def send_password_reset():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        app.logger.debug(f"Received email: {email}")
+        if email:
+            try:
+                app.logger.debug("Attempting to generate password reset link")
+                # Generate the password reset link
+                link = auth.generate_password_reset_link(email)
+                app.logger.debug(f"Password reset link generated: {link}")
+                send_reset_email(email, link)
+                flash('Password reset email sent!', 'success')
+                return redirect(url_for('send_password_reset'))
+            except FirebaseError as e:
+                # Log the detailed error and show a user-friendly message
+                app.logger.error(f'Firebase error: {e}')
+                flash('Failed to generate password reset link. Please try again later.', 'error')
+                return redirect(url_for('send_password_reset'))
+            except Exception as e:
+                # Catch any other errors
+                app.logger.error(f'Error sending password reset email: {str(e)}')
+                flash('An unexpected error occurred. Please try again later.', 'error')
+                return redirect(url_for('send_password_reset'))
+    return render_template('password.html')
+
+def send_reset_email(to_email, reset_link):
+    msg = Message('Password Reset Request',
+                  sender=app.config['MAIL_USERNAME'],
+                  recipients=[to_email])
+    msg.body = f'Click the link to reset your password: {reset_link}'
+    mail.send(msg)
+    app.logger.debug(f"Password reset email sent to: {to_email}")
 
 @app.route('/sam')
 def sam():
@@ -74,7 +251,7 @@ def imageLanding():
     return render_template('image_landingPage.html')
 
 
-@app.route('/')
+@app.route('/tools')
 def tools():
     category = request.args.get('category', None)
     search_query = request.args.get('search', None)
@@ -130,7 +307,7 @@ def generate_content():
 @app.route('/generate-stream', methods=['POST'])
 def generate_stream():
 
-    client = OpenAI(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
+    client = openai(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
     
     data = request.get_json()  # Get JSON data sent from the JavaScript fetch
     prompt = data['prompt']
