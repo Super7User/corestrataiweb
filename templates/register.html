@@ -231,6 +231,18 @@
         .row{
             --bs-gutter-x: 0rem;
         }
+        .password-container {
+            position: relative;
+            width: 100%;
+           
+        }
+         .fas{
+            position: absolute;
+            right: 90px;
+            top: 45%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -280,7 +292,10 @@
                     <label for="email">Email Address</label>
                     <input type="text" id="email" name="email" class="form-control" placeholder="Enter your email" required>
                     <label for="password">Password</label>
+                    <div class="password-container">
                     <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                    <i class="fas fa-eye" id="togglePasswordIcon" onclick="togglePassword()"></i>
+                    </div>
                     <button type="submit" style="background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);" class="register">Register Now</button>
                 </form>
                 <p id="registerErrorMessage" class="error"></p>
@@ -306,6 +321,19 @@
             }
 
             return true;
+        }
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var passwordIcon = document.getElementById("togglePasswordIcon");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                passwordIcon.classList.remove("fa-eye");
+                passwordIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                passwordIcon.classList.remove("fa-eye-slash");
+                passwordIcon.classList.add("fa-eye");
+            }
         }
 
         $(document).ready(function () {

@@ -237,6 +237,18 @@
         .row {
             --bs-gutter-x: 0rem !important;
         }
+        .password-container {
+            position: relative;
+            width: 100%;
+           
+        }
+         .fas{
+            position: absolute;
+            right: 90px;
+            top: 45%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -290,13 +302,13 @@
                     <!-- <p id="errorMessage" class="error"></p> -->
 
                     <label for="login_password">Password</label>
-                    <!-- <div class="input-group"> -->
+                    <div class="password-container">
                     <input type="password" id="login_password" name="login_password" class="form-control"
                         placeholder="Enter your password" required>
-                    <!-- <span class="input-group-text" onclick="togglePassword()">
-                            <i class="fas fa-eye" id="togglePasswordIcon"></i>
-                        </span> -->
-                    <!-- </div> -->
+                    <!-- <span class="input-group-text" onclick="togglePassword()"> -->
+                            <i class="fas fa-eye" id="togglePasswordIcon" onclick="togglePassword()"></i>
+                        <!-- </span> -->
+                    </div>
                     <p id="errorMessage" class="error"></p>
 
                     <div class="row">

@@ -1,9 +1,10 @@
-from flask import Flask, request, render_template, jsonify, Response, flash, redirect, url_for, send_file
+from flask import Flask, request, render_template, jsonify, Response, flash, redirect, session, url_for, send_file
 from dotenv import load_dotenv, find_dotenv
 import pandas as pd
 # from openai import OpenAI
 import requests
-import openai
+# import openai
+from openai import OpenAI
 import os
 import time
 import ast
@@ -16,13 +17,21 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignat
 from flask_mail import Mail, Message
 from firebase_admin.exceptions import FirebaseError
 import logging
+from flask_login import LoginManager, login_user, UserMixin, current_user
+from datetime import timedelta
 
 
 app = Flask(__name__)
+
+class User(UserMixin):
+    def __init__(self, id, email):
+        self.id = id
+        self.email = email
  
 
 load_dotenv(find_dotenv())
-openai.api_key ='sk-proj-yD1vWVA1mWuSArCSrUqJT3BlbkFJMbhkUHGmr3f3HrgPvpba'
+client = OpenAI(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
+# openai.api_key ='sk-proj-yD1vWVA1mWuSArCSrUqJT3BlbkFJMbhkUHGmr3f3HrgPvpba'
 
 app.secret_key = 'your_secret_key'
 app.config['MAIL_SERVER'] = 'smtp.example.com'
@@ -51,7 +60,7 @@ firebase_admin.initialize_app(cred)
 def get_completion(prompt, model="gpt-4"):
     messages = [{"role": "user", "content": prompt}]
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model=model,
             messages=messages,
             temperature=0,  # this is the degree of randomness of the model's output
@@ -95,7 +104,6 @@ def login():
     password = request.form['login_password']
 
     try:
-        # Verify the user's email and password using Firebase Authentication REST API
         url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + firebaseConfig["apiKey"]
         payload = {
             "email": email,
@@ -111,6 +119,7 @@ def login():
             return jsonify({"status": "error", "message": response_data.get("error", {}).get("message", "Invalid login credentials.")})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)})
+
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -252,6 +261,7 @@ def imageLanding():
 
 @app.route('/tools')
 def tools():
+
     category = request.args.get('category', None)
     search_query = request.args.get('search', None)
     data = pd.read_csv('alltools.csv')
@@ -266,7 +276,9 @@ def tools():
     categories = data['Category'].dropna().unique().tolist()
     print("It is in tools   1")
 
-    return render_template('tools2.html', tools_data=tools_data, categories=categories)
+    user_email = current_user.email if current_user.is_authenticated else None
+
+    return render_template('tools2.html', tools_data=tools_data, categories=categories,user_email=user_email)
 
 
 @app.route('/tool-detail/<string:tool_id_str>')
@@ -310,7 +322,7 @@ def generate_stream():
     prompt = data['prompt']
 
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {
