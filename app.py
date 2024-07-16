@@ -20,9 +20,9 @@ import logging
 
 app = Flask(__name__)
  
-OPENAI_API_KEY = "sk-proj-yD1vWVA1mWuSArCSrUqJT3BlbkFJMbhkUHGmr3f3HrgPvpba"
+
 load_dotenv(find_dotenv())
-openai.api_key = openai.api_key = 'sk-proj-yD1vWVA1mWuSArCSrUqJT3BlbkFJMbhkUHGmr3f3HrgPvpba'
+openai.api_key ='sk-proj-yD1vWVA1mWuSArCSrUqJT3BlbkFJMbhkUHGmr3f3HrgPvpba'
 
 app.secret_key = 'your_secret_key'
 app.config['MAIL_SERVER'] = 'smtp.example.com'
@@ -33,7 +33,7 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
 mail = Mail(app)
-s = URLSafeTimedSerializer(app.secret_key)
+# s = URLSafeTimedSerializer(app.secret_key)
 
 firebaseConfig = {
     "apiKey": "AIzaSyDQ9Ym9NRCPiC-wLNsmg7PozMA7xedfwfA",
@@ -72,7 +72,6 @@ def get_info():
     prompt = f"Tell me about {product_name}"
     response = get_completion(prompt)
     return response
-
 
 @app.route('/')
 def index_dark():
@@ -304,16 +303,14 @@ def generate_content():
 
     return jsonify(message=response_message)
 
+
 @app.route('/generate-stream', methods=['POST'])
 def generate_stream():
-
-    client = openai(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
-    
     data = request.get_json()  # Get JSON data sent from the JavaScript fetch
     prompt = data['prompt']
 
     try:
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
                 {
@@ -329,18 +326,56 @@ def generate_stream():
             temperature=1,
             max_tokens=256,
             top_p=1,
-            )
-        print("Response ========", response)
-        # Extracting the message from the response
-        #messages = response.get('choices', [])[0].get('message.content', {})
-
+        )
+        
         # Function to generate the response stream
         def generate():
             for chunk in response:
-                yield chunk.choices[0].delta.content 
+                yield chunk.choices[0].delta.content
+        
         return Response(generate(), mimetype='text/plain')
+    
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+# @app.route('/generate-stream', methods=['POST'])
+# def generate_stream():
+
+#     client = openai(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
+    
+#     data = request.get_json()  # Get JSON data sent from the JavaScript fetch
+#     prompt = data['prompt']
+
+#     try:
+#         response = client.chat.completions.create(
+#             model="gpt-4",
+#             messages=[
+#                 {
+#                     "role": "system",
+#                     "content": "Write a compelling product page copy for my [product/service] that clearly communicates the features and benefits of the product, engages my [target persona], and motivates them to take action."
+#                 },
+#                 {
+#                     "role": "user",
+#                     "content": prompt
+#                 },
+#             ],
+#             stream=True,
+#             temperature=1,
+#             max_tokens=256,
+#             top_p=1,
+#             )
+#         print("Response ========", response)
+#         # Extracting the message from the response
+#         #messages = response.get('choices', [])[0].get('message.content', {})
+
+#         # Function to generate the response stream
+#         def generate():
+#             for chunk in response:
+#                 yield chunk.choices[0].delta.content 
+#         return Response(generate(), mimetype='text/plain')
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
 
 
 @app.route('/login1', methods=['POST'])

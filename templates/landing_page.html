@@ -138,6 +138,7 @@
                             </a>
                         </div>
                         <div class="col-sm-6">
+                            <a href="newblog">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Technical Paper</h5>
@@ -145,6 +146,7 @@
                                         content.</p>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -155,27 +157,32 @@
 
     <script>
         $(document).ready(function () {
-            $('#sidebar').addClass('active');
+            var icon = $('#toggleIcon');
+            icon[0].style.setProperty('margin-left', '220px', 'important');
+    
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
-                var icon = $('#toggleIcon');
                 icon.toggleClass('icon-move-right icon-move-left');
-
+    
                 if ($('#sidebar').hasClass('active')) {
-                    icon.removeClass('fa-align-right').addClass('fa-align-left');
-                } else {
                     icon.removeClass('fa-align-left').addClass('fa-align-right');
+                    icon[0].style.setProperty('margin-left', '0px', 'important');
+                   
+                } else {
+                    icon.removeClass('fa-align-right').addClass('fa-align-left');
+                    icon[0].style.setProperty('margin-left', '220px', 'important');
+                   
                 }
             });
-
+    
             // Close sidebar when clicking on an item
             $('#sidebar .list-unstyled li').on('click', function () {
                 $('#sidebar').removeClass('active');
-                $('#toggleIcon').removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
+                icon.removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
+                icon.css('margin-left', '220px'); // Reset margin-left to 220px
             });
         });
     </script>
-
     </script>
 </body>
 
