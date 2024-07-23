@@ -276,22 +276,28 @@ CONTENT STYLE
         .card_img {
             background-color: #b0c2db;
             border: 1px solid #8f8c8c;
-            width: 50px;
-            height: 50px;
+            width: 100px;
+            height: 100px;
             overflow: hidden;
             border-radius: 100%;
             margin: -60px auto 0;
-            margin-top:-20px
+            margin-top:-35px
         }
 
         .card_img img {
-            width: 100%;
-            height: 100%;
+            /* width: 100%;
+            height: 100%; */
             object-fit: cover;
         }
 
         .card_info {
             padding-bottom: 20px;
+        }
+        .card-img-top{
+            width: 70px; 
+            height: 65px;
+            margin-top:14px;
+            object-fit: cover
         }
       
     </style>
@@ -300,240 +306,70 @@ CONTENT STYLE
 <body class="home-one">
     <div class="ac-page-wrapper">
         <div class="wrapper">
-            <!--======  Start Preloader  ======-->
             {% include 'header.html' %}
-            <!-- <div class="ac-preloader">
-                <div class="loader">
-                    <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
-                </div>
-            </div> -->
-            <!--======  Start Header  ======-->
-            <div class="bg_cover" style="width:100% !important ;margin-top: 0px;">
+            <div class="bg_cover" style="width:100% !important; margin-top: 0px;">
                 <div id="content" class="wow">
-
                     <div class="container1">
-                        <!-- <main> -->
-                        <!-- <section> -->
                         <div class="container my-5 mt-5">
                             <h2>Discover Our Tools</h2>
-                            <p>Welcome to the home of innovation at CorestratAI Solutions. Explore our tools and
-                                services.</p>
-
-                            <!-- Search Bar -->
-                            <!-- <div class="input-group mb-3">
-                                <input type="text" class="form-control" id="search-box" placeholder="Search by title..."
-                                    oninput="searchItems()">
-                                <div class="input-group-append">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </div>
-                            </div> -->
+                            <p>Welcome to the home of innovation at CorestratAI Solutions. Explore our tools and services.</p>
                             <div class="row height d-flex justify-content-center align-items-center">
                                 <div class="col-md-10">
                                     <div class="search">
                                         <i class="fa fa-search"></i>
-                                        <input type="text" class="form-control" id="search-box"
-                                            placeholder="Search by title..." oninput="searchItems()">
-
+                                        <input type="text" class="form-control" id="search-box" placeholder="Search by title..." oninput="searchItems()">
                                     </div>
-
                                 </div>
-
                             </div>
-
-                            <!-- Button Container -->
-                            <div class="btn-space" role="group"
-                                style="font-family:system-ui !important; font-weight: bolder;">
-                                <button type="button" class="btn btn-secondary category-button active"
-                                    data-category="{{ category }}" onclick="filterCategory(this)">All</button>
+                            <div class="btn-space" role="group" style="font-family:system-ui !important; font-weight: bolder;">
+                                <button type="button" class="btn btn-secondary category-button active" data-category="All" onclick="filterCategory(this)">All</button>
                                 {% for category in categories %}
-                                <button type="button" class="btn btn-secondary category-button"
-                                    data-category="{{ category }}" onclick="filterCategory(this)">{{ category
-                                    }}</button>
+                                    <button type="button" class="btn btn-secondary category-button" data-category="{{ category }}" onclick="filterCategory(this)">{{ category }}</button>
                                 {% endfor %}
                             </div>
                         </div>
-                        <!-- <div class="card-container my-5">
-                            <div class="row">
-                                {% for tool in tools_data %}
-                                <div class="col-md-4 mb-4">
-                                    <div class="card h-100 shadow p-3 mb-5 bg-body rounded"
-                                        style="background-color: #EAF6F6 !important;text-align:center">
-                                        <a href="/tool-detail/{{ tool['ID'] }}" class="stretched-link">
-                                            <img src="{{ url_for('static', filename=tool['Image']) }}"
-                                                class="card-img-top" alt="{{ tool['Title'] }} Logo"
-                                                style="width: 30px; height: 30px;">
-                                        </a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ tool['Title'] }}</h5>
-                                            <p class="card-text">{{ tool['Description'] }}</p>
-                                        </div>
-                                        <div class="card-footer" style="gap: 10px;">
-                                            <small class="text-muted"
-                                                style="background-color:#8ECDDD;padding: 5px; border-radius: 10px;margin-right: 10px;">{{
-                                                tool['Category'] }}</small>
-                                            {% if tool['Plan'] == 'Professional' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #FBA834;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-                                            {% elif tool['Plan'] == 'Starter' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #836FFF;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-                                            {% elif tool['Plan'] == 'Free' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #A5DD9B;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div> -->
-
                         <div class="card-container my-5">
                             <div class="row justify-content-center">
                                 {% for tool in tools_data %}
-                                <div class="col-md-4 mb-4">
-                                    <div class="card" style="height: 300px;background-color: #A8D1D1 !important;">
-                                        <div class="card_img">
-                                            <a href="/tool-detail/{{ tool['ID'] }}" class="stretched-link">
-                                                <img src="{{ url_for('static', filename=tool['Image']) }}"
-                                                    class="card-img-top" alt="{{ tool['Title'] }} Logo"
-                                                    style="width: 30px; height: 30px;margin-top:10px;">
-                                            </a>
-                                        </div>
-                                        <div class="card-body mt-2">
-                                            <h5 class="card-title">{{ tool['Title'] }}</h5>
-                                            <p class="card-text">{{ tool['Description'] }}</p>
-                                        </div>
-                                        <div class="card-footer" style="gap: 10px;">
-                                            <small class="text-muted"
-                                                style="background-color:#8ECDDD;padding: 5px; border-radius: 10px;margin-right: 10px;">{{
-                                                tool['Category'] }}</small>
-                                            {% if tool['Plan'] == 'Professional' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #FBA834;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-                                            {% elif tool['Plan'] == 'Starter' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #836FFF;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-                                            {% elif tool['Plan'] == 'Free' %}
-                                            <small class="text-muted float-right"
-                                                style="background-color: #A5DD9B;padding: 3px; border-radius: 10px;margin-left: 10px;">{{
-                                                tool['Plan']
-                                                }}</small>
-
-                                            {% endif %}
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card" style="height: 350px; background-color: #A8D1D1 !important;">
+                                            <div class="card_img">
+                                                <a href="/tool-detail/{{ tool['ID'] }}" class="stretched-link">
+                                                    <img src="{{ url_for('static', filename=tool['Image']) }}" class="card-img-top" alt="{{ tool['Title'] }} Logo">
+                                                </a>
+                                            </div>
+                                            <div class="card-body mt-2">
+                                                <h6 class="card-title">{{ tool['Title'] }}</h6>
+                                                <p class="card-text">{{ tool['Description'] }}</p>
+                                            </div>
+                                            <div class="card-footer" style="gap: 10px;">
+                                                <small class="text-muted" style="background-color: #8ECDDD; padding: 5px; border-radius: 10px; margin-right: 10px;">{{ tool['Category'] }}</small>
+                                                {% if tool['Plan'] == 'Professional' %}
+                                                    <small class="text-muted float-right" style="background-color: #FBA834; padding: 3px; border-radius: 10px; margin-left: 10px;">{{ tool['Plan'] }}</small>
+                                                {% elif tool['Plan'] == 'Starter' %}
+                                                    <small class="text-muted float-right" style="background-color: #836FFF; padding: 3px; border-radius: 10px; margin-left: 10px;">{{ tool['Plan'] }}</small>
+                                                {% elif tool['Plan'] == 'Free' %}
+                                                    <small class="text-muted float-right" style="background-color: #A5DD9B; padding: 3px; border-radius: 10px; margin-left: 10px;">{{ tool['Plan'] }}</small>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 {% endfor %}
                             </div>
                         </div>
-
-                        <footer>
-                            <!-- <button class="btn btn-primary" onclick="toggleTheme()">Toggle Dark/Light Mode</button> -->
-
-                        </footer>
+                        <footer></footer>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='cardscripts.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
-    <!-- <script>
-        $(document).ready(function () {
-            // Function to toggle sidebar
-            $('#sidebar').addClass('active');
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-
-            // Close sidebar when clicking on an item
-            $('#sidebar .list-unstyled li').on('click', function () {
-                $('#sidebar').removeClass('active');
-            });
-        });
-    </script> -->
-     
-    <!-- <script>
-        $(document).ready(function () {
-            var icon = $('#toggleIcon');
-            icon.css('margin-left', '220px');
-    
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-                icon.toggleClass('icon-move-right icon-move-left');
-    
-                if ($('#sidebar').hasClass('active')) {
-                    icon.removeClass('fa-align-left').addClass('fa-align-right');
-                    icon.css('margin-left', '-220px');
-                } else {
-                    icon.removeClass('fa-align-right').addClass('fa-align-left');
-                    icon.css('margin-left', '220px');
-                }
-            });
-    
-            // Close sidebar when clicking on an item
-            $('#sidebar .list-unstyled li').on('click', function () {
-                $('#sidebar').removeClass('active');
-                icon.removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
-                icon.css('margin-left', '220px'); // Reset margin-left to 108px
-            });
-        });
-    </script> -->
-    
-
-    <script>
-        $(document).ready(function () {
-            var icon = $('#toggleIcon');
-            icon[0].style.setProperty('margin-left', '220px', 'important');
-    
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-                icon.toggleClass('icon-move-right icon-move-left');
-    
-                if ($('#sidebar').hasClass('active')) {
-                    icon.removeClass('fa-align-left').addClass('fa-align-right');
-                    icon[0].style.setProperty('margin-left', '0px', 'important');
-                   
-                } else {
-                    icon.removeClass('fa-align-right').addClass('fa-align-left');
-                    icon[0].style.setProperty('margin-left', '220px', 'important');
-                   
-                }
-            });
-    
-            // Close sidebar when clicking on an item
-            $('#sidebar .list-unstyled li').on('click', function () {
-                $('#sidebar').removeClass('active');
-                icon.removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
-                icon.css('margin-left', '220px'); // Reset margin-left to 220px
-            });
-        });
-    </script>
-    
-    
 </body>
 
 </html>

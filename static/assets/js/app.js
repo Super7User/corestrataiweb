@@ -1,10 +1,29 @@
-function generateDescription() {
-    const prompt = document.getElementById('promptInput').value;
-    console.log(prompt,"asasas")
-    const negativePrompt = document.getElementById('negativePromptInput').value;
+// function togglePromptInputs() {
+//     var isChecked = document.getElementById('defaultPromptCheckbox').checked;
+//     document.getElementById('promptInputs').style.display = isChecked ? 'none' : 'block';
+//     document.getElementById('dropdownInputs').style.display = isChecked ? 'block' : 'none';
+// }
 
-   
-    // Example POST request to Flask backend
+function updateInputFields() {
+    
+    var selectedValue = document.getElementById('defaultPromptDropdown').value;
+    var negativePrompts = JSON.parse(document.getElementById('negativePromptsData').textContent);
+
+    document.getElementById('promptInput').value = selectedValue;
+    if (negativePrompts.hasOwnProperty(selectedValue)) {
+        document.getElementById('negativePromptInput').value = negativePrompts[selectedValue];
+    } else {
+        document.getElementById('negativePromptInput').value = '';
+    }
+ 
+}
+function generateDescription() {
+    let prompt, negativePrompt;
+    prompt = document.getElementById('promptInput').value;
+    console.log(prompt,"asasas")
+    negativePrompt = document.getElementById('negativePromptInput').value;
+ 
+    
     fetch('/generate-description', {
         method: 'POST',
         headers: {
@@ -17,7 +36,6 @@ function generateDescription() {
             return response.blob();  // Convert the response to a Blob if the request was successful
         } else {
             throw new Error('Network response was not ok.');
-            console.log('Network response was not ok.')
         }
     })
     .then(blob => {

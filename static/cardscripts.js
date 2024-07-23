@@ -24,12 +24,10 @@ function searchItems() {
         .catch(error => console.error('Error fetching filtered content:', error));
 }
 
-
-
 function filterCategory(button) {
     var category = button.getAttribute('data-category');
 
-    fetch(`/?category=${encodeURIComponent(category)}`)
+    fetch(`/tools?category=${encodeURIComponent(category)}`)
         .then(response => response.text())
         .then(html => {
             var parser = new DOMParser();
@@ -51,6 +49,13 @@ function setActiveCategory(activeButton) {
     });
     activeButton.classList.add('active');
 }
+
+// Attach event listeners to category buttons
+document.querySelectorAll('.category-button').forEach(button => {
+    button.addEventListener('click', function() {
+        filterCategory(button);
+    });
+});
 
 
 

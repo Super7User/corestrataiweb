@@ -163,6 +163,9 @@
             margin: 6px;
             background-color: #E0E7E8;
         }
+        #negativePromptInput,#promptInput{
+            color:#000
+        }
     </style>
 
 </head>
@@ -185,20 +188,34 @@
                         <div class="row">
                             <!-- Input and button area -->
                             <div class="col-md-5">
-                                <div class="mb-3">
+                                <div class="mb-3" >
+                                    <label for="defaultPromptDropdown" class="form-label">Select Predefined Prompt</label>
+                                    <select class="form-select" id="defaultPromptDropdown" onchange="updateInputFields()">
+                                        <option value="select">Select Prompt</option>
+                                        {% for title in tools_data %}
+                                        <option value="{{ title }}">{{ title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3" id="promptInputs">
                                     <label for="promptInput" class="form-label">Prompt</label>
                                     <input type="text" class="form-control" id="promptInput" placeholder="Enter prompt">
-                                </div>
-                                <div class="mb-3">
+
                                     <label for="negativePromptInput" class="form-label">Negative Prompt</label>
                                     <input type="text" class="form-control" id="negativePromptInput"
                                         placeholder="Enter negative prompt">
                                 </div>
-                                <button id="generateBtn" class="btn btn-primary button"
+                                <!-- id="dropdownInputs" style="display: none;" -->                               
+                                <!-- <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" id="defaultPromptCheckbox" onclick="togglePromptInputs()">
+                                    <label class="form-check-label" for="defaultPromptCheckbox">Use Default Prompt</label>
+                                </div> -->
+                               
+                                <button id="generateBtn" class="btn btn-primary button text-center"
                                     onclick="generateDescription()">Generate
                                     Description</button>
                             </div>
-                            <!-- Canvas area -->
+                           
                             <div class="col-md-7">
                                 <span class="border border-dark">
                                     <img id="outputImage" style="width:100%; height: 100%; text-align: center;">
@@ -210,6 +227,7 @@
             </div>
         </div>
     </div>
+    <script id="negativePromptsData" type="application/json">{{ negative_prompts | tojson | safe }}</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
