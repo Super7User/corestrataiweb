@@ -237,7 +237,7 @@ def send_reset_email(to_email, reset_link):
 def tools():
     category = request.args.get('category', None)
     search_query = request.args.get('search', None)
-    data = pd.read_csv('alltools1.csv')
+    data = pd.read_csv('alltools.csv')
 
     if category:
         data = data[data['Category'] == category]
@@ -265,7 +265,7 @@ def tool_detail(tool_id_str):
     current_tool_id = session.get('current_tool_id')
     print(current_tool_id,"current")
 
-    data = pd.read_csv('alltools1.csv')
+    data = pd.read_csv('alltools.csv')
     tool_details = data.to_dict(orient='records')
 
     tool = next((item for item in tool_details if item['ID'] == tool_id), None)
@@ -432,7 +432,7 @@ def log_in():
 
 @app.route('/image')
 def image():
-    datacsv = pd.read_csv('alltools1.csv')
+    datacsv = pd.read_csv('alltools.csv')
     # titles = datacsv['Title'].tolist()
     other_titles = datacsv[datacsv['Category'] != 'image']['Title'].tolist()
     datacsv['Category'] = datacsv['Category'].str.strip().str.title()
