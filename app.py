@@ -15,6 +15,7 @@ from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, UserMixin, current_user, login_required, logout_user
 from datetime import timedelta
 import logging
+from groq import Groq
 
 app = Flask(__name__)
 
@@ -26,7 +27,8 @@ class User(UserMixin):
 # Load environment variables
 
 load_dotenv(find_dotenv())
-client = OpenAI(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
+# client = OpenAI(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
+client = Groq(api_key='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')
 
 
 # OpenAI configuration
@@ -153,7 +155,6 @@ def login():
             response = requests.post(url, json=payload)
             response_data = response.json()
             
-            # Print the response data
             print(response_data)
             
             if response.status_code == 200:
@@ -239,7 +240,7 @@ def tools():
     search_query = request.args.get('search', None)
     data = pd.read_csv('alltools.csv')
 
-    if category:
+    if category and category != "All":
         data = data[data['Category'] == category]
 
     if search_query:
@@ -273,8 +274,10 @@ def tool_detail(tool_id_str):
         return "Tool not found", 404
 
     tool['Fields'] = ast.literal_eval(tool['Fields']) if pd.notna(tool['Fields']) else []
-
-    return render_template('tool_details.html', tool=tool, tool_id=tool_id)
+    font_family = tool.get('Font')
+    print(font_family,"tool")
+    
+    return render_template('tool_details.html', tool=tool, tool_id=tool_id,fontDynamic=font_family)
 
 @app.route('/generate-content', methods=['POST'])
 def generate_content():
@@ -292,8 +295,10 @@ def generate_stream():
     textarea = data['textareaInput']
 
     try:
+        # response = client.chat.completions.create(
+        #     model="gpt-4",
         response = client.chat.completions.create(
-            model="gpt-4",
+           model="llama3-8b-8192",
             messages=[
                 {"role": "system", "content": "Write a compelling product page copy for my [product/service] that clearly communicates the features and benefits of the product, engages my [target persona], and motivates them to take action."},
                 {"role": "user", "content": prompt},
