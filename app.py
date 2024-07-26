@@ -259,12 +259,13 @@ def tools():
 def tool_detail(tool_id_str):
     try:
         tool_id = int(float(tool_id_str))
+        session['tool_id'] = tool_id
     except ValueError:
         return "Invalid Tool ID", 400
     
-    session['current_tool_id'] = tool_id
-    current_tool_id = session.get('current_tool_id')
-    print(current_tool_id,"current")
+    # session['current_tool_id'] = tool_id
+    # current_tool_id = session.get('current_tool_id')
+    # print(current_tool_id,"current")
 
     data = pd.read_csv('alltools.csv')
     tool_details = data.to_dict(orient='records')
@@ -291,33 +292,59 @@ def generate_content():
 @app.route('/generate-stream', methods=['POST'])
 def generate_stream():
     data = request.get_json()
-    prompt = data['prompt']
-    textarea = data['textareaInput']
+    prompt = data.get('prompt')
+    if not prompt:
+        return jsonify({'error': 'Prompt is missing'}), 400
+    else:
+        print("Prompt ====", prompt)
+    tool_id = session.get('tool_id')  # Retrieve tool_id from session
 
+    # Read the CSV and fetch the PromptSystem
     try:
-        # response = client.chat.completions.create(
-        #     model="gpt-4",
+        df = pd.read_csv('alltools.csv')  # Update the path to where the file is stored
+        tool_details = df[df['ID'] == int(tool_id)]
+        if tool_details.empty:
+            return jsonify({'error': 'Tool not found'}), 404
+
+        system_prompt = tool_details.iloc[0]['PromptSystem']
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    # Call to OpenAI with the custom system prompt
+    try:
         response = client.chat.completions.create(
            model="llama3-8b-8192",
+        # response = client.chat.completions.create(
+        #     model="gpt-4",
             messages=[
-                {"role": "system", "content": "Write a compelling product page copy for my [product/service] that clearly communicates the features and benefits of the product, engages my [target persona], and motivates them to take action."},
-                {"role": "user", "content": prompt},
-                {"role": "user", "content": textarea}
+                {
+                    "role": "system",
+                    "content": system_prompt
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                },
             ],
             stream=True,
             temperature=1,
-            max_tokens=256,
+            max_tokens=512,
             top_p=1,
         )
-        
+
         def generate():
             for chunk in response:
-                yield chunk.choices[0].delta.content
-        
+                if chunk.choices[0].delta.content:
+                    yield chunk.choices[0].delta.content
+                else:
+                    print("No content in chunk or malformed chunk:", chunk)
+                    
         return Response(generate(), mimetype='text/plain')
     
     except Exception as e:
+        print("Error during streaming:", str(e))
         return jsonify({'error': str(e)}), 500
+
 
 @app.route('/generate-description', methods=['POST'])
 def generate_description():
