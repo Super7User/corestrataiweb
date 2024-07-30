@@ -9,19 +9,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--====== Title ======-->
     <title>AIcraft - AI Application & Generator HTML Template</title>
- 
+
     <!--====== Style css ======-->
     <!-- <link id="themeStylesheet" rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}"> -->
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styleDark.css') }}"> -->
-   <style>
-    #sidebarCollapse,#sidebar{
-        display: none;
-    }
-    body{
-        background-color: #131414 !important;
+    <style>
+        #sidebarCollapse,
+        #sidebar {
+            display: none;
+        }
 
-    }
-   </style> 
+        body {
+            background-color: #131414 !important;
+
+        }
+
+        .hero-wrapper {
+            padding: 78px 0 65px !important;
+        }
+
+        .container_hor {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+        }
+
+        .section:nth-child(1) {
+            background-color: var(--black-dark-color);
+            display: flex;
+            justify-content: space-between;
+        }
+        /* .section:nth-child(2) {
+            background-color: #e6e6e6;
+        }
+
+        .section:nth-child(3) {
+            background-color: #d9d9d9;
+        } */
+
+        .text {
+            flex: 1;
+            padding: 70px;
+        }
+
+        .video {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .image {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height:60% */
+        }
+
+        .video video {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .text p {
+            /* color:#ccc !important; */
+            text-align: justify;
+        }
+    </style>
 </head>
 
 <body class="home-one-dark">
@@ -38,7 +102,51 @@
                 <!--======  Start Hero Section  ======-->
                 <section class="hero-section">
                     <div class="hero-wrapper bg_cover" style="background-image: url(assets/images/hero/hero-bg-1.png);">
-                        <div class="container">
+                        <div class="container_hor">
+                            <div class="section">
+                                <div class="text">
+                                    <h3 style="color:#ccc !important;">Your New AI Assistant is here</h3>
+                                    <p class="text-end">coming soon..</p>
+                                    <p style="color:#8f8d8d  !important;">Unlock limitless creativity with our AI Assistant, delivering cutting-edge
+                                        generative AI solutions for effortless content, image and video generation.
+                                        Experience the future of content creation like never before.</p>
+                                </div>
+                                <div class="video">
+                                    <video controls>
+                                        <source src="{{ url_for('static', filename='AI.mp4') }}" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                            <div class="section">
+                                
+                                <div class="image">
+                                    <img src="{{ url_for('static', filename='assets/images/tools.webp') }}" alt="Descriptive Alt Text" style="width: 80%; max-width: 600px; height: 50%;">
+                                </div>  
+
+                                <div class="text">
+                                    <h3>All Tools</h3>
+                                    <br>
+                                    <p>The features of tool cards, each showcasing an image, 
+                                        title, description, and category. These cards are designed 
+                                        to be visually appealing and informative, providing users with clear and 
+                                        concise information about each tool.</p>
+                                </div>
+                            </div>
+                            <div class="section">
+                                <div class="text">
+                                    <h3>Article</h3>
+                                    <br>
+                                    <p>Below the hero section, there is a central area 
+                                        with multiple cards. Each card represents different content categories, 
+                                        such as "Blog" and "Technical Paper."</p>
+                                </div>
+                                <div class="image">
+                                    <img src="{{ url_for('static', filename='assets/images/article.webp') }}" alt="Descriptive Alt Text" style="width: 80%; max-width: 600px; height: auto;">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="container" style="margin-top:900px ;">
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <!--=== Hero Content ===-->
@@ -59,7 +167,8 @@
                                 <div class="col-lg-12">
                                     <!--=== Hero Image ===-->
                                     <div class="hero-one_image-box text-center wow fadeInUp">
-                                        <img src="{{ url_for('static', filename='assets/images/hero/dashboard.jpg')}}" alt="dashboard image">
+                                        <img src="{{ url_for('static', filename='assets/images/hero/dashboard.jpg')}}"
+                                            alt="dashboard image">
                                     </div>
                                 </div>
                             </div>
@@ -82,56 +191,64 @@
                             <!--=== client item ===-->
                             <div class="client-item">
                                 <div class="client-img">
-                                    <a href="index.html"><img src="{{ url_for('static', filename='assets/images/clients/logo1_1.png')}}"
+                                    <a href="index.html"><img
+                                            src="{{ url_for('static', filename='assets/images/clients/logo1_1.png')}}"
                                             alt="client-logo"></a>
                                 </div>
                             </div>
                             <!--=== client item ===-->
                             <div class="client-item">
                                 <div class="client-img">
-                                    <a href="index.html"><img src="{{ url_for('static', filename='assets/images/clients/logo1_2.png')}}"
+                                    <a href="index.html"><img
+                                            src="{{ url_for('static', filename='assets/images/clients/logo1_2.png')}}"
                                             alt="client-logo"></a>
                                 </div>
                             </div>
                             <!--=== client item ===-->
                             <div class="client-item">
                                 <div class="client-img">
-                                    <a href="index.html"><img src="{{ url_for('static', filename='assets/images/clients/logo1_3.png')}}"
+                                    <a href="index.html"><img
+                                            src="{{ url_for('static', filename='assets/images/clients/logo1_3.png')}}"
                                             alt="client-logo"></a>
                                 </div>
                             </div>
                             <!--=== client item ===-->
                             <div class="client-item">
                                 <div class="client-img">
-                                    <a href="index.html"><img src="{{ url_for('static', filename='assets/images/clients/logo1_4.png')}}"
+                                    <a href="index.html"><img
+                                            src="{{ url_for('static', filename='assets/images/clients/logo1_4.png')}}"
                                             alt="client-logo"></a>
                                 </div>
                             </div>
                             <!--=== client item ===-->
                             <div class="client-item">
                                 <div class="client-img">
-                                    <a href="index.html"><img src="{{ url_for('static', filename='assets/images/clients/logo1_5.png')}}"
+                                    <a href="index.html"><img
+                                            src="{{ url_for('static', filename='assets/images/clients/logo1_5.png')}}"
                                             alt="client-logo"></a>
                                 </div>
                             </div>
                             <!--=== client item ===-->
                             <div class="client-item">
                                 <div class="client-img">
-                                    <a href="index.html"><img src="{{ url_for('static', filename='assets/images/clients/logo1_6.png')}}"
+                                    <a href="index.html"><img
+                                            src="{{ url_for('static', filename='assets/images/clients/logo1_6.png')}}"
                                             alt="client-logo"></a>
                                 </div>
                             </div>
                             <!--=== client item ===-->
                             <div class="client-item">
                                 <div class="client-img">
-                                    <a href="index.html"><img src="{{ url_for('static', filename='assets/images/clients/logo1_7.png')}}"
+                                    <a href="index.html"><img
+                                            src="{{ url_for('static', filename='assets/images/clients/logo1_7.png')}}"
                                             alt="client-logo"></a>
                                 </div>
                             </div>
                             <!--=== client item ===-->
                             <div class="client-item">
                                 <div class="client-img">
-                                    <a href="index.html"><img src="{{ url_for('static', filename='assets/images/clients/logo1_3.png')}}"
+                                    <a href="index.html"><img
+                                            src="{{ url_for('static', filename='assets/images/clients/logo1_3.png')}}"
                                             alt="client-logo"></a>
                                 </div>
                             </div>
@@ -254,7 +371,8 @@
                                 <div class="ac-process-item mb-40 wow fadeInUp">
                                     <div class="process-inner-content">
                                         <div class="thumbnail">
-                                            <img src="{{ url_for('static', filename='assets/images/gallery/work-1.jpg')}}" alt="work image">
+                                            <img src="{{ url_for('static', filename='assets/images/gallery/work-1.jpg')}}"
+                                                alt="work image">
                                         </div>
                                         <div class="content">
                                             <span class="number">01</span>
@@ -270,7 +388,8 @@
                                 <div class="ac-process-item mb-40 wow fadeInUp">
                                     <div class="process-inner-content">
                                         <div class="thumbnail">
-                                            <img src="{{ url_for('static', filename='assets/images/gallery/work-2.jpg')}}" alt="work image">
+                                            <img src="{{ url_for('static', filename='assets/images/gallery/work-2.jpg')}}"
+                                                alt="work image">
                                         </div>
                                         <div class="content">
                                             <span class="number">02</span>
@@ -286,7 +405,8 @@
                                 <div class="ac-process-item mb-40 wow fadeInUp">
                                     <div class="process-inner-content">
                                         <div class="thumbnail">
-                                            <img src="{{ url_for('static', filename='assets/images/gallery/work-1.jpg')}}" alt="work image">
+                                            <img src="{{ url_for('static', filename='assets/images/gallery/work-1.jpg')}}"
+                                                alt="work image">
                                         </div>
                                         <div class="content">
                                             <span class="number">03</span>
@@ -545,7 +665,8 @@
                             <div class="col-xl-7">
                                 <!--=== Features Image Box ===-->
                                 <div class="section-image-box style-one mb-50 wow fadeInRight">
-                                    <img src="{{ url_for('static', filename='assets/images/gallery/feature-1.jpg')}}" alt="features image">
+                                    <img src="{{ url_for('static', filename='assets/images/gallery/feature-1.jpg')}}"
+                                        alt="features image">
                                 </div>
                             </div>
                         </div>
@@ -560,7 +681,8 @@
                                 <div class="col-xl-6">
                                     <!--=== Section Title ===-->
                                     <div class="video-one_image-box p-r z-1 mb-50 wow fadeInLeft">
-                                        <img src="{{ url_for('static', filename='assets/images/gallery/video-1.jpg')}}" alt="video image">
+                                        <img src="{{ url_for('static', filename='assets/images/gallery/video-1.jpg')}}"
+                                            alt="video image">
                                         <div class="play-button">
                                             <a href="https://www.youtube.com/watch?v=o_MjdUtSL7g" class="video-popup"><i
                                                     class="flaticon-play-button-arrowhead"></i></a>
@@ -613,7 +735,8 @@
                                         <div class="author-info-wrap d-flex justify-content-between">
                                             <div class="author-thumb-item mb-15">
                                                 <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-1.jpg')}}" alt="author thumb">
+                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-1.jpg')}}"
+                                                        alt="author thumb">
                                                 </div>
                                                 <div class="content">
                                                     <h6>Esther Howard</h6>
@@ -636,7 +759,8 @@
                                         <div class="author-info-wrap d-flex justify-content-between">
                                             <div class="author-thumb-item mb-15">
                                                 <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-2.jpg')}}" alt="author thumb">
+                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-2.jpg')}}"
+                                                        alt="author thumb">
                                                 </div>
                                                 <div class="content">
                                                     <h6>Jenny Wilson</h6>
@@ -659,7 +783,8 @@
                                         <div class="author-info-wrap d-flex justify-content-between">
                                             <div class="author-thumb-item mb-15">
                                                 <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-3.jpg')}}" alt="author thumb">
+                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-3.jpg')}}"
+                                                        alt="author thumb">
                                                 </div>
                                                 <div class="content">
                                                     <h6>Guy Hawkins</h6>
@@ -682,7 +807,8 @@
                                         <div class="author-info-wrap d-flex justify-content-between">
                                             <div class="author-thumb-item mb-15">
                                                 <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-4.jpg')}}" alt="author thumb">
+                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-4.jpg')}}"
+                                                        alt="author thumb">
                                                 </div>
                                                 <div class="content">
                                                     <h6>Bessie Cooper</h6>
@@ -705,7 +831,8 @@
                                         <div class="author-info-wrap d-flex justify-content-between">
                                             <div class="author-thumb-item mb-15">
                                                 <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-5.jpg')}}" alt="author thumb">
+                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-5.jpg')}}"
+                                                        alt="author thumb">
                                                 </div>
                                                 <div class="content">
                                                     <h6>Kathryn Murphy</h6>
@@ -728,7 +855,8 @@
                                         <div class="author-info-wrap d-flex justify-content-between">
                                             <div class="author-thumb-item mb-15">
                                                 <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-6.jpg')}}" alt="author thumb">
+                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-6.jpg')}}"
+                                                        alt="author thumb">
                                                 </div>
                                                 <div class="content">
                                                     <h6>Marvin McKinney</h6>
@@ -754,13 +882,14 @@
                             <div class="col-xl-6">
                                 <!--=== Image Box ===-->
                                 <div class="contact-two_image-box p-r z-1 mb-50">
-                                    <img src="{{ url_for('static', filename='assets/images/contact/contact-1.jpg')}}" class="image-one wow fadeInLeft"
-                                        alt="Contact Image">
-                                    <img src="{{ url_for('static', filename='assets/images/contact/contact-2.jpg')}}" class="image-two wow fadeInRight"
-                                        alt="Contact Image">
-                                    <img src="{{ url_for('static', filename='assets/images/contact/contact-3.jpg')}}" class="image-three wow fadeInDown"
-                                        alt="Contact Image">
-                                    <img src="{{ url_for('static', filename='assets/images/contact/shape-1.png')}}" class="shape-one" alt="Contact Image">
+                                    <img src="{{ url_for('static', filename='assets/images/contact/contact-1.jpg')}}"
+                                        class="image-one wow fadeInLeft" alt="Contact Image">
+                                    <img src="{{ url_for('static', filename='assets/images/contact/contact-2.jpg')}}"
+                                        class="image-two wow fadeInRight" alt="Contact Image">
+                                    <img src="{{ url_for('static', filename='assets/images/contact/contact-3.jpg')}}"
+                                        class="image-three wow fadeInDown" alt="Contact Image">
+                                    <img src="{{ url_for('static', filename='assets/images/contact/shape-1.png')}}"
+                                        class="shape-one" alt="Contact Image">
                                 </div>
                             </div>
                             <div class="col-xl-6">
@@ -854,8 +983,10 @@
                                     <div class="cta-one_image-box p-r z-1 text-xl-end">
                                         <!-- <img src="assets/images/gallery/robot2.png" class="image-one" alt="">
                                         <img src="assets/images/gallery/base2.png" class="image-two" alt=""> -->
-                                        <img src="{{ url_for('static', filename='assets/images/gallery/robot2.png')}}" class="image-one" alt="">
-                                        <img src="{{ url_for('static', filename='assets/images/gallery/base2.png')}}" class="image-two" alt="">
+                                        <img src="{{ url_for('static', filename='assets/images/gallery/robot2.png')}}"
+                                            class="image-one" alt="">
+                                        <img src="{{ url_for('static', filename='assets/images/gallery/base2.png')}}"
+                                            class="image-two" alt="">
 
                                     </div>
                                 </div>
@@ -949,7 +1080,7 @@
             </div>
         </footer><!--======  End Footer  ======-->
     </div>
-  
+
     <!--====== Jquery js ======-->
     <script src="{{ url_for('static', filename='assets/vendor/jquery-3.6.0.min.js') }}"></script>
     <!--====== Popper js for Bootstrap ======-->
@@ -959,7 +1090,8 @@
     <!--====== Slick Carousel js ======-->
     <script src="{{ url_for('static', filename='assets/vendor/slick/slick.min.js') }}"></script>
     <!--====== Magnific Popup js ======-->
-    <script src="{{ url_for('static', filename='assets/vendor/magnific-popup/dist/jquery.magnific-popup.min.js') }}"></script>
+    <script
+        src="{{ url_for('static', filename='assets/vendor/magnific-popup/dist/jquery.magnific-popup.min.js') }}"></script>
     <!--====== ImagesLoaded js ======-->
     <!-- <script src="{{ url_for('static', filename='assets/vendor/imagesloaded.min.js') }}"></script> -->
     <!--====== Isotope Plugin js ======-->
@@ -968,7 +1100,7 @@
     <script src="{{ url_for('static', filename='assets/vendor/wow/wow.min.js') }}"></script>
     <!--====== Main Custom js ======-->
     <script src="{{ url_for('static', filename='assets/js/theme.js') }}"></script>
-     
+
     <script>
         $(document).ready(function () {
             $('#sidebar').addClass('active');
@@ -991,7 +1123,7 @@
             });
         });
     </script>
-    
+
 </body>
 
 </html>
