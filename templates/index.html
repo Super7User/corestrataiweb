@@ -85,6 +85,13 @@
             /* color:#ccc !important; */
             text-align: justify;
         }
+        .hover-text {
+            transition: transform 0.3s ease, text-decoration 0.3s ease;
+    }
+
+    .hover-text:hover {
+        transform: scale(1.05);
+    }
     </style>
 </head>
 
@@ -104,7 +111,7 @@
                     <div class="hero-wrapper bg_cover" style="background-image: url(assets/images/hero/hero-bg-1.png);">
                         <div class="container_hor">
                             <div class="section">
-                                <div class="text">
+                                <div class="text hover-text">
                                     <h3 style="color:#ccc !important;">Your New AI Assistant is here</h3>
                                     <p class="text-end">coming soon..</p>
                                     <p style="color:#8f8d8d  !important;">Unlock limitless creativity with our AI Assistant, delivering cutting-edge
@@ -112,19 +119,18 @@
                                         Experience the future of content creation like never before.</p>
                                 </div>
                                 <div class="video">
-                                    <video controls>
+                                    <video id="myVideo" controls muted >
                                         <source src="{{ url_for('static', filename='AI.mp4') }}" type="video/mp4">
                                     </video>
                                 </div>
                             </div>
-                            <div class="section">
-                                
-                                <div class="image">
+                            <div class="section">                            
+                                <div class="image hover-text">
                                     <img src="{{ url_for('static', filename='assets/images/tools.webp') }}" alt="Descriptive Alt Text" style="width: 80%; max-width: 600px; height: 50%;">
                                 </div>  
 
-                                <div class="text">
-                                    <h3>All Tools</h3>
+                                <div class="text hover-text">
+                                    <h3 >All Tools</h3>
                                     <br>
                                     <p>The features of tool cards, each showcasing an image, 
                                         title, description, and category. These cards are designed 
@@ -133,14 +139,14 @@
                                 </div>
                             </div>
                             <div class="section">
-                                <div class="text">
+                                <div class="text hover-text">
                                     <h3>Article</h3>
                                     <br>
                                     <p>Below the hero section, there is a central area 
                                         with multiple cards. Each card represents different content categories, 
                                         such as "Blog" and "Technical Paper."</p>
                                 </div>
-                                <div class="image">
+                                <div class="image hover-text">
                                     <img src="{{ url_for('static', filename='assets/images/article.webp') }}" alt="Descriptive Alt Text" style="width: 80%; max-width: 600px; height: auto;">
                                 </div>
                                 
@@ -1121,6 +1127,12 @@
                 $('#sidebar').removeClass('active');
                 $('#toggleIcon').removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById('myVideo');
+            video.play();
         });
     </script>
 

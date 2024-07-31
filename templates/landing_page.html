@@ -158,7 +158,7 @@
     <script>
         $(document).ready(function () {
             var icon = $('#toggleIcon');
-            icon[0].style.setProperty('margin-left', '220px', 'important');
+            icon[0].style.setProperty('margin-left', '230px', 'important');
     
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
@@ -170,7 +170,7 @@
                    
                 } else {
                     icon.removeClass('fa-align-right').addClass('fa-align-left');
-                    icon[0].style.setProperty('margin-left', '220px', 'important');
+                    icon[0].style.setProperty('margin-left', '230px', 'important');
                    
                 }
             });
@@ -179,11 +179,11 @@
             $('#sidebar .list-unstyled li').on('click', function () {
                 $('#sidebar').removeClass('active');
                 icon.removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
-                icon.css('margin-left', '220px'); // Reset margin-left to 220px
+                icon.css('margin-left', '230px'); // Reset margin-left to 220px
             });
         });
     </script>
-    </script>
+   
 </body>
 
 </html>
