@@ -1,31 +1,33 @@
 function searchItems() {
-    // Get the value of the search input
     var searchQuery = document.getElementById('search-box').value.toLowerCase();
-
-    // Get the currently active category, if there is one
     var activeCategory = document.querySelector('.category-button.active');
     var categoryFilter = activeCategory ? activeCategory.getAttribute('data-category') : null;
 
-    // Combine both search and category in the fetch query
     var queryString = `?search=${encodeURIComponent(searchQuery)}`;
     if (categoryFilter) {
         queryString += `&category=${encodeURIComponent(categoryFilter)}`;
     }
 
-    // Send a request to the server with the search query and selected category
     fetch(queryString)
         .then(response => response.text())
         .then(html => {
             var parser = new DOMParser();
             var doc = parser.parseFromString(html, 'text/html');
             var newContent = doc.querySelector('.card-container');
-            document.querySelector('.card-container').innerHTML = newContent.innerHTML;
+            if (newContent) {
+                document.querySelector('.card-container').innerHTML = newContent.innerHTML;
+            } else {
+                console.error('No .card-container found in the response HTML.');
+            }
         })
         .catch(error => console.error('Error fetching filtered content:', error));
 }
 
 function filterCategory(button) {
-    var category = button.getAttribute('data-category');
+    const category = button.getAttribute('data-category');
+    const buttons = document.querySelectorAll('.category-button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
 
     fetch(`/tools?category=${encodeURIComponent(category)}`)
         .then(response => response.text())
@@ -50,13 +52,8 @@ function setActiveCategory(activeButton) {
     activeButton.classList.add('active');
 }
 
-// Attach event listeners to category buttons
 document.querySelectorAll('.category-button').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
         filterCategory(button);
     });
 });
-
-
-
-

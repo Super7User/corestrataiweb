@@ -253,14 +253,14 @@
 ----------------------------------------------------- */
 
         .container-fluid {
-            margin-top: 100px;
+            margin-top: 50px;
             /* Increased top margin */
         }
 
         #content {
             width: 100%;
             padding: 20px;
-            min-height: 100vh;
+            min-height: 95vh;
             transition: all 0.3s;
         }
 
@@ -355,22 +355,24 @@
             </div>======  End Preloader  ====== -->
             <!--======  Start Header  ======-->
             {% include 'header.html' %}
-            <div class="bg_cover" style="width:100% !important ;margin-top: 0px;">
-                <div id="content" class="wow">
-                    <div class="container-fluid">
-                        <p class="text-end mt-2"><a href="imageLanding"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
-                        <div class="container-card">
-                            <div class="title">Title</div>
-                            <form action="theme" method="get">
-                                <div class="textarea-container">
-                                    <textarea name="content" id="input-text" name="input-text" placeholder="Enter your text here..."></textarea>
-                                </div>
-                                <button type="submit" class="submit-button" onclick="submit()" >Submit </button>
-                            </form>
+            <main style="width:100%">
+                <div class="bg_cover" style="width:100% !important ;margin-top: 0px;">
+                    <div id="content" class="wow">
+                        <div class="container-fluid">
+                            <p class="text-end mt-2"><a href="imageLanding"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
+                            <div class="container-card">
+                                <div class="title">Title</div>
+                                <form action="theme" method="get">
+                                    <div class="textarea-container">
+                                        <textarea name="content" id="input-text" name="input-text" placeholder="Enter your text here..."></textarea>
+                                    </div>
+                                    <button type="submit" class="submit-button" onclick="submit()" >Submit </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </main>
         </div>
     </div>
     <script>

@@ -9,8 +9,11 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='tooldetailstyles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='toolsdetailmain.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!--====== FontAwesome css ======-->
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/flaticon/flaticon_mycollection.css') }}">
     <!--====== FontAwesome css ======-->
@@ -18,7 +21,8 @@
     <!--====== Bootstrap css ======-->
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}">
     <!--====== magnific-popup css ======-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/magnific-popup/dist/magnific-popup.css') }}">
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='assets/vendor/magnific-popup/dist/magnific-popup.css') }}">
     <!--====== Animate css ======-->
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/wow/animate.css') }}">
     <!--====== Slick-popup css ======-->
@@ -82,8 +86,9 @@
         .button-container {
             display: flex;
             gap: 10px;
-            margin-top: 20px;
+            /* margin-top: 20px; */
         }
+
 
         @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
@@ -106,20 +111,6 @@
             border-bottom: 1px dashed #ddd;
             margin: 40px 0;
         }
-        .navbar {
-            padding: 15px 10px;
-            background: #fff;
-            border: none;
-            border-radius: 0;
-            margin-bottom: 40px;
-            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-btn {
-            box-shadow: none;
-            outline: none !important;
-            border: none;
-        }
 
         .line {
             width: 100%;
@@ -132,91 +123,6 @@
             display: flex;
             width: 100%;
             align-items: stretch;
-        }
-
-        #sidebar {
-            min-width: 250px;
-            max-width: 250px;
-            background: #A8D1D1;
-            color: #292828;
-            transition: all 0.3s;
-            font-family: Arial, sans-serif;
-        }
-
-        #sidebar.active {
-            margin-left: -250px;
-        }
-
-        #sidebar .sidebar-header {
-            padding: 20px;
-            background: #A8D1D1;
-        }
-
-        #sidebar ul.components {
-            padding: 20px 0;
-        }
-
-        #sidebar ul p {
-            color: #fff;
-            padding: 10px;
-        }
-
-        #sidebar ul li a {
-            padding: 20px;
-            font-size: 1.1em;
-            display: block;
-        }
-
-        #sidebar ul li a:hover {
-            color: #7386D5;
-            background: #fff;
-        }
-
-        #sidebar ul li.active>a,
-        a[aria-expanded="true"] {
-            color: #fff;
-            background: #6d7fcc;
-        }
-
-        a[data-toggle="collapse"] {
-            position: relative;
-        }
-
-        .dropdown-toggle::after {
-            display: block;
-            position: absolute;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-        }
-
-        ul ul a {
-            font-size: 0.9em !important;
-            padding-left: 30px !important;
-            background: #6d7fcc;
-        }
-
-        ul.CTAs {
-            padding: 20px;
-        }
-
-        ul.CTAs a {
-            text-align: center;
-            font-size: 0.9em !important;
-            display: block;
-            border-radius: 5px;
-            margin-bottom: 5px;
-        }
-
-        a.download {
-            background: #fff;
-            color: #7386D5;
-        }
-
-        a.article,
-        a.article:hover {
-            background: #6d7fcc !important;
-            color: #fff !important;
         }
 
         .container-fluid {
@@ -235,24 +141,9 @@
             transition: all 0.3s;
         }
 
-       
+
         .transparent-header {
             background-color: #A8D1D1 !important;
-        }
-
-        #image-container {
-            display: none;
-            margin-top: 20px;
-        }
-
-        #image-upload {
-            display: none;
-        }
-
-        #image-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
         }
 
         .row {
@@ -269,8 +160,9 @@
             content: ' *';
             color: red;
         }
+
         .btn-generate {
-            background-image: linear-gradient(to right, #4CA1AF 0%, #C4E0E5  51%, #4CA1AF  100%);
+            background-image: linear-gradient(to right, #90c3fd, #ba71ff, #ff71b8);
             margin: 10px;
             padding: 15px 45px;
             text-align: center;
@@ -278,79 +170,122 @@
             font-family: Arial, sans-serif;
             transition: 0.5s;
             background-size: 200% auto;
-            color:#292828;            
+            color: #292828;
             box-shadow: 0 0 20px #eee;
             border-radius: 10px;
             /* display: block; */
-          }
+        }
 
-          .btn-generate:hover {
+        .btn-generate:hover {
             font-family: Arial, sans-serif;
-            background-position: right center; /* change the direction of the change here */
-            color:  rgb(29, 27, 27);
+            background-position: right center;
+            /* change the direction of the change here */
+            color: rgb(29, 27, 27);
             text-decoration: none;
-          }
-          .textarea-container {
-    position: relative;
-}
+        }
 
-.loading-indicator {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+        .textarea-container {
+            position: relative;
+        }
+
+        .loading-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+        }
+
+        .dot-typing {
+            position: relative;
+            width: 5px;
+            height: 5px;
+            border-radius: 5px;
+            background-color: #000;
+            color: #000;
+            animation: dot-typing 1.5s infinite linear;
+            animation-delay: .25s;
+        }
+
+        .dot-typing::before,
+        .dot-typing::after {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            width: 5px;
+            height: 5px;
+            border-radius: 5px;
+            background-color: #000;
+            color: #000;
+        }
+
+        .dot-typing::before {
+            left: -10px;
+            animation: dot-typing 1.5s infinite linear;
+            animation-delay: 0s;
+        }
+
+        .dot-typing::after {
+            left: 10px;
+            animation: dot-typing 1.5s infinite linear;
+            animation-delay: .5s;
+        }
+
+        @keyframes dot-typing {
+            0% {
+                background-color: #000;
+            }
+
+            50%,
+            100% {
+                background-color: #fff;
+            }
+        }
+
+        #textarea-input,
+        #input-text {
+            color: #000
+        }
+
+        .left-pane,
+        .right-pane {
+            margin-top: 50px;
+            display: flex;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--card-background-color);
+            border-radius: 0 0 12px 12px;
+            flex-direction: column;
+        }
+        .icon-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-}
+    justify-content: flex-end;
+  }
+  .breadcrumb {
+    font-size: 14px;
+    padding: 10px 0;
+    /* background-color: #f8f9fa; Light grey background */
+    border-radius: 4px;
+  }
 
-.dot-typing {
-    position: relative;
-    width: 5px;
-    height: 5px;
-    border-radius: 5px;
-    background-color: #000;
-    color: #000;
-    animation: dot-typing 1.5s infinite linear;
-    animation-delay: .25s;
-}
-
-.dot-typing::before, .dot-typing::after {
-    content: '';
+  .breadcrumb a {
+    text-decoration: none;
+    color: #007bff; /* Bootstrap primary blue color */
+    padding: 8px 16px;
+    border-radius: 4px;
     display: inline-block;
-    position: absolute;
-    top: 0;
-    width: 5px;
-    height: 5px;
-    border-radius: 5px;
-    background-color: #000;
-    color: #000;
-}
+    text-align: right
+  }
 
-.dot-typing::before {
-    left: -10px;
-    animation: dot-typing 1.5s infinite linear;
-    animation-delay: 0s;
-}
-
-.dot-typing::after {
-    left: 10px;
-    animation: dot-typing 1.5s infinite linear;
-    animation-delay: .5s;
-}
-
-@keyframes dot-typing {
-    0% {
-        background-color: #000;
-    }
-    50%,
-    100% {
-        background-color: #fff;
-    }
-}
-#textarea-input,#input-text{
-    color:#000
+  .breadcrumb i {
+    margin-right: 8px;
+  }
+  .ac-header-bnt-2 {
+    display: none !important;
 }
     </style>
 </head>
@@ -361,108 +296,97 @@
             {% include 'header.html' %}
             <div class="ac-preloader">
                 <div class="loader">
-                  
+
                     <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
                 </div>
             </div>
-           
-            <div class="bg_cover" style="width:100% !important ;margin-top: 50px;">
-                <div id="content" class="wow">
-                    <p class="text-end mt-3"><a href="/tools"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
-                    <!-- <main style="width:100%">
-                        <div class="left-pane" style="background-color: #DAE5EF;">
-                            {% if tool_id == tool.ID %}
-                            {% for f in tool.Fields %}
-                            <div class="mb-3">
-                                {% if f['type'] == 'input' %}
-                                <label for="input-text" class="form-label required">Theme</label>
-                                <input type="text" id="input-text" class="form-control mt-3" name="{{ f['type'] }}" placeholder="{{ f['Description'] }}" required>
-                                {% elif f['type'] == 'textarea' %}
-                                <label for="textarea-input" class="form-label required">Topic</label>
-                                <textarea class="form-control mt-3" id="textarea-input" name="{{ f['type'] }}" placeholder="{{ f['Description'] }}" rows="5" required></textarea>
-                                {% endif %}
-                            </div>
-                            {% endfor %}
-                            {% endif %}
-                            <button class="btn btn-generate" disabled style="color:#292828; font-size: large;" id="generate-button" onclick="generate()">Generate</button>
-                        </div>
-                        <div class="right-pane" style="background-color: #DAE5EF; position: relative;">
-                            <div class="textarea-container" style="position: relative;">
-                                <textarea id="output-text" placeholder="Output will appear here..." rows="30" readonly ></textarea>
-                                <textarea id="output-text" placeholder="Output will appear here..." rows="30" readonly style="font-family: {{ tool['Font'] | default('Arial, sans-serif') }}"></textarea>
-                                <div id="loading-indicator" class="loading-indicator" style="display: none;">     <div class="spinner-border text-primary"></div></div>
-                            </div>
-                        </div>
-                    </main> -->
-                    <main style="width:100%">
-                        <div class="left-pane" style="background-color: #DAE5EF;">
-                            {% if tool_id == tool.ID %}
-                            {% for f in tool.Fields %}
-                            <div class="mb-3">
-                                {% if f['type'] == 'input' %}
-                                <label for="input-text" class="form-label required">Theme</label>
-                                <input type="text" id="input-text" class="form-control mt-3" name="{{ f['type'] }}" placeholder="{{ f['Description'] }}" required>
-                                {% elif f['type'] == 'textarea' %}
-                                <label for="textarea-input" class="form-label required">Topic</label>
-                                <textarea class="form-control mt-3" id="textarea-input" name="{{ f['type'] }}" placeholder="{{ f['Description'] }}" rows="5" required></textarea>
-                                {% endif %}
-                            </div>
-                            {% endfor %}
-                            {% endif %}
-                            <button class="btn btn-generate" disabled style="color:#292828; font-size: large;" id="generate-button" onclick="generate()">Generate</button>
-                        </div>
-                        <div class="right-pane" style="background-color: #DAE5EF; position: relative;">
-                            <button class="btn float-end" onclick="copyContent()"><i class="fa-solid fa-copy"></i></button>
-                            <div class="textarea-container mt-5" style="position: relative;">                              
-                                <textarea id="output-text" placeholder="Output will appear here..." rows="30" readonly style="font-family: '{{fontDynamic}}' !important;"></textarea>
-                                <div id="loading-indicator" class="loading-indicator" style="display: none;">
-                                    <div class="spinner-border text-primary"></div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </main>
-                    
+
+            <main style="width:100%">
+                <!-- <div class="bg_cover" style="width:100% !important ;margin-top: 50px;"> -->
+                <!-- <div id="content" class="wow"> -->
+                    <div class="breadcrumb">
+                        <a href="/tools"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a>
+                      </div>
+                <div class="left-pane">
+                    {% if tool_id == tool.ID %}
+                    {% for f in tool.Fields %}
+                    <div class="mb-3">
+                        {% if f['type'] == 'input' %}
+                        <label for="input-text" class="form-label required">Theme</label>
+                        <input type="text" id="input-text" class="form-control mt-3" name="{{ f['type'] }}"
+                            placeholder="{{ f['Description'] }}" required>
+                        {% elif f['type'] == 'textarea' %}
+                        <label for="textarea-input" class="form-label required">Topic</label>
+                        <textarea class="form-control mt-3" id="textarea-input" name="{{ f['type'] }}"
+                            placeholder="{{ f['Description'] }}" rows="5" required></textarea>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <button class="btn btn-generate" disabled style="color:#292828; font-size: large;"
+                        id="generate-button" onclick="generate()">Generate</button>
                 </div>
-            </div>
+                <div class="right-pane" style="position: relative;">
+                    <div class="icon-container">
+                        <i class="fa-solid fa-copy" onclick="copyContent()"></i>
+                    </div>
+                    <div class="textarea-container mt-3" style="position: relative;">
+                        <textarea id="output-text" placeholder="Output will appear here..." rows="30" readonly
+                            style="font-family: '{{fontDynamic}}' !important;"></textarea>
+                        <div id="loading-indicator" class="loading-indicator" style="display: none;">
+                            <div class="spinner-border text-primary"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- </div> -->
+                <!-- </div> -->
+            </main>
         </div>
     </div>
     <script>
-       function copyContent() {
-        const textarea = document.getElementById('output-text');
-        textarea.select();
-        document.execCommand('copy');
-    }
-    
-    document.getElementById('output-text').addEventListener('copy', function(event) {
-        const copiedText = window.getSelection().toString();
-        const fontDynamic = '{{ fontDynamic }}';
-        console.log(fontDynamic,"fontDynamic")
-        const styledText = `<span style="font-family: ${fontDynamic};">${copiedText}</span>`;
-        const richText = `{\\rtf1\\ansi{\\fonttbl{\\f0 ${fontDynamic};}}\\f0 ${copiedText.replace(/\n/g, '\\par ')}}`;
+        function copyContent() {
+            const textarea = document.getElementById('output-text');
+            textarea.select();
+            document.execCommand('copy');
+        }
 
-        event.clipboardData.setData('text/plain', copiedText); // For plain text editors like Notepad
-        event.clipboardData.setData('text/html', styledText); // For HTML editors
-        event.clipboardData.setData('text/rtf', richText); // For rich text editors
+        document.getElementById('output-text').addEventListener('copy', function (event) {
+            const copiedText = window.getSelection().toString();
+            const fontDynamic = '{{ fontDynamic }}';
+            console.log(fontDynamic, "fontDynamic")
+            const styledText = `<span style="font-family: ${fontDynamic};">${copiedText}</span>`;
+            const richText = `{\\rtf1\\ansi{\\fonttbl{\\f0 ${fontDynamic};}}\\f0 ${copiedText.replace(/\n/g, '\\par ')}}`;
 
-        event.preventDefault();
-    });
+            event.clipboardData.setData('text/plain', copiedText); // For plain text editors like Notepad
+            event.clipboardData.setData('text/html', styledText); // For HTML editors
+            event.clipboardData.setData('text/rtf', richText); // For rich text editors
 
-    // document.getElementById('output-text').addEventListener('copy', function(event) {
-    //     const copiedText = window.getSelection().toString();
-    //     event.clipboardData.setData('text/plain', copiedText);
+            event.preventDefault();
+        });
 
-    //     const fontDynamic = '{{ fontDynamic }}';
-    //     console.log(fontDynamic,"fontDynamic")
-    //     event.clipboardData.setData('text/html', `<span style="font-family: ${fontDynamic};">${copiedText}</span>`);
-    //     event.clipboardData.setData('text/rtf', `{\\rtf1\\ansi{\\fonttbl\\f0 ${fontDynamic};}\\f0 ${copiedText}}`);
-    //     event.preventDefault();
-    // });
+        // document.getElementById('output-text').addEventListener('copy', function(event) {
+        //     const copiedText = window.getSelection().toString();
+        //     event.clipboardData.setData('text/plain', copiedText);
+
+        //     const fontDynamic = '{{ fontDynamic }}';
+        //     console.log(fontDynamic,"fontDynamic")
+        //     event.clipboardData.setData('text/html', `<span style="font-family: ${fontDynamic};">${copiedText}</span>`);
+        //     event.clipboardData.setData('text/rtf', `{\\rtf1\\ansi{\\fonttbl\\f0 ${fontDynamic};}\\f0 ${copiedText}}`);
+        //     event.preventDefault();
+        // });
     </script>
     <script src="{{ url_for('static', filename='tooldetailscripts.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -479,29 +403,16 @@
                 }
             });
 
-            // Close sidebar when clicking on an item
             $('#sidebar .list-unstyled li').on('click', function () {
                 $('#sidebar').removeClass('active');
                 $('#toggleIcon').removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
             });
         });
     </script>
-    
-    
+
+
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/vendor/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/vendor/popper/popper.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/vendor/slick/slick.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/vendor/magnific-popup/dist/jquery.magnific-popup.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/vendor/imagesloaded.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/vendor/isotope.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/vendor/wow/wow.min.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/theme.js') }}"></script>
 </body>
 
 </html>
-
-
-
-

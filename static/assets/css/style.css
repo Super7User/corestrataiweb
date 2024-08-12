@@ -54,17 +54,19 @@ color:#fff !important
 }
 
 .case-details-wrapper .post-content .check-list.style-one li i, .about-one_content-box p span, .clients-text.style-one p, .error-content h1 span, .footer-default .footer_widget_nav_menu ul li a:hover, .footer-default .footer_about_widget .footer-content ul.social-link li a:hover i, .user-form .form-text span a, .blog-details-wrapper .blog-post-item .post-content .ac-postbox-tag .ac-postbox-cats a:hover, .blog-details-wrapper .blog-post-item .post-content .ac-postbox-tag .ac-postbox-cats span, .blog-details-wrapper .blog-post-item .post-content ul.check-list li i, .blog-details-wrapper .blog-post-item .post-content .post-meta span i, .sidebar-widget.sidebar-recent-widget .post-thumbnail-content .post-title-date h6:hover, .sidebar-widget.sidebar-category-widget .sidebar-widget-content ul li a:hover, .blog-post-item.style-two .post-content .post-meta-wrap .post-meta span i, .blog-post-item.style-two .post-content .entry-content .read-more.style-one span, .blog-post-item.style-two .post-content .entry-content h3.title:hover, .post-meta.style-two span i, .team-item.style-one .member-info .content h4:hover, .pricing-item.style-one .pricing-head h3, .iconic-info-box.style-five .content p:hover a, .iconic-info-box.style-four .icon, .iconic-info-box.style-two .icon i, .iconic-info-box.style-one .content h4:hover, .iconic-info-box.style-one .icon i, .sub-title.style-one, .hero-wrapper .hero-content .heading-title span, .navigation-default .ac-header-one__right-btn .ac-header-bnt-1 a:hover, .navigation-default .main-menu ul > li:hover:hover > a, .navigation-default .main-menu ul > li:hover > a, .ac-header-one__right-btn.style-one .ac-dark-btn a, .home-one-dark .clients-text p, .home-one-dark .footer-default .footer_about_widget .footer-content ul.social-link li a:hover i, .home-one-dark .footer_widget_nav_menu ul li a:hover, .home-one-dark .header-navigation .main-menu ul > li:hover:hover > a, .home-one-dark .header-navigation .main-menu ul > li:hover > a, .home-one .footer-default .footer_about_widget .footer-content ul.social-link li a:hover i {
-  background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);
+  /* background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%); */
   /* background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%); */
   /* background-image: linear-gradient(to right, #4CA1AF 0%, #C4E0E5  51%, #4CA1AF  100%); */
+  background: linear-gradient(to right, #90c3fd, #ba71ff, #ff71b8);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .intro-wrapper, .sidebar-nav-widget a.active, .sidebar-nav-widget .nav-link.active, .sidebar-nav-widget a:hover, .sidebar-nav-widget h6:after, .sidebar-nav-widget.style-two .nav-tabs .nav-link.active, .author-card .author-thumb-item .thumb, .footer-default .footer_about_widget .footer-content ul.social-link li a:hover, .user-form .theme-btn.style-one:hover, .team-details-wrapper .member-info ul.social-link li a:hover, .skill-one_image-box .play-button .video-popup, .section-image-box.style-one:after, .sidebar-widget.tag-cloud-widget .tagcloud a:hover, .blog-post-item.style-two .post-content .entry-content .read-more.style-one, .skill-item.style-one .skill-bar, .team-item.style-one .member-info .share-button ul.social-link li a:hover, .team-item.style-one .member-info .share-button .icon:hover, .pricing-tabs .nav-link.active, .iconic-number-box.style-two .number, .home-one-dark .footer-default .footer_about_widget .footer-content ul.social-link li a:hover, .home-one .footer-default .footer_about_widget .footer-content ul.social-link li a:hover {
-  background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%)
+  /* background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%) */
   /* background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%); */
+  background-image: linear-gradient(to right, #90c3fd, #ba71ff, #ff71b8);
 }
 
 .video-two_image-box .video-popup, .theme-tabs.style-three .nav-link.active, .theme-tabs.style-two .nav-link.active, .pricing-item.style-two .pricing-head, .iconic-info-box.style-three .icon, .theme-btn.style-one, .circle-list.style-one li:before {
@@ -406,7 +408,7 @@ ul.social-link li {
   background: #fff;
 }
 .home-one-dark .footer-default .footer_about_widget .footer-content ul.social-link li a:after {
-  background: #000;
+  background: #fff;
 }
 .home-one-dark .copyright-area {
   border-color: rgba(255, 255, 255, 0.1);
@@ -510,7 +512,7 @@ ul.social-link li {
   background: #fff;
 }
 .home-one-dark .footer-default .footer_about_widget .footer-content ul.social-link li a:after {
-  background: #000;
+  background: #fff;
 }
 .home-one-dark .footer-newsletter-widget .newsletter-content form .form-group input {
   background-color: transparent;
@@ -1235,13 +1237,15 @@ ul.social-link li {
 }
 .theme-btn.style-two:hover {
   border-color: transparent;
-  background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%)
+  background: linear-gradient(to right, #90c3fd, #ba71ff, #ff71b8);
+  /* background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%) */
   /* background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%); */
 }
 .theme-btn.gradient-btn {
   padding: 12px 16px;
   background-size: 150% 100%;
-  background-image: linear-gradient(to right, #4CA1AF 0%, #81a2a8 51%, #4CA1AF  100%);
+  background: linear-gradient(to right, #90c3fd, #ba71ff, #ff71b8);
+  /* background-image: linear-gradient(to right, #4CA1AF 0%, #81a2a8 51%, #4CA1AF  100%); */
   /* background-image: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%); */
   transition: all 0.3s ease-in-out;
 }
@@ -1570,7 +1574,7 @@ ul.social-link li {
   padding: 16px 36px;
   border-radius: 50px;
   border: 1px solid #333;
-  color: var(--white-color);
+  /* color: var(--white-color); */
   font: 600 16px var(--font);
   line-height: 22px;
 }
@@ -1722,8 +1726,8 @@ ul.social-link li {
   font-size: 62px;
   font-weight: 700;
   line-height: 70px;
-  /* -webkit-text-stroke: 4px #814AFF; */
-  -webkit-text-stroke: 4px #A8D1D1;
+  /* -webkit-text-stroke: 4px ; */
+  -webkit-text-stroke: 4px #90c3fd;
   color: transparent;
   margin-bottom: 17px;
 }
@@ -3423,7 +3427,7 @@ ul.social-link li {
   height: 280px;
   border-radius: 50%;
   filter: blur(100px);
-  background-color: #589696;
+  background-color: #90c3fd;
 }
 .testimonial-shape-section .shape.shape-one {
   top: 135px;
