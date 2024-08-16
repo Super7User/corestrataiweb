@@ -1,118 +1,118 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
+ 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="Insurance, Health, Agency">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Include FontAwesome for icons -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-        <!--====== Required meta tags ======-->
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!--====== Title ======-->
-    
-        <!--====== Favicon Icon ======-->
-        <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.png') }}" type="image/png">
-        <!--====== Google Fonts ======-->
-        <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
-            rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-            integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-            crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <!--====== FontAwesome css ======-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/flaticon/flaticon_mycollection.css') }}">
-        <!--====== FontAwesome css ======-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/fontawesome/css/all.min.css') }}">
-        <!--====== Bootstrap css ======-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}">
-        <!--====== magnific-popup css ======-->
-        <link rel="stylesheet"
-            href="{{ url_for('static', filename='assets/vendor/magnific-popup/dist/magnific-popup.css') }}">
-        <!--====== Animate css ======-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/wow/animate.css') }}">
-        <!--====== Slick-popup css ======-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/slick/slick.css') }}">
-        <!--====== Default css ======-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/default.css') }}">
-        <!--====== Style css ======-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
-    
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+ 
     <style>
-
-        {% comment %} @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"; {% endcomment %}
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #fafafa;
-            position: fixed;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
+ 
+        body.dark-theme {
+            --background-color: #121212;
+            --text-color: #e0e0e0;
+            --card-background: #1f1f1f;
+            --header-background: #555;
+        }
+ 
+        body {
+            --background-color: #f0f0f0;
+            --text-color: #333;
+            --card-background: rgb(238, 238, 252);
+            --header-background:#e6e3e3 ;
+            font-family: system-ui, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+ 
+        h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+ 
         p {
-            font-family: 'Poppins', sans-serif;
             font-size: 1.1em;
             font-weight: 300;
             line-height: 1.7em;
             color: #999;
         }
-
+ 
         .line {
             width: 100%;
             height: 1px;
             border-bottom: 1px dashed #ddd;
             margin: 40px 0;
         }
-
-        /* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
-
+ 
         #content {
             width: 100%;
             padding: 20px;
             min-height: 100vh;
             transition: all 0.3s;
         }
-
+ 
+        a {
+            text-decoration: none; /* Removes underline from links */
+        }
+ 
         .transparent-header {
             background-color: #e6e3e3;
         }
+ 
         .ac-header-one__main,
         .header-navigation {
-            background-color: #A8D1D1 !important;
-
+            background-color: var(--header-background) !important;
         }
-
+ 
         .card {
             width: 100%;
             padding: 20px;
             border-radius: 10px;
             height: 200px !important;
-            /* background: linear-gradient(to right, #f7a7b3, #9ec7f7); */
-            background-color: #D4DEE7;
-            color: rgb(34, 32, 32);
+            background-color: var(--card-background);
+            color: var(--text-color);
             text-align: center;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            transition: 0.3s all ease;
         }
-
+ 
         .card:hover {
-            transform: scale(1.05);
+            opacity: var(--btn-hover-opacity);
         }
+ 
+        .theme-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--font-color);
+        }
+ 
+        .card-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+ 
+       
     </style>
-
 </head>
-
+ 
 <body>
        <div class="wrapper">
            <!-- <div class="ac-preloader">
@@ -154,16 +154,16 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+ 
     <script>
         $(document).ready(function () {
             var icon = $('#toggleIcon');
             icon[0].style.setProperty('margin-left', '230px', 'important');
-    
+   
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
                 icon.toggleClass('icon-move-right icon-move-left');
-    
+   
                 if ($('#sidebar').hasClass('active')) {
                     icon.removeClass('fa-align-left').addClass('fa-align-right');
                     icon[0].style.setProperty('margin-left', '0px', 'important');
@@ -174,7 +174,7 @@
                    
                 }
             });
-    
+   
             // Close sidebar when clicking on an item
             $('#sidebar .list-unstyled li').on('click', function () {
                 $('#sidebar').removeClass('active');
@@ -185,5 +185,5 @@
     </script>
    
 </body>
-
+ 
 </html>
