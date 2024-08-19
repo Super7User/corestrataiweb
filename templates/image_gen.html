@@ -41,103 +41,105 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <style>
-        /* body { */
-        /* margin-top: 150px; */
-        /* } */
+    
 
-        #outputCanvas {
-            width: 80%;
-            height: 512px;
-            /* Adjust height as needed */
-            border: 1px solid #ccc;
-        }
+</head>
+<style>
+/* body { */
+    /* margin-top: 150px; */
+    /* } */
 
-        .button {
-            background: linear-gradient(to right, #4CA1AF, #C4E0E5,#4CA1AF);
-            border: none;
-            color: rgb(31, 30, 30) !important;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px !important;
-            margin: 4px 2px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+    #outputCanvas {
+        width: 80%;
+        height: 512px;
+        /* Adjust height as needed */
+        border: 1px solid #ccc;
+    }
 
-        /* Hover state */
-        .button:hover {
-            background: linear-gradient(to right, #627f85, #C4E0E5,#627f85);
-            color: black
-        }
+    .button {
+        background: linear-gradient(to left, #ff71b8, #ba71ff,#90c3fd);
+        border: none;
+        color: rgb(31, 30, 30) !important;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px !important;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
 
-        .grand {
-            background: linear-gradient(to right, #a4fce9, #94cbf8);
-            border: none;
-            color: rgb(31, 30, 30);
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+    /* Hover state */
+    .button:hover {
+        background: linear-gradient(to left, #ff71b8, #ba71ff,#90c3fd);
+        color: black
+    }
 
-        /* Hover state */
-        .grand:hover {
-            background: linear-gradient(to right, #92cef7, #d783fd);
-            color: black
-        }
+    .grand {
+        background: linear-gradient(to right, #a4fce9, #94cbf8);
+        border: none;
+        color: rgb(31, 30, 30);
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
 
-        .back-link {
-            color: #9164e6;
-            margin-left: 40px;
-            font-size: larger;
+    /* Hover state */
+    .grand:hover {
+        background: linear-gradient(to left, #ff71b8, #ba71ff,#90c3fd);
+        color: black
+    }
 
-        }
+    .back-link {
+        color: #9164e6;
+        margin-left: 40px;
+        font-size: larger;
 
-        .back-link:hover {
-            color: #f083c2;
-            /* Change color on hover (blue) */
-        }
+    }
 
-        @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+    .back-link:hover {
+        color: #f083c2;
+        /* Change color on hover (blue) */
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #fafafa;
-        }
+    @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
-        p {
-            font-family: Arial, sans-serif;
-            font-size: 1.1em;
-            font-weight: 300;
-            line-height: 1.7em;
-            color: #999;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        background: #fafafa;
+    }
 
-      
-        .line {
-            width: 100%;
-            height: 1px;
-            border-bottom: 1px dashed #ddd;
-            margin: 40px 0;
-        }
+    p {
+        font-family: Arial, sans-serif;
+        font-size: 1.1em;
+        font-weight: 300;
+        line-height: 1.7em;
+        color: #999;
+    }
 
-             a[data-toggle="collapse"] {
-            position: relative;
-        }
+  
+    .line {
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px dashed #ddd;
+        margin: 40px 0;
+    }
 
-       
-        /* ---------------------------------------------------
-    CONTENT STYLE
+         a[data-toggle="collapse"] {
+        position: relative;
+    }
+
+   
+    /* ---------------------------------------------------
+CONTENT STYLE
 ----------------------------------------------------- */
-
-        .container-fluid {
+.container-fluid {
             margin-top: 100px;
             /* Increased top margin */
         }
@@ -151,25 +153,65 @@
 
         .transparent-header {
             /* background-color: #e6e3e3; */
-            background-color: #A8D1D1 !important;
+            background-color: #fff;
         }
         .ac-header-one__main{
-            background-color: #A8D1D1 !important;
+            background-color:#fff;
         }
         .border {
             display: inline-block;
             width: 100%;
             height: 100%;
             margin: 6px;
-            background-color: #E0E7E8;
+            /*background-color: #E0E7E8;*/
+            background-color: #fff;
+
         }
         #negativePromptInput,#promptInput{
-            color:#000
+            color:#000;
+            padding:10px;
+           
         }
-    </style>
+        .mb-3{
+            margin-left: 50px;
+            padding: 10px;
+        }
+        #generateBtn{
+            margin-left: 50px;
+            padding: 10px;
+        }
+        
+        
 
-</head>
-
+        /* Button */
+        /*#generateBtn  {
+            background: linear-gradient(to left, #ff71b8, #ba71ff,#90c3fd);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-left: 60px;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+ }*/
+ #generateBtn {
+    background: linear-gradient(to left, #ff71b8, #ba71ff, #90c3fd);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-left: 60px;
+    text-align: center; /* Center the text horizontally */
+    display: flex; /* Enables flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+</style>
 <body class="home-one">
     <div class="ac-page-wrapper" style="width:100%">
         <div class="wrapper">
@@ -188,6 +230,12 @@
                         <div class="row">
                             <!-- Input and button area -->
                             <div class="col-md-5">
+                                <style>
+                                    .col-md-5{
+                                        background-color: rgb(238, 238, 252);
+                                    }
+                                    </style>
+                                
                                 <div class="mb-3" >
                                     <label for="defaultPromptDropdown" class="form-label">Select Predefined Prompt</label>
                                     <select class="form-select" id="defaultPromptDropdown" onchange="updateInputFields()">
@@ -227,6 +275,7 @@
             </div>
         </div>
     </div>
+    
     <script id="negativePromptsData" type="application/json">{{ negative_prompts | tojson | safe }}</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -283,6 +332,16 @@
     <script src="{{ url_for('static', filename='assets/vendor/wow/wow.min.js') }}"></script>
     <!--====== Main Custom js ======-->
     <script src="{{ url_for('static', filename='assets/js/theme.js') }}"></script>
+    <script>
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+        document.body.classList.toggle('dark');
+    });
+    
+
+       
+
+    </script>
+
 </body>
 
 </html>

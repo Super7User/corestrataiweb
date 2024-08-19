@@ -54,14 +54,17 @@
 */
 
         @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
+        
+        
         body {
             font-family: 'Poppins', sans-serif;
-            background: #fafafa;
-            position: fixed;
+            /*background: #fafafa;*/
+            background-color: #fff
+            /*position: fixed;*/
+            
         }
-
-        p {
+        
+         p {
             font-family: 'Poppins', sans-serif;
             font-size: 1.1em;
             font-weight: 300;
@@ -85,29 +88,80 @@
         .ac-header-one__main,
         .header-navigation {
             background-color: #A8D1D1 !important;
-
+            
         }
 
-        .card {
-            width: 100%;
-            height:200px !important;
-            padding: 20px;
-            border-radius: 10px;
-            /* background: linear-gradient(to right, #f7a7b3, #9ec7f7); */
-            background-color: #D4DEE7 !important;
-            color: rgb(34, 32, 32);
-            text-align: center;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-
+        
+        
         .card:hover {
             transform: scale(1.05);
         }
-    </style>
+    
+        /*.card{
+            background: rgb(238, 238, 252);
+            height:200px !important;
+            width:100;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: transform 0.3s;
+            margin-left: 100px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            /*min-width: 500px;
+            max-width: 72%;
+            gap: 2in;*/
+            /*min-width: 793px;
+            max-width: 87%;
+            margin-right: 20px;
+            
+           }*/
+           /*.card {
+            background: rgb(238, 238, 252);
+            height: 200px !important;
+            width: calc(50% - 20px); 
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: transform 0.3s;
+            margin-left: 100px; 
+            margin-right: 20; 
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            min-width: 800; 
+            max-width:900;
+            margin-bottom: 20px; 
+        }
+
+
+        .card-group {
+           display: flex;
+           justify-content: space-between;   
+        }*/
+        .card {
+           background: rgb(238, 238, 252);
+           height: 200px !important;
+           width: calc(50% - 40px); 
+           padding: 20px;
+           border: 1px solid #ccc;
+           border-radius: 4px;
+           box-sizing: border-box;
+           transition: transform 0.3s;
+           box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+           min-width: 500px; 
+           max-width: 700px;
+           
+}
+
+       .card-group {
+          justify-content: center; 
+          gap: 7px; 
+          
+}
+
+</style>
 
 </head>
-
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -144,7 +198,7 @@
                             <a href="gif">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Image TO Image</h5>
+                                        <h5 class="card-title">Image To Image</h5>
                                         <p class="card-text">Image-to-image generation involves taking an existing image as input and generating a new image with the applied changes.</p>
                                     </div>
                                 </div>
@@ -188,3 +242,5 @@
 </body>
 
 </html>
+
+   
