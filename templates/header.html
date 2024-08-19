@@ -32,6 +32,7 @@
             background-color: var(--background-color);
             height: 100%;
 
+
             --heading-color: #333333;
             /* Default dark color for headings */
             --heading-background: #f0f0f0;
@@ -406,33 +407,37 @@
                 margin-left: var(--sb-width);
             }
         }
+
         .button-container {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    right: 10px;
-    top: 20px;
-    gap: 10px;
-}
+            display: flex;
+            align-items: center;
+            position: absolute;
+            right: 10px;
+            top: 20px;
+            gap: 10px;
+        }
 
-.ac-header-bnt-2 .theme-btn {
-    /* padding: 5px 15px; */
-    font-size: 1rem;
-    background-color: #ba71ff;
-    color: #fff;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-right: 70px;
-}
+        .ac-header-bnt-2 .theme-btn {
+            /* padding: 5px 15px; */
+            font-size: 1rem;
+            background-color: #ba71ff;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 70px;
+        }
 
-.ac-header-bnt-2 .theme-btn:hover {
-    opacity: var(--btn-hover-opacity);
-}
+        .ac-header-bnt-2 .theme-btn:hover {
+            opacity: var(--btn-hover-opacity);
+        }
 
-.ac-header-bnt-2 .theme-btn:active {
-    transform: scale(var(--btn-active-scale));
-}
+        .ac-header-bnt-2 .theme-btn:active {
+            transform: scale(var(--btn-active-scale));
+        }
 
+        .fa-right-from-bracket {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -441,6 +446,7 @@
         <i class="fas fa-moon"></i>
     </button> -->
     <div class="button-container">
+        <i class="fa-solid fa-right-from-bracket"></i>
         <div class="ac-header-bnt-2 d-none d-md-block">
             <a href="newlogin" class="theme-btn gradient-btn">Start Writing</a>
         </div>
@@ -476,7 +482,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ url_for('repository') }}">
                         <i class="fa-solid fa-folder"></i>
                         <span class="sidebar-text">My Repository</span>
                     </a>
