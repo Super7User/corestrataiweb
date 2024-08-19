@@ -41,6 +41,7 @@
             display: flex;
             justify-content: center;
             margin-top:80px;
+            padding-left: 20px;
         }
 
         #content {
@@ -143,6 +144,8 @@
             justify-content: center;
             align-items: center;
             min-height: 80vh;
+            margin-left: 20px;
+            max-width: 768px;
         }
         
         
@@ -156,6 +159,11 @@
         .go-back-link:hover {
             color: #f083c2;
             opacity:0.8; 
+        }
+        @media (max-width: 767px) {
+            .card {
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
@@ -195,7 +203,7 @@
                             <!-- <div class="col-md-1" style="margin-top: 100px"></div> -->
                             <div class="col-md-9">
                                 <div id="blogCanvas" contenteditable="true" tabindex="0" class="border bg-white"
-                                 style=" margin-left:40px;background: var(--card-background) !important; color: black !important; font-weight: bolder; height: 400px; width:970px;max-width:1050px; position: fixed; overflow-y: scroll;">
+                                 style=" margin-left:40px;background: var(--card-background) !important; color: black !important; font-weight: bolder; height: 400px; width:960px;max-width:1050px; position: fixed; overflow-y: scroll;">
                                  <!-- User's blog design appears here -->
                             </div>
                         </div>
