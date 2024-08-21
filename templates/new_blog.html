@@ -13,24 +13,22 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
 
     <style>
-        #content {
-            width: 100%;
-            padding: 20px;
-            min-height: 100vh;
-            transition: all 0.3s;
-            margin-top:150px;
-        }
-
-
-
-
         main {
             background-color: var(--background-color);
             margin-left: 5rem;
             padding: 1rem 2rem;
             transition: margin-left 0.5s ease-in-out;
         }
-        
+        #content {
+            width: 100%; 
+            padding-top:80px;
+            min-height: 100vh;
+            transition:none;
+            
+        }
+        a {
+            text-decoration: none; 
+        }
         .button {
             background: linear-gradient(to right, #90c3fd, #ba71ff, #ff71b8);
             border: none;
@@ -43,9 +41,6 @@
             margin: 4px 2px;
             cursor: pointer;
             transition: background 0.3s ease;
-        }
-        a {
-            text-decoration: none;
         }
 
         .button:hover {
@@ -60,7 +55,7 @@
             text-align:center;
             text-decoration: none;
             display: inline-block;
-            font-size: 17px;
+            font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
             transition: background 0.3s ease;
@@ -79,6 +74,7 @@
             color: #f083c2;
             opacity:0.8; 
         }
+
     </style>
 </head>
 
@@ -93,8 +89,8 @@
             </div>
             {% include 'header.html' %}
             <main class="bg_cover" style="background-image: url(assets/images/hero/hero-bg-1.png); width:100% !important">
-                
-                    <div id="content" class="wow mt-5 content-wrapper">
+                <div class="content-wrapper">
+                    <div id="content" class="wow mt-5">
                         <!-- <a href="new_sidebar.html" class="back-link ml-5 mt-5" onclick="history.go(-1); return false;"><i class="fas fa-arrow-left" title="Back"></i></a> -->
                         <p class="text-end mt-3 go-back-link" style="position: absolute; top:85px; right: 30px; color: #9164e6; font-size: larger;">
                             <a href="landingpage"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a>
@@ -117,7 +113,7 @@
                             <!-- <div class="col-md-1" style="margin-top: 100px"></div> -->
                             <div class="col-md-9">
                                 <div id="blogCanvas" contenteditable="true" tabindex="0" class="border bg-white"
-                                 style=" margin-left:40px;background: #E3E9EA !important; color: black !important; font-weight: bolder; height: 400px; width:960px;max-width:1050px; position: fixed; overflow-y: scroll;">
+                                 style=" background: #E3E9EA !important; color: black !important; font-weight: bolder; height: 400px; width:1000px;max-width:1050px; position: fixed; overflow-y: scroll;">
                                  <!-- User's blog design appears here -->
                             </div>
                         </div>
