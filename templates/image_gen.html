@@ -197,6 +197,7 @@ CONTENT STYLE
        }
 </style>
 <body class="home-one">
+   
     <div class="ac-page-wrapper" style="width:100%">
         <div class="wrapper">
             <!--======  Start Preloader  ======-->
@@ -207,7 +208,9 @@ CONTENT STYLE
             </div><!--======  End Preloader  ======-->
             <!--======  Start Header  ======-->
             {% include 'header.html' %}
-            <div class="bg_cover" style="width:100% !important ;margin-top: 0px;">
+            <main style="background-color: #fff;">
+    
+              <div class="bg_cover" style="width:100% !important ;margin-top: 0px;">
                 <div id="content" class="wow">
                     <div class="container-fluid">
                         <p class="text-end"><a href="imageLanding"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
@@ -229,6 +232,7 @@ CONTENT STYLE
                                         {% endfor %}
                                     </select>
                                 </div>
+                                
                                 <div class="mb-3" id="promptInputs">
                                     <label for="promptInput" class="form-label">Prompt</label>
                                     <input type="text" class="form-control" id="promptInput" placeholder="Enter prompt">
@@ -237,6 +241,7 @@ CONTENT STYLE
                                     <input type="text" class="form-control" id="negativePromptInput"
                                         placeholder="Enter negative prompt">
                                 </div>
+                           
                                 <!-- id="dropdownInputs" style="display: none;" -->                               
                                 <!-- <div class="mb-3 form-check">
                                     <input class="form-check-input" type="checkbox" id="defaultPromptCheckbox" onclick="togglePromptInputs()">
@@ -247,6 +252,7 @@ CONTENT STYLE
                                     onclick="generateDescription()">Generate
                                     Description</button>
                             </div>
+                              
                            
                             <div class="col-md-7">
                                 <span class="border border-dark">
@@ -256,10 +262,12 @@ CONTENT STYLE
                         </div>
                     </div>
                 </div>
+        
             </div>
+            </main>
         </div>
     </div>
-    
+
     <script id="negativePromptsData" type="application/json">{{ negative_prompts | tojson | safe }}</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
