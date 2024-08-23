@@ -45,6 +45,7 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #d0e3f4;
+           
             display: flex;
             /* align-items: center; */
             /* justify-content: center; */
@@ -64,7 +65,7 @@
             margin-left: 40px;
             width:100% !important;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        } */
+        }*/ 
 
         .input-group {
             margin-bottom: 20px;
@@ -156,7 +157,7 @@
             color: #999;
         }
 
-
+      
 
         .line {
             width: 100%;
@@ -165,21 +166,25 @@
             margin: 40px 0;
         }
 
-
+        
         /* ---------------------------------------------------
 CONTENT STYLE
 ----------------------------------------------------- */
 
         .container-fluid {
             margin-top: 150px;
+           
+            
+            
             /* Increased top margin */
-        }
+         }
 
         #content {
             width: 100%;
             padding: 20px;
             min-height: 100vh;
             transition: all 0.3s;
+            
         }
 
         .transparent-header {
@@ -190,31 +195,29 @@ CONTENT STYLE
         #image-container {
             display: none;
             margin-top: 20px;
-        }
+           
+     }
 
         #image-upload {
             display: none;
+            
         }
 
         #image-wrapper {
             display: flex;
             justify-content: center;
             margin-top: 20px;
-        }
+           }
 
         .row {
             display: flex;
             justify-content: space-between;
-            /* gap: 5px; */
-            /* width: 80%; */
-        }
-
-        .ac-header-one__main {
+             }
+        .ac-header-one__main{
             background-color: #A8D1D1 !important;
         }
-
         .button {
-            background: linear-gradient(to right, #4CA1AF, #C4E0E5, #4CA1AF);
+            background: linear-gradient(to left, #ff71b8, #ba71ff,#90c3fd);
             border: none;
             color: rgb(31, 30, 30);
             padding: 15px 32px;
@@ -229,14 +232,49 @@ CONTENT STYLE
 
         /* Hover state */
         .button:hover {
-            background: linear-gradient(to right, #627f85, #C4E0E5, #627f85);
-            color: black
+            background: linear-gradient(to left, #ff71b8, #ba71ff,#90c3fd);
+            color: black;
+            transition: background 0.3s ease;
         }
-    </style>
+     .ac-page-wrapper{
+        position: relative;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 120px;
+        margin-left:auto;
+        margin-right: auto;
+        display: block;
+        float: right;
+        justify-content: center;
+        padding-left: 50px;
+        align-items: center;
+        
+       }
+    .card{
+        display: flex;
+        width: 100%;
+        height: 490px;
+       }
+      
+    .hero-wrapper {
+        position: relative;
+      }
+
+    #content {
+       position: relative;
+      }
+
+   #content p.text-end {
+      position: fixed;
+      top: 70px; 
+      right: 50px;
+
+}
+</style>
 </head>
 
 <body class="home-one">
-    <div class="ac-page-wrapper">
+   <div class="ac-page-wrapper">
         <div class="wrapper">
             <!--======  Start Preloader  ======-->
             <div class="ac-preloader">
@@ -246,62 +284,61 @@ CONTENT STYLE
             </div><!--======  End Preloader  ======-->
             <!--======  Start Header  ======-->
             {% include 'header.html' %}
-            <main style="width:100%">
-                <div class="hero-wrapper bg_cover"
-                    style="background-image: url(assets/images/hero/hero-bg-1.png);padding: 100px !important;">
-                    <div id="content" class=" wow">
-                        <p class="text-end mt-2"><a href="imageLanding"><i
-                                    class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
+           <main style="background-color: #fff;">
+                <div class="hero-wrapper bg_cover" style="padding: 100px !important;">
+                   
+                    <div id="content" class=" wow" >
+                        <p class="text-end mt-2"><a href="imageLanding"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a> </p>
                         <div class="card-group">
-                            <div class="row">
-
+                            <div class="row" >
+                                
                                 <div class="col-sm-6">
-
-                                    <div class="card" style="background-color: #C1CEDB;">
-                                        <div class="card-body">
-                                            <img id="image-display"
-                                                src="{{ url_for('static', filename='images/upload.png')}}"
+                                    
+                                        <div class="card" style="background-color: rgb(238, 238, 252);">
+                                            <div class="card-body">
+                                                <img id="image-display" src="{{ url_for('static', filename='images/upload.png')}}"
                                                 style="width:500px;height:350px">
                                             <input type="file" id="image-upload" accept="image/*">
-                                            <a href="#" id="upload-button" class="btn btn-primary mt-3 button">Upload
-                                                Image</a>
+                                            <a href="#" id="upload-button" class="btn btn-primary mt-3 button">Upload Image</a>
+                                            </div>
                                         </div>
-                                    </div>
-
+                                    
                                 </div>
                                 <div class="col-sm-6">
-
-                                    <div class="card" style="background-color: #C1CEDB;">
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                            <div class="videos">
-                                                <div class="video-container">
-                                                    <img id="gif1" style="display: none;" alt="Generated GIF">
-                                                    <div class="play-button" id="playButton1" onclick="playGif('gif1')">
-                                                        <img src="/static/images/play-icon.png" alt="Play Button">
-                                                    </div>
-                                                    <div id="loading" class="loading">Generating GIF, please wait...
-                                                    </div>
-                                                </div>
+                                    
+                                        <div class="card" style="background-color:rgb(238, 238, 252);">
+                                            <div class="card-body">
+                                                    <p class="card-text">
+                                                        <div class="videos">
+                                                            <div class="video-container">
+                                                                <img id="gif1" style="display: none;" alt="Generated GIF">
+                                                                <div class="play-button" id="playButton1" onclick="playGif('gif1')">
+                                                                    <img src="/static/images/play-icon.png" alt="Play Button">
+                                                                </div>
+                                                                <div id="loading" class="loading">Generating GIF, please wait...</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <input type="text" id="imageUrl" placeholder="Enter init_image URL">
+                                                        </div>
+                                                        <a href="#" onclick="generateVideo()" class="btn btn-primary button">Generate</a>
+                
+                                                    </p>
                                             </div>
-                                            <div class="input-group">
-                                                <input type="text" id="imageUrl" placeholder="Enter init_image URL">
-                                            </div>
-                                            <a href="#" onclick="generateVideo()"
-                                                class="btn btn-primary button">Generate</a>
-
-                                            </p>
+                                            
                                         </div>
-                                    </div>
-
-
+                                
                                 </div>
+                                
                             </div>
+                            
                         </div>
+                        
+                    
                     </div>
+              
                 </div>
-            </main>
-
+           </main>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

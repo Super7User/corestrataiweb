@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="Insurance, Health, Agency">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include FontAwesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
     <!--====== Required meta tags ======-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -47,120 +44,88 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
-    <style>
-        /*
-    DEMO STYLE
-*/
-
-        @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #fafafa;
-            position: fixed;
+   <style>
+       
+        h5 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 0px;
         }
 
         p {
-            font-family: 'Poppins', sans-serif;
             font-size: 1.1em;
-            font-weight: 300;
+            font-weight: 16px;
             line-height: 1.7em;
             color: #999;
+            margin-top: 5px;
         }
-
-
-        .line {
+        
+         a {
+            text-decoration: none;
+        }
+        #content {
             width: 100%;
-            height: 1px;
-            border-bottom: 1px dashed #ddd;
-            margin: 40px 0;
+            margin-top:190px;
+            min-height: 100vh;
+            transition: all 0.3s;
         }
-
-
-        .transparent-header {
-            background-color: #e6e3e3;
+        main {
+            background-color: var(--background-color);
+            margin-left: 5rem;
+            padding: 1rem 2rem;
+            transition: margin-left 0.5s ease-in-out;
         }
-
-        .ac-header-one__main,
-        .header-navigation {
-            background-color: #A8D1D1 !important;
-
-        }
-
         .card {
             width: 100%;
-            height: 200px !important;
             padding: 20px;
             border-radius: 10px;
-            /* background: linear-gradient(to right, #f7a7b3, #9ec7f7); */
-            background-color: #D4DEE7 !important;
-            color: rgb(34, 32, 32);
+            height: 200px !important;
             text-align: center;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            transition: 0.3s all ease;
         }
+       .card:hover {
+         transform: scale(1.05);
+       }
 
-        .card:hover {
-            transform: scale(1.05);
-        }
+
     </style>
-
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
-
-    <div class="wrapper">
-        <!-- <div class="ac-preloader">
-            <div class="loader">
-                <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
-            </div>
-        </div> -->
-        {% include 'header.html' %}
-        <main style="width: 100%;height: 100%;">
-            <div class="hero-wrapper bg_cover" style="background-image: url(assets/images/hero/hero-bg-1.png);">
-                <div id="content" class=" wow">
-                    <div class="card-group">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <a href="image">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Prompt To Image</h5>
-                                            <p class="card-text">Use an image generation model to create the image, and
-                                                deliver the result to the user for feedback.</p>
-                                        </div>
-                                    </div>
-                                </a>
+    {% include 'header.html' %}
+    <main class="hero-wrapper bg_cover" style="background-image: url(assets/images/hero/hero-bg-1.png);">
+        <div id="content"class=" wow">
+            <div class="card-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="image" class="card-link">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="color: var(--font-color);">Prompt To Image</h5>
+                                    <p class="card-text">Use an image generation model to create the image, and deliver the result to the user for feedback.</p>
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <a href="gif">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Image TO Image</h5>
-                                            <p class="card-text">Image-to-image generation involves taking an existing
-                                                image as input and generating a new image with the applied changes.</p>
-                                        </div>
-                                    </div>
-                                </a>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="gif" class="card-link">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="color: var(--font-color);">Image To Image</h5>
+                                    <p class="card-text">Image-to-image generation involves taking an existing image as input and generating a new image with the applied changes.</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+                            
+                    
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
     <script>
         $(document).ready(function () {
             var icon = $('#toggleIcon');
@@ -173,11 +138,9 @@
                 if ($('#sidebar').hasClass('active')) {
                     icon.removeClass('fa-align-left').addClass('fa-align-right');
                     icon[0].style.setProperty('margin-left', '0px', 'important');
-
                 } else {
                     icon.removeClass('fa-align-right').addClass('fa-align-left');
                     icon[0].style.setProperty('margin-left', '230px', 'important');
-
                 }
             });
 
@@ -185,7 +148,7 @@
             $('#sidebar .list-unstyled li').on('click', function () {
                 $('#sidebar').removeClass('active');
                 icon.removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
-                icon.css('margin-left', '230px'); // Reset margin-left to 220px
+                icon.css('margin-left', '230px'); // Reset margin-left to 230px
             });
         });
     </script>
