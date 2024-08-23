@@ -8,7 +8,7 @@ import ast
 import json
 from io import BytesIO
 import firebase_admin
-from firebase_admin import credentials, auth
+from firebase_admin import credentials, auth, db
 from firebase_admin.exceptions import FirebaseError
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail, Message
@@ -16,6 +16,7 @@ from flask_login import LoginManager, login_user, UserMixin, current_user, login
 from datetime import timedelta
 import logging
 from groq import Groq
+import time
 
 app = Flask(__name__)
 
@@ -46,7 +47,11 @@ mail = Mail(app)
 
 # Firebase configuration
 cred = credentials.Certificate("serviceAccountKey.json")  
-firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app(cred,{
+    'databaseURL': 'https://holygrail07-3bc90-default-rtdb.firebaseio.com/'
+})
+
+ref = db.reference('/')
 
 # Initialize LoginManager
 login_manager = LoginManager()
@@ -100,42 +105,39 @@ def index_dark():
 def about():
     return render_template('about.html')
 
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     if request.method == 'POST':
-#         email = request.form['login_email']
-#         password = request.form['login_password']
-#         keep_logged_in = 'keep_logged_in' in request.form
-#         print(request,request.form,"rrrrr") 
-#         try:
-#             # Verify the user's email and password using Firebase Authentication REST API
-#             url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={firebaseConfig['apiKey']}"
-#             payload = {
-#                 "email": email,
-#                 "password": password,
-#                 "returnSecureToken": True
-#             }
-#             response = requests.post(url, json=payload)
-#             response_data = response.json()
+# @app.route('/repository')
+# def repository():
+#     user_id = session.get('userId')
+#     print(user_id,"repository")
+#     return render_template('repository.html')
 
-#             if response.status_code == 200:
-#                 user_id = response_data['localId']
-#                 user = User(id=user_id, email=email)
-#                 login_user(user, remember=keep_logged_in)
+@app.route('/repository', methods=['GET'])
+def repository():
+    user_id = session.get('userId')
+    
+    if not user_id:
+        return jsonify({'error': 'User ID not found in session'}), 400
+    
+    try:
+        # Query the database to find all entries with the matching user_id
+        ref = db.reference('generated_streams')
+        query = ref.order_by_child('user_id').equal_to(user_id)
+        result = query.get()
 
-#                 if keep_logged_in:
-#                     session.permanent = True
-#                     app.permanent_session_lifetime = timedelta(hours=1)
-#                 else:
-#                     session.permanent = False
+        if not result:
+            return jsonify({'error': 'Data not found'}), 404
 
-#                 return jsonify({"status": "success", "message": f"User {email} logged in successfully."})
-#             else:
-#                 return jsonify({"status": "error", "message": response_data.get("error", {}).get("message", "Invalid login credentials.")})
-#         except Exception as e:
-#             return jsonify({"status": "error", "message": str(e)})
+        # Convert timestamps to readable format and collect all data
+        formatted_data = []
+        for key, value in result.items():
+            value['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(value['timestamp'] / 1000))
+            formatted_data.append(value)
 
-#     return render_template('login.html')
+        # Render the data in the HTML template
+        return render_template('repository.html', data=formatted_data)
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -161,6 +163,8 @@ def login():
                 user_id = response_data['localId']
                 user = User(id=user_id, email=email)
                 login_user(user, remember=keep_logged_in)
+
+                session['userId'] = user_id
 
                 if keep_logged_in:
                     session.permanent = True
@@ -240,6 +244,9 @@ def tools():
     search_query = request.args.get('search', None)
     data = pd.read_csv('alltools.csv')
 
+    user_id = session.get('userId')
+    print(user_id,"userId")
+
     if category and category != "All":
         data = data[data['Category'] == category]
 
@@ -277,8 +284,21 @@ def tool_detail(tool_id_str):
     tool['Fields'] = ast.literal_eval(tool['Fields']) if pd.notna(tool['Fields']) else []
     font_family = tool.get('Font')
     print(font_family,"tool")
+    titleName = tool.get('Title')
+    print(titleName,"titleName")
+    user_id = session.get('userId')
+    # if user_id:
+    #     title = tool.get('Title')
+    #     if title:
+    #         ref.child('users').child(user_id).child('tools').child(str(tool_id)).set({
+    #             'title': title,
+    #             'user_id':user_id,
+    #             'timestamp': {"timestamp": "TIMESTAMP"}
+    #         })
+    #         print(f"Saved tool {title} for user {user_id} in Firebase")
+
     
-    return render_template('tool_details.html', tool=tool, tool_id=tool_id,fontDynamic=font_family)
+    return render_template('tool_details.html', tool=tool, tool_id=tool_id,fontDynamic=font_family,titleName=titleName)
 
 @app.route('/generate-content', methods=['POST'])
 def generate_content():
@@ -289,17 +309,95 @@ def generate_content():
 
     return jsonify(message=response_message)
 
+
+# @app.route('/generate-stream', methods=['POST'])
+# def generate_stream():
+#     data = request.get_json()
+#     prompt = data.get('prompt')
+#     user_id = session.get('userId')
+    
+#     if not prompt:
+#         return jsonify({'error': 'Prompt is missing'}), 400
+    
+#     tool_id = session.get('tool_id')  # Retrieve tool_id from session
+
+#     # Read the CSV and fetch the PromptSystem
+#     try:
+#         df = pd.read_csv('alltools.csv')  # Update the path to where the file is stored
+#         tool_details = df[df['ID'] == int(tool_id)]
+#         if tool_details.empty:
+#             return jsonify({'error': 'Tool not found'}), 404
+
+#         system_prompt = tool_details.iloc[0]['PromptSystem']
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
+
+#     # Call to OpenAI with the custom system prompt
+#     try:
+#         response = client.chat.completions.create(
+#             model="llama3-8b-8192",
+#             messages=[
+#                 {
+#                     "role": "system",
+#                     "content": system_prompt
+#                 },
+#                 {
+#                     "role": "user",
+#                     "content": prompt
+#                 },
+#             ],
+#             stream=True,
+#             temperature=1,
+#             max_tokens=512,
+#             top_p=1,
+#         )
+
+#         # Initialize an empty string to store the entire response
+#         complete_response = ""
+
+#         def generate():
+#             nonlocal complete_response
+#             content_generated = False
+
+#             for chunk in response:
+#                 if chunk.choices[0].delta.content:
+#                     content = chunk.choices[0].delta.content
+#                     complete_response += content
+#                     yield content
+#                     content_generated = True
+#                 else:
+#                     print("No content in chunk or malformed chunk:", chunk)
+            
+#             # If content was generated, store it in Realtime Database
+#             if content_generated:
+#                 ref = db.reference('generated_streams').push()  # Auto-generate a new key for the document
+#                 ref.set({
+#                     'user_id': user_id,
+#                     'tool_id': tool_id,
+#                     'prompt': prompt,
+#                     'response': complete_response,
+#                     'timestamp': int(time.time() * 1000)  # Store timestamp in milliseconds
+#                 })
+
+#         return Response(generate(), mimetype='text/plain')
+    
+#     except Exception as e:
+#         print("Error during streaming:", str(e))
+#         return jsonify({'error': str(e)}), 500
+
+
 @app.route('/generate-stream', methods=['POST'])
 def generate_stream():
     data = request.get_json()
     prompt = data.get('prompt')
+    user_id = session.get('userId')
+    
     if not prompt:
         return jsonify({'error': 'Prompt is missing'}), 400
-    else:
-        print("Prompt ====", prompt)
+    
     tool_id = session.get('tool_id')  # Retrieve tool_id from session
 
-    # Read the CSV and fetch the PromptSystem
+    # Read the CSV and fetch the PromptSystem and Title
     try:
         df = pd.read_csv('alltools.csv')  # Update the path to where the file is stored
         tool_details = df[df['ID'] == int(tool_id)]
@@ -307,15 +405,14 @@ def generate_stream():
             return jsonify({'error': 'Tool not found'}), 404
 
         system_prompt = tool_details.iloc[0]['PromptSystem']
+        tool_title = tool_details.iloc[0]['Title']  # Get the title of the tool
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
     # Call to OpenAI with the custom system prompt
     try:
         response = client.chat.completions.create(
-           model="llama3-8b-8192",
-        # response = client.chat.completions.create(
-        #     model="gpt-4",
+            model="llama3-8b-8192",
             messages=[
                 {
                     "role": "system",
@@ -332,18 +429,73 @@ def generate_stream():
             top_p=1,
         )
 
+        # Initialize an empty string to store the entire response
+        complete_response = ""
+
         def generate():
+            nonlocal complete_response
+            content_generated = False
+
             for chunk in response:
                 if chunk.choices[0].delta.content:
-                    yield chunk.choices[0].delta.content
+                    content = chunk.choices[0].delta.content
+                    complete_response += content
+                    yield content
+                    content_generated = True
                 else:
                     print("No content in chunk or malformed chunk:", chunk)
-                    
+            
+            # If content was generated, store it in Realtime Database
+            if content_generated:
+                ref = db.reference('generated_streams').push()  # Auto-generate a new key for the document
+                ref.set({
+                    'user_id': user_id,
+                    'tool_id': tool_id,
+                    'tool_title': tool_title,  # Store the tool title
+                    'prompt': prompt,
+                    'response': complete_response,
+                    'timestamp': int(time.time() * 1000)  # Store timestamp in milliseconds
+                })
+
         return Response(generate(), mimetype='text/plain')
     
     except Exception as e:
         print("Error during streaming:", str(e))
         return jsonify({'error': str(e)}), 500
+
+
+
+@app.route('/tooldetailoutput/<int:tool_id>', methods=['GET'])
+def tool_details_output(tool_id):
+    user_id = session.get('userId')
+    
+    if not user_id:
+        return jsonify({'error': 'User ID not found in session'}), 400
+    
+    try:
+        # Query the database to find the entries with the matching user_id and tool_id
+        ref = db.reference('generated_streams')
+        query = ref.order_by_child('user_id').equal_to(user_id)
+        result = query.get()
+
+        last_entry = None
+        for key, value in result.items():
+            if value['tool_id'] == tool_id:
+                last_entry = value
+                break  # Assuming you want the first matching entry
+
+        if not last_entry:
+            return jsonify({'error': 'Data not found for this tool'}), 404
+
+        # Convert timestamp to readable format
+        last_entry['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_entry['timestamp'] / 1000))
+
+        # Render the data in the HTML template
+        return render_template('tooldetail_Ouput.html', data=last_entry)
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 
 @app.route('/generate-description', methods=['POST'])

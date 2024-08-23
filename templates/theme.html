@@ -252,10 +252,9 @@
         CONTENT STYLE
     ----------------------------------------------------- */
 
-        .container-fluid {
+        /* .container-fluid {
             margin-top: 100px !important;
-            /* Increased top margin */
-        }
+        } */
 
         #content {
             width: 100%;
@@ -370,6 +369,9 @@
             margin-right: 20px;
             margin-bottom: 10px;
         }
+        .ac-header-bnt-2 {
+    display: none !important;
+}
     </style>
 
 </head>
@@ -385,60 +387,62 @@
             </div>
             <!--======  Start Header  ======-->
             {% include 'header.html' %}
-            <div class="bg_cover" style="width:100% !important ;margin-top: 0px;">
-                <div id="content" class="wow">
-                    <div class="container-fluid">
-                        <p class="text-end mt-2"><a href="title"><i
-                                    class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
-
-                        <h1>Select a Blog Template</h1>
-
-                        <form id="templateForm">
-
-                            <div class="radio-buttons mt-4">
-                                <label>
-                                    <input type="radio" name="template" value="trendy" onclick="updatePreview(this.value)" checked>
-                                    Trendy
-                                </label>
-                                
-                                <label>
-                                    <input type="radio" name="template" value="casual"
-                                        onclick="updatePreview(this.value)">
-                                    Casual
-                                </label>
-                                <label>
-                                    <input type="radio" name="template" value="formal"
-                                        onclick="updatePreview(this.value)">
-                                    Formal
-                                </label>
-                                <label>
-                                    <input type="radio" name="template" value="minimalist"
-                                        onclick="updatePreview(this.value)">
-                                    Minimalist
-                                </label>
-                                <label>
-                                    <input type="radio" name="template" value="bold"
-                                        onclick="updatePreview(this.value)">
-                                    Bold
-                                </label>
-                                <label>
-                                    <input type="radio" name="template" value="vintage"
-                                        onclick="updatePreview(this.value)">
-                                    Vintage/Retro
-                                </label>
-                                <label>
-                                    <input type="radio" name="template" value="elegant"
-                                        onclick="updatePreview(this.value)">
-                                    Elegant
-                                </label> 
-                            </div>
-                        </form>
-
-                        <!-- <h2>Template Preview</h2> -->
-                        <iframe id="templatePreview" class="template-preview" src="trendy"></iframe>
+            <main style="width:100%">
+                <div class="bg_cover" style="width:100% !important ;margin-top: 20px;">
+                    <div id="content" class="wow">
+                        <div class="container-fluid">
+                            <p class="text-end dark-theme-paragraph"><a href="title"><i
+                                        class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a></p>
+    
+                            <h1 class="dark-theme-heading">Select a Blog Template</h1>
+    
+                            <form id="templateForm">
+    
+                                <div class="radio-buttons mt-4">
+                                    <label>
+                                        <input type="radio" name="template" value="trendy" onclick="updatePreview(this.value)" checked>
+                                        Trendy
+                                    </label>
+                                    
+                                    <label>
+                                        <input type="radio" name="template" value="casual"
+                                            onclick="updatePreview(this.value)">
+                                        Casual
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="template" value="formal"
+                                            onclick="updatePreview(this.value)">
+                                        Formal
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="template" value="minimalist"
+                                            onclick="updatePreview(this.value)">
+                                        Minimalist
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="template" value="bold"
+                                            onclick="updatePreview(this.value)">
+                                        Bold
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="template" value="vintage"
+                                            onclick="updatePreview(this.value)">
+                                        Vintage/Retro
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="template" value="elegant"
+                                            onclick="updatePreview(this.value)">
+                                        Elegant
+                                    </label> 
+                                </div>
+                            </form>
+    
+                            <!-- <h2>Template Preview</h2> -->
+                            <iframe id="templatePreview" class="template-preview" src="trendy"></iframe>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </main>
         </div>
     </div>
     <script>
