@@ -1,24 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zxx">
 
 <head>
+    <!--====== Required meta tags ======-->
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="Insurance, Health, Agency">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--====== Title ======-->
+    <title>AIcraft - AI Application & Generator HTML Template</title>
+    <!--====== Favicon Icon ======-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include FontAwesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <!--====== Required meta tags ======-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--====== Title ======-->
 
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.png') }}" type="image/png">
+    <!--====== Google Fonts ======-->
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!--====== FontAwesome css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/flaticon/flaticon_mycollection.css') }}">
+    <!--====== FontAwesome css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/fontawesome/css/all.min.css') }}">
+    <!--====== Bootstrap css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <!--====== magnific-popup css ======-->
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='assets/vendor/magnific-popup/dist/magnific-popup.css') }}">
+    <!--====== Animate css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/wow/animate.css') }}">
+    <!--====== Slick-popup css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/slick/slick.css') }}">
+    <!--====== Default css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/default.css') }}">
+    <!--====== Style css ======-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
+        body {
+            overflow-y: hidden;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
         main {
             background-color: var(--background-color);
             margin-left: 5rem;
             padding: 1rem 2rem;
             transition: margin-left 0.5s ease-in-out;
         }
+
         #content {
             width: 100%; 
             padding-top:80px;
@@ -29,8 +71,9 @@
         a {
             text-decoration: none; 
         }
+
         .button {
-            background: linear-gradient(to right, #90c3fd, #ba71ff, #ff71b8);
+            background:linear-gradient(to right, #90c3fd, #ba71ff, #ff71b8);
             border: none;
             color: #fff;
             padding: 15px 32px;
@@ -48,7 +91,7 @@
         }
 
         .grand {
-            background: linear-gradient(to right, #a4fce9, #94cbf8);
+            background:linear-gradient(to right, #ffa3cc, #d1a8ff, #b3d7ff);
             border: none;
             color:rgb(31, 30, 30) !important;
             padding: 20px 32px; 
@@ -64,16 +107,34 @@
             height: 50px;
             width:210px;
            
+           
         }
+
         .grand:hover {
             background: linear-gradient(to right, #90c3fd, #ba71ff, #ff71b8);
             color:black;
             opacity: var(--btn-hover-opacity);
         }
-        .go-back-link:hover {
+
+        span:hover {
             color: #f083c2;
-            opacity:0.8; 
+           
         }
+        .ac-header-bnt-2 {
+            display: none !important;
+        }
+
+        span {
+            color: var(--font-color);
+            font-size: larger;
+            font-weight:16px;
+        }
+        
+        .theme-toggle {
+            top:5px;
+        }
+
+
 
     </style>
 </head>
@@ -92,9 +153,9 @@
                 <div class="content-wrapper">
                     <div id="content" class="wow mt-5">
                         <!-- <a href="new_sidebar.html" class="back-link ml-5 mt-5" onclick="history.go(-1); return false;"><i class="fas fa-arrow-left" title="Back"></i></a> -->
-                        <p class="text-end mt-3 go-back-link" style="position: absolute; top:85px; right: 30px; color: #9164e6; font-size: larger;">
+                        <span class="text-end mt-3" style="position: absolute; top:80px; right:40px;">
                             <a href="landingpage"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp;Go back</a>
-                        </p>
+                        </span>
                         
                         <div class="row mt-4">
                             <div class="col-md-3 d-flex flex-column align-items-center" style="padding-top: 0px;">
@@ -113,7 +174,7 @@
                             <!-- <div class="col-md-1" style="margin-top: 100px"></div> -->
                             <div class="col-md-9">
                                 <div id="blogCanvas" contenteditable="true" tabindex="0" class="border bg-white"
-                                 style=" background: #E3E9EA !important; color: black !important; font-weight: bolder; height: 400px; width:1000px;max-width:1050px; position: fixed; overflow-y: scroll;">
+                                style=" background:#E3E9EA !important; color: black !important; font-weight: bolder; height: 400px;width:66%; position: fixed; overflow-y: scroll;">
                                  <!-- User's blog design appears here -->
                             </div>
                         </div>
@@ -126,14 +187,14 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-        crossorigin="anonymous"></script>
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -178,6 +239,9 @@
     <!--====== Main Custom js ======-->
     <script src="{{ url_for('static', filename='assets/js/theme.js') }}"></script>
 
+    
+
 </body>
 
 </html>   
+
