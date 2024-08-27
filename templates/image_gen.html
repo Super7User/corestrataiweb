@@ -48,6 +48,7 @@
 /* body { */
     /* margin-top: 150px; */
     /* } */
+    
 
     #outputCanvas {
         width: 80%;
@@ -141,8 +142,8 @@ CONTENT STYLE
 ----------------------------------------------------- */
        .container-fluid {
             margin-top: 100px;
-            justify-content: center; /* Center the content horizontally */
-    align-items: center; 
+            justify-content: center;
+            align-items: center; 
         }
 
         #content {
@@ -196,6 +197,20 @@ CONTENT STYLE
            align-items: center; 
            justify-content: center; 
        }
+       .theme-toggle{
+           top: 3px;
+       }
+       .hero-wrapper {
+           position: relative;
+       }
+
+      #content p.text-end {
+          position: fixed;
+          top: 80px; 
+          right: 20px; 
+          margin: 0;
+          z-index: 1000;
+      }
       
        
 </style>
@@ -333,6 +348,16 @@ CONTENT STYLE
     });
     
 </script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const startWritingButton = document.querySelector(".ac-header-bnt-2 a.theme-btn");
+      if (startWritingButton) {
+        startWritingButton.remove();
+      }
+    });
+  </script>
 
 </body>
 

@@ -278,6 +278,8 @@ CONTENT STYLE
        position: relative;
       }
 
+
+
    #content p.text-end {
       position: fixed;
       top: 70px; 
@@ -523,6 +525,15 @@ CONTENT STYLE
     <script src="{{ url_for('static', filename='assets/vendor/wow/wow.min.js') }}"></script>
     <!--====== Main Custom js ======-->
     <script src="{{ url_for('static', filename='assets/js/theme.js') }}"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const startWritingButton = document.querySelector(".ac-header-bnt-2 a.theme-btn");
+          if (startWritingButton) {
+            startWritingButton.remove();
+          }
+        });
+      </script>
 
 </body>
 
