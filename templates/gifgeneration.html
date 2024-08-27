@@ -45,7 +45,6 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #d0e3f4;
-           
             display: flex;
             /* align-items: center; */
             /* justify-content: center; */
@@ -54,7 +53,7 @@
 
         }
 
-        /* .container1 {
+         /*.container1 {
             background-color: #D4DEE7;
             padding: 20px;
             border-radius: 10px;
@@ -65,11 +64,13 @@
             margin-left: 40px;
             width:100% !important;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }*/ 
+        }*/
 
         .input-group {
             margin-bottom: 20px;
             text-align: center;
+            justify-content: center;
+            align-items: center;
         }
 
         .input-group input {
@@ -236,8 +237,8 @@ CONTENT STYLE
             color: black;
             transition: background 0.3s ease;
         }
-     .ac-page-wrapper{
-        position: relative;
+      .ac-page-wrapper{
+        position: fixed;
         width: 100%;
         text-align: center;
         margin-bottom: 120px;
@@ -248,13 +249,26 @@ CONTENT STYLE
         justify-content: center;
         padding-left: 50px;
         align-items: center;
-        
-       }
+        height: 100vh;
+     }
+
     .card{
         display: flex;
-        width: 100%;
+        width: 48%;
         height: 490px;
+        justify-content: center;
+        align-items: center;
+    
        }
+       @media (max-width: 768px) {
+        .ac-page-wrapper {
+            flex-direction: column;
+        }
+        .card {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    }
       
     .hero-wrapper {
         position: relative;
@@ -268,13 +282,16 @@ CONTENT STYLE
       position: fixed;
       top: 70px; 
       right: 50px;
-
-}
+   }
+   /*.input-group{
+    justify-content: center;
+    align-items: center;
+   }*/
 </style>
 </head>
 
 <body class="home-one">
-   <div class="ac-page-wrapper">
+   <div class="ac-page-wrapper" style="position: fixed ;">
         <div class="wrapper">
             <!--======  Start Preloader  ======-->
             <div class="ac-preloader">

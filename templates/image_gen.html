@@ -52,7 +52,6 @@
     #outputCanvas {
         width: 80%;
         height: 512px;
-        /* Adjust height as needed */
         border: 1px solid #ccc;
     }
 
@@ -70,7 +69,6 @@
         transition: background 0.3s ease;
     }
 
-    /* Hover state */
     .button:hover {
         background: linear-gradient(to left, #ff71b8, #ba71ff,#90c3fd);
         color: black
@@ -90,7 +88,6 @@
         transition: background 0.3s ease;
     }
 
-    /* Hover state */
     .grand:hover {
         background: linear-gradient(to left, #ff71b8, #ba71ff,#90c3fd);
         color: black
@@ -105,7 +102,6 @@
 
     .back-link:hover {
         color: #f083c2;
-        /* Change color on hover (blue) */
     }
 
     @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
@@ -113,6 +109,7 @@
     body {
         font-family: Arial, sans-serif;
         background: #fafafa;
+        overflow: hidden;
     }
 
     p {
@@ -134,14 +131,18 @@
         a[data-toggle="collapse"] {
         position: relative;
     }
+    main {
+        background-color: var(--background-color);
+    }
 
    
     /* ---------------------------------------------------
 CONTENT STYLE
 ----------------------------------------------------- */
-.container-fluid {
+       .container-fluid {
             margin-top: 100px;
-            /* Increased top margin */
+            justify-content: center; /* Center the content horizontally */
+    align-items: center; 
         }
 
         #content {
@@ -195,6 +196,8 @@ CONTENT STYLE
            align-items: center; 
            justify-content: center; 
        }
+      
+       
 </style>
 <body class="home-one">
    
@@ -329,10 +332,7 @@ CONTENT STYLE
         document.body.classList.toggle('dark');
     });
     
-
-       
-
-    </script>
+</script>
 
 </body>
 
