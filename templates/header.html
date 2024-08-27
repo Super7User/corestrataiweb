@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CorestratAI Solutions</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <style>
+    <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            ;
         }
 
         body {
@@ -29,6 +30,17 @@
             line-height: 1.7;
             color: var(--font-color);
             background-color: var(--background-color);
+            height: 100%;
+
+
+            --heading-color: #333333;
+            /* Default dark color for headings */
+            --heading-background: #f0f0f0;
+            /* Default light background for headings */
+            --paragraph-color: #666666;
+            /* Default dark color for paragraphs */
+            --paragraph-background: #ffffff;
+            /* Default light background for paragraphs */
         }
 
         body.sb-expanded {
@@ -45,7 +57,39 @@
             --btn-background: #444;
             --btn-hover-opacity: 0.9;
             --btn-active-scale: 0.95;
+
+            --heading-color: #ffffff;
+            --heading-background: #333333;
+            --paragraph-color: #cccccc;
+            --paragraph-background: #222222;
         }
+
+        .dark-theme-heading {
+            color: var(--heading-color);
+            background-color: var(--heading-background);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .dark-theme-paragraph {
+            color: var(--paragraph-color);
+            /* background-color: var(--paragraph-background); */
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            text-align: justify;
+            margin-top: 10px;
+        }
+
+
+        /* body.sb-expanded {
+            --sb-width: 14.5rem;
+        } */
+
 
         h1 {
             font-size: 1.5rem;
@@ -281,7 +325,7 @@
         }
 
         .category-button.active {
-            background: linear-gradient(to right, #ff71b8,#ba71ff,#90c3fd);
+            background: linear-gradient(to right, #ff71b8, #ba71ff, #90c3fd);
             color: #333;
         }
 
@@ -304,8 +348,8 @@
         }
 
         button {
-            margin-top: 20px;
-            height: 30px;
+            /* margin-top: 20px; */
+            /* height: 30px; */
             padding: 5px 10px;
             border-radius: 10px;
             font-size: 14px;
@@ -326,7 +370,7 @@
 
         .theme-toggle {
             position: absolute;
-            top: 10px;
+            /* top: 10px; */
             right: 10px;
             background: none;
             border: none;
@@ -350,14 +394,66 @@
             width: 50%;
             height: auto;
         }
-        
+
+        main {
+            background-color: var(--background-color);
+            margin-left: 5rem;
+            padding: 1rem 2rem;
+            transition: margin-left 0.5s ease-in-out;
+        }
+
+        @media (min-width: 768px) {
+            main {
+                margin-left: var(--sb-width);
+            }
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            right: 10px;
+            top: 20px;
+            gap: 10px;
+        }
+
+        .ac-header-bnt-2 .theme-btn {
+            /* padding: 5px 15px; */
+            font-size: 1rem;
+            background-color: #ba71ff;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 70px;
+        }
+
+        .ac-header-bnt-2 .theme-btn:hover {
+            opacity: var(--btn-hover-opacity);
+        }
+
+        .ac-header-bnt-2 .theme-btn:active {
+            transform: scale(var(--btn-active-scale));
+        }
+
+        .fa-right-from-bracket {
+            display: none !important;
+        }
     </style>
 </head>
 
 <body>
-    <button class="theme-toggle" onclick="toggleTheme()">
+    <!-- <button class="theme-toggle" onclick="toggleTheme()">
         <i class="fas fa-moon"></i>
-    </button>
+    </button> -->
+    <div class="button-container">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <div class="ac-header-bnt-2 d-none d-md-block">
+            <a href="newlogin" class="theme-btn gradient-btn">Start Writing</a>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
     <aside>
         <nav>
             <ul>
@@ -386,7 +482,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ url_for('repository') }}">
                         <i class="fa-solid fa-folder"></i>
                         <span class="sidebar-text">My Repository</span>
                     </a>

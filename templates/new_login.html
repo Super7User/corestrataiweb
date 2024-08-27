@@ -13,7 +13,8 @@
         rel="stylesheet">
     <style>
         body {
-            background: #A8D1D1;
+            /* background: #A8D1D1; */
+            background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
         }
 
         .card {
@@ -123,7 +124,8 @@
             height: 2rem;
             border-radius: 1.875rem;
             /* background: #6D32AB; */
-            background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);
+            background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
+            /* background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%); */
             transition: all 0.3s ease-in-out;
             top: 0.2rem;
             left: 0.2rem;
@@ -317,12 +319,12 @@
                                     name="keep_logged_in">&nbsp;Keep me logged in </p>
                         </div>
                         <div class="col-4">
-                            <p class="text-right"><a href="{{ url_for('send_password_reset') }}">Forgot Password ?</a>
+                            <p class="text-right"><a href="{{ url_for('send_password_reset') }}" style="color: #000;">Forgot Password ?</a>
                             </p>
                         </div>
                     </div>
                     <button type="submit"
-                        style="background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);"
+                        style="background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #F762D8 110.76%)"
                         class="login">Login</button>
                 </form>
             </div>
@@ -334,7 +336,7 @@
                     <p class="text-right">Action Demo</p>
                 </div>
             </div> -->
-            <div class="mt-4 text-center">Don't have an account ? <a href="register">Sign Up</a></div>
+            <div class="mt-4 text-center">Don't have an account ? <a href="register" style="color: #000;">Sign Up</a></div>
         </div>
     </div>
 

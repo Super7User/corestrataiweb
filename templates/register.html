@@ -13,7 +13,8 @@
         rel="stylesheet">
     <style>
         body {
-            background: #A8D1D1;
+            /* background: #A8D1D1; */
+            background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
         }
 
         .card {
@@ -123,7 +124,8 @@
             height: 2rem;
             border-radius: 1.875rem;
             /* background: #6D32AB; */
-            background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);
+            background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
+            /* background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%); */
             transition: all 0.3s ease-in-out;
             top: 0.2rem;
             left: 0.2rem;
@@ -296,11 +298,12 @@
                     <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
                     <i class="fas fa-eye" id="togglePasswordIcon" onclick="togglePassword()"></i>
                     </div>
-                    <button type="submit" style="background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);" class="register">Register Now</button>
+                    <button type="submit" style="background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #F762D8  110.76%);"
+                    class="register">Register Now</button>
                 </form>
                 <p id="registerErrorMessage" class="error"></p>
             </div>
-            <div class="mt-4 text-center">Already have an account? <a href="newlogin">Login</a></div>
+            <div class="mt-4 text-center">Already have an account? <a href="newlogin" style="color: #000;">Login</a></div>
         </div>
     </div>
 

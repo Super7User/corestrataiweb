@@ -8,21 +8,33 @@
     <meta name="description" content="Insurance, Health, Agency">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--====== Title ======-->
-    <title>AIcraft - AI Application & Generator HTML Template</title>
-
-    <!--====== Style css ======-->
-    <!-- <link id="themeStylesheet" rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}"> -->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styleDark.css') }}"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.png') }}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/flaticon/flaticon_mycollection.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='assets/vendor/magnific-popup/dist/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/wow/animate.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/slick/slick.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/default.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+    <link id="themeStylesheet" rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
     <style>
         #sidebarCollapse,
         #sidebar {
             display: none;
         }
 
-        body {
+        /* body {
             background-color: #131414 !important;
-
-        }
+        } */
 
         .hero-wrapper {
             padding: 78px 0 65px !important;
@@ -47,13 +59,6 @@
             display: flex;
             justify-content: space-between;
         }
-        /* .section:nth-child(2) {
-            background-color: #e6e6e6;
-        }
-
-        .section:nth-child(3) {
-            background-color: #d9d9d9;
-        } */
 
         .text {
             flex: 1;
@@ -67,13 +72,13 @@
             justify-content: center;
             align-items: center;
         }
+
         .image {
             flex: 1;
             padding: 60px;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* height:60% */
         }
 
         .video video {
@@ -82,537 +87,566 @@
         }
 
         .text p {
-            /* color:#ccc !important; */
             text-align: justify;
         }
+
         .hover-text {
             transition: transform 0.3s ease, text-decoration 0.3s ease;
-    }
+        }
 
-    .hover-text:hover {
-        transform: scale(1.05);
+        .hover-text:hover {
+            transform: scale(1.05);
+        }
+        aside {
+    display: none; 
+}
+main {
+    margin-left: 0 !important; 
+    width: 100%;
+    padding:0px !important;
+    transition: margin-left 0.5s ease-in-out; 
+}
+
+@media (min-width: 768px) {
+    main {
+        margin-left: 0; 
+        width: calc(100% - var(--sb-width)); 
     }
+}
+
+.content-area {
+    flex: 1 1 100%;
+    max-width: 100%;
+}
     </style>
 </head>
 
 <body class="home-one-dark">
     {% include 'header.html' %}
-    <div class="ac-page-wrapper" style="width: 100%;">
-        <!--======  Start Preloader  ======-->
-        <div class="ac-preloader">
-            <div class="loader">
-                <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
+    <main style="width:100%">
+        <div class="ac-page-wrapper" style="width: 100%;">
+            <!--======  Start Preloader  ======-->
+            <div class="ac-preloader">
+                <div class="loader">
+                    <img src="{{ url_for('static', filename='assets/images/loader.png')}}" alt="Preloader">
+                </div>
             </div>
-        </div>
-        <div class="smooth-wrapper">
-            <div id="smooth-content">
-                <!--======  Start Hero Section  ======-->
-                <section class="hero-section">
-                    <div class="hero-wrapper bg_cover" style="background-image: url(assets/images/hero/hero-bg-1.png);">
-                        <div class="container_hor">
-                            <div class="section">
-                                <div class="text hover-text">
-                                    <h3 style="color:#ccc !important;">Your New AI Assistant is here</h3>
-                                    <p class="text-end">coming soon..</p>
-                                    <p style="color:#8f8d8d  !important;">Unlock limitless creativity with our AI Assistant, delivering cutting-edge
-                                        generative AI solutions for effortless content, image and video generation.
-                                        Experience the future of content creation like never before.</p>
+            <div class="smooth-wrapper">
+                <div id="smooth-content">
+                    <!--======  Start Hero Section  ======-->
+                    <section class="hero-section">
+                        <div class="hero-wrapper bg_cover"
+                            style="background-image: url(assets/images/hero/hero-bg-1.png);">
+                            <div class="container_hor">
+                                <div class="section">
+                                    <div class="text hover-text">
+                                        <h3 style="color:#ccc !important;">Your New AI Assistant is here</h3>
+                                        <p class="text-end">coming soon..</p>
+                                        <p style="color:#8f8d8d  !important;">Unlock limitless creativity with our AI
+                                            Assistant, delivering cutting-edge generative AI solutions for effortless
+                                            content, image and video generation. Experience the future of content creation
+                                            like never before.</p>
+                                    </div>
+                                    <div class="video">
+                                        <video id="myVideo" controls muted>
+                                            <source src="{{ url_for('static', filename='AI.mp4') }}" type="video/mp4">
+                                        </video>
+                                    </div>
                                 </div>
-                                <div class="video">
-                                    <video id="myVideo" controls muted >
-                                        <source src="{{ url_for('static', filename='AI.mp4') }}" type="video/mp4">
-                                    </video>
-                                </div>
-                            </div>
-                            <div class="section">                            
-                                <div class="image hover-text">
-                                    <img src="{{ url_for('static', filename='assets/images/tools.webp') }}" alt="Descriptive Alt Text" style="width: 80%; max-width: 600px; height: 50%;">
-                                </div>  
+                                <div class="section">
+                                    <div class="image hover-text">
+                                        <img src="{{ url_for('static', filename='assets/images/tools.webp') }}"
+                                            alt="Descriptive Alt Text"
+                                            style="width: 80%; max-width: 600px; height: 50%;">
+                                    </div>
 
-                                <div class="text hover-text">
-                                    <h3 >All Tools</h3>
-                                    <br>
-                                    <p>The features of tool cards, each showcasing an image, 
-                                        title, description, and category. These cards are designed 
-                                        to be visually appealing and informative, providing users with clear and 
-                                        concise information about each tool.</p>
+                                    <div class="text hover-text">
+                                        <h3>All Tools</h3>
+                                        <br>
+                                        <p>The features of tool cards, each showcasing an image, title, description, and
+                                            category. These cards are designed to be visually appealing and informative,
+                                            providing users with clear and concise information about each tool.</p>
+                                    </div>
+                                </div>
+                                <div class="section">
+                                    <div class="text hover-text">
+                                        <h3>Article</h3>
+                                        <br>
+                                        <p>Below the hero section, there is a central area with multiple cards. Each card
+                                            represents different content categories, such as "Blog" and "Technical
+                                            Paper."</p>
+                                    </div>
+                                    <div class="image hover-text">
+                                        <img src="{{ url_for('static', filename='assets/images/article.webp') }}"
+                                            alt="Descriptive Alt Text"
+                                            style="width: 80%; max-width: 600px; height: auto;">
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="section">
-                                <div class="text hover-text">
-                                    <h3>Article</h3>
-                                    <br>
-                                    <p>Below the hero section, there is a central area 
-                                        with multiple cards. Each card represents different content categories, 
-                                        such as "Blog" and "Technical Paper."</p>
+                            <div class="container" style="margin-top:900px ;">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <!--=== Hero Content ===-->
+                                        <div class="hero-content text-center">
+                                            <h1 class="heading-title wow fadeInDown">Best AI Writer for Creating <span>Blog
+                                                    Post & Articles</span></h1>
+                                            <p class="wow fadeInUp para-one">Write unique & plagiarism-free content for
+                                                blogs, articles, ads, products, websites &social <br> media unlock the power
+                                                of generative AI across every team.</p>
+                                            <div class="hero-button wow fadeInDown">
+                                                <a href="index.html" class="theme-btn gradient-btn">Start Writing Free
+                                                </a>
+                                            </div>
+                                            <p class="wow fadeInUp para-two">No credit card required</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="image hover-text">
-                                    <img src="{{ url_for('static', filename='assets/images/article.webp') }}" alt="Descriptive Alt Text" style="width: 80%; max-width: 600px; height: auto;">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <!--=== Hero Image ===-->
+                                        <div class="hero-one_image-box text-center wow fadeInUp">
+                                            <img src="{{ url_for('static', filename='assets/images/hero/dashboard.jpg')}}"
+                                                alt="dashboard image">
+                                        </div>
+                                    </div>
                                 </div>
-                                
                             </div>
                         </div>
-                        <div class="container" style="margin-top:900px ;">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8">
-                                    <!--=== Hero Content ===-->
-                                    <div class="hero-content text-center">
-                                        <h1 class="heading-title wow fadeInDown">Best AI Writer for Creating <span>Blog
-                                                Post & Articles</span></h1>
-                                        <p class="wow fadeInUp para-one">Write unique & plagiarism-free content for
-                                            blogs, articles, ads, products, websites &social <br> media unlock the power
-                                            of generative AI across every team.</p>
-                                        <div class="hero-button wow fadeInDown">
-                                            <a href="index.html" class="theme-btn gradient-btn">Start Writing Free </a>
+                    </section><!--======  End Hero Section  ======-->
+                    <!--======  Start Clients Section  ======-->
+                    <section class="clients-section">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!--=== Clients Text ===-->
+                                    <div class="clients-text text-center mb-30 wow fadeInDown">
+                                        <p>20,000+ Professionals & Teams Choose AI</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--=== Clients Slider Content ===-->
+                            <div class="clients-slider wow fadeInUp">
+                                <!--=== client item ===-->
+                                <div class="client-item">
+                                    <div class="client-img">
+                                        <a href="index.html"><img
+                                                src="{{ url_for('static', filename='assets/images/clients/logo1_1.png')}}"
+                                                alt="client-logo"></a>
+                                    </div>
+                                </div>
+                                <!--=== client item ===-->
+                                <div class="client-item">
+                                    <div class="client-img">
+                                        <a href="index.html"><img
+                                                src="{{ url_for('static', filename='assets/images/clients/logo1_2.png')}}"
+                                                alt="client-logo"></a>
+                                    </div>
+                                </div>
+                                <!--=== client item ===-->
+                                <div class="client-item">
+                                    <div class="client-img">
+                                        <a href="index.html"><img
+                                                src="{{ url_for('static', filename='assets/images/clients/logo1_3.png')}}"
+                                                alt="client-logo"></a>
+                                    </div>
+                                </div>
+                                <!--=== client item ===-->
+                                <div class="client-item">
+                                    <div class="client-img">
+                                        <a href="index.html"><img
+                                                src="{{ url_for('static', filename='assets/images/clients/logo1_4.png')}}"
+                                                alt="client-logo"></a>
+                                    </div>
+                                </div>
+                                <!--=== client item ===-->
+                                <div class="client-item">
+                                    <div class="client-img">
+                                        <a href="index.html"><img
+                                                src="{{ url_for('static', filename='assets/images/clients/logo1_5.png')}}"
+                                                alt="client-logo"></a>
+                                    </div>
+                                </div>
+                                <!--=== client item ===-->
+                                <div class="client-item">
+                                    <div class="client-img">
+                                        <a href="index.html"><img
+                                                src="{{ url_for('static', filename='assets/images/clients/logo1_6.png')}}"
+                                                alt="client-logo"></a>
+                                    </div>
+                                </div>
+                                <!--=== client item ===-->
+                                <div class="client-item">
+                                    <div class="client-img">
+                                        <a href="index.html"><img
+                                                src="{{ url_for('static', filename='assets/images/clients/logo1_7.png')}}"
+                                                alt="client-logo"></a>
+                                    </div>
+                                </div>
+                                <!--=== client item ===-->
+                                <div class="client-item">
+                                    <div class="client-img">
+                                        <a href="index.html"><img
+                                                src="{{ url_for('static', filename='assets/images/clients/logo1_3.png')}}"
+                                                alt="client-logo"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section><!--======  End Clients Section  ======-->
+                    <!--======  Start Use-case Section  ======-->
+                    <section class="use-cases-section pt-105 pb-85">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!--=== Section Title ===-->
+                                    <div class="section-title text-center mb-50 wow fadeInDown">
+                                        <span class="sub-title style-one">Use Causes</span>
+                                        <h2>Generate Content by AI</h2>
+                                        <p>In a few seconds, our A.I. will generate amazing results that <br> you can copy,
+                                            paste & publish. , write creatively</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <!--=== Iconic info box ===-->
+                                    <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
+                                        <div class="icon">
+                                            <i class="flaticon-communication"></i>
                                         </div>
-                                        <p class="wow fadeInUp para-two">No credit card required</p>
+                                        <div class="content">
+                                            <h4><a href="use-case-details.html">Blog Post & Articles</a></h4>
+                                            <p>Produce upgraded blog entry and articles to get natural traffic - making you
+                                                noticeable to the world.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <!--=== Iconic info box ===-->
+                                    <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
+                                        <div class="icon">
+                                            <i class="flaticon-description"></i>
+                                        </div>
+                                        <div class="content">
+                                            <h4><a href="use-case-details.html">Product Description</a></h4>
+                                            <p>Produce upgraded blog entry and articles to get natural traffic - making you
+                                                noticeable to the world.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <!--=== Iconic info box ===-->
+                                    <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
+                                        <div class="icon">
+                                            <i class="flaticon-content-marketing"></i>
+                                        </div>
+                                        <div class="content">
+                                            <h4><a href="use-case-details.html">Social Media Ads</a></h4>
+                                            <p>Produce upgraded blog entry and articles to get natural traffic - making you
+                                                noticeable to the world.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <!--=== Iconic info box ===-->
+                                    <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
+                                        <div class="icon">
+                                            <i class="flaticon-product"></i>
+                                        </div>
+                                        <div class="content">
+                                            <h4><a href="use-case-details.html">Product Benefit</a></h4>
+                                            <p>Produce upgraded blog entry and articles to get natural traffic - making you
+                                                noticeable to the world.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <!--=== Iconic info box ===-->
+                                    <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
+                                        <div class="icon">
+                                            <i class="flaticon-data-analytics"></i>
+                                        </div>
+                                        <div class="content">
+                                            <h4><a href="use-case-details.html">Advance Analytics</a></h4>
+                                            <p>Produce upgraded blog entry and articles to get natural traffic - making you
+                                                noticeable to the world.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <!--=== Iconic info box ===-->
+                                    <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
+                                        <div class="icon">
+                                            <i class="flaticon-spinner-of-dots"></i>
+                                        </div>
+                                        <div class="content">
+                                            <h4><a href="use-case-details.html">Suggest Improvements</a></h4>
+                                            <p>Produce upgraded blog entry and articles to get natural traffic - making you
+                                                noticeable to the world.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section><!--======  End Use-case Section  ======-->
+                    <!--======  Start Work Process Section  ======-->
+                    <section class="works-process-section pb-75">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!--=== Section Title ===-->
+                                    <div class="section-title text-center mb-55 wow fadeInDown">
+                                        <span class="sub-title style-one">Working Process</span>
+                                        <h2>How to Work</h2>
+                                        <p>In a few seconds, our A.I. will generate amazing results that <br> you can copy,
+                                            paste & publish. , write creatively </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-xl-4 col-md-6 col-sm-6">
+                                    <!--=== Process Item ===-->
+                                    <div class="ac-process-item mb-40 wow fadeInUp">
+                                        <div class="process-inner-content">
+                                            <div class="thumbnail">
+                                                <img src="{{ url_for('static', filename='assets/images/gallery/work-1.jpg')}}"
+                                                    alt="work image">
+                                            </div>
+                                            <div class="content">
+                                                <span class="number">01</span>
+                                                <h5>Select Writing Template</h5>
+                                                <p>Templates are pre-designed, that can guide the organization and layout of
+                                                    your writing, whether </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 col-sm-6">
+                                    <!--=== Process Item ===-->
+                                    <div class="ac-process-item mb-40 wow fadeInUp">
+                                        <div class="process-inner-content">
+                                            <div class="thumbnail">
+                                                <img src="{{ url_for('static', filename='assets/images/gallery/work-2.jpg')}}"
+                                                    alt="work image">
+                                            </div>
+                                            <div class="content">
+                                                <span class="number">02</span>
+                                                <h5>Generate Content</h5>
+                                                <p>Use AI to quickly create the content you need, whether it's for blogs,
+                                                    articles, or more.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 col-sm-6">
+                                    <!--=== Process Item ===-->
+                                    <div class="ac-process-item mb-40 wow fadeInUp">
+                                        <div class="process-inner-content">
+                                            <div class="thumbnail">
+                                                <img src="{{ url_for('static', filename='assets/images/gallery/work-1.jpg')}}"
+                                                    alt="work image">
+                                            </div>
+                                            <div class="content">
+                                                <span class="number">03</span>
+                                                <h5>Edit & Publish</h5>
+                                                <p>Refine the AI-generated content to suit your needs, then publish it with
+                                                    ease.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section><!--======  End Work Process Section  ======-->
+                    <!--======  Start Pricing Section  ======-->
+                    <section class="pricing-section black-dark-bg pt-110 pb-80">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="section-title text-center title-white mb-50 wow fadeInDown">
+                                        <span class="sub-title style-one">Pricing Plan</span>
+                                        <h2>Choose Your Best Plan</h2>
+                                        <p>In a few seconds, our A.I. will generate amazing results that <br> you can copy,
+                                            paste & publish. , write creatively in </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <!--=== Hero Image ===-->
-                                    <div class="hero-one_image-box text-center wow fadeInUp">
-                                        <img src="{{ url_for('static', filename='assets/images/hero/dashboard.jpg')}}"
-                                            alt="dashboard image">
+                                    <div class="pricing-tabs style-one text-center mb-40 wow fadeInUp">
+                                        <ul class="nav nav-tabs">
+                                            <li>
+                                                <button class="nav-link active" data-bs-toggle="tab"
+                                                    data-bs-target="#monthly">Monthly Plan</button>
+                                            </li>
+                                            <li>
+                                                <button class="nav-link" data-bs-toggle="tab"
+                                                    data-bs-target="#annual">Annual Plan</button>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </section><!--======  End Hero Section  ======-->
-                <!--======  Start Clients Section  ======-->
-                <section class="clients-section">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <!--=== Clients Text ===-->
-                                <div class="clients-text text-center mb-30 wow fadeInDown">
-                                    <p>20,000+ Professionals & Teams Choose AI</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!--=== Clients Slider Content ===-->
-                        <div class="clients-slider wow fadeInUp">
-                            <!--=== client item ===-->
-                            <div class="client-item">
-                                <div class="client-img">
-                                    <a href="index.html"><img
-                                            src="{{ url_for('static', filename='assets/images/clients/logo1_1.png')}}"
-                                            alt="client-logo"></a>
-                                </div>
-                            </div>
-                            <!--=== client item ===-->
-                            <div class="client-item">
-                                <div class="client-img">
-                                    <a href="index.html"><img
-                                            src="{{ url_for('static', filename='assets/images/clients/logo1_2.png')}}"
-                                            alt="client-logo"></a>
-                                </div>
-                            </div>
-                            <!--=== client item ===-->
-                            <div class="client-item">
-                                <div class="client-img">
-                                    <a href="index.html"><img
-                                            src="{{ url_for('static', filename='assets/images/clients/logo1_3.png')}}"
-                                            alt="client-logo"></a>
-                                </div>
-                            </div>
-                            <!--=== client item ===-->
-                            <div class="client-item">
-                                <div class="client-img">
-                                    <a href="index.html"><img
-                                            src="{{ url_for('static', filename='assets/images/clients/logo1_4.png')}}"
-                                            alt="client-logo"></a>
-                                </div>
-                            </div>
-                            <!--=== client item ===-->
-                            <div class="client-item">
-                                <div class="client-img">
-                                    <a href="index.html"><img
-                                            src="{{ url_for('static', filename='assets/images/clients/logo1_5.png')}}"
-                                            alt="client-logo"></a>
-                                </div>
-                            </div>
-                            <!--=== client item ===-->
-                            <div class="client-item">
-                                <div class="client-img">
-                                    <a href="index.html"><img
-                                            src="{{ url_for('static', filename='assets/images/clients/logo1_6.png')}}"
-                                            alt="client-logo"></a>
-                                </div>
-                            </div>
-                            <!--=== client item ===-->
-                            <div class="client-item">
-                                <div class="client-img">
-                                    <a href="index.html"><img
-                                            src="{{ url_for('static', filename='assets/images/clients/logo1_7.png')}}"
-                                            alt="client-logo"></a>
-                                </div>
-                            </div>
-                            <!--=== client item ===-->
-                            <div class="client-item">
-                                <div class="client-img">
-                                    <a href="index.html"><img
-                                            src="{{ url_for('static', filename='assets/images/clients/logo1_3.png')}}"
-                                            alt="client-logo"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section><!--======  End Clients Section  ======-->
-                <!--======  Start Use-case Section  ======-->
-                <section class="use-cases-section pt-105 pb-85">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <!--=== Section Title ===-->
-                                <div class="section-title text-center mb-50 wow fadeInDown">
-                                    <span class="sub-title style-one">Use Causes</span>
-                                    <h2>Generate Content by AI</h2>
-                                    <p>In a few seconds, our A.I. will generate amazing results that <br> you can copy,
-                                        paste & publish. , write creatively</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <!--=== Iconic info box ===-->
-                                <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
-                                    <div class="icon">
-                                        <i class="flaticon-communication"></i>
-                                    </div>
-                                    <div class="content">
-                                        <h4><a href="use-case-details.html">Blog Post & Articles</a></h4>
-                                        <p>Produce upgraded blog entry and articles to get natural traffic - making you
-                                            noticeable to the world.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <!--=== Iconic info box ===-->
-                                <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
-                                    <div class="icon">
-                                        <i class="flaticon-description"></i>
-                                    </div>
-                                    <div class="content">
-                                        <h4><a href="use-case-details.html">Product Description</a></h4>
-                                        <p>Produce upgraded blog entry and articles to get natural traffic - making you
-                                            noticeable to the world.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <!--=== Iconic info box ===-->
-                                <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
-                                    <div class="icon">
-                                        <i class="flaticon-content-marketing"></i>
-                                    </div>
-                                    <div class="content">
-                                        <h4><a href="use-case-details.html">Social Media Ads</a></h4>
-                                        <p>Produce upgraded blog entry and articles to get natural traffic - making you
-                                            noticeable to the world.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <!--=== Iconic info box ===-->
-                                <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
-                                    <div class="icon">
-                                        <i class="flaticon-product"></i>
-                                    </div>
-                                    <div class="content">
-                                        <h4><a href="use-case-details.html">Product Benefit</a></h4>
-                                        <p>Produce upgraded blog entry and articles to get natural traffic - making you
-                                            noticeable to the world.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <!--=== Iconic info box ===-->
-                                <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
-                                    <div class="icon">
-                                        <i class="flaticon-data-analytics"></i>
-                                    </div>
-                                    <div class="content">
-                                        <h4><a href="use-case-details.html">Advance Analytics</a></h4>
-                                        <p>Produce upgraded blog entry and articles to get natural traffic - making you
-                                            noticeable to the world.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <!--=== Iconic info box ===-->
-                                <div class="iconic-info-box style-one text-center mb-25 wow fadeInUp">
-                                    <div class="icon">
-                                        <i class="flaticon-spinner-of-dots"></i>
-                                    </div>
-                                    <div class="content">
-                                        <h4><a href="use-case-details.html">Suggest Improvements</a></h4>
-                                        <p>Produce upgraded blog entry and articles to get natural traffic - making you
-                                            noticeable to the world.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section><!--======  End Use-case Section  ======-->
-                <!--======  Start Work Process Section  ======-->
-                <section class="works-process-section pb-75">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <!--=== Section Title ===-->
-                                <div class="section-title text-center mb-55 wow fadeInDown">
-                                    <span class="sub-title style-one">Working Process</span>
-                                    <h2>How to Work</h2>
-                                    <p>In a few seconds, our A.I. will generate amazing results that <br> you can copy,
-                                        paste & publish. , write creatively </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="col-xl-4 col-md-6 col-sm-6">
-                                <!--=== Process Item ===-->
-                                <div class="ac-process-item mb-40 wow fadeInUp">
-                                    <div class="process-inner-content">
-                                        <div class="thumbnail">
-                                            <img src="{{ url_for('static', filename='assets/images/gallery/work-1.jpg')}}"
-                                                alt="work image">
-                                        </div>
-                                        <div class="content">
-                                            <span class="number">01</span>
-                                            <h5>Select Writhing Template</h5>
-                                            <p>Templates are pre-designed, that can guide the organization and layout of
-                                                your writing, whether </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-6 col-sm-6">
-                                <!--=== Process Item ===-->
-                                <div class="ac-process-item mb-40 wow fadeInUp">
-                                    <div class="process-inner-content">
-                                        <div class="thumbnail">
-                                            <img src="{{ url_for('static', filename='assets/images/gallery/work-2.jpg')}}"
-                                                alt="work image">
-                                        </div>
-                                        <div class="content">
-                                            <span class="number">02</span>
-                                            <h5>Select Writhing Template</h5>
-                                            <p>Templates are pre-designed, that can guide the organization and layout of
-                                                your writing, whether </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-6 col-sm-6">
-                                <!--=== Process Item ===-->
-                                <div class="ac-process-item mb-40 wow fadeInUp">
-                                    <div class="process-inner-content">
-                                        <div class="thumbnail">
-                                            <img src="{{ url_for('static', filename='assets/images/gallery/work-1.jpg')}}"
-                                                alt="work image">
-                                        </div>
-                                        <div class="content">
-                                            <span class="number">03</span>
-                                            <h5>Select Writhing Template</h5>
-                                            <p>Templates are pre-designed, that can guide the organization and layout of
-                                                your writing, whether </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section><!--======  End Work Process Section  ======-->
-                <!--======  Start Pricing Section  ======-->
-                <section class="pricing-section black-dark-bg pt-110 pb-80">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="section-title text-center title-white mb-50 wow fadeInDown">
-                                    <span class="sub-title style-one">Pricing Plan</span>
-                                    <h2>Choose Your Best Plan</h2>
-                                    <p>In a few seconds, our A.I. will generate amazing results that <br> you can copy,
-                                        paste & publish. , write creatively in </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="pricing-tabs style-one text-center mb-40 wow fadeInUp">
-                                    <ul class="nav nav-tabs">
-                                        <li>
-                                            <button class="nav-link active" data-bs-toggle="tab"
-                                                data-bs-target="#monthly">Monthly Plan</button>
-                                        </li>
-                                        <li>
-                                            <button class="nav-link" data-bs-toggle="tab"
-                                                data-bs-target="#annual">Annual Plan</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="tab-content wow fadeInDown">
-                                    <div class="tab-pane fade show active" id="monthly">
-                                        <div class="row">
-                                            <div class="col-xl-3 col-md-6 col-sm-12">
-                                                <div class="pricing-item style-one mb-40">
-                                                    <div class="pricing-head text-center">
-                                                        <span class="package">Personal</span>
-                                                        <h3><span class="currency">$</span>00.00</h3>
-                                                        <a href="index.html" class="theme-btn style-two">Start Free
-                                                            Trial</a>
-                                                    </div>
-                                                    <div class="pricing-body">
-                                                        <ul class="check-list style-one">
-                                                            <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
-                                                            </li>
-                                                            <li><i class="flaticon-check"></i>10+ Templates</li>
-                                                            <li><i class="flaticon-check"></i>All types of content</li>
-                                                            <li><i class="flaticon-check"></i>10+ Languages</li>
-                                                        </ul>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="tab-content wow fadeInDown">
+                                        <div class="tab-pane fade show active" id="monthly">
+                                            <div class="row">
+                                                <div class="col-xl-3 col-md-6 col-sm-12">
+                                                    <div class="pricing-item style-one mb-40">
+                                                        <div class="pricing-head text-center">
+                                                            <span class="package">Personal</span>
+                                                            <h3><span class="currency">$</span>00.00</h3>
+                                                            <a href="index.html" class="theme-btn style-two">Start Free
+                                                                Trial</a>
+                                                        </div>
+                                                        <div class="pricing-body">
+                                                            <ul class="check-list style-one">
+                                                                <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
+                                                                </li>
+                                                                <li><i class="flaticon-check"></i>10+ Templates</li>
+                                                                <li><i class="flaticon-check"></i>All types of content</li>
+                                                                <li><i class="flaticon-check"></i>10+ Languages</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-6 col-sm-12">
-                                                <div class="pricing-item style-one mb-40">
-                                                    <div class="pricing-head text-center">
-                                                        <span class="package">Business</span>
-                                                        <h3><span class="currency">$</span>68.00</h3>
-                                                        <a href="index.html" class="theme-btn style-two">Start Free
-                                                            Trial</a>
-                                                    </div>
-                                                    <div class="pricing-body">
-                                                        <ul class="check-list style-one">
-                                                            <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
-                                                            </li>
-                                                            <li><i class="flaticon-check"></i>10+ Templates</li>
-                                                            <li><i class="flaticon-check"></i>All types of content</li>
-                                                            <li><i class="flaticon-check"></i>10+ Languages</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-6 col-sm-12">
-                                                <div class="pricing-item style-one mb-40">
-                                                    <div class="pricing-head text-center">
-                                                        <span class="package">Pro</span>
-                                                        <h3><span class="currency">$</span>78.00</h3>
-                                                        <a href="index.html" class="theme-btn style-two">Start Free
-                                                            Trial</a>
-                                                    </div>
-                                                    <div class="pricing-body">
-                                                        <ul class="check-list style-one">
-                                                            <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
-                                                            </li>
-                                                            <li><i class="flaticon-check"></i>10+ Templates</li>
-                                                            <li><i class="flaticon-check"></i>All types of content</li>
-                                                            <li><i class="flaticon-check"></i>10+ Languages</li>
-                                                        </ul>
+                                                <div class="col-xl-3 col-md-6 col-sm-12">
+                                                    <div class="pricing-item style-one mb-40">
+                                                        <div class="pricing-head text-center">
+                                                            <span class="package">Business</span>
+                                                            <h3><span class="currency">$</span>68.00</h3>
+                                                            <a href="index.html" class="theme-btn style-two">Start Free
+                                                                Trial</a>
+                                                        </div>
+                                                        <div class="pricing-body">
+                                                            <ul class="check-list style-one">
+                                                                <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
+                                                                </li>
+                                                                <li><i class="flaticon-check"></i>10+ Templates</li>
+                                                                <li><i class="flaticon-check"></i>All types of content</li>
+                                                                <li><i class="flaticon-check"></i>10+ Languages</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-6 col-sm-12">
-                                                <div class="pricing-item style-one mb-40">
-                                                    <div class="pricing-head text-center">
-                                                        <span class="package">Unlimited</span>
-                                                        <h3><span class="currency">$</span>99.00</h3>
-                                                        <a href="index.html" class="theme-btn style-two">Start Free
-                                                            Trial</a>
+                                                <div class="col-xl-3 col-md-6 col-sm-12">
+                                                    <div class="pricing-item style-one mb-40">
+                                                        <div class="pricing-head text-center">
+                                                            <span class="package">Pro</span>
+                                                            <h3><span class="currency">$</span>78.00</h3>
+                                                            <a href="index.html" class="theme-btn style-two">Start Free
+                                                                Trial</a>
+                                                        </div>
+                                                        <div class="pricing-body">
+                                                            <ul class="check-list style-one">
+                                                                <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
+                                                                </li>
+                                                                <li><i class="flaticon-check"></i>10+ Templates</li>
+                                                                <li><i class="flaticon-check"></i>All types of content</li>
+                                                                <li><i class="flaticon-check"></i>10+ Languages</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                    <div class="pricing-body">
-                                                        <ul class="check-list style-one">
-                                                            <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
-                                                            </li>
-                                                            <li><i class="flaticon-check"></i>10+ Templates</li>
-                                                            <li><i class="flaticon-check"></i>All types of content</li>
-                                                            <li><i class="flaticon-check"></i>10+ Languages</li>
-                                                        </ul>
+                                                </div>
+                                                <div class="col-xl-3 col-md-6 col-sm-12">
+                                                    <div class="pricing-item style-one mb-40">
+                                                        <div class="pricing-head text-center">
+                                                            <span class="package">Unlimited</span>
+                                                            <h3><span class="currency">$</span>99.00</h3>
+                                                            <a href="index.html" class="theme-btn style-two">Start Free
+                                                                Trial</a>
+                                                        </div>
+                                                        <div class="pricing-body">
+                                                            <ul class="check-list style-one">
+                                                                <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
+                                                                </li>
+                                                                <li><i class="flaticon-check"></i>10+ Templates</li>
+                                                                <li><i class="flaticon-check"></i>All types of content</li>
+                                                                <li><i class="flaticon-check"></i>10+ Languages</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="annual">
-                                        <div class="row">
-                                            <div class="col-xl-3 col-md-6 col-sm-12">
-                                                <div class="pricing-item style-one mb-40">
-                                                    <div class="pricing-head text-center">
-                                                        <span class="package">Personal</span>
-                                                        <h3><span class="currency">$</span>00.00</h3>
-                                                        <a href="index.html" class="theme-btn style-two">Start Free
-                                                            Trial</a>
-                                                    </div>
-                                                    <div class="pricing-body">
-                                                        <ul class="check-list style-one">
-                                                            <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
-                                                            </li>
-                                                            <li><i class="flaticon-check"></i>10+ Templates</li>
-                                                            <li><i class="flaticon-check"></i>All types of content</li>
-                                                            <li><i class="flaticon-check"></i>10+ Languages</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-6 col-sm-12">
-                                                <div class="pricing-item style-one mb-40">
-                                                    <div class="pricing-head text-center">
-                                                        <span class="package">Business</span>
-                                                        <h3><span class="currency">$</span>68.00</h3>
-                                                        <a href="index.html" class="theme-btn style-two">Start Free
-                                                            Trial</a>
-                                                    </div>
-                                                    <div class="pricing-body">
-                                                        <ul class="check-list style-one">
-                                                            <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
-                                                            </li>
-                                                            <li><i class="flaticon-check"></i>10+ Templates</li>
-                                                            <li><i class="flaticon-check"></i>All types of content</li>
-                                                            <li><i class="flaticon-check"></i>10+ Languages</li>
-                                                        </ul>
+                                        <div class="tab-pane fade" id="annual">
+                                            <div class="row">
+                                                <div class="col-xl-3 col-md-6 col-sm-12">
+                                                    <div class="pricing-item style-one mb-40">
+                                                        <div class="pricing-head text-center">
+                                                            <span class="package">Personal</span>
+                                                            <h3><span class="currency">$</span>00.00</h3>
+                                                            <a href="index.html" class="theme-btn style-two">Start Free
+                                                                Trial</a>
+                                                        </div>
+                                                        <div class="pricing-body">
+                                                            <ul class="check-list style-one">
+                                                                <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
+                                                                </li>
+                                                                <li><i class="flaticon-check"></i>10+ Templates</li>
+                                                                <li><i class="flaticon-check"></i>All types of content</li>
+                                                                <li><i class="flaticon-check"></i>10+ Languages</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-6 col-sm-12">
-                                                <div class="pricing-item style-one mb-40">
-                                                    <div class="pricing-head text-center">
-                                                        <span class="package">Pro</span>
-                                                        <h3><span class="currency">$</span>78.00</h3>
-                                                        <a href="index.html" class="theme-btn style-two">Start Free
-                                                            Trial</a>
-                                                    </div>
-                                                    <div class="pricing-body">
-                                                        <ul class="check-list style-one">
-                                                            <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
-                                                            </li>
-                                                            <li><i class="flaticon-check"></i>10+ Templates</li>
-                                                            <li><i class="flaticon-check"></i>All types of content</li>
-                                                            <li><i class="flaticon-check"></i>10+ Languages</li>
-                                                        </ul>
+                                                <div class="col-xl-3 col-md-6 col-sm-12">
+                                                    <div class="pricing-item style-one mb-40">
+                                                        <div class="pricing-head text-center">
+                                                            <span class="package">Business</span>
+                                                            <h3><span class="currency">$</span>68.00</h3>
+                                                            <a href="index.html" class="theme-btn style-two">Start Free
+                                                                Trial</a>
+                                                        </div>
+                                                        <div class="pricing-body">
+                                                            <ul class="check-list style-one">
+                                                                <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
+                                                                </li>
+                                                                <li><i class="flaticon-check"></i>10+ Templates</li>
+                                                                <li><i class="flaticon-check"></i>All types of content</li>
+                                                                <li><i class="flaticon-check"></i>10+ Languages</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-6 col-sm-12">
-                                                <div class="pricing-item style-one mb-40">
-                                                    <div class="pricing-head text-center">
-                                                        <span class="package">Unlimited</span>
-                                                        <h3><span class="currency">$</span>99.00</h3>
-                                                        <a href="index.html" class="theme-btn style-two">Start Free
-                                                            Trial</a>
+                                                <div class="col-xl-3 col-md-6 col-sm-12">
+                                                    <div class="pricing-item style-one mb-40">
+                                                        <div class="pricing-head text-center">
+                                                            <span class="package">Pro</span>
+                                                            <h3><span class="currency">$</span>78.00</h3>
+                                                            <a href="index.html" class="theme-btn style-two">Start Free
+                                                                Trial</a>
+                                                        </div>
+                                                        <div class="pricing-body">
+                                                            <ul class="check-list style-one">
+                                                                <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
+                                                                </li>
+                                                                <li><i class="flaticon-check"></i>10+ Templates</li>
+                                                                <li><i class="flaticon-check"></i>All types of content</li>
+                                                                <li><i class="flaticon-check"></i>10+ Languages</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                    <div class="pricing-body">
-                                                        <ul class="check-list style-one">
-                                                            <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
-                                                            </li>
-                                                            <li><i class="flaticon-check"></i>10+ Templates</li>
-                                                            <li><i class="flaticon-check"></i>All types of content</li>
-                                                            <li><i class="flaticon-check"></i>10+ Languages</li>
-                                                        </ul>
+                                                </div>
+                                                <div class="col-xl-3 col-md-6 col-sm-12">
+                                                    <div class="pricing-item style-one mb-40">
+                                                        <div class="pricing-head text-center">
+                                                            <span class="package">Unlimited</span>
+                                                            <h3><span class="currency">$</span>99.00</h3>
+                                                            <a href="index.html" class="theme-btn style-two">Start Free
+                                                                Trial</a>
+                                                        </div>
+                                                        <div class="pricing-body">
+                                                            <ul class="check-list style-one">
+                                                                <li><i class="flaticon-check"></i>10,000 Monthly Word Limit
+                                                                </li>
+                                                                <li><i class="flaticon-check"></i>10+ Templates</li>
+                                                                <li><i class="flaticon-check"></i>All types of content</li>
+                                                                <li><i class="flaticon-check"></i>10+ Languages</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -621,471 +655,470 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section><!--======  End Pricing Section  ======-->
-                <!--======  Start Features Section  ======-->
-                <section class="features-section pt-120 pb-70">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-5">
-                                <!--=== Section Content Box ===-->
-                                <div class="section-content-box mb-50">
-                                    <div class="section-title mb-50 wow fadeInDown">
-                                        <span class="sub-title style-one">Awesome Features</span>
-                                        <h2>The AI Writer's Tools for <br> Content Creators</h2>
-                                    </div>
-                                    <div class="iconic-info-list">
-                                        <div class="iconic-info-box style-two mb-30 wow fadeInUp">
-                                            <div class="icon">
-                                                <i class="flaticon-communication"></i>
-                                            </div>
-                                            <div class="content">
-                                                <h4>Write Better Content Faster</h4>
-                                                <p>Produce upgraded blog entry and articles to get natural traffic -
-                                                    making </p>
-                                            </div>
+                    </section><!--======  End Pricing Section  ======-->
+                    <!--======  Start Features Section  ======-->
+                    <section class="features-section pt-120 pb-70">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xl-5">
+                                    <!--=== Section Content Box ===-->
+                                    <div class="section-content-box mb-50">
+                                        <div class="section-title mb-50 wow fadeInDown">
+                                            <span class="sub-title style-one">Awesome Features</span>
+                                            <h2>The AI Writer's Tools for <br> Content Creators</h2>
                                         </div>
-                                        <div class="iconic-info-box style-two mb-30 wow fadeInUp">
-                                            <div class="icon">
-                                                <i class="flaticon-google"></i>
+                                        <div class="iconic-info-list">
+                                            <div class="iconic-info-box style-two mb-30 wow fadeInUp">
+                                                <div class="icon">
+                                                    <i class="flaticon-communication"></i>
+                                                </div>
+                                                <div class="content">
+                                                    <h4>Write Better Content Faster</h4>
+                                                    <p>Produce upgraded blog entry and articles to get natural traffic -
+                                                        making </p>
+                                                </div>
                                             </div>
-                                            <div class="content">
-                                                <h4>Say Google to the Black Page</h4>
-                                                <p>Produce upgraded blog entry and articles to get natural traffic -
-                                                    making </p>
+                                            <div class="iconic-info-box style-two mb-30 wow fadeInUp">
+                                                <div class="icon">
+                                                    <i class="flaticon-google"></i>
+                                                </div>
+                                                <div class="content">
+                                                    <h4>Say Google to the Black Page</h4>
+                                                    <p>Produce upgraded blog entry and articles to get natural traffic -
+                                                        making </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="iconic-info-box style-two mb-30 wow fadeInUp">
-                                            <div class="icon">
-                                                <i class="flaticon-communication"></i>
-                                            </div>
-                                            <div class="content">
-                                                <h4>90+ Tools and Template</h4>
-                                                <p>Produce upgraded blog entry and articles to get natural traffic -
-                                                    making </p>
+                                            <div class="iconic-info-box style-two mb-30 wow fadeInUp">
+                                                <div class="icon">
+                                                    <i class="flaticon-communication"></i>
+                                                </div>
+                                                <div class="content">
+                                                    <h4>90+ Tools and Template</h4>
+                                                    <p>Produce upgraded blog entry and articles to get natural traffic -
+                                                        making </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-7">
-                                <!--=== Features Image Box ===-->
-                                <div class="section-image-box style-one mb-50 wow fadeInRight">
-                                    <img src="{{ url_for('static', filename='assets/images/gallery/feature-1.jpg')}}"
-                                        alt="features image">
+                                <div class="col-xl-7">
+                                    <!--=== Features Image Box ===-->
+                                    <div class="section-image-box style-one mb-50 wow fadeInRight">
+                                        <img src="{{ url_for('static', filename='assets/images/gallery/feature-1.jpg')}}"
+                                            alt="features image">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section><!--======  End Features Section  ======-->
-                <!--======  Start Intro Section  ======-->
-                <section class="intro-section pb-120">
-                    <div class="container">
-                        <!--=== Intro Wrapper ===-->
-                        <div class="intro-wrapper">
-                            <div class="row align-items-center">
-                                <div class="col-xl-6">
+                    </section><!--======  End Features Section  ======-->
+                    <!--======  Start Intro Section  ======-->
+                    <section class="intro-section pb-120">
+                        <div class="container">
+                            <!--=== Intro Wrapper ===-->
+                            <div class="intro-wrapper">
+                                <div class="row align-items-center">
+                                    <div class="col-xl-6">
+                                        <!--=== Section Title ===-->
+                                        <div class="video-one_image-box p-r z-1 mb-50 wow fadeInLeft">
+                                            <img src="{{ url_for('static', filename='assets/images/gallery/video-1.jpg')}}"
+                                                alt="video image">
+                                            <div class="play-button">
+                                                <a href="https://www.youtube.com/watch?v=o_MjdUtSL7g"
+                                                    class="video-popup"><i
+                                                        class="flaticon-play-button-arrowhead"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <!--=== Section Content Box ===-->
+                                        <div class="section-content-box text-white mb-50 wow fadeInRight">
+                                            <div class="section-title mb-55">
+                                                <span class="sub-title style-one">Amazing AI</span>
+                                                <h2>Content Generation with <br> Artificial Intelligence</h2>
+                                            </div>
+                                            <p>Create duplicate that proselytes for business profiles, facebook
+                                                advertisements, item portrayals, messages, points of arrival, social
+                                                promotions, from there, the sky is the limit.</p>
+                                            <ul class="circle-list style-one">
+                                                <li>Make article that are finished in under 15 seconds.</li>
+                                                <li>Save many hours with our AI intelligence article generator.</li>
+                                                <li>Work on your duplicate with the article rewriter.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section><!--======  End Intro Section  ======-->
+                    <!--======  Start Testimonial Section  ======-->
+                    <section class="testimonial-section testimonial-shape-section p-r z-1 bg_cover pt-110 pb-90"
+                        style="background-image: url(assets/images/bg/testimonial-bg.jpg);">
+                        <div class="shape shape-one"><span class="circle"></span></div>
+                        <div class="shape shape-two"><span class="circle"></span></div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
                                     <!--=== Section Title ===-->
-                                    <div class="video-one_image-box p-r z-1 mb-50 wow fadeInLeft">
-                                        <img src="{{ url_for('static', filename='assets/images/gallery/video-1.jpg')}}"
-                                            alt="video image">
-                                        <div class="play-button">
-                                            <a href="https://www.youtube.com/watch?v=o_MjdUtSL7g" class="video-popup"><i
-                                                    class="flaticon-play-button-arrowhead"></i></a>
+                                    <div class="section-title title-white text-center mb-55 wow fadeInDown">
+                                        <span class="sub-title style-one">Client Feedback</span>
+                                        <h2>What `s Say Our Client</h2>
+                                        <p>In a few seconds, our A.I. will generate amazing results that <br> you can copy,
+                                            paste & publish. , write creatively </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-4 col-md-6 col-sm-12">
+                                    <!--=== Testimonial Item ===-->
+                                    <div class="testimonial-item style-one mb-30 wow fadeInDown">
+                                        <div class="testimonial-content">
+                                            <div class="author-info-wrap d-flex justify-content-between">
+                                                <div class="author-thumb-item mb-15">
+                                                    <div class="thumb">
+                                                        <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-1.jpg')}}"
+                                                            alt="author thumb">
+                                                    </div>
+                                                    <div class="content">
+                                                        <h6>Esther Howard</h6>
+                                                        <span class="position">Product Designer</span>
+                                                    </div>
+                                                </div>
+                                                <div class="ratings">
+                                                    <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
+                                                </div>
+                                            </div>
+                                            <p>They just disclosed the new lengthy structure article essayist 3.0, and I
+                                                moved toward it with alert, The result is excellent instruments.</p>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 col-sm-12">
+                                    <!--=== Testimonial Item ===-->
+                                    <div class="testimonial-item style-one mb-30 wow fadeInDown">
+                                        <div class="testimonial-content">
+                                            <div class="author-info-wrap d-flex justify-content-between">
+                                                <div class="author-thumb-item mb-15">
+                                                    <div class="thumb">
+                                                        <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-2.jpg')}}"
+                                                            alt="author thumb">
+                                                    </div>
+                                                    <div class="content">
+                                                        <h6>Jenny Wilson</h6>
+                                                        <span class="position">Product Designer</span>
+                                                    </div>
+                                                </div>
+                                                <div class="ratings">
+                                                    <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
+                                                </div>
+                                            </div>
+                                            <p>They just disclosed the new lengthy structure article essayist 3.0, and I
+                                                moved toward it with alert, The result is excellent instruments.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 col-sm-12">
+                                    <!--=== Testimonial Item ===-->
+                                    <div class="testimonial-item style-one mb-30 wow fadeInDown">
+                                        <div class="testimonial-content">
+                                            <div class="author-info-wrap d-flex justify-content-between">
+                                                <div class="author-thumb-item mb-15">
+                                                    <div class="thumb">
+                                                        <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-3.jpg')}}"
+                                                            alt="author thumb">
+                                                    </div>
+                                                    <div class="content">
+                                                        <h6>Guy Hawkins</h6>
+                                                        <span class="position">Product Designer</span>
+                                                    </div>
+                                                </div>
+                                                <div class="ratings">
+                                                    <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
+                                                </div>
+                                            </div>
+                                            <p>They just disclosed the new lengthy structure article essayist 3.0, and I
+                                                moved toward it with alert, The result is excellent instruments.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 col-sm-12">
+                                    <!--=== Testimonial Item ===-->
+                                    <div class="testimonial-item style-one mb-30 wow fadeInDown">
+                                        <div class="testimonial-content">
+                                            <div class="author-info-wrap d-flex justify-content-between">
+                                                <div class="author-thumb-item mb-15">
+                                                    <div class="thumb">
+                                                        <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-4.jpg')}}"
+                                                            alt="author thumb">
+                                                    </div>
+                                                    <div class="content">
+                                                        <h6>Bessie Cooper</h6>
+                                                        <span class="position">Product Designer</span>
+                                                    </div>
+                                                </div>
+                                                <div class="ratings">
+                                                    <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
+                                                </div>
+                                            </div>
+                                            <p>They just disclosed the new lengthy structure article essayist 3.0, and I
+                                                moved toward it with alert, The result is excellent instruments.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 col-sm-12">
+                                    <!--=== Testimonial Item ===-->
+                                    <div class="testimonial-item style-one mb-30 wow fadeInDown">
+                                        <div class="testimonial-content">
+                                            <div class="author-info-wrap d-flex justify-content-between">
+                                                <div class="author-thumb-item mb-15">
+                                                    <div class="thumb">
+                                                        <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-5.jpg')}}"
+                                                            alt="author thumb">
+                                                    </div>
+                                                    <div class="content">
+                                                        <h6>Kathryn Murphy</h6>
+                                                        <span class="position">Product Designer</span>
+                                                    </div>
+                                                </div>
+                                                <div class="ratings">
+                                                    <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
+                                                </div>
+                                            </div>
+                                            <p>They just disclosed the new lengthy structure article essayist 3.0, and I
+                                                moved toward it with alert, The result is excellent instruments.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 col-sm-12">
+                                    <!--=== Testimonial Item ===-->
+                                    <div class="testimonial-item style-one mb-30 wow fadeInDown">
+                                        <div class="testimonial-content">
+                                            <div class="author-info-wrap d-flex justify-content-between">
+                                                <div class="author-thumb-item mb-15">
+                                                    <div class="thumb">
+                                                        <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-6.jpg')}}"
+                                                            alt="author thumb">
+                                                    </div>
+                                                    <div class="content">
+                                                        <h6>Marvin McKinney</h6>
+                                                        <span class="position">Product Designer</span>
+                                                    </div>
+                                                </div>
+                                                <div class="ratings">
+                                                    <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
+                                                </div>
+                                            </div>
+                                            <p>They just disclosed the new lengthy structure article essayist 3.0, and I
+                                                moved toward it with alert, The result is excellent instruments.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section><!--======  End Testimonial Section  ======-->
+                    <!--======  Start Faqs Section  ======-->
+                    <section class="faqs-section pb-190 pt-110">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <!--=== Image Box ===-->
+                                    <div class="contact-two_image-box p-r z-1 mb-50">
+                                        <img src="{{ url_for('static', filename='assets/images/contact/contact-1.jpg')}}"
+                                            class="image-one wow fadeInLeft" alt="Contact Image">
+                                        <img src="{{ url_for('static', filename='assets/images/contact/contact-2.jpg')}}"
+                                            class="image-two wow fadeInRight" alt="Contact Image">
+                                        <img src="{{ url_for('static', filename='assets/images/contact/contact-3.jpg')}}"
+                                            class="image-three wow fadeInDown" alt="Contact Image">
+                                        <img src="{{ url_for('static', filename='assets/images/contact/shape-1.png')}}"
+                                            class="shape-one" alt="Contact Image">
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <!--=== Section Content Box ===-->
-                                    <div class="section-content-box text-white mb-50 wow fadeInRight">
-                                        <div class="section-title mb-55">
-                                            <span class="sub-title style-one">Amazing AI</span>
-                                            <h2>Content Generation with <br> Artificial Intelligence</h2>
+                                    <div class="section-content-box pl-xl-45">
+                                        <!--=== Section Title ===-->
+                                        <div class="section-title mb-55 wow fadeInDown">
+                                            <span class="sub-title style-one">Faq</span>
+                                            <h2>Frequently Asked Question</h2>
                                         </div>
-                                        <p>Create duplicate that proselytes for business profiles, facebook
-                                            advertisements, item portrayals, messages, points of arrival, social
-                                            promotions, from there, the sky is the limit.</p>
-                                        <ul class="circle-list style-one">
-                                            <li>Make article that are finished in under 15 seconds.</li>
-                                            <li>Save many hours with our AI intelligence article generator.</li>
-                                            <li>Work on your duplicate with the article rewriter.</li>
+                                        <div class="accordion wow fadeInUp" id="accordionOne">
+                                            <!--=== Accordion Card ===-->
+                                            <div class="accordion-card style-one mb-15">
+                                                <div class="accordion-header">
+                                                    <h6 class="accordion-title collapsed" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapse1" aria-expanded="true">
+                                                        What is Content Writing AI?
+                                                    </h6>
+                                                </div>
+                                                <div id="collapse1" class="accordion-collapse collapse show"
+                                                    data-bs-parent="#accordionOne">
+                                                    <div class="accordion-content">
+                                                        <p>Content writing AI refers to artificial intelligence systems,
+                                                            often powered by natural language processing (NLP) algorithms,
+                                                            that are designed to generate human-like text for various
+                                                            purposes, such as articles, blog posts, product descriptions,
+                                                            and more.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--=== Accordion Card ===-->
+                                            <div class="accordion-card style-one mb-15">
+                                                <div class="accordion-header">
+                                                    <h6 class="accordion-title" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapse2" aria-expanded="false">
+                                                        Is Content Written by AI SEO-Friendly?
+                                                    </h6>
+                                                </div>
+                                                <div id="collapse2" class="accordion-collapse collapse"
+                                                    data-bs-parent="#accordionOne">
+                                                    <div class="accordion-content">
+                                                        <p>Content writing AI refers to artificial intelligence systems,
+                                                            often powered by natural language processing (NLP) algorithms,
+                                                            that are designed to generate human-like text for various
+                                                            purposes, such as articles, blog posts, product descriptions,
+                                                            and more.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--=== Accordion Card ===-->
+                                            <div class="accordion-card style-one mb-15">
+                                                <div class="accordion-header">
+                                                    <h6 class="accordion-title" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapse3" aria-expanded="false">
+                                                        How Does Content Writing AI Work?
+                                                    </h6>
+                                                </div>
+                                                <div id="collapse3" class="accordion-collapse collapse"
+                                                    data-bs-parent="#accordionOne">
+                                                    <div class="accordion-content">
+                                                        <p>Content writing AI refers to artificial intelligence systems,
+                                                            often powered by natural language processing (NLP) algorithms,
+                                                            that are designed to generate human-like text for various
+                                                            purposes, such as articles, blog posts, product descriptions,
+                                                            and more.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section><!--======  End Faqs Section  ======-->
+                    <!--======  Start CTA Section  ======-->
+                    <section class="cta-section">
+                        <div class="container">
+                            <div class="cta-wrapper_one">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6">
+                                        <!--=== CTA Content Box ===-->
+                                        <div class="cta-one_content-box wow fadeInLeft">
+                                            <h2>End Writer’s Block Today</h2>
+                                            <p>It’s like having access to a team of copywriting experts writing powerful
+                                                copy for you in 1-click.</p>
+                                            <a href="contact.html" class="theme-btn gradient-btn">Start Writing Free </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!--=== CTA Image ===-->
+                                        <div class="cta-one_image-box p-r z-1 text-xl-end">
+                                            <img src="{{ url_for('static', filename='assets/images/gallery/robot2.png')}}"
+                                                class="image-one" alt="">
+                                            <img src="{{ url_for('static', filename='assets/images/gallery/base2.png')}}"
+                                                class="image-two" alt="">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section><!--======  End CTA Section  ======-->
+                </div>
+            </div>
+            <!--======  Start Footer  ======-->
+            <footer class="footer-default bg_cover pt-80">
+                <div class="container">
+                    <div class="footer-widget-area pb-45">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <!--===  Footer Widget  ===-->
+                                <div class="footer-widget footer_about_widget mb-30 wow fadeInUp">
+                                    <div class="footer-content">
+                                        <div class="footer-logo mb-30">
+                                            <a href="index.html"><img src="assets/images/logo/white-logo.png"
+                                                    alt="Footer Logo"></a>
+                                        </div>
+                                        <p>Automatically generate blog articles, website copy, landing pages & digital ads
+                                            for your business in seconds. Unleash the most advanced AI writer to boost your
+                                            traffic and productivity.</p>
+                                        <ul class="social-link">
+                                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
                                         </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <!--===  Footer Widget  ===-->
+                                <div class="footer-widget footer_widget_nav_menu wow fadeInDown">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4 class="footer-title">Quick Links</h4>
+                                            <ul class="mb-30">
+                                                <li><a href="blog-details.html">Blog Post & Articles</a></li>
+                                                <li><a href="blog-details.html">Product Description</a></li>
+                                                <li><a href="blog-details.html">Social Media Ads</a></li>
+                                                <li><a href="team.html">Expert Team</a></li>
+                                                <li><a href="pricing.html">Pricing Package</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="footer-title">Company</h4>
+                                            <ul class="mb-30">
+                                                <li><a href="about.html">About Us</a></li>
+                                                <li><a href="pricing.html">Pricing</a></li>
+                                                <li><a href="login.html">Login</a></li>
+                                                <li><a href="sign-up.html">Sign Up</a></li>
+                                                <li><a href="about.html">Privacy & Policy</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <!--===  Footer Widget  ===-->
+                                <div class="footer-widget footer-newsletter-widget mb-30 wow fadeInUp">
+                                    <h4 class="footer-title">News & Update</h4>
+                                    <div class="newsletter-content">
+                                        <form>
+                                            <div class="form-group mb-30">
+                                                <input type="email" placeholder="enter your email" name="email" required>
+                                                <button class="theme-btn gradient-btn">Subscribe</button>
+                                            </div>
+                                        </form>
+                                        <p>Our latest news, articles, and resources, we will sent to your inbox weekly.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section><!--======  End Intro Section  ======-->
-                <!--======  Start Testimonial Section  ======-->
-                <section class="testimonial-section testimonial-shape-section p-r z-1 bg_cover pt-110 pb-90"
-                    style="background-image: url(assets/images/bg/testimonial-bg.jpg);">
-                    <div class="shape shape-one"><span class="circle"></span></div>
-                    <div class="shape shape-two"><span class="circle"></span></div>
+                </div>
+                <!--===  Copyright Area  ===-->
+                <div class="copyright-area">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12">
-                                <!--=== Section Title ===-->
-                                <div class="section-title title-white text-center mb-55 wow fadeInDown">
-                                    <span class="sub-title style-one">Client Feedback</span>
-                                    <h2>What `s Say Our Client</h2>
-                                    <p>In a few seconds, our A.I. will generate amazing results that <br> you can copy,
-                                        paste & publish. , write creatively </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-4 col-md-6 col-sm-12">
-                                <!--=== Testimonial Item ===-->
-                                <div class="testimonial-item style-one mb-30 wow fadeInDown">
-                                    <div class="testimonial-content">
-                                        <div class="author-info-wrap d-flex justify-content-between">
-                                            <div class="author-thumb-item mb-15">
-                                                <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-1.jpg')}}"
-                                                        alt="author thumb">
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Esther Howard</h6>
-                                                    <span class="position">Product Designer</span>
-                                                </div>
-                                            </div>
-                                            <div class="ratings">
-                                                <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
-                                            </div>
-                                        </div>
-                                        <p>They just disclosed the new lengthy structure article essayist 3.0, and I
-                                            moved toward it with alert, The result is excellent instruments.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-6 col-sm-12">
-                                <!--=== Testimonial Item ===-->
-                                <div class="testimonial-item style-one mb-30 wow fadeInDown">
-                                    <div class="testimonial-content">
-                                        <div class="author-info-wrap d-flex justify-content-between">
-                                            <div class="author-thumb-item mb-15">
-                                                <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-2.jpg')}}"
-                                                        alt="author thumb">
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Jenny Wilson</h6>
-                                                    <span class="position">Product Designer</span>
-                                                </div>
-                                            </div>
-                                            <div class="ratings">
-                                                <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
-                                            </div>
-                                        </div>
-                                        <p>They just disclosed the new lengthy structure article essayist 3.0, and I
-                                            moved toward it with alert, The result is excellent instruments.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-6 col-sm-12">
-                                <!--=== Testimonial Item ===-->
-                                <div class="testimonial-item style-one mb-30 wow fadeInDown">
-                                    <div class="testimonial-content">
-                                        <div class="author-info-wrap d-flex justify-content-between">
-                                            <div class="author-thumb-item mb-15">
-                                                <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-3.jpg')}}"
-                                                        alt="author thumb">
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Guy Hawkins</h6>
-                                                    <span class="position">Product Designer</span>
-                                                </div>
-                                            </div>
-                                            <div class="ratings">
-                                                <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
-                                            </div>
-                                        </div>
-                                        <p>They just disclosed the new lengthy structure article essayist 3.0, and I
-                                            moved toward it with alert, The result is excellent instruments.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-6 col-sm-12">
-                                <!--=== Testimonial Item ===-->
-                                <div class="testimonial-item style-one mb-30 wow fadeInDown">
-                                    <div class="testimonial-content">
-                                        <div class="author-info-wrap d-flex justify-content-between">
-                                            <div class="author-thumb-item mb-15">
-                                                <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-4.jpg')}}"
-                                                        alt="author thumb">
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Bessie Cooper</h6>
-                                                    <span class="position">Product Designer</span>
-                                                </div>
-                                            </div>
-                                            <div class="ratings">
-                                                <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
-                                            </div>
-                                        </div>
-                                        <p>They just disclosed the new lengthy structure article essayist 3.0, and I
-                                            moved toward it with alert, The result is excellent instruments.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-6 col-sm-12">
-                                <!--=== Testimonial Item ===-->
-                                <div class="testimonial-item style-one mb-30 wow fadeInDown">
-                                    <div class="testimonial-content">
-                                        <div class="author-info-wrap d-flex justify-content-between">
-                                            <div class="author-thumb-item mb-15">
-                                                <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-5.jpg')}}"
-                                                        alt="author thumb">
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Kathryn Murphy</h6>
-                                                    <span class="position">Product Designer</span>
-                                                </div>
-                                            </div>
-                                            <div class="ratings">
-                                                <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
-                                            </div>
-                                        </div>
-                                        <p>They just disclosed the new lengthy structure article essayist 3.0, and I
-                                            moved toward it with alert, The result is excellent instruments.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-6 col-sm-12">
-                                <!--=== Testimonial Item ===-->
-                                <div class="testimonial-item style-one mb-30 wow fadeInDown">
-                                    <div class="testimonial-content">
-                                        <div class="author-info-wrap d-flex justify-content-between">
-                                            <div class="author-thumb-item mb-15">
-                                                <div class="thumb">
-                                                    <img src="{{ url_for('static', filename='assets/images/testimonial/thumb-6.jpg')}}"
-                                                        alt="author thumb">
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Marvin McKinney</h6>
-                                                    <span class="position">Product Designer</span>
-                                                </div>
-                                            </div>
-                                            <div class="ratings">
-                                                <span><i class="fas fa-star"></i><a href="#">(5.0)</a></span>
-                                            </div>
-                                        </div>
-                                        <p>They just disclosed the new lengthy structure article essayist 3.0, and I
-                                            moved toward it with alert, The result is excellent instruments.</p>
-                                    </div>
+                                <div class="copyright-text text-center">
+                                    <p>Copyright 2024 All Right Reserved</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section><!--======  End Testimonial Section  ======-->
-                <!--======  Start Faqs Section  ======-->
-                <section class="faqs-section pb-190 pt-110">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <!--=== Image Box ===-->
-                                <div class="contact-two_image-box p-r z-1 mb-50">
-                                    <img src="{{ url_for('static', filename='assets/images/contact/contact-1.jpg')}}"
-                                        class="image-one wow fadeInLeft" alt="Contact Image">
-                                    <img src="{{ url_for('static', filename='assets/images/contact/contact-2.jpg')}}"
-                                        class="image-two wow fadeInRight" alt="Contact Image">
-                                    <img src="{{ url_for('static', filename='assets/images/contact/contact-3.jpg')}}"
-                                        class="image-three wow fadeInDown" alt="Contact Image">
-                                    <img src="{{ url_for('static', filename='assets/images/contact/shape-1.png')}}"
-                                        class="shape-one" alt="Contact Image">
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <!--=== Section Content Box ===-->
-                                <div class="section-content-box pl-xl-45">
-                                    <!--=== Section Title ===-->
-                                    <div class="section-title mb-55 wow fadeInDown">
-                                        <span class="sub-title style-one">Faq</span>
-                                        <h2>Frequently Asked Question</h2>
-                                    </div>
-                                    <div class="accordion wow fadeInUp" id="accordionOne">
-                                        <!--=== Accordion Card ===-->
-                                        <div class="accordion-card style-one mb-15">
-                                            <div class="accordion-header">
-                                                <h6 class="accordion-title collapsed" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse1" aria-expanded="true">
-                                                    What is Content Writing AI?
-                                                </h6>
-                                            </div>
-                                            <div id="collapse1" class="accordion-collapse collapse show"
-                                                data-bs-parent="#accordionOne">
-                                                <div class="accordion-content">
-                                                    <p>Content writing AI refers to artificial intelligence systems,
-                                                        often powered by natural language processing (NLP) algorithms,
-                                                        that are designed to generate human-like text for various
-                                                        purposes, such as articles, blog posts, product descriptions,
-                                                        and more.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--=== Accordion Card ===-->
-                                        <div class="accordion-card style-one mb-15">
-                                            <div class="accordion-header">
-                                                <h6 class="accordion-title" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse2" aria-expanded="false">
-                                                    Is Content Written by AI SEO-Friendly?
-                                                </h6>
-                                            </div>
-                                            <div id="collapse2" class="accordion-collapse collapse"
-                                                data-bs-parent="#accordionOne">
-                                                <div class="accordion-content">
-                                                    <p>Content writing AI refers to artificial intelligence systems,
-                                                        often powered by natural language processing (NLP) algorithms,
-                                                        that are designed to generate human-like text for various
-                                                        purposes, such as articles, blog posts, product descriptions,
-                                                        and more.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--=== Accordion Card ===-->
-                                        <div class="accordion-card style-one mb-15">
-                                            <div class="accordion-header">
-                                                <h6 class="accordion-title" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse3" aria-expanded="false">
-                                                    How Does Content Writing AI Work?
-                                                </h6>
-                                            </div>
-                                            <div id="collapse3" class="accordion-collapse collapse"
-                                                data-bs-parent="#accordionOne">
-                                                <div class="accordion-content">
-                                                    <p>Content writing AI refers to artificial intelligence systems,
-                                                        often powered by natural language processing (NLP) algorithms,
-                                                        that are designed to generate human-like text for various
-                                                        purposes, such as articles, blog posts, product descriptions,
-                                                        and more.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section><!--======  End Faqs Section  ======-->
-                <!--======  Start CTA Section  ======-->
-                <section class="cta-section">
-                    <div class="container">
-                        <div class="cta-wrapper_one">
-                            <div class="row align-items-center">
-                                <div class="col-lg-6">
-                                    <!--=== CTA Content Box ===-->
-                                    <div class="cta-one_content-box wow fadeInLeft">
-                                        <h2>End Writer’s Block Today</h2>
-                                        <p>It’s like having access to a team of copywriting experts writing powerful
-                                            copy for you in 1-click.</p>
-                                        <a href="contact.html" class="theme-btn gradient-btn">Start Writing Free </a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <!--=== CTA Image ===-->
-                                    <div class="cta-one_image-box p-r z-1 text-xl-end">
-                                        <!-- <img src="assets/images/gallery/robot2.png" class="image-one" alt="">
-                                        <img src="assets/images/gallery/base2.png" class="image-two" alt=""> -->
-                                        <img src="{{ url_for('static', filename='assets/images/gallery/robot2.png')}}"
-                                            class="image-one" alt="">
-                                        <img src="{{ url_for('static', filename='assets/images/gallery/base2.png')}}"
-                                            class="image-two" alt="">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section><!--======  End CTA Section  ======-->
-            </div>
+                </div>
+            </footer><!--======  End Footer  ======-->
         </div>
-        <!--======  Start Footer  ======-->
-        <footer class="footer-default bg_cover pt-80">
-            <div class="container">
-                <div class="footer-widget-area pb-45">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <!--===  Footer Widget  ===-->
-                            <div class="footer-widget footer_about_widget mb-30 wow fadeInUp">
-                                <div class="footer-content">
-                                    <div class="footer-logo mb-30">
-                                        <a href="index.html"><img src="assets/images/logo/white-logo.png"
-                                                alt="Footer Logo"></a>
-                                    </div>
-                                    <p>Automatically generate blog articles, website copy, landing pages & digital ads
-                                        for your business in seconds. Unleash the most advanced AI writer to boost your
-                                        traffic and productivity.</p>
-                                    <ul class="social-link">
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-5">
-                            <!--===  Footer Widget  ===-->
-                            <div class="footer-widget footer_widget_nav_menu wow fadeInDown">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h4 class="footer-title">Quick Links</h4>
-                                        <ul class="mb-30">
-                                            <li><a href="blog-details.html">Blog Post & Articles</a></li>
-                                            <li><a href="blog-details.html">Product Description</a></li>
-                                            <li><a href="blog-details.html">Social Media Ads</a></li>
-                                            <li><a href="team.html">Expert Team</a></li>
-                                            <li><a href="pricing.html">Pricing Package</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h4 class="footer-title">Company</h4>
-                                        <ul class="mb-30">
-                                            <li><a href="about.html">About Us</a></li>
-                                            <li><a href="pricing.html">Pricing</a></li>
-                                            <li><a href="login.html">Login</a></li>
-                                            <li><a href="sign-up.html">Sign Up</a></li>
-                                            <li><a href="about.html">Privacy & Policy</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <!--===  Footer Widget  ===-->
-                            <div class="footer-widget footer-newsletter-widget mb-30 wow fadeInUp">
-                                <h4 class="footer-title">News & Update</h4>
-                                <div class="newsletter-content">
-                                    <form>
-                                        <div class="form-group mb-30">
-                                            <input type="email" placeholder="enter your email" name="email" required>
-                                            <button class="theme-btn gradient-btn">Subscribe</button>
-                                        </div>
-                                    </form>
-                                    <p>Our latest news, articles, and resources, we will sent to your inbox weekly.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--===  Copyright Area  ===-->
-            <div class="copyright-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="copyright-text text-center">
-                                <p>Copyright 2024 All Right Reserved</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer><!--======  End Footer  ======-->
-    </div>
+    </main>
 
     <!--====== Jquery js ======-->
     <script src="{{ url_for('static', filename='assets/vendor/jquery-3.6.0.min.js') }}"></script>
@@ -1096,39 +1129,12 @@
     <!--====== Slick Carousel js ======-->
     <script src="{{ url_for('static', filename='assets/vendor/slick/slick.min.js') }}"></script>
     <!--====== Magnific Popup js ======-->
-    <script
-        src="{{ url_for('static', filename='assets/vendor/magnific-popup/dist/jquery.magnific-popup.min.js') }}"></script>
-    <!--====== ImagesLoaded js ======-->
-    <!-- <script src="{{ url_for('static', filename='assets/vendor/imagesloaded.min.js') }}"></script> -->
-    <!--====== Isotope Plugin js ======-->
-    <!-- <script src="{{ url_for('static', filename='assets/vendor/isotope.min.js') }}"></script> -->
+    <script src="{{ url_for('static', filename='assets/vendor/magnific-popup/dist/jquery.magnific-popup.min.js') }}"></script>
     <!--====== WOW Animation js ======-->
     <script src="{{ url_for('static', filename='assets/vendor/wow/wow.min.js') }}"></script>
     <!--====== Main Custom js ======-->
     <script src="{{ url_for('static', filename='assets/js/theme.js') }}"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('#sidebar').addClass('active');
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-                var icon = $('#toggleIcon');
-                icon.toggleClass('icon-move-right icon-move-left');
-
-                if ($('#sidebar').hasClass('active')) {
-                    icon.removeClass('fa-align-right').addClass('fa-align-left');
-                } else {
-                    icon.removeClass('fa-align-left').addClass('fa-align-right');
-                }
-            });
-
-            // Close sidebar when clicking on an item
-            $('#sidebar .list-unstyled li').on('click', function () {
-                $('#sidebar').removeClass('active');
-                $('#toggleIcon').removeClass('fa-align-right icon-move-right').addClass('fa-align-left icon-move-left');
-            });
-        });
-    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var video = document.getElementById('myVideo');
