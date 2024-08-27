@@ -48,11 +48,11 @@
 /* body { */
     /* margin-top: 150px; */
     /* } */
+    
 
     #outputCanvas {
         width: 80%;
         height: 512px;
-        /* Adjust height as needed */
         border: 1px solid #ccc;
     }
 
@@ -70,7 +70,6 @@
         transition: background 0.3s ease;
     }
 
-    /* Hover state */
     .button:hover {
         background: linear-gradient(to left, #ff71b8, #ba71ff,#90c3fd);
         color: black
@@ -90,7 +89,6 @@
         transition: background 0.3s ease;
     }
 
-    /* Hover state */
     .grand:hover {
         background: linear-gradient(to left, #ff71b8, #ba71ff,#90c3fd);
         color: black
@@ -105,7 +103,6 @@
 
     .back-link:hover {
         color: #f083c2;
-        /* Change color on hover (blue) */
     }
 
     @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
@@ -113,6 +110,7 @@
     body {
         font-family: Arial, sans-serif;
         background: #fafafa;
+        overflow: hidden;
     }
 
     p {
@@ -134,14 +132,18 @@
         a[data-toggle="collapse"] {
         position: relative;
     }
+    main {
+        background-color: var(--background-color);
+    }
 
    
     /* ---------------------------------------------------
 CONTENT STYLE
 ----------------------------------------------------- */
-.container-fluid {
+       .container-fluid {
             margin-top: 100px;
-            /* Increased top margin */
+            justify-content: center;
+            align-items: center; 
         }
 
         #content {
@@ -195,6 +197,22 @@ CONTENT STYLE
            align-items: center; 
            justify-content: center; 
        }
+       .theme-toggle{
+           top: 3px;
+       }
+       .hero-wrapper {
+           position: relative;
+       }
+
+      #content p.text-end {
+          position: fixed;
+          top: 80px; 
+          right: 20px; 
+          margin: 0;
+          z-index: 1000;
+      }
+      
+       
 </style>
 <body class="home-one">
    
@@ -329,10 +347,17 @@ CONTENT STYLE
         document.body.classList.toggle('dark');
     });
     
+</script>
 
-       
 
-    </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const startWritingButton = document.querySelector(".ac-header-bnt-2 a.theme-btn");
+      if (startWritingButton) {
+        startWritingButton.remove();
+      }
+    });
+  </script>
 
 </body>
 

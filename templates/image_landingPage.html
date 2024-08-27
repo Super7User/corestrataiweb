@@ -49,6 +49,7 @@
 
    <style>
        
+<<<<<<< HEAD
         h5 {
             font-size: 1.5rem;
             font-weight: bold;
@@ -90,8 +91,61 @@
         }
        .card:hover {
          transform: scale(1.05);
+=======
+       h5 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 0px;
+>>>>>>> 97694c44de7acb0ef416031ccb0ba98ad2d64819
        }
 
+       p {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.1em;
+        font-weight: 300;
+        line-height: 1.7em;
+        color: #999;
+      }
+
+       main {
+         background-color: var(--background-color);
+         margin-left: 5rem;
+         padding: 1rem 2rem;
+         transition: margin-left 0.5s ease-in-out;
+      }
+
+      .card {
+         background: rgb(238, 238, 252);
+         height: 200px;
+         width: 100%;
+         padding: 20px;
+         border: 1px solid #ccc;
+         border-radius: 4px;
+         box-sizing: border-box;
+         transition: transform 0.3s;
+         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .card:hover {
+         transform: scale(1.05);
+      }
+
+      .card-group {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         gap: 20px; 
+         max-width: 1200px;
+         margin: 0 auto; 
+         padding: 20px; 
+     }
+
+     .hero-wrapper {
+        padding: 200px 0; 
+     }
+     .theme-toggle{
+        top: 2px;
+     }
+     
 
     </style>
 </head>
@@ -156,6 +210,14 @@
             });
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const startWritingButton = document.querySelector(".ac-header-bnt-2 a.theme-btn");
+          if (startWritingButton) {
+            startWritingButton.remove();
+          }
+        });
+      </script>
 </body>
 
 </html>
