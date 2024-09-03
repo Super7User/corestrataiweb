@@ -350,7 +350,7 @@
         button {
             /* margin-top: 20px; */
             /* height: 30px; */
-            padding: 5px 10px;
+            padding: 0px 40px;
             border-radius: 10px;
             font-size: 14px;
             background-color: var(--btn-background);
@@ -368,16 +368,15 @@
             transform: scale(var(--btn-active-scale));
         }
 
-        .theme-toggle {
+        /* .theme-toggle {
             position: absolute;
-            /* top: 10px; */
             right: 10px;
             background: none;
             border: none;
             cursor: pointer;
             font-size: 1.5rem;
             color: var(--font-color);
-        }
+        } */
 
         .card img {
             width: 100%;
@@ -411,33 +410,46 @@
         .button-container {
             display: flex;
             align-items: center;
-            position: absolute;
-            right: 10px;
-            top: 20px;
             gap: 10px;
+            position: absolute;
+            right: 30px;
+            top: 20px;
         }
 
         .ac-header-bnt-2 .theme-btn {
-            /* padding: 5px 15px; */
             font-size: 1rem;
             background-color: #ba71ff;
             color: #fff;
             border-radius: 5px;
             text-decoration: none;
-            margin-right: 70px;
+            /* padding: 5px 15px; */
+            /* font-size: 1rem;
+            background-color: #ba71ff;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 30px; */
         }
 
-        .ac-header-bnt-2 .theme-btn:hover {
-            opacity: var(--btn-hover-opacity);
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--font-color);
         }
 
-        .ac-header-bnt-2 .theme-btn:active {
-            transform: scale(var(--btn-active-scale));
+        .fas.fa-right-from-bracket {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--font-color);
+            right: 20px !important;
         }
 
-        .fa-right-from-bracket {
+
+        /* .fa-right-from-bracket {
             display: none !important;
-        }
+        } */
     </style>
 </head>
 
@@ -445,15 +457,17 @@
     <!-- <button class="theme-toggle" onclick="toggleTheme()">
         <i class="fas fa-moon"></i>
     </button> -->
+
     <div class="button-container">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <div class="ac-header-bnt-2 d-none d-md-block">
+        <div class="ac-header-bnt-2">
             <a href="newlogin" class="theme-btn gradient-btn">Start Writing</a>
         </div>
         <button class="theme-toggle" onclick="toggleTheme()">
             <i class="fas fa-moon"></i>
         </button>
+        <a href="newlogin"><i class="fas fa-right-from-bracket" style="font-size: 1.5rem; cursor: pointer;"></i></a>
     </div>
+
     <aside>
         <nav>
             <ul>

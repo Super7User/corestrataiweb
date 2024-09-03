@@ -12,11 +12,17 @@ from firebase_admin import credentials, auth, db
 from firebase_admin.exceptions import FirebaseError
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail, Message
+from firebase_admin import  exceptions
+from firebase_admin._auth_utils import EmailAlreadyExistsError
 from flask_login import LoginManager, login_user, UserMixin, current_user, login_required, logout_user
 from datetime import timedelta
 import logging
 from groq import Groq
 import time
+import smtplib
+from google.oauth2 import id_token
+from google.auth.transport import requests as google_requests
+
 
 app = Flask(__name__)
 
@@ -37,12 +43,15 @@ client = Groq(api_key='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'
 
 
 app.secret_key = 'your_secret_key'
-app.config['MAIL_SERVER'] = 'smtp.example.com'
+app.config['MAIL_SERVER'] = 'smtp.example.com'  # Ensure this is correct
 app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'your_email@example.com'
-app.config['MAIL_PASSWORD'] = 'your_email_password'
+app.config['MAIL_USERNAME'] = 'dhanapooja1211@gmail.com'
+app.config['MAIL_PASSWORD'] = 'your-email-password'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_DEBUG'] = True
+
+
 mail = Mail(app)
 
 # Firebase configuration
@@ -50,6 +59,7 @@ cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred,{
     'databaseURL': 'https://holygrail07-3bc90-default-rtdb.firebaseio.com/'
 })
+
 
 ref = db.reference('/')
 
@@ -66,6 +76,9 @@ firebaseConfig = {
     "messagingSenderId": "1007986562323",
     "appId": "1:1007986562323:web:5a670e323b70f710d9b6e6"
 }
+
+# firebase = pyrebase.initialize_app(firebaseConfig)
+# auth = firebase.auth()
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -105,11 +118,37 @@ def index_dark():
 def about():
     return render_template('about.html')
 
-# @app.route('/repository')
-# def repository():
-#     user_id = session.get('userId')
-#     print(user_id,"repository")
-#     return render_template('repository.html')
+@app.route('/password')
+def password_reset():
+    return render_template('password.html')
+
+
+@app.route('/send_reset_password', methods=['POST'])
+def send_reset_password():
+    email = request.form.get('email')
+    
+    if not email:
+        return jsonify({'status': 'error', 'message': 'Email address is required.'}), 400
+
+    try:
+        # Generate the password reset link
+        reset_link = auth.generate_password_reset_link(email)
+        
+        # Send the reset link via email
+        msg = Message('Password Reset Request', sender=app.config['MAIL_USERNAME'], recipients=[email])
+        msg.body = f'Click the following link to reset your password: {reset_link}'
+        print(msg)
+        mail.send(msg)
+        return jsonify({'status': 'success', 'message': 'Reset link sent via email.'})
+    except firebase_admin.auth.UserNotFoundError:
+        return jsonify({'status': 'error', 'message': 'No user found with this email address.'}), 404
+    except smtplib.SMTPException as e:
+        return jsonify({'status': 'error', 'message': f'SMTP error occurred: {e}'}), 500
+    except Exception as e:
+        # Log the error for debugging
+        logging.error(f"Unexpected error: {str(e)}")
+        return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
+
 
 @app.route('/repository', methods=['GET'])
 def repository():
@@ -180,6 +219,36 @@ def login():
 
     return render_template('login.html')
 
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
+    token = data.get('token')
+
+    print("Received token:", token)
+
+    try:
+        # Verify the token with Firebase
+        decoded_token = auth.verify_id_token(token)
+        print("Decoded token:", decoded_token)
+        uid = decoded_token['uid']
+        # Handle user creation logic here
+        # Example: Save the user info to your database
+
+        return jsonify({'success': True, 'uid': uid})
+    except firebase_admin.auth.InvalidIdTokenError:
+        print("Invalid ID token")
+        return jsonify({'success': False, 'error': 'Invalid ID token'}), 401
+    except firebase_admin.auth.ExpiredIdTokenError:
+        print("Expired ID token")
+        return jsonify({'success': False, 'error': 'Expired ID token'}), 401
+    except firebase_admin.auth.RevokedIdTokenError:
+        print("Revoked ID token")
+        return jsonify({'success': False, 'error': 'Revoked ID token'}), 401
+    except Exception as e:
+        print("Error during token verification:", str(e))
+        return jsonify({'success': False, 'error': 'Token verification failed'}), 401
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -205,37 +274,6 @@ def register():
             return jsonify({"status": "error", "message": str(e)})
 
     return render_template('register.html')
-
-@app.route('/password-reset', methods=['GET', 'POST'])
-def send_password_reset():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        app.logger.debug(f"Received email: {email}")
-        if email:
-            try:
-                app.logger.debug("Attempting to generate password reset link")
-                link = auth.generate_password_reset_link(email)
-                app.logger.debug(f"Password reset link generated: {link}")
-                send_reset_email(email, link)
-                flash('Password reset email sent!', 'success')
-                return redirect(url_for('send_password_reset'))
-            except FirebaseError as e:
-                app.logger.error(f'Firebase error: {e}')
-                flash('Failed to generate password reset link. Please try again later.', 'error')
-                return redirect(url_for('send_password_reset'))
-            except Exception as e:
-                app.logger.error(f'Error sending password reset email: {str(e)}')
-                flash('An unexpected error occurred. Please try again later.', 'error')
-                return redirect(url_for('send_password_reset'))
-    return render_template('password.html')
-
-def send_reset_email(to_email, reset_link):
-    msg = Message('Password Reset Request',
-                  sender=app.config['MAIL_USERNAME'],
-                  recipients=[to_email])
-    msg.body = f'Click the link to reset your password: {reset_link}'
-    mail.send(msg)
-    app.logger.debug(f"Password reset email sent to: {to_email}")
 
 @app.route('/tools')
 @login_required
@@ -287,16 +325,6 @@ def tool_detail(tool_id_str):
     titleName = tool.get('Title')
     print(titleName,"titleName")
     user_id = session.get('userId')
-    # if user_id:
-    #     title = tool.get('Title')
-    #     if title:
-    #         ref.child('users').child(user_id).child('tools').child(str(tool_id)).set({
-    #             'title': title,
-    #             'user_id':user_id,
-    #             'timestamp': {"timestamp": "TIMESTAMP"}
-    #         })
-    #         print(f"Saved tool {title} for user {user_id} in Firebase")
-
     
     return render_template('tool_details.html', tool=tool, tool_id=tool_id,fontDynamic=font_family,titleName=titleName)
 
@@ -308,82 +336,6 @@ def generate_content():
     response_message = "I am available"
 
     return jsonify(message=response_message)
-
-
-# @app.route('/generate-stream', methods=['POST'])
-# def generate_stream():
-#     data = request.get_json()
-#     prompt = data.get('prompt')
-#     user_id = session.get('userId')
-    
-#     if not prompt:
-#         return jsonify({'error': 'Prompt is missing'}), 400
-    
-#     tool_id = session.get('tool_id')  # Retrieve tool_id from session
-
-#     # Read the CSV and fetch the PromptSystem
-#     try:
-#         df = pd.read_csv('alltools.csv')  # Update the path to where the file is stored
-#         tool_details = df[df['ID'] == int(tool_id)]
-#         if tool_details.empty:
-#             return jsonify({'error': 'Tool not found'}), 404
-
-#         system_prompt = tool_details.iloc[0]['PromptSystem']
-#     except Exception as e:
-#         return jsonify({'error': str(e)}), 500
-
-#     # Call to OpenAI with the custom system prompt
-#     try:
-#         response = client.chat.completions.create(
-#             model="llama3-8b-8192",
-#             messages=[
-#                 {
-#                     "role": "system",
-#                     "content": system_prompt
-#                 },
-#                 {
-#                     "role": "user",
-#                     "content": prompt
-#                 },
-#             ],
-#             stream=True,
-#             temperature=1,
-#             max_tokens=512,
-#             top_p=1,
-#         )
-
-#         # Initialize an empty string to store the entire response
-#         complete_response = ""
-
-#         def generate():
-#             nonlocal complete_response
-#             content_generated = False
-
-#             for chunk in response:
-#                 if chunk.choices[0].delta.content:
-#                     content = chunk.choices[0].delta.content
-#                     complete_response += content
-#                     yield content
-#                     content_generated = True
-#                 else:
-#                     print("No content in chunk or malformed chunk:", chunk)
-            
-#             # If content was generated, store it in Realtime Database
-#             if content_generated:
-#                 ref = db.reference('generated_streams').push()  # Auto-generate a new key for the document
-#                 ref.set({
-#                     'user_id': user_id,
-#                     'tool_id': tool_id,
-#                     'prompt': prompt,
-#                     'response': complete_response,
-#                     'timestamp': int(time.time() * 1000)  # Store timestamp in milliseconds
-#                 })
-
-#         return Response(generate(), mimetype='text/plain')
-    
-#     except Exception as e:
-#         print("Error during streaming:", str(e))
-#         return jsonify({'error': str(e)}), 500
 
 
 @app.route('/generate-stream', methods=['POST'])
