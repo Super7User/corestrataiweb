@@ -499,7 +499,7 @@ def tool_details_output(tool_id):
         return jsonify({'error': str(e)}), 500
     
 @app.route('/generate-description', methods=['POST'])
-def generate_desc():
+def generate_description():
     data = request.get_json()
     prompt = data.get('prompt')
     negative_prompt = data.get('negativePrompt')
