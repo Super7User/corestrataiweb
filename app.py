@@ -17,6 +17,8 @@ from datetime import timedelta
 import logging
 from groq import Groq
 import time
+from PIL import Image
+
 
 app = Flask(__name__)
 
@@ -495,54 +497,47 @@ def tool_details_output(tool_id):
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-
-
+    
 @app.route('/generate-description', methods=['POST'])
-def generate_description():
+def generate_desc():
     data = request.get_json()
-    # dropdownPrompt = data.get('dropdownPrompt')
     prompt = data.get('prompt')
     negative_prompt = data.get('negativePrompt')
 
-    url = "https://modelslab.com/api/v6/realtime/text2img"
+    # Optionally accept width and height from the client
+    image_width = data.get('width', 850)
+    image_height = data.get('height', 420)
 
-    payload = json.dumps({
-        "key": "4bwTSqIbyTxTdTUhJxOFFKF1TS3XxqcgrcF1IWtvBOHlKGy636yMhSxUvqc6",
-        "prompt": prompt,
-        "negative_prompt": "Bad quality" if negative_prompt is None else negative_prompt,
-        "width": "512",
-        "height": "512",
-        "safety_checker": False,
-        "seed": None,
-        "samples": 1,
-        "base64": False,
-        "webhook": None,
-        "track_id": None
-    })
+    client1 = OpenAI(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
 
-    headers = {
-        'Content-Type': 'application/json'
-    }
-
-    response = requests.post(url, headers=headers, data=payload)
-    response_data = json.loads(response.text)
-    print(response_data,"response")
-    if 'output' in response_data and len(response_data['output']) > 0:
-        image_url = response_data['output'][0]
-
+    try:
+        # Generate the image using OpenAI API
+        response = client1.images.generate(
+            model="dall-e-3",
+            prompt=prompt,
+            size="1024x1024",  # Default size to work with
+            quality="standard",
+            n=1,
+        )
+        image_url = response.data[0].url
+        print("image url==", image_url)
         image_response = requests.get(image_url)
 
-        print(image_response,"image")
         if image_response.status_code == 200:
             image_buffer = BytesIO(image_response.content)
-            image_buffer.seek(0)
+            image = Image.open(image_buffer)
 
-            return send_file(image_buffer, mimetype='image/png', as_attachment=True, download_name='generated_image.png')
+            # Resize image based on frontend dimensions
+            resized_image = image.resize((image_width, image_height))
+            resized_image_buffer = BytesIO()
+            resized_image.save(resized_image_buffer, format='PNG')
+            resized_image_buffer.seek(0)
+
+            return send_file(resized_image_buffer, mimetype='image/png', as_attachment=True, download_name='generated_image.png')
         else:
-            return jsonify({'status': 'error', 'message': 'Failed to download the image'})
-    else:
-        return jsonify({'status': 'error', 'message': 'No image URL found'})
+            return jsonify({'status': 'error', 'message': 'Failed to download the image'}), 500
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 @app.route('/sam')
 def sam():
@@ -617,7 +612,7 @@ def log_in():
 @app.route('/image')
 def image():
     datacsv = pd.read_csv('alltools.csv')
-    # titles = datacsv['Title'].tolist()
+     #titles = datacsv['Title'].tolist()
     other_titles = datacsv[datacsv['Category'] != 'image']['Title'].tolist()
     datacsv['Category'] = datacsv['Category'].str.strip().str.title()
     negative_prompts = datacsv.set_index('Title')['Negativeprompt'].dropna().to_dict()
