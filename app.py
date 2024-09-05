@@ -200,7 +200,7 @@ def register():
                 password=password
             )
             auth.set_custom_user_claims(user.uid, {'signed_in': True})
-            return jsonify({"status": "success", "message": f"User {email} registered successfully."})
+            return jsonify({"status": "success", "message": f"User {email} registered successfully.", "redirect_url":'/newlogin'})
         except firebase_admin.auth.AuthError as e:
             return jsonify({"status": "error", "message": str(e)})
 
