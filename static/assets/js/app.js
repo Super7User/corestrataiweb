@@ -41,14 +41,18 @@ function generateDescription() {
     .then(blob => {
         const imageUrl = URL.createObjectURL(blob);  // Create a URL from the blob
         const imageContainer = document.getElementById('outputImage');
+        const outputLink = document.getElementById('outputLink');  
         imageContainer.src = imageUrl;  // Update the image src to the blob URL
+        outputLink.href = imageUrl;
         console.log(imageUrl,imageContainer)
     })
     .catch(error => {
         console.error('Error fetching the image:', error);
         alert('Error fetching the image.');
     });
-}
+}  
+
+    
 function addText() {
     const blogCanvas = document.getElementById('blogCanvas');
     const existingText = blogCanvas.querySelector('p');
