@@ -472,19 +472,19 @@
         <nav>
             <ul>
                 <li>
-                    <a href="{{ url_for('tools') }}">
+                    <a href="{{ url_for('tools.tools') }}">
                         <i class="fa-brands fa-microsoft"></i>
                         <span class="sidebar-text">All Tools</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('landing') }}">
+                    <a href="{{ url_for('main_routes.landing') }}">
                         <i class="fa-solid fa-newspaper"></i>
                         <span class="sidebar-text">Article</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('imageLanding') }}">
+                    <a href="{{ url_for('main_routes.imageLanding') }}">
                         <i class="fa-solid fa-image"></i>
                         <span class="sidebar-text">Image Generation</span>
                     </a>
@@ -496,7 +496,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('repository') }}">
+                    <a href="{{ url_for('auth_blueprint.repository') }}">
                         <i class="fa-solid fa-folder"></i>
                         <span class="sidebar-text">My Repository</span>
                     </a>
