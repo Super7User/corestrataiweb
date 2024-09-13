@@ -13,55 +13,53 @@
         rel="stylesheet">
 
     <script type="module">
-         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 
-  
-        const firebaseConfig = {
-            "apiKey": "AIzaSyDQ9Ym9NRCPiC-wLNsmg7PozMA7xedfwfA",
-            "authDomain": "holygrail07-3bc90.firebaseapp.com",
-            "projectId": "holygrail07-3bc90",
-            "storageBucket": "holygrail07-3bc90.appspot.com",
-            "messagingSenderId": "1007986562323",
-            "appId": "1:1007986562323:web:5a670e323b70f710d9b6e6"
-        }
 
-        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyANFurFRRBK-NrZstE1A-LUd9gHM1ODjkY",
+            authDomain: "holygrail07.firebaseapp.com",
+            databaseURL: "https://holygrail07-default-rtdb.firebaseio.com",
+            projectId: "holygrail07",
+            storageBucket: "holygrail07.appspot.com",
+            messagingSenderId: "395680302764",
+            appId: "1:395680302764:web:8a7ac908f4a7f7ceeb0109",
+            measurementId: "G-PVSRW8082S"
+        };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        window.googleSignUp = function() {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-        .then((result) => {
-            // Get the ID token instead of access token
-            result.user.getIdToken().then((idToken) => {
-                console.log("ID Token:", idToken);
+        window.googleSignUp = function () {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    result.user.getIdToken().then((idToken) => {
+                        console.log("ID Token:", idToken);
 
-                // Send user details to Flask app
-                fetch('/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        'token': idToken,
-                        'user': result.user
-                    })
-                }).then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    if (data.success) {
-                        window.location.href = "/tools";
-                    } else {
-                        console.error("Signup failed");
-                    }
+                        fetch('/signup', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                'token': idToken,
+                                'user': result.user
+                            })
+                        }).then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                if (data.success) {
+                                    window.location.href = "/tools";
+                                } else {
+                                    console.error("Signup failed");
+                                }
+                            });
+                    });
+                }).catch((error) => {
+                    console.error("Error during sign-in:", error);
                 });
-            });
-        }).catch((error) => {
-            console.error("Error during sign-in:", error);
-        });
-}
+        }
 
     </script>
 
@@ -232,6 +230,7 @@
             transform: translateY(-50%);
             cursor: pointer;
         }
+
         .google-signup-btn {
             background-color: #F762D8;
             display: inline-flex;
@@ -276,7 +275,6 @@
     </script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
     </script>
-    <!-- Firebase App (the core Firebase SDK) -->
 
     <div class="row">
         <div class="col-6 p-4 mt-5">
@@ -306,7 +304,11 @@
             <h6>Enter the credentials to access your account</h6>
             <div class="mt-5">
                 <div class="text-center mt-5">
-                    <button class="login google-signup-btn"  style="background: linear-gradient(90deg, #F762D8 25.37%, #814AFF 52.7%, #F762D8 110.76%)" onclick="googleSignUp()"> <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Icon">Sign Up with Google</button>
+                    <button class="login google-signup-btn"
+                        style="background: linear-gradient(90deg, #F762D8 25.37%, #814AFF 52.7%, #F762D8 110.76%)"
+                        onclick="googleSignUp()"> <img
+                            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                            alt="Google Icon">Sign Up with Google</button>
                 </div>
                 <form name="login_form" id="login_form" method="post" action="/login" enctype="multipart/form-data"
                     onsubmit="return validateForm()">
@@ -326,7 +328,8 @@
                                     name="keep_logged_in">&nbsp;Keep me logged in </p>
                         </div>
                         <div class="col-4">
-                            <p class="text-right"><a href="{{ url_for('main_routes.password_reset') }}" style="color: #000;">Forgot
+                            <p class="text-right"><a href="{{ url_for('main_routes.password_reset') }}"
+                                    style="color: #000;">Forgot
                                     Password?</a></p>
                         </div>
                     </div>
@@ -343,37 +346,32 @@
 
 
     <script>
-       
-       function sendResetPassword() {
-    var email = document.getElementById('login_email').value;
 
-    if (email === '') {
-        alert('Please enter your email address.');
-        return;
-    }
+        function sendResetPassword() {
+            var email = document.getElementById('login_email').value;
 
-    $.ajax({
-        type: 'POST',
-        url: '/send_reset_password',
-        data: { 'email': email },
-        success: function (response) {
-            if (response.status === "success") {
-                alert('Password reset link sent to your email.');
-                // Optionally, you can log the reset link for debugging
-                console.log("Password reset link: ", response.link);
-            } else {
-                alert(response.message);
+            if (email === '') {
+                alert('Please enter your email address.');
+                return;
             }
-        },
-        error: function (xhr, status, error) {
-            alert('An error occurred: ' + error);
+
+            $.ajax({
+                type: 'POST',
+                url: '/send_reset_password',
+                data: { 'email': email },
+                success: function (response) {
+                    if (response.status === "success") {
+                        alert('Password reset link sent to your email.');
+                        console.log("Password reset link: ", response.link);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred: ' + error);
+                }
+            });
         }
-    });
-}
-
-
-
-
 
         function validateForm() {
             var email = document.getElementById("login_email").value;

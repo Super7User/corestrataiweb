@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
+from flask import Blueprint, render_template,session, request, redirect, url_for, jsonify
 from flask_login import login_required, logout_user, login_user
 import pandas as pd
 
@@ -67,7 +67,9 @@ def vintage():
 
 @main_routes.route('/gif')
 def index():
-    return render_template('gifgeneration.html')
+    user_emailId = session.get('email')
+    user_plan = session.get('plan')
+    return render_template('gifgeneration.html',plan=user_plan)
 
 @main_routes.route('/newlogin')
 def newlogin():
@@ -75,16 +77,27 @@ def newlogin():
 
 @main_routes.route('/newblog')
 def newblog():
-    return render_template('new_blog.html')
+    user_emailId = session.get('email')
+    user_plan = session.get('plan')
+    return render_template('new_blog.html',plan=user_plan)
 
 @main_routes.route('/landingpage')
 def landing():
-    return render_template('landing_page.html')
+    user_emailId = session.get('email')
+    user_plan = session.get('plan')
+    return render_template('landing_page.html',plan=user_plan)
 
 @main_routes.route('/imageLanding')
 def imageLanding():
-    return render_template('image_landingPage.html')
+    user_emailId = session.get('email')
+    user_plan = session.get('plan')
+    return render_template('image_landingPage.html',plan=user_plan)
 
+@main_routes.route('/header')
+def header():
+     user_emailId = session.get('email')
+     user_plan = session.get('plan')
+     return render_template('header.html',plan=user_plan)
 
 
 

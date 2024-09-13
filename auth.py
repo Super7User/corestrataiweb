@@ -4,40 +4,38 @@ from flask_login import LoginManager, login_user, UserMixin, current_user, login
 from firebase_admin import auth as firebase_auth, db
 from datetime import timedelta
 import logging
-import smtplib
 import requests
 import time
+import pandas as pd
 
-# Initialize the auth blueprint
 auth_blueprint = Blueprint('auth_blueprint', __name__)
 
-# Set up the login manager for user sessions
 login_manager = LoginManager()
 
-# Dummy User class for session management
+
 class User(UserMixin):
     def __init__(self, id, email):
         self.id = id
         self.email = email
 
-# Firebase configuration (use actual credentials)
 firebaseConfig = {
-    "apiKey": "AIzaSyDQ9Ym9NRCPiC-wLNsmg7PozMA7xedfwfA",
-    "authDomain": "holygrail07-3bc90.firebaseapp.com",
-    "projectId": "holygrail07-3bc90",
-    "storageBucket": "holygrail07-3bc90.appspot.com",
-    "messagingSenderId": "1007986562323",
-    "appId": "1:1007986562323:web:5a670e323b70f710d9b6e6"
-}
+    "apiKey": "AIzaSyANFurFRRBK-NrZstE1A-LUd9gHM1ODjkY",
+    "authDomain": "holygrail07.firebaseapp.com",
+    "databaseURL": "https://holygrail07-default-rtdb.firebaseio.com",
+    "projectId": "holygrail07",
+    "storageBucket": "holygrail07.appspot.com",
+    "messagingSenderId": "395680302764",
+    "appId": "1:395680302764:web:8a7ac908f4a7f7ceeb0109",
+    "measurementId": "G-PVSRW8082S"
+  }
 
-# Load user function for login manager
+
 @login_manager.user_loader
 def load_user(user_id):
     # Implement your user loader logic here
     # For demonstration, we'll return a dummy user
     return User(user_id, "example@example.com")
 
-# Route for sending a password reset email
 @auth_blueprint.route('/send_reset_password', methods=['POST'])
 def send_reset_password():
     email = request.form.get('email')
@@ -62,11 +60,11 @@ def send_reset_password():
     except Exception as e:
         logging.error(f"Unexpected error: {str(e)}")
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
-# Route for login
+
 @auth_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['login_email']
+        email = request.form['login_email'].strip().lower()  # Strip any whitespace and convert to lowercase
         password = request.form['login_password']
         keep_logged_in = 'keep_logged_in' in request.form
 
@@ -79,24 +77,51 @@ def login():
             }
             response = requests.post(url, json=payload)
             response_data = response.json()
-            
+
             if response.status_code == 200:
                 user_id = response_data['localId']
                 user = User(id=user_id, email=email)
                 login_user(user, remember=keep_logged_in)
 
                 session['userId'] = user_id
-                session.permanent = keep_logged_in  # Set session based on 'keep_logged_in'
+                session.permanent = keep_logged_in  
 
-                return jsonify({"status": "success", "message": f"User {email} logged in successfully."})
+                try:
+                    plan_data = pd.read_csv('plan.csv')
+                    plan_data['mail_Id'] = plan_data['mail_Id'].str.strip().str.lower()
+                   
+                    matching_rows = plan_data[plan_data['mail_Id'] == email]
+                    print(matching_rows, plan_data['mail_Id'],email,"matching_rows") 
+
+                    if not matching_rows.empty:
+                        
+                        plan = matching_rows['Plan'].values[0]  
+                        session['email'] = email  
+                        session['plan'] = plan    
+                        print(plan,"plan")
+                        unique_id = db.reference('generated_streams').push().key
+                        session['firebase_unique_id'] = unique_id  # Store this ID in session
+
+                        ref = db.reference(f'generated_streams/{unique_id}')
+                        ref.update({
+                            'plan': plan,
+                        })
+
+
+                        return jsonify({"status": "success", "message": f"Login successful. Plan: {plan}"})
+                    else:
+                        return jsonify({"status": "error", "message": "No plan associated with this user."})
+
+                except Exception as e:
+                    return jsonify({"status": "error", "message": f"Error reading plan data: {str(e)}"})
             else:
                 return jsonify({"status": "error", "message": response_data.get("error", {}).get("message", "Invalid login credentials.")})
+
         except Exception as e:
             return jsonify({"status": "error", "message": str(e)})
-    
-    return render_template('login.html')
+ 
+    return render_template('login.html',plan=plan)
 
-# Route for signup
 @auth_blueprint.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -116,7 +141,6 @@ def signup():
     except Exception as e:
         return jsonify({'success': False, 'error': 'Token verification failed'}), 401
 
-# Route for logout
 @auth_blueprint.route('/logout')
 @login_required
 def logout():
@@ -124,7 +148,6 @@ def logout():
     session.clear()
     return redirect(url_for('auth_blueprint.login'))
 
-# Route for registering a new user
 @auth_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -142,6 +165,8 @@ def register():
 
 @auth_blueprint.route('/repository', methods=['GET'])
 def repository():
+    user_emailId = session.get('email')
+    user_plan = session.get('plan')
     user_id = session.get('userId')
     
     if not user_id:
@@ -163,11 +188,10 @@ def repository():
             formatted_data.append(value)
 
         # Render the data in the HTML template
-        return render_template('repository.html', data=formatted_data)
+        return render_template('repository.html', data=formatted_data,plan=user_plan)
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 
-# Logging configuration
 logging.basicConfig(level=logging.DEBUG)

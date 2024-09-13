@@ -32,18 +32,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css')}}">
 </head>
 <body>
-    <!-- <main> -->
+
         <section>
             <h2>Discover Our Tools</h2>  
             <a href="/index-m">Go to Home Two</a>     
                         <p>Welcome to the home of innovation at CorestratAI Solutions. Explore our tools and services.</p>
-            <!-- Search Bar -->
             <div class="search-container">
                 <input type="text" id="search-box" placeholder="Search by title..." oninput="searchItems()">
                 <button id="search-button">🔍</button>
             </div>
     
-            <!-- Button Container -->
             <div class="button-container">
                 {% for category in categories %}
                     <!--   <button class="category-button">{{ category }}</button> -->
@@ -76,7 +74,6 @@
                     {% endfor %}
                 </div>
             </section>
-    <!-- </main> -->
     <footer>
         <button onclick="toggleTheme()">Toggle Dark/Light Mode</button>
 

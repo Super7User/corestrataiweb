@@ -27,7 +27,7 @@ mail = Mail(app)
 
 cred = credentials.Certificate("serviceAccountKey.json")  
 firebase_admin.initialize_app(cred,{
-    'databaseURL': 'https://holygrail07-3bc90-default-rtdb.firebaseio.com/'
+    'databaseURL': 'https://holygrail07-default-rtdb.firebaseio.com/'
 })
 
 

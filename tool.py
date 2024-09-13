@@ -21,9 +21,10 @@ def tools():
     category = request.args.get('category', None)
     search_query = request.args.get('search', None)
     data = pd.read_csv('alltools.csv')
-
+    user_emailId = session.get('email')
+    user_plan = session.get('plan')
     user_id = session.get('userId')
-    print(user_id, "userId")
+    print(user_id,user_emailId,user_plan,"userId")
 
     if category and category != "All":
         data = data[data['Category'] == category]
@@ -38,7 +39,7 @@ def tools():
 
     user_email = current_user.email if current_user.is_authenticated else None
 
-    return render_template('tools2.html', tools_data=tools_data, categories=categories, user_email=user_email)
+    return render_template('tools2.html', tools_data=tools_data, categories=categories, user_email=user_email, plan= user_plan)
 
 def get_completion(prompt, model="gpt-4"):
     messages = [{"role": "user", "content": prompt}]
@@ -58,6 +59,8 @@ def tool_detail(tool_id_str):
     try:
         tool_id = int(float(tool_id_str))
         session['tool_id'] = tool_id
+        user_emailId = session.get('email')
+        user_plan = session.get('plan')
     except ValueError:
         return "Invalid Tool ID", 400   
 
@@ -74,7 +77,7 @@ def tool_detail(tool_id_str):
     print(font_family, "tool")
     print(titleName, "titleName")
     
-    return render_template('tool_details.html', tool=tool, tool_id=tool_id, fontDynamic=font_family, titleName=titleName)
+    return render_template('tool_details.html', tool=tool, tool_id=tool_id, fontDynamic=font_family, titleName=titleName,plan=user_plan)
 
 @tools_blueprint.route('/generate-content', methods=['POST'])
 def generate_content():
@@ -88,6 +91,8 @@ def generate_stream():
     data = request.get_json()
     prompt = data.get('prompt')
     user_id = session.get('userId')
+    # user_plan = session.get('plan')
+    unique_id = session.get('firebase_unique_id')
 
     if not prompt:
         return jsonify({'error': 'Prompt is missing'}), 400
@@ -129,6 +134,7 @@ def generate_stream():
         def generate():
             nonlocal complete_response
             content_generated = False
+           
 
             for chunk in response:
                 if chunk.choices[0].delta.content:
@@ -140,13 +146,15 @@ def generate_stream():
                     print("No content in chunk or malformed chunk:", chunk)
 
             if content_generated:
-                ref = db.reference('generated_streams').push()
-                ref.set({
+                # ref = db.reference('generated_streams').push()
+                ref = db.reference(f'generated_streams/{unique_id}')
+                ref.update({
                     'user_id': user_id,
                     'tool_id': tool_id,
                     'tool_title': tool_title,
                     'prompt': prompt,
                     'response': complete_response,
+                    # 'plan':user_plan,
                     'timestamp': int(time.time() * 1000)
                 })
 
@@ -159,6 +167,8 @@ def generate_stream():
 @tools_blueprint.route('/tooldetailoutput/<int:tool_id>', methods=['GET'])
 def tool_details_output(tool_id):
     user_id = session.get('userId')
+    user_emailId = session.get('email')
+    user_plan = session.get('plan')
 
     if not user_id:
         return jsonify({'error': 'User ID not found in session'}), 400
@@ -179,7 +189,7 @@ def tool_details_output(tool_id):
 
         last_entry['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_entry['timestamp'] / 1000))
 
-        return render_template('tooldetail_Ouput.html', data=last_entry)
+        return render_template('tooldetail_Ouput.html', data=last_entry,plan=user_plan)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
