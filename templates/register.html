@@ -347,7 +347,12 @@
                     url: '/register',
                     data: $(this).serialize(),
                     success: function (response) {
-                        alert(response.message);
+                        if (response.status === "success") {
+                            alert(response.message);
+                            window.location.href = '/newlogin'; 
+                        } else {
+                            document.getElementById("registerErrorMessage").innerHTML = response.message;
+                        }
                     },
                     error: function (xhr, status, error) {
                         alert('An error occurred: ' + error);
@@ -355,6 +360,7 @@
                 });
             });
         });
+        
     </script>
 </body>
 
