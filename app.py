@@ -2,11 +2,11 @@ from flask import Flask
 from flask_mail import Mail
 from auth import login_manager, auth_blueprint  # Absolute import
 from tool import tools_blueprint
-from firebase_admin import credentials, initialize_app
+from firebase_admin import credentials
 from routes import main_routes
 from image import image_blueprint
 import firebase_admin
-from firebase_admin import credentials, auth, db
+from firebase_admin import credentials, auth, db,firestore
 
 app = Flask(__name__)
 
@@ -21,23 +21,23 @@ app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_DEBUG'] = True
 
 mail = Mail(app)
-# cred = credentials.Certificate("serviceAccountKey.json")
-# initialize_app(cred)
+
+cred = credentials.Certificate("serviceAccountKey.json")
+
+ 
+# firebase_admin.initialize_app(cred,{
+#     'databaseURL': 'https://holygrail07-default-rtdb.firebaseio.com/'
+# })
+
+# firebase_db = firestore.client()
+# ref = db.reference('/')
 
 
-cred = credentials.Certificate("serviceAccountKey.json")  
-firebase_admin.initialize_app(cred,{
-    'databaseURL': 'https://holygrail07-default-rtdb.firebaseio.com/'
-})
-
-
-ref = db.reference('/')
-
-# Initialize LoginManager
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-# Register the Blueprint from routes.py
+
+
 app.register_blueprint(auth_blueprint)
 app.register_blueprint(tools_blueprint)
 app.register_blueprint(main_routes)
