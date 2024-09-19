@@ -124,7 +124,7 @@
             padding: 1rem 2rem;
             transition: margin-left 0.5s ease-in-out;
         } */
-       
+
 
         .games {
             margin-top: 50px;
@@ -276,7 +276,7 @@
         }
 
         .category-button.active {
-            background: linear-gradient(to right, #ff71b8,#ba71ff,#90c3fd);
+            background: linear-gradient(to right, #ff71b8, #ba71ff, #90c3fd);
             color: #333;
         }
 
@@ -345,15 +345,15 @@
             width: 50%;
             height: auto;
         }
+
         .ac-header-bnt-2 {
-    display: none !important;
-}
+            display: none !important;
+        }
 
-.fa-right-from-bracket{
-    /* display: block !important; */
-    margin-top: 20px
-}
-
+        .fa-right-from-bracket {
+            /* display: block !important; */
+            margin-top: 20px
+        }
     </style>
 </head>
 
@@ -390,7 +390,8 @@
                 <div class="banner__wrapper">
                     <div class="banner">
                         <a href="/tool-detail/{{ tool['ID'] }}" class="stretched-link">
-                            <img src="{{ url_for('static', filename=tool['Image']) }}" alt="{{ tool['Title'] }} Logo" class="tool-img">
+                            <img src="{{ url_for('static', filename=tool['Image']) }}" alt="{{ tool['Title'] }} Logo"
+                                class="tool-img">
                         </a>
                     </div>
                     <div class="card__wrapper">
