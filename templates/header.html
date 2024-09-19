@@ -407,14 +407,14 @@
             }
         }
 
-        .button-container {
+        /* .button-container {
             display: flex;
             align-items: center;
             gap: 10px;
             position: absolute;
             right: 30px;
             top: 20px;
-        }
+        } */
 
         .ac-header-bnt-2 .theme-btn {
             font-size: 1rem;
@@ -450,6 +450,66 @@
         /* .fa-right-from-bracket {
             display: none !important;
         } */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            width: 300px;
+            text-align: flex-start;
+            margin-top: 0;
+            font-weight: 20px;
+        }
+
+        #profileModal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 80px;
+            width: 100%;
+            height: 100%;
+            justify-content: flex-start;
+            align-items: flex-end;
+            flex-direction: column;
+            text-align: flex-start
+        }
+
+        .close {
+            float: right;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        body.dark-theme .modal-content {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* Adjust spacing between items */
+            gap: 15px;
+            /* Adds spacing between the elements */
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            /* Adjust size of the moon icon */
+        }
+
+        .profile-icon {
+            cursor: pointer;
+        }
+
+        a .fas {
+            color: inherit;
+            /* Makes sure the icon color is inherited from parent */
+        }
     </style>
 </head>
 
@@ -462,11 +522,26 @@
         <div class="ac-header-bnt-2">
             <a href="newlogin" class="theme-btn gradient-btn">Start Writing</a>
         </div>
+
         <button class="theme-toggle" onclick="toggleTheme()">
             <i class="fas fa-moon"></i>
         </button>
-        <a href="newlogin"><i class="fas fa-right-from-bracket" style="font-size: 1.5rem; cursor: pointer;"></i></a>
+
+        <div class="profile-icon" id="profileIcon">
+            <i class="fa fa-user-circle" id="profileBtn" style="font-size: 2rem; cursor: pointer;"></i>
+        </div>
+
+        <div id="profileModal" class="modal">
+            <div class="modal-content">
+                <div id="userProfileContent"></div>
+            </div>
+        </div>
+
+        <a href="newlogin">
+            <i class="fas fa-right-from-bracket" style="font-size: 1.5rem; cursor: pointer;"></i>
+        </a>
     </div>
+
 
     <aside>
         <nav>
@@ -483,14 +558,14 @@
                         <span class="sidebar-text">Article</span>
                     </a>
                 </li>
-                  {% if plan == 'Professional' or plan == 'Starter' %}
-                  <li>
-                      <a href="{{ url_for('main_routes.imageLanding') }}">
-                          <i class="fa-solid fa-image"></i>
-                          <span class="sidebar-text">Image Generation</span>
-                      </a>
-                  </li>
-                  {% endif %}
+                {% if plan == 'Professional' or plan == 'Starter' %}
+                <li>
+                    <a href="{{ url_for('main_routes.imageLanding') }}">
+                        <i class="fa-solid fa-image"></i>
+                        <span class="sidebar-text">Image Generation</span>
+                    </a>
+                </li>
+                {% endif %}
                 {% if plan == 'Professional' %}
                 <li>
                     <a href="#">
@@ -516,7 +591,6 @@
     </aside>
     <script>
         const resizeBtn = document.querySelector("[data-resize-btn]");
-
         resizeBtn.addEventListener("click", function (e) {
             e.preventDefault();
             document.body.classList.toggle("sb-expanded");
@@ -525,7 +599,77 @@
         function toggleTheme() {
             document.body.classList.toggle('dark-theme');
         }
+
+        document.getElementById("profileBtn").onclick = function () {
+            document.getElementById("profileModal").style.display = "flex";
+
+            // Example email value (You should dynamically get this value)
+            const email = "user@example.com"; // Replace with actual user email
+
+
+            fetch(`/get_user_data?email=${encodeURIComponent(email)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const profileContent = document.getElementById("userProfileContent");
+                    profileContent.innerHTML = ''; // Clear previous content
+
+                    if (data.error) {
+                        profileContent.innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        const headers = data.headers;
+                        const userData = data.user_data;
+
+                        headers.forEach(header => {
+                            const p = document.createElement("p");
+
+                            // Create an icon based on the header name
+                            const icon = getHeaderIcon(header);
+
+                            // Add the icon and header text
+                            p.innerHTML = `<i class="${icon}"></i> <span class="header-text">${header}:</span> <span class="user-data">${userData[header]}</span>`;
+
+                            profileContent.appendChild(p);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                    alert("Error fetching user data");
+                });
+        };
+
+        function getHeaderIcon(header) {
+            switch (header.toLowerCase()) {
+                case 'name':
+                    return 'fa fa-user';
+                case 'email':
+                    return 'fa fa-envelope';
+                case 'phone':
+                    return 'fa fa-phone';
+                case 'address':
+                    return 'fa fa-map-marker-alt';
+                case 'company':
+                    return 'fa fa-building';
+                default:
+                    return 'fa fa-info-circle';
+            }
+        }
+
+
+        // Close the modal when clicking anywhere outside the modal content
+        window.onclick = function (event) {
+            const modal = document.getElementById("profileModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        function closeModal() {
+            document.getElementById("profileModal").style.display = "none";
+        }
+
     </script>
+
 </body>
 
 </html>

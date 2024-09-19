@@ -11,11 +11,11 @@ main {
 }
 
 .left-pane {
-    max-width: 50%; /* Ensures the left pane doesn't grow beyond half of the main container */
+    max-width:40%; /* Ensures the left pane doesn't grow beyond half of the main container */
 }
 
 .right-pane {
-    max-width: 50%; /* Ensures the right pane doesn't grow beyond half of the main container */
+    max-width: 40%; /* Ensures the right pane doesn't grow beyond half of the main container */
     padding-left: 20px; /* Gives some space between the panes */
 }
 
