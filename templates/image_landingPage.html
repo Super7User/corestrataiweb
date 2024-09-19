@@ -58,17 +58,17 @@
        p {
         font-family: 'Poppins', sans-serif;
         font-size: 1.1em;
-        font-weight: 300;
+        font-weight: 400;
         line-height: 1.7em;
         color: #999;
-      }
+       }
 
        main {
          background-color: var(--background-color);
          margin-left: 5rem;
          padding: 1rem 2rem;
          transition: margin-left 0.5s ease-in-out;
-      }
+       }
 
       .card {
          background: rgb(238, 238, 252);
@@ -80,10 +80,10 @@
          box-sizing: border-box;
          transition: transform 0.3s;
          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-      }
+       }
       .card:hover {
          transform: scale(1.05);
-      }
+       }
 
       .card-group {
          display: flex;
@@ -93,14 +93,18 @@
          max-width: 1200px;
          margin: 0 auto; 
          padding: 20px; 
-     }
+       }
 
      .hero-wrapper {
         padding: 200px 0; 
-     }
-     .theme-toggle{
-        top: 2px;
-     }
+       }
+     .toggle-button{
+        top:7px;
+       }
+     .profile-section {
+        margin-top:3px;
+       }
+
      
 
     </style>
@@ -168,7 +172,7 @@
         });
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+          document.addEventListener("DOMContentLoaded", function() {
           const startWritingButton = document.querySelector(".ac-header-bnt-2 a.theme-btn");
           if (startWritingButton) {
             startWritingButton.remove();
