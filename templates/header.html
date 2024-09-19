@@ -350,7 +350,7 @@
         button {
             /* margin-top: 20px; */
             /* height: 30px; */
-            padding: 5px 10px;
+            padding: 0px 40px;
             border-radius: 10px;
             font-size: 14px;
             background-color: var(--btn-background);
@@ -367,20 +367,17 @@
         button:active {
             transform: scale(var(--btn-active-scale));
         }
-        .theme-toggle {
+
+        /* .theme-toggle {
             position: absolute;
-            top: 0px;
-            right: 30px;
+            right: 10px;
             background: none;
             border: none;
             cursor: pointer;
             font-size: 1.5rem;
             color: var(--font-color);
-        }
- 
-     
- 
- 
+        } */
+
         .card img {
             width: 100%;
             border-radius: 12px;
@@ -413,21 +410,46 @@
         .button-container {
             display: flex;
             align-items: center;
-            position: absolute;
-            right: 10px;
-            top: 20px;
             gap: 10px;
+            position: absolute;
+            right: 30px;
+            top: 20px;
         }
  
         .ac-header-bnt-2 .theme-btn {
-            /* padding: 5px 15px; */
             font-size: 1rem;
             background-color: #ba71ff;
             color: #fff;
             border-radius: 5px;
             text-decoration: none;
-            margin-right: 70px;
+            /* padding: 5px 15px; */
+            /* font-size: 1rem;
+            background-color: #ba71ff;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 30px; */
         }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--font-color);
+        }
+
+        .fas.fa-right-from-bracket {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--font-color);
+            right: 20px !important;
+        }
+
+
+        /* .fa-right-from-bracket {
+            display: none !important;
+        } */
  
         .ac-header-bnt-2 .theme-btn:hover {
             opacity: var(--btn-hover-opacity);
@@ -480,14 +502,17 @@
     <!-- <button class="theme-toggle" onclick="toggleTheme()">
         <i class="fas fa-moon"></i>
     </button> -->
+
     <div class="button-container">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <div class="ac-header-bnt-2 d-none d-md-block">
+        <div class="ac-header-bnt-2">
             <a href="newlogin" class="theme-btn gradient-btn">Start Writing</a>
         </div>
         <button class="theme-toggle" onclick="toggleTheme()">
             <i class="fas fa-moon"></i>
         </button>
+        <a href="newlogin"><i class="fas fa-right-from-bracket" style="font-size: 1.5rem; cursor: pointer;"></i></a>
+    </div>
+
         <div class="profile-icon hidden" id="profileIcon">
             <i class="fa fa-user-circle" id="profileBtn" style="font-size: 2rem; cursor: pointer;"></i>
         </div>
@@ -503,23 +528,26 @@
         <nav>
             <ul>
                 <li>
-                    <a href="{{ url_for('tools') }}">
+                    <a href="{{ url_for('tools.tools') }}">
                         <i class="fa-brands fa-microsoft"></i>
                         <span class="sidebar-text">All Tools</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('landing') }}">
+                    <a href="{{ url_for('main_routes.landing') }}">
                         <i class="fa-solid fa-newspaper"></i>
                         <span class="sidebar-text">Article</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ url_for('imageLanding') }}">
-                        <i class="fa-solid fa-image"></i>
-                        <span class="sidebar-text">Image Generation</span>
-                    </a>
-                </li>
+                  {% if plan == 'Professional' or plan == 'Starter' %}
+                  <li>
+                      <a href="{{ url_for('main_routes.imageLanding') }}">
+                          <i class="fa-solid fa-image"></i>
+                          <span class="sidebar-text">Image Generation</span>
+                      </a>
+                  </li>
+                  {% endif %}
+                {% if plan == 'Professional' %}
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-video"></i>
@@ -527,11 +555,12 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('repository') }}">
+                    <a href="{{ url_for('auth_blueprint.repository') }}">
                         <i class="fa-solid fa-folder"></i>
                         <span class="sidebar-text">My Repository</span>
                     </a>
                 </li>
+                {% endif %}
                 <li>
                     <a href="#" data-resize-btn>
                         <i class="fa-solid fa-angles-right"></i>

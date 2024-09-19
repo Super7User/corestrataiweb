@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 500px !important;
+            margin: 20px;
+            text-align: left !important;
+        }
+
+        .card h1,
+        h3 {
+            text-align: center;
+        }
+
+        .card form {
+            flex-direction: column;
+        }
+
+        .card label {
+            margin: 10px 0 5px;
+        }
+
+        .card input[type="text"],
+        .card input[type="email"],
+        .card input[type="url"],
+        .card input[type="tel"],
+        .card input[type="date"],
+        .card textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .card input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .card input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .card button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .card button:hover {
+            background-color: #218838;
+        }
+
+        #popupModal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+
+        .ac-header-bnt-2 {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'header.html' %}
+    <main style="margin-top: auto;">
+        <div class="card" style="margin-top: 40px;">
+            <h1>Create User</h1>
+            <!-- Form for creating a user -->
+            <form id="create-user-form" method="POST">
+                <!-- Basic Info -->
+                <label for="uid">UID:</label>
+                <input type="text" id="uid" name="uid" required>
+
+                <label for="displayName">Display Name:</label>
+                <input type="text" id="displayName" name="displayName" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" required>
+
+                <label for="photoURL">Profile Image URL:</label>
+                <input type="url" id="photoURL" name="photoURL">
+
+                <label for="dateOfBirth">Date of Birth:</label>
+                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+
+                <h3>Address</h3>
+                <label for="street">Street:</label>
+                <input type="text" id="street" name="street">
+
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city">
+
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state">
+
+                <label for="postalCode">Postal Code:</label>
+                <input type="text" id="postalCode" name="postalCode">
+
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country">
+
+                <label for="plan">Plan: &nbsp;</label>
+                <label for="plan-free">
+                    <input type="radio" id="plan-free" name="Plan" value="free" checked> Free
+                </label>
+                <label for="plan-starter">
+                    <input type="radio" id="plan-starter" name="Plan" value="starter"> Starter
+                </label>
+                <label for="plan-professional">
+                    <input type="radio" id="plan-professional" name="Plan" value="professional"> Professional
+                </label>
+
+                <h3>Settings</h3>
+                <label for="notificationsEnabled">
+                    <input type="checkbox" id="notificationsEnabled" name="notificationsEnabled" checked>Notifications
+                    Enabled
+                </label>
+
+                <label for="language">Language:</label>
+                <input type="text" id="language" name="language" value="en" required>
+
+                <label for="theme">Theme:</label>
+                <input type="text" id="theme" name="theme" value="dark" required>
+             
+                <h3>Preferences</h3>
+                <label for="newsletterSubscribed">
+                    <input type="checkbox" id="newsletterSubscribed" name="newsletterSubscribed" checked>Newsletter
+                    Subscribed
+                </label>
+
+                <label for="contentFilters">Content Filters:</label>
+                <input type="text" id="contentFilters" name="contentFilters" value="technology,science">
+
+                <label for="bio">Bio:</label>
+                <textarea id="bio" name="bio" rows="4">Passionate developer and tech enthusiast.</textarea>
+
+                <label for="isActive">
+                    <input type="checkbox" id="isActive" name="isActive" checked>Is Active
+                </label>
+
+               
+                <h3>Social Links</h3>
+                <label for="twitter">Twitter URL:</label>
+                <input type="url" id="twitter" name="socialLinks[twitter]" placeholder="https://twitter.com/janedoe">
+
+                <label for="facebook">Facebook URL:</label>
+                <input type="url" id="facebook" name="socialLinks[facebook]" placeholder="https://facebook.com/janedoe">
+
+                <label for="instagram">Instagram URL:</label>
+                <input type="url" id="instagram" name="socialLinks[instagram]"
+                    placeholder="https://instagram.com/janedoe">
+
+                <label for="youtube">YouTube URL:</label>
+                <input type="url" id="youtube" name="socialLinks[youtube]"
+                    placeholder="https://www.youtube.com/@channel1">
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+    
+        <div id="popupModal">
+            <div id="popupMessage"></div>
+            <button onclick="closePopup()">Close</button>
+        </div>
+
+        <script>
+           
+            document.getElementById('create-user-form').addEventListener('submit', function (event) {
+                event.preventDefault();  
+
+                var formData = new FormData(this);
+
+                fetch('/create-user', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        showPopup(data);  
+                    })
+                    .catch(error => {
+                        showPopup('An error occurred: ' + error.message);
+                    });
+            });
+
+            
+            function showPopup(message) {
+                document.getElementById('popupMessage').innerText = message;
+                document.getElementById('popupModal').style.display = 'block';
+            }
+
+           
+            function closePopup() {
+                document.getElementById('popupModal').style.display = 'none';
+            }
+        </script>
+    </main>
+</body>
+
+</html>

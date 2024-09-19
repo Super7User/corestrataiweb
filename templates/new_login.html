@@ -7,13 +7,65 @@
     <meta name="description" content="Insurance, Health, Agency">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include FontAwesome for icons -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyANFurFRRBK-NrZstE1A-LUd9gHM1ODjkY",
+            authDomain: "holygrail07.firebaseapp.com",
+            databaseURL: "https://holygrail07-default-rtdb.firebaseio.com",
+            projectId: "holygrail07",
+            storageBucket: "holygrail07.appspot.com",
+            messagingSenderId: "395680302764",
+            appId: "1:395680302764:web:8a7ac908f4a7f7ceeb0109",
+            measurementId: "G-PVSRW8082S"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.googleSignUp = function () {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    result.user.getIdToken().then((idToken) => {
+                        console.log("ID Token:", idToken);
+
+                        fetch('/signup', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                'token': idToken,
+                                'user': result.user
+                            })
+                        }).then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                if (data.success) {
+                                    window.location.href = "/tools";
+                                } else {
+                                    console.error("Signup failed");
+                                }
+                            });
+                    });
+                }).catch((error) => {
+                    console.error("Error during sign-in:", error);
+                });
+        }
+
+    </script>
+
+
     <style>
         body {
-            /* background: #A8D1D1; */
             background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
         }
 
@@ -30,65 +82,12 @@
             transition: transform 0.3s;
         }
 
-        /*----------- BUTTON ----------*/
         .btn-holder {
             width: 400px;
             height: 200px;
             margin: 50px auto 0;
         }
 
-        .btn-lg.btn-toggle {
-            padding: 0;
-            margin: 0 5rem;
-            position: relative;
-            height: 2.5rem;
-            width: 6rem;
-            border-radius: 3rem;
-            color: #6b7381;
-            background: #bdc1c8;
-            margin-bottom: 30px;
-        }
-
-        .btn-toggle.btn-lg>.switch {
-            position: absolute;
-            top: 0.2rem;
-            left: 0.1rem;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 1.875rem;
-            background: #fff;
-            transition: left .25s;
-        }
-
-        .btn-toggle.active {
-            background-color: #ff8800;
-        }
-
-        .btn-toggle.btn-lg.active>.switch {
-            left: 3.75rem;
-            transition: left .25s;
-        }
-
-        .btn-lg.btn-toggle:after {
-            content: "Watch Demo";
-            right: -5rem;
-            opacity: 0.5;
-            line-height: 2.5rem;
-            width: 5rem;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            position: absolute;
-            bottom: 0;
-            transition: opacity .25s;
-        }
-
-        .btn-lg.btn-toggle.active:after {
-            opacity: 1;
-        }
-
-        /*------------ CHECKBOX -------------*/
         .toggle-switch {
             margin: 0 auto;
             width: 241px;
@@ -123,16 +122,13 @@
             width: 2rem;
             height: 2rem;
             border-radius: 1.875rem;
-            /* background: #6D32AB; */
             background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #4AB6FE 110.76%);
-            /* background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%); */
             transition: all 0.3s ease-in-out;
             top: 0.2rem;
             left: 0.2rem;
         }
 
         .toggle-switch label input:checked+span {
-            /* background-color: #ff8800; */
             background-color: #A8D1D1;
         }
 
@@ -161,19 +157,6 @@
             opacity: 1;
         }
 
-        .container1 {
-            width: 300px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-
-        .container {
-            width: 100% !important
-        }
-
         input[type=text],
         input[type=password] {
             width: 90% !important;
@@ -192,7 +175,7 @@
         }
 
         button {
-            background-color: #4CAF50;
+            /* background-color: #252525; */
             color: white;
             padding: 10px 20px;
             margin: 8px 0;
@@ -202,9 +185,9 @@
             width: 100%;
         }
 
-        button:hover {
+        /* button:hover {
             background-color: #45a049;
-        }
+        } */
 
         .error {
             color: red;
@@ -224,11 +207,6 @@
             margin-right: 30px
         }
 
-        .centered-image {
-            display: block;
-            margin: 0 auto;
-        }
-
         .login {
             text-align: center !important;
             margin-left: 20%;
@@ -239,17 +217,45 @@
         .row {
             --bs-gutter-x: 0rem !important;
         }
+
         .password-container {
             position: relative;
             width: 100%;
-           
         }
-         .fas{
+
+        .fas {
             position: absolute;
             right: 90px;
             top: 45%;
             transform: translateY(-50%);
             cursor: pointer;
+        }
+
+        .google-signup-btn {
+            background-color: #F762D8;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            /* background-color: transparent; */
+            /* border: 1px solid #4285F4; */
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            /* transition: background-color 0.3s, color 0.3s; */
+        }
+
+        .google-signup-btn img {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .google-signup-btn:hover {
+            background-color: #814AFF;
+            color: white;
         }
     </style>
 </head>
@@ -265,12 +271,14 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+    </script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
+    </script>
 
     <div class="row">
         <div class="col-6 p-4 mt-5">
             <div class="card shadow-sm bg-body rounded">
-                <!-- <img src="static/logo.png" class="mt-5 centered-image" style="width:30%; text-align: center !important;"
-                    alt="logo"> -->
                 <h2 class="col text-center mt-5"><strong>HOLYGRAIL CONTENT GENERATOR</strong></h2>
                 <div class="btn-holder">
                     <div class="toggle-switch">
@@ -283,12 +291,11 @@
                     </div>
                 </div>
                 <p class="light-text">
-
                     <span style="cursor: pointer;" onclick="location.href='/'">Home</span>
                     <span style="cursor: pointer;" href="">Ecosystem</span>
                     <span style="cursor: pointer;" href="">Blog</span>
-                    <span style="cursor: pointer;"  onclick="window.open('//www.corestratai.com/', '_blank')"
-                    >Company</span>
+                    <span style="cursor: pointer;"
+                        onclick="window.open('//www.corestratai.com/', '_blank')">Company</span>
                 </p>
             </div>
         </div>
@@ -296,31 +303,34 @@
             <h3 class="text-left mt-3"><strong>Welcome back</strong></h3>
             <h6>Enter the credentials to access your account</h6>
             <div class="mt-5">
+                <div class="text-center mt-5">
+                    <button class="login google-signup-btn"
+                        style="background: linear-gradient(90deg, #F762D8 25.37%, #814AFF 52.7%, #F762D8 110.76%)"
+                        onclick="googleSignUp()"> <img
+                            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                            alt="Google Icon">Sign Up with Google</button>
+                </div>
                 <form name="login_form" id="login_form" method="post" action="/login" enctype="multipart/form-data"
                     onsubmit="return validateForm()">
                     <label for="login_email">Email Address</label>
                     <input type="text" id="login_email" name="login_email" class="form-control"
                         placeholder="Enter your email" required>
-                    <!-- <p id="errorMessage" class="error"></p> -->
-
                     <label for="login_password">Password</label>
                     <div class="password-container">
-                    <input type="password" id="login_password" name="login_password" class="form-control"
-                        placeholder="Enter your password" required>
-                    <!-- <span class="input-group-text" onclick="togglePassword()"> -->
-                            <i class="fas fa-eye" id="togglePasswordIcon" onclick="togglePassword()"></i>
-                        <!-- </span> -->
+                        <input type="password" id="login_password" name="login_password" class="form-control"
+                            placeholder="Enter your password" required>
+                        <i class="fas fa-eye" id="togglePasswordIcon" onclick="togglePassword()"></i>
                     </div>
                     <p id="errorMessage" class="error"></p>
-
                     <div class="row">
                         <div class="col-8">
                             <p class="text-left" style="display: inline;"><input type="checkbox" id="keep_logged_in"
                                     name="keep_logged_in">&nbsp;Keep me logged in </p>
                         </div>
                         <div class="col-4">
-                            <p class="text-right"><a href="{{ url_for('send_password_reset') }}" style="color: #000;">Forgot Password ?</a>
-                            </p>
+                            <p class="text-right"><a href="{{ url_for('main_routes.password_reset') }}"
+                                    style="color: #000;">Forgot
+                                    Password?</a></p>
                         </div>
                     </div>
                     <button type="submit"
@@ -328,23 +338,45 @@
                         class="login">Login</button>
                 </form>
             </div>
-            <!-- <div class="row text-center">
-                <div class="col">
-                    <p class="text-left"> <a href="landing_page.html">Customer Demo</a></p>
-                </div>
-                <div class="col">
-                    <p class="text-right">Action Demo</p>
-                </div>
-            </div> -->
-            <div class="mt-4 text-center">Don't have an account ? <a href="register" style="color: #000;">Sign Up</a></div>
+            <div class="mt-4 text-center">Don't have an account? <a href="register" style="color: #000;">Sign Up</a>
+            </div>
         </div>
     </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
 
     <script>
+
+        function sendResetPassword() {
+            var email = document.getElementById('login_email').value;
+
+            if (email === '') {
+                alert('Please enter your email address.');
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/send_reset_password',
+                data: { 'email': email },
+                success: function (response) {
+                    if (response.status === "success") {
+                        alert('Password reset link sent to your email.');
+                        console.log("Password reset link: ", response.link);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred: ' + error);
+                }
+            });
+        }
+
         function validateForm() {
             var email = document.getElementById("login_email").value;
             var password = document.getElementById("login_password").value;
-            var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; // Email regex pattern
+            var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 
             if (!email.match(emailPattern)) {
                 document.getElementById("errorMessage").innerHTML = "Invalid email format";
@@ -368,7 +400,7 @@
                     data: $(this).serialize(),
                     success: function (response) {
                         if (response.status === "success") {
-                            window.location.href = "/tools";  // Redirect to the dashboard page on successful login
+                            window.location.href = "/tools";
                         } else {
                             alert(response.message);
                         }
@@ -379,7 +411,6 @@
                 });
             });
         });
-
 
         function togglePassword() {
             var passwordField = document.getElementById("login_password");
