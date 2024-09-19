@@ -19,15 +19,6 @@ from groq import Groq
 import time
 from PIL import Image
 import csv
-<<<<<<< HEAD
-
-app = Flask(__name__)
-
-
-
-# Get user data based on the logged-in user id
-
-=======
  
 app = Flask(__name__)
  
@@ -35,7 +26,6 @@ app = Flask(__name__)
  
 # Get user data based on the logged-in user id
  
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
 class User(UserMixin):
     def __init__(self, id, email):
         self.id = id
@@ -89,24 +79,14 @@ def load_user(user_id):
     if 'userId' in session:
         return User(id=session['userId'], email=session['user_email'])
     return None
-<<<<<<< HEAD
-
-=======
  
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
 @app.route('/get_user_data')
 def get_user_data():
     if 'user_email' not in session:
         return jsonify({"error": "User not logged in"}), 401
-<<<<<<< HEAD
-
-    email = session['user_email']
-    
-=======
  
     email = session['user_email']
    
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
     # Fetch user data and headers from CSV
     headers, user_data = fetch_user_data_from_csv(email)
     if user_data:
@@ -116,11 +96,7 @@ def get_user_data():
         })
     else:
         return jsonify({"error": "User not found"}), 404
-<<<<<<< HEAD
-
-=======
  
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
 def fetch_user_data_from_csv(email):
     with open('demotools.csv', mode='r') as file:
         csv_reader = csv.DictReader(file)
@@ -129,15 +105,9 @@ def fetch_user_data_from_csv(email):
             if row['Email'] == email:
                 return headers, row  # Return headers and user data
     return headers, None  # Return headers and None if user not found
-<<<<<<< HEAD
-
-
-
-=======
  
  
  
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
 def get_completion(prompt, model="gpt-4"):
     messages = [{"role": "user", "content": prompt}]
     try:
@@ -166,13 +136,8 @@ def get_info():
 def index_dark():
      # Fetch the user from session, database, or any source
     return render_template('index.html')
-<<<<<<< HEAD
-
-
-=======
  
  
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -228,76 +193,45 @@ def login():
             }
             response = requests.post(url, json=payload)
             response_data = response.json()
-<<<<<<< HEAD
-
-=======
  
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
             if response.status_code == 200:
                 user_id = response_data['localId']
                 user = User(id=user_id, email=email)
                 login_user(user, remember=keep_logged_in)
-<<<<<<< HEAD
-
-                # Store user info in session
-                session['userId'] = user_id
-                session['user_email'] = email
-
-=======
  
                 # Store user info in session
                 session['userId'] = user_id
                 session['user_email'] = email
  
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
                 # Set session lifetime based on 'keep_logged_in'
                 if keep_logged_in:
                     session.permanent = True
                     app.permanent_session_lifetime = timedelta(hours=1)
                 else:
                     session.permanent = False
-<<<<<<< HEAD
-
-        
-                return jsonify({"status": "success", "message": f"User {email} logged in successfully."})
-
-=======
  
        
                 return jsonify({"status": "success", "message": f"User {email} logged in successfully."})
  
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
             else:
                 return jsonify({"status": "error", "message": response_data.get("error", {}).get("message", "Invalid login credentials.")})
         except Exception as e:
             return jsonify({"status": "error", "message": str(e)})
  
     return render_template('login.html')
-<<<<<<< HEAD
-
-=======
  
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
 @app.route('/header')
 @login_required
 def header():
     email = current_user.email
     user_data = fetch_user_data_from_csv(email)
-<<<<<<< HEAD
-
-=======
  
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
     if user_data:
         return render_template('header.html', user_data=user_data)
     else:
         flash("User data not found.")
         return redirect(url_for('login'))
-<<<<<<< HEAD
-
-=======
  
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
 @app.route('/logout')
 @login_required
 def logout():
@@ -747,8 +681,4 @@ def generate_headers_old():
 logging.basicConfig(level=logging.DEBUG)
  
 if __name__ == '__main__':
-<<<<<<< HEAD
-    app.run(debug=True)
-=======
     app.run(debug=True) 
->>>>>>> 8278371503926086fc51d339fa5a23f947d0c963
