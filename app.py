@@ -6,6 +6,7 @@ from firebase_admin import credentials
 from routes import main_routes
 from image import image_blueprint
 import firebase_admin
+import logging
 from firebase_admin import credentials, auth, db,firestore
 
 app = Flask(__name__)
@@ -24,6 +25,7 @@ mail = Mail(app)
 
 cred = credentials.Certificate("serviceAccountKey.json")
 
+logging.basicConfig(level=logging.DEBUG)
  
 # firebase_admin.initialize_app(cred,{
 #     'databaseURL': 'https://holygrail07-default-rtdb.firebaseio.com/'

@@ -8,6 +8,7 @@ import logging
 import requests
 import time
 import pandas as pd
+import csv
 
 
 auth_blueprint = Blueprint('auth_blueprint', __name__)
@@ -42,6 +43,31 @@ firebaseConfig = {
     "measurementId": "G-PVSRW8082S"
 }
 
+@auth_blueprint.route('/get_user_data')
+def get_user_data():
+    if 'email' not in session:
+        return jsonify({"error": "User not logged in"}), 401
+ 
+    email = session['email']
+   
+    # Fetch user data and headers from CSV
+    headers, user_data = fetch_user_data_from_csv(email)
+    if user_data:
+        return jsonify({
+            "headers": headers,
+            "user_data": user_data
+        })
+    else:
+        return jsonify({"error": "User not found"}), 404
+ 
+def fetch_user_data_from_csv(email):
+    with open('demotools.csv', mode='r') as file:
+        csv_reader = csv.DictReader(file)
+        headers = csv_reader.fieldnames  # Get CSV headers
+        for row in csv_reader:
+            if row['Email'] == email:
+                return headers, row  # Return headers and user data
+    return headers, None  # Return headers and None if user not found
 
 @auth_blueprint.route('/userdetails')
 def userdetails():
