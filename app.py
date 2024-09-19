@@ -18,9 +18,13 @@ import logging
 from groq import Groq
 import time
 from PIL import Image
-
+import csv
 
 app = Flask(__name__)
+
+
+
+# Get user data based on the logged-in user id
 
 class User(UserMixin):
     def __init__(self, id, email):
@@ -71,9 +75,38 @@ firebaseConfig = {
 
 @login_manager.user_loader
 def load_user(user_id):
-    # Implement your user loader logic here
-    # For demonstration, we'll return a dummy user
-    return User(user_id, "example@example.com")
+    # For demonstration, we're just using the user ID. You might want to fetch user details here.
+    if 'userId' in session:
+        return User(id=session['userId'], email=session['user_email'])
+    return None
+
+@app.route('/get_user_data')
+def get_user_data():
+    if 'user_email' not in session:
+        return jsonify({"error": "User not logged in"}), 401
+
+    email = session['user_email']
+    
+    # Fetch user data and headers from CSV
+    headers, user_data = fetch_user_data_from_csv(email)
+    if user_data:
+        return jsonify({
+            "headers": headers,
+            "user_data": user_data
+        })
+    else:
+        return jsonify({"error": "User not found"}), 404
+
+def fetch_user_data_from_csv(email):
+    with open('demotools.csv', mode='r') as file:
+        csv_reader = csv.DictReader(file)
+        headers = csv_reader.fieldnames  # Get CSV headers
+        for row in csv_reader:
+            if row['Email'] == email:
+                return headers, row  # Return headers and user data
+    return headers, None  # Return headers and None if user not found
+
+
 
 def get_completion(prompt, model="gpt-4"):
     messages = [{"role": "user", "content": prompt}]
@@ -101,7 +134,9 @@ def get_info():
 
 @app.route('/')
 def index_dark():
+     # Fetch the user from session, database, or any source
     return render_template('index.html')
+
 
 @app.route('/about')
 def about():
@@ -149,7 +184,7 @@ def login():
         keep_logged_in = 'keep_logged_in' in request.form
 
         try:
-            # Verify the user's email and password using Firebase Authentication REST API
+            # Firebase Authentication REST API request
             url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={firebaseConfig['apiKey']}"
             payload = {
                 "email": email,
@@ -158,29 +193,44 @@ def login():
             }
             response = requests.post(url, json=payload)
             response_data = response.json()
-            
-            print(response_data)
-            
+
             if response.status_code == 200:
                 user_id = response_data['localId']
                 user = User(id=user_id, email=email)
                 login_user(user, remember=keep_logged_in)
 
+                # Store user info in session
                 session['userId'] = user_id
+                session['user_email'] = email
 
+                # Set session lifetime based on 'keep_logged_in'
                 if keep_logged_in:
                     session.permanent = True
-                    app.permanent_session_lifetime = timedelta(hours=1)  # Keep logged in for 24 hours
+                    app.permanent_session_lifetime = timedelta(hours=1)
                 else:
                     session.permanent = False
 
+        
                 return jsonify({"status": "success", "message": f"User {email} logged in successfully."})
+
             else:
                 return jsonify({"status": "error", "message": response_data.get("error", {}).get("message", "Invalid login credentials.")})
         except Exception as e:
             return jsonify({"status": "error", "message": str(e)})
 
     return render_template('login.html')
+
+@app.route('/header')
+@login_required
+def header():
+    email = current_user.email
+    user_data = fetch_user_data_from_csv(email)
+
+    if user_data:
+        return render_template('header.html', user_data=user_data)
+    else:
+        flash("User data not found.")
+        return redirect(url_for('login'))
 
 @app.route('/logout')
 @login_required
