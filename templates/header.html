@@ -413,7 +413,7 @@
             gap: 10px;
             position: absolute;
             right: 30px;
-            top: 20px;
+            /* top: 20px; */
         }
  
         .ac-header-bnt-2 .theme-btn {
@@ -568,17 +568,19 @@
         <div class="ac-header-bnt-2">
             <a href="newlogin" class="theme-btn gradient-btn">Start Writing</a>
         </div>
-
-        <button class="theme-toggle" onclick="toggleTheme()">
-            <i class="fas fa-moon"></i>
-        </button>
+       
+        <div class="togg">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
 
         
         <!-- <a href="newlogin">
             <i class="fas fa-right-from-bracket" style="font-size: 1.5rem; cursor: pointer;"></i>
         </a> -->
-        <div class="profile-icon mt-5" id="profileIcon" style="display: flex; justify-content: flex-end !important;">
-            <i class="fa fa-user-circle" id="profileBtn" style="font-size: 1.5rem !important; cursor: pointer;margin-top:10px "></i>
+        <div class="profile-icon" id="profileIcon" style="display: flex; justify-content: flex-end !important;">
+            <i class="fa fa-user-circle" id="profileBtn" style="font-size: 1.5rem !important; cursor: pointer; "></i>
         </div>
         
     
