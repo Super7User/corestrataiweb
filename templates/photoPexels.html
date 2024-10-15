@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pexels Photo Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input[type="text"], button {
+            padding: 10px;
+            margin: 10px;
+        }
+        .photo {
+            margin-top: 20px;
+        }
+        img {
+            width: 300px;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pexels Photo Search</h1>
+    <form id="search-form">
+        <input type="text" id="query" placeholder="Search for nature, city, etc." required>
+        <button type="submit">Search</button>
+    </form>
+    <div id="photos"></div>
+
+    <script src="{{ url_for('static', filename='assets/js/pexels.js') }}"></script>
+    
+</body>
+</html>

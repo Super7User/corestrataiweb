@@ -4,6 +4,10 @@ import pandas as pd
 
 main_routes = Blueprint('main_routes', __name__)
 
+# @main_routes.route('/media')
+# def media():
+#     return render_template('media.html')
+
 
 @main_routes.route('/sampleData')
 def sampleData():

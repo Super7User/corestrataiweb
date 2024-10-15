@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pexels Videos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .video-card {
+            margin: 15px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 380px;
+            position: relative;
+            cursor: pointer;
+        }
+        .video-card video {
+            width: 100%;
+            height: auto;
+            display: none;
+        }
+        .video-card img {
+            max-width: 100%;
+            height: auto;
+        }
+        .video-title {
+            margin-top: 10px;
+        }
+        .video-user {
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Popular Pexels Videos</h1>
+    <div class="video-container">
+        {% for video in videos %}
+        <div class="video-card" 
+             onmouseover="playVideo(this)" 
+             onmouseout="pauseVideo(this)">
+            <!-- Video element for hover play -->
+            <video loop muted>
+                <source src="{{ video.video_files[0].link }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <!-- Thumbnail image to display initially -->
+            <img src="{{ video.image }}" alt="Video Thumbnail">
+            
+            <div class="video-title">
+                <a href="{{ video.url }}" target="_blank">Video ID: {{ video.id }}</a>
+            </div>
+            <div class="video-user">
+                by <a href="{{ video.user.url }}" target="_blank">{{ video.user.name }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function playVideo(videoCard) {
+            // Show video and start playing
+            const video = videoCard.querySelector('video');
+            const img = videoCard.querySelector('img');
+            img.style.display = 'none'; // Hide the image
+            video.style.display = 'block'; // Show the video
+            video.play();
+        }
+
+        function pauseVideo(videoCard) {
+            // Pause the video and hide it
+            const video = videoCard.querySelector('video');
+            const img = videoCard.querySelector('img');
+            video.pause(); // Pause the video
+            video.style.display = 'none'; // Hide the video
+            img.style.display = 'block'; // Show the image
+        }
+    </script>
+</body>
+</html>

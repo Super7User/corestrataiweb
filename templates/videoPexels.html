@@ -1,0 +1,58 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Video from Pexels</title>
+</head>
+<body>
+    <h1>Search Videos from Pexels</h1>
+
+   
+    <form id="search-form">
+        <input type="text" id="search-query" placeholder="Enter keyword (e.g., nature)" required>
+        <button type="submit">Search</button>
+    </form>
+    <br><br><br>
+   
+    <video id="video-player" width="640" height="338" controls>
+        <source id="video-source" src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+   
+    <p>Video provided by: <a id="author-link" href="" target="_blank"></a></p>
+
+    <script src="{{ url_for('static', filename='assets/js/videoPexels.js') }}"></script>
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Pexels Video</title>
+</head>
+<body>
+    <h1>Pexels Video Search</h1>
+
+    <form id="video-form">
+        <label for="video-id">Enter Pexels Video ID:</label>
+        <input type="text" id="video-id" name="video-id" required>
+        <button type="submit">Search Video</button>
+    </form>
+
+    <video id="video-player" width="640" height="338" controls style="display:none;">
+        <source id="video-source" src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <p id="author-info" style="display:none;">Video provided by: <a id="author-link" href="" target="_blank"></a></p>
+    
+    <div id="thumbnails" style="display:none;"></div>
+
+    <script src="video.js"></script>
+</body>
+</html>
+

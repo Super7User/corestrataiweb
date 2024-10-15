@@ -50,7 +50,6 @@ def get_user_data():
  
     email = session['email']
    
-    # Fetch user data and headers from CSV
     headers, user_data = fetch_user_data_from_csv(email)
     if user_data:
         return jsonify({
@@ -63,11 +62,11 @@ def get_user_data():
 def fetch_user_data_from_csv(email):
     with open('demotools.csv', mode='r') as file:
         csv_reader = csv.DictReader(file)
-        headers = csv_reader.fieldnames  # Get CSV headers
+        headers = csv_reader.fieldnames  
         for row in csv_reader:
             if row['Email'] == email:
-                return headers, row  # Return headers and user data
-    return headers, None  # Return headers and None if user not found
+                return headers, row  
+    return headers, None  
 
 @auth_blueprint.route('/userdetails')
 def userdetails():
@@ -286,7 +285,6 @@ def register():
 
 @auth_blueprint.route('/repository', methods=['GET'])
 def repository():
-    user_email = session.get('email')
     user_plan = session.get('plan')
     user_id = session.get('userId')
 

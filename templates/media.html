@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media & Effects Dashboard</title>
+    <style>
+        .header {
+            background-color: #ffffff;
+            /* Light header background */
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            color: #333;
+            /* Dark text color for header */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Light shadow for header */
+        }
+
+        .containerMedia {
+            display: flex;
+            flex: 1;
+            padding-top: 30px;
+            /* To account for the fixed header */
+        }
+
+        .side {
+            width: 25%;
+            background-color: #ffffff;
+            /* White background for sidebar */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Light shadow for sidebar */
+        }
+
+        .card {
+            background-color: #f9f9f9;
+            /* Light card background */
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Light shadow for cards */
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+        }
+
+        .card button {
+            padding: 10px;
+            background-color: #007bff;
+            /* Primary button color */
+            border: none;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            /* Rounded corners for button */
+        }
+
+        .card button:hover {
+            background-color: #0056b3;
+            /* Darker shade on hover */
+        }
+
+        .video-player {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .video-player video {
+            width: 80%;
+            height: auto;
+            max-height: 80vh;
+            border: 2px solid #ccc;
+            /* Light border for video */
+        }
+
+        /* Modal container */
+        .modal1 {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            /* overflow: auto;  */
+            background: rgba(255, 255, 255, 0.5);
+            justify-content: center;
+            align-items: center;
+            overflow-y: scroll;
+        }
+
+        .modal-content1 {
+            background-color: #e4dede;
+            /* Dark theme background */
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 70%;
+            /* Adjust the width as per the screenshot */
+            max-width: 1200px;
+            /* Set a max width */
+            color: rgb(32, 32, 32);
+            margin-left: 200px;
+            margin-right: 200px;
+        }
+
+        /* Modal close button */
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #ff0000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Header with navigation buttons */
+        .media-nav {
+            display: flex;
+            justify-content: flex-start;
+            gap: 20px;
+            /* Space between buttons */
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            background-color: #444;
+            border: none;
+            padding: 10px 20px;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #555;
+        }
+
+        .nav-btn.active {
+            background-color: #007bff;
+            /* Active button color */
+        }
+
+        /* Search bar styling */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #media-search {
+            width: 300px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #888;
+            margin-right: 10px;
+        }
+
+        #search-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #search-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Media options styling */
+        .media-options {
+            display: flex;
+            justify-content: space-evenly;
+            /* Equal spacing between radio buttons */
+            margin-bottom: 20px;
+        }
+
+        .media-options label {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .media-options input[type="radio"] {
+            margin-right: 10px;
+            accent-color: #ff4500;
+            /* Radio button color */
+        }
+
+        /* Media picker styling */
+        .media-picker {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .media-picker img {
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .media-picker img:hover {
+            transform: scale(1.05);
+            /* Slight zoom effect on hover */
+        }
+
+
+        .button-container {
+            top: 20px !important;
+        }
+
+        .ac-header-bnt-2 {
+            display: none !important;
+        }
+
+        body.dark-theme .modal-content1 {
+            background-color: #565353;
+            color: #fff;
+        }
+
+        body.dark-theme .modal1 {
+            background-color: rgba(255, 255, 255, 0.096);
+            color: #fff;
+
+        }
+
+        .scene-card {
+            background-color: #f9f9f9;
+            /* Light background */
+            color: #333;
+            /* Dark text color */
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Lighter shadow */
+            font-family: Arial, sans-serif;
+            width: 300px;
+            transition: border 0.3s ease;
+        }
+
+        .scene-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .scene-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+            /* Darker header text */
+        }
+
+        .scene-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .scene-options i {
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            /* Lighter icon color */
+        }
+
+        .scene-content {
+            background-color: #fff;
+            /* Pure white background */
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            /* Subtle shadow */
+        }
+
+        .scene-section {
+            margin-bottom: 15px;
+        }
+
+        .scene-section h4 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+            color: #555;
+            /* Darker subheading */
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .scene-section p {
+            margin: 0;
+            font-size: 12px;
+            color: #777;
+            /* Slightly darker text */
+        }
+
+        .media-thumbnail img {
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            /* Light border around images */
+        }
+
+        .scene-input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            /* Light gray border */
+            background-color: #f5f5f5;
+            /* Light input background */
+            color: #333;
+            /* Dark input text */
+            font-size: 12px;
+        }
+
+        .scene-range {
+            width: 100%;
+            margin-top: 5px;
+            accent-color: #888;
+            /* Custom range slider color */
+        }
+
+        .scene-card:hover {
+            border: 2px solid #007bff;
+            /* Blue border on hover */
+        }
+
+        .dark-theme .scene-card {
+            background-color: #2b2b2b;
+            color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: border 0.3s ease;
+        }
+
+        .dark-theme .scene-header h3 {
+            color: #fff;
+        }
+
+        .dark-theme .scene-section h4 {
+            color: #fff;
+        }
+
+        .dark-theme .scene-content {
+            background-color: #3a3a3a;
+        }
+
+        .dark-theme .scene-input {
+            background-color: #4a4a4a;
+            color: #eee;
+        }
+
+        .dark-theme .media-thumbnail img {
+            border: 1px solid #555;
+        }
+
+        .dark-theme .scene-card:hover {
+            border: 2px solid #ff4500;
+            /* Red border on hover */
+        }
+
+        .dark-theme .sidebarb {
+            background-color: #282626;
+        }
+
+        .dark-theme .sidebarb .menu {
+            color: #fff
+        }
+
+        .dark-theme .placeholder {
+            background-color: #282626;
+        }
+        .dark-theme label {
+            color:#fff;
+        }
+
+        .media-picker {
+            background-color: #f7f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            color: rgb(34, 33, 33);
+            margin-top: 20px;
+            margin-left: 28%
+        }
+
+        .style-section,
+        .instruction-section {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: #272626;
+            margin-bottom: 5px;
+        }
+
+        .style-dropdown {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background-color: #535252;
+            color: #979797;
+            font-size: 14px;
+        }
+
+        .instruction-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background-color: #535252;
+            color: white;
+            font-size: 14px;
+        }
+
+        .generate-btn-container {
+            text-align: center;
+        }
+
+        .nav-btn {
+            background-color: #ff3d68;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #ff5a80;
+        }
+
+        .generate-description {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2e2e2e;
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .sidebarb {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .sidebarb h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .sidebarb .menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebarb .menu li {
+            margin-bottom: 15px;
+        }
+
+        .sidebarb .menu li a {
+            text-decoration: none;
+            color: black;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .sidebarb .menu li img {
+            width: 24px;
+            margin-right: 10px;
+        }
+
+        .media-grid {
+            display: flex;
+            flex-wrap: wrap;
+            /* This ensures wrapping after 4 items */
+            gap: 10px;
+            /* Adds space between the items */
+            justify-content: flex-start;
+        }
+
+        .placeholder {
+            background-color: #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            width: calc(25% - 10px);
+            /* Four items per row, considering the gap */
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        li {
+            cursor: pointer;
+        }
+
+        .media-grid1 {
+            display: flex;
+            /* Horizontal layout */
+            flex-wrap: wrap;
+            /* Items will wrap if the container width is exceeded */
+            gap: 10px;
+            /* Space between the items */
+        }
+
+        .placeholder {
+            flex: 0 1 190px;
+            /* Base width for each item */
+            padding: 15px;
+            background-color: #e0e0e0;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .tabs {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 15px !important;
+            margin-right: 10px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .media-section {
+            margin-bottom: 40px;
+        }
+
+        .media-grid1.active {
+            display: flex;
+            /* Display flex only for the active tab */
+        }
+
+        .media-grid1 {
+            display: none;
+            /* Hide inactive content */
+        }
+
+        button.active {
+            background-color: #b0b0b0;
+            /* Active button styling */
+        }
+
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .video-card {
+            margin: 3px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 320px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .video-card video {
+            width: 100%;
+            height: auto;
+            display: none;
+        }
+
+        .video-card img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .video-title {
+            margin-top: 10px;
+        }
+
+        .video-user {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .image-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 30px;  
+            justify-items: center; 
+            /* margin-top: 20px; */
+            width: 100%;
+        }
+
+        .image-card {
+            width: 250px; 
+            margin: -20px;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .image-user {
+            margin-top: 5px;
+        }
+
+        .image-user a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .containerHead {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem !important;
+            margin: 0;
+            background: linear-gradient(to right, #90c3fd 30%, #ba71ff 50%, #ff71b8 70%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 0;
+            /* color: gray; */
+            background: linear-gradient(to right, #ba71ff 30.37%, #ff71b8 52.7%, #90c3fd 80.76%) !important;
+            background-clip: text !important;
+            -webkit-background-clip: text !important;
+            color: transparent !important;
+        }
+
+        .logo {
+            position: absolute;
+            top: 45px;
+            left: 100px;
+            width: 155px
+        }
+
+        .menu li {
+            list-style: none;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu li:hover {
+            background-color: #f0f0f0;
+            /* Optional hover effect */
+        }
+        .dark-theme .highlighted{
+            background-color: #323538;
+        }
+
+        .highlighted {
+            background-color: #d0e1ff;
+            /* Color to indicate it's selected */
+            border: 2px solid #989899;
+        }
+
+        .menu li div {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu li img {
+            margin-right: 10px;
+        }
+        .square {
+    width: 100%;
+    padding-bottom: 100%; /* This makes the height equal to the width */
+    position: relative;
+}
+
+.square video, .square img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+    </style>
+</head>
+
+<body class="body1">
+    {% include 'header.html' %}
+    <main style="margin-top: 1%">
+        <img src="{{ url_for('static', filename='images/logonew.png')}}" alt="Logo" style="background: #A5AEAD;" class="logo">
+        
+        
+        <div class="containerHead">
+            <h1>Holygrail</h1>
+            <h2>Instagram Partner</h2>
+        </div>
+        <div class="scene-type" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;margin-left: inherit;">
+            <label>
+                <input type="radio" name="scene-type" value="reel" id="reel-radio" checked> Reels
+            </label>
+            <label>
+                <input type="radio" name="scene-type" value="post" id="post-radio"> Post
+            </label>
+        </div>
+        <div class="containerMedia">
+            <!-- <div class="side"> -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <h3>Scene 1</h3>
+                    <div class="scene-options">
+                        <i class="fa fa-cog"></i>
+                        <i class="fa fa-trash"></i>
+                    </div>
+                </div>
+                <div class="scene-content">
+                    <div class="scene-section">
+                        <h4>Voiceover <i class="fa fa-microphone"></i></h4>
+                        <input type="text" placeholder="Enter voiceover text..." class="scene-input">
+                    </div>
+
+                    <div class="scene-section">
+                        <h4>Media <i class="fa fa-image"></i></h4>
+
+                        <div class="media-thumbnail" style="width: 34px;">
+                            <img src="{{ url_for('static', filename='images/media.png')}}" alt="Media Thumbnail">
+                        </div>
+
+                        <!-- <input type="text" placeholder="Media description..." class="scene-input"> -->
+                    </div>
+
+
+                    <div class="scene-section">
+                        <h4>Effect <i class="fa fa-magic"></i></h4>
+                        <input type="range" min="0" max="100" value="45" class="scene-range">
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-player">
+                <video controls>
+                    <source src="sample-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <div id="media-modal" class="modal1">
+            <div class="modal-content1">
+                <span class="close" id="close-media">&times;</span>
+
+                <div class="media-nav">
+                    <h3 class="" id="media-picker-btn">Media picker</h3>
+                    <button class="nav-btn active" id="stock-btn">Stock</button>
+                    <button class="nav-btn" id="my-btn">My</button>
+                    <button class="nav-btn" id="generate-btn">Generate</button>
+                    <button class="nav-btn" id="favorites-btn">Favorites</button>
+                </div>
+
+                <div class="search-container">
+                    <input type="text" placeholder="Search for media..." id="media-search">
+                    <button id="search-btn">Search</button>
+                </div>
+
+                <div id="stock-content" class="modal-section active">
+
+                    <div class="container" style="display: flex;">
+                        <div class="sidebarb">
+                            <h3>Stock Content</h3>
+                            <ul class="menu">
+                                <li onclick="highlightMenuItem(this)">
+                                    <div id="gettyBtn"><img src="{{ url_for('static', filename='images/getty.png')}}"
+                                            alt="getty"> Getty</div>
+                                </li>
+                                <li onclick="highlightMenuItem(this); showMedia('pexels')">
+                                    <div><img
+                                            src="{{ url_for('static', filename='images/pexels.png')}}" alt="Pexels">
+                                        Pexels</div>
+                                </li>
+                                <li onclick="highlightMenuItem(this);showMedia('giphy')">
+                                    <div><img
+                                            src="{{ url_for('static', filename='images/giphy.png')}}" alt="Giphy"> Giphy
+                                    </div>
+                                </li>
+                                <!-- <li><div onclick="showMedia('brandfetch')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Brandfetch_logo.svg/800px-Brandfetch_logo.svg.png" alt="Brandfetch"> Brandfetch</div></li> -->
+                            </ul>
+                        </div>
+
+                        <div class="content" style="padding: 9px 50px; width:100%">
+                            <!-- <h2>Add Media</h2> -->
+
+                            <!-- <div class="search-bar">
+                                <input type="text" placeholder="Search Stock Media">
+                                <div class="info">Full resolution assets with no watermarks will be used in generated video.</div>
+                            </div> -->
+
+                            <!-- Getty Section -->
+                            <div id="getty" class="media-section">
+                                <div class="tabs">
+                                    <button id="getty-video-btn" onclick="showTab('getty', 'video')">Videos</button>
+                                    <button id="getty-image-btn" onclick="showTab('getty', 'image')">Images</button>
+                                </div>
+                                <div id="getty-video" class="media-grid1 active">
+                                    <div class="placeholder">00:20</div>
+                                    <div class="placeholder">00:06</div>
+                                    <div class="placeholder">00:39</div>
+                                </div>
+                                <div id="getty-image" class="media-grid1">
+                                    <div class="placeholder">Image Getty 01</div>
+                                    <div class="placeholder">Image Getty 02</div>
+                                    <div class="placeholder">Image Getty 03</div>
+                                </div>
+                            </div>
+
+
+                            <div id="pexels" class="media-section">
+                                <div class="tabs">
+                                    <button id="pexels-video-btn" onclick="showTab('pexels', 'video')">Videos</button>
+                                    <button id="pexels-image-btn" onclick="showTab('pexels', 'image')">Images</button>
+                                </div>
+                                <!-- Pexels Videos -->
+                                <div id="pexels-video" class="media-grid1 active">
+                                    <div class="video-container">
+                                        {% for video in videos %}
+                                        <div class="video-card placeholder" onmouseover="playVideo(this)"
+                                            onmouseout="pauseVideo(this)">
+                                            <!-- Video element for hover play -->
+                                            <video loop muted>
+                                                <source src="{{ video.video_files[0].link }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            <!-- Thumbnail image to display initially -->
+                                            <img src="{{ video.image }}" alt="Video Thumbnail">
+
+                                            <!-- <div class="video-title">
+                        <a href="{{ video.url }}" target="_blank">Video ID: {{ video.id }}</a>
+                    </div>
+                    <div class="video-user">
+                        by <a href="{{ video.user.url }}" target="_blank">{{ video.user.name }}</a>
+                    </div> -->
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <!-- Pexels Images -->
+                                <!-- <div id="pexels-image" class="media-grid1">
+                                    <div class="placeholder">Pexels Image 01</div>
+                                    <div class="placeholder">Pexels Image 02</div>
+                                    <div class="placeholder">Pexels Image 03</div>
+                                </div> -->
+                                <div id="pexels-image" class="media-grid1 active">
+                                    <div class="image-container">
+                                        {% for image in images %}
+                                        <div class="image-card placeholder" style="top:45px; background: transparent !important;">
+                                            <img src="{{ image.src.medium }}" alt="{{ image.alt }}" style="width: 180px;">
+                                            <!-- <div class="image-user">
+                                                by <a href="{{ image.photographer_url }}" target="_blank">{{ image.photographer }}</a>
+                                            </div> -->
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div id="giphy" class="media-section">
+                                <div class="tabs">
+                                    <button id="giphy-video-btn" onclick="showTab('giphy', 'video')">Videos</button>
+                                    <button id="giphy-image-btn" onclick="showTab('giphy', 'image')">Images</button>
+                                </div>
+                                <div id="giphy-video" class="media-grid1 active">
+                                    <div class="placeholder">Giphy Video 01</div>
+                                    <div class="placeholder">Giphy Video 02</div>
+                                    <div class="placeholder">Giphy Video 03</div>
+                                </div>
+                                <div id="giphy-image" class="media-grid1">
+                                    <div class="placeholder">Giphy Image 01</div>
+                                    <div class="placeholder">Giphy Image 02</div>
+                                    <div class="placeholder">Giphy Image 03</div>
+                                </div>
+                            </div>
+
+
+                            <div id="brandfetch" class="media-section">
+                                <div class="tabs">
+                                    <button id="brandfetch-video-btn"
+                                        onclick="showTab('brandfetch', 'video')">Videos</button>
+                                    <button id="brandfetch-image-btn"
+                                        onclick="showTab('brandfetch', 'image')">Images</button>
+                                </div>
+                                <div id="brandfetch-video" class="media-grid1 active">
+                                    <div class="placeholder">Brandfetch Video 01</div>
+                                    <div class="placeholder">Brandfetch Video 02</div>
+                                </div>
+                                <div id="brandfetch-image" class="media-grid1">
+                                    <div class="placeholder">Brandfetch Image 01</div>
+                                    <div class="placeholder">Brandfetch Image 02</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div id="my-content" class="modal-section" style="display:none;">
+
+                    <div class="my-media">
+                        <label for="file-upload" class="file-upload-label">Upload</label>
+                        <input type="file" id="file-upload">
+                        <div class="my-media-gallery" style="margin-top: 20px;">
+                            <img src="my-media1.jpg" alt="My Media 1">
+                            <img src="my-media2.jpg" alt="My Media 2">
+                            <img src="my-media3.jpg" alt="My Media 3">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content" class="media-picker" style="display: none; margin-left: 28%">
+                    <div class="style-section">
+                        <label for="style-select">Style</label>
+                        <select id="style-select" class="style-dropdown">
+                            <option value="3d-model">3D model</option>
+                            <option value="image">Image</option>
+                            <option value="video-clip">Video clip</option>
+                            <option value="sticker">Sticker</option>
+                        </select>
+                    </div>
+
+                    <div class="instruction-section">
+                        <label for="instruction-input">Instructions</label>
+                        <input type="text" id="instruction-input" class="instruction-input"
+                            placeholder="Enter instructions (e.g. A lighthouse on a cliff)"
+                            style="color:#fff !important">
+                    </div>
+
+                    <p class="generate-description">
+                        Generated file will be automatically added to My Library.
+                    </p>
+                </div>
+
+                <div id="media-picker-content" class="modal-section" style="display:none;">
+
+                </div>
+            </div>
+        </div>
+
+        <div id="effect-modal" class="modal1">
+            <div class="modal-content1">
+                <span class="close" id="close-effect">&times;</span>
+                <h2>Select Effects</h2>
+                <div class="effect-picker">
+                    <img src="effect1.jpg" alt="Effect 1">
+                    <img src="effect2.jpg" alt="Effect 2">
+                    <img src="effect3.jpg" alt="Effect 3">
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        const mediaThumbnail = document.querySelector('.media-thumbnail');
+        const mediaModal = document.getElementById('media-modal');
+        const closeMedia = document.getElementById('close-media');
+        const searchBtn = document.getElementById('search-btn');
+        const mediaPicker = document.getElementById('media-picker');
+        const mediaTypeRadios = document.querySelectorAll('input[name="media-type"]');
+
+        const videoContent = `
+            <img src="media1.jpg" alt="Video 1">
+            <img src="media2.jpg" alt="Video 2">
+            <img src="media3.jpg" alt="Video 3">
+        `;
+
+        const imageContent = `
+            <img src="image1.jpg" alt="Image 1">
+            <img src="image2.jpg" alt="Image 2">
+            <img src="image3.jpg" alt="Image 3">
+        `;
+
+        const gifContent = `
+            <img src="gif1.gif" alt="GIF 1">
+            <img src="gif2.gif" alt="GIF 2">
+            <img src="gif3.gif" alt="GIF 3">
+        `;
+
+        const stickerContent = `
+            <img src="sticker1.png" alt="Sticker 1">
+            <img src="sticker2.png" alt="Sticker 2">
+            <img src="sticker3.png" alt="Sticker 3">
+        `;
+
+        function updateMediaPickerContent(mediaType) {
+            if (mediaType === 'video') {
+                mediaPicker.innerHTML = videoContent;
+            } else if (mediaType === 'image') {
+                mediaPicker.innerHTML = imageContent;
+            } else if (mediaType === 'gif') {
+                mediaPicker.innerHTML = gifContent;
+            } else if (mediaType === 'sticker') {
+                mediaPicker.innerHTML = stickerContent;
+            }
+        }
+
+        mediaTypeRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                updateMediaPickerContent(this.value);
+            });
+        });
+
+        if (mediaThumbnail) {
+            mediaThumbnail.addEventListener('click', function () {
+                mediaModal.style.display = 'block';
+                updateMediaPickerContent(document.querySelector('input[name="media-type"]:checked').value);
+            });
+        }
+
+        if (closeMedia) {
+            closeMedia.addEventListener('click', function () {
+                mediaModal.style.display = 'none';
+            });
+        }
+
+        window.addEventListener('click', function (event) {
+            if (event.target == mediaModal) {
+                mediaModal.style.display = 'none';
+            }
+        });
+
+        if (searchBtn) {
+            searchBtn.addEventListener('click', function () {
+                const searchQuery = document.getElementById('media-search').value;
+                const mediaType = document.querySelector('input[name="media-type"]:checked').value;
+                alert(`Searching for ${mediaType}: "${searchQuery}"`);
+            });
+        }
+
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', function () {
+
+                // Remove 'active' class from all buttons
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+                this.classList.add('active');
+
+                document.querySelectorAll('.modal-section').forEach(section => section.style.display = 'none');
+
+                document.getElementById('content').style.display = 'none';
+
+
+                if (this.id === 'media-picker-btn') {
+                    document.getElementById('media-picker-content').style.display = 'block';
+                } else if (this.id === 'my-btn') {
+                    document.getElementById('my-content').style.display = 'block';
+                } else if (this.id === 'stock-btn') {
+                    document.getElementById('stock-content').style.display = 'block';
+                } else if (this.id === 'generate-btn') {
+                    document.getElementById('content').style.display = 'block'; // Only show content on Generate button click
+                }
+            });
+        });
+        function showMedia(mediaId) {
+            // Hide all media sections
+            document.querySelectorAll('.media-section').forEach(function (section) {
+                section.style.display = 'none';
+            });
+
+
+            document.getElementById(mediaId).style.display = 'block';
+        }
+
+
+        document.getElementById('gettyBtn').addEventListener('click', function () {
+            showMedia('getty');
+        });
+
+
+        window.onload = function () {
+            document.querySelectorAll('.media-section').forEach(function (section) {
+                section.style.display = 'none';
+            });
+            document.getElementById('getty').style.display = 'block';
+        };
+
+
+        document.getElementById('media-picker-content').style.display = 'block';
+    </script>
+
+    <script>
+        function showTab(section, type) {
+    document.querySelectorAll(`#${section} .media-grid1`).forEach(grid => grid.classList.remove('active'));
+    document.querySelectorAll(`#${section} button`).forEach(btn => btn.classList.remove('active'));
+
+    document.getElementById(`${section}-${type}`).classList.add('active');
+    document.getElementById(`${section}-${type}-btn`).classList.add('active');
+}
+
+function playVideo(videoCard) {
+    const video = videoCard.querySelector('video');
+    const img = videoCard.querySelector('img');
+
+    img.style.display = 'none';
+    video.style.display = 'block';
+    video.play();
+}
+
+function pauseVideo(videoCard) {
+    const video = videoCard.querySelector('video');
+    const img = videoCard.querySelector('img');
+
+    video.pause();
+    video.style.display = 'none';
+    img.style.display = 'block';
+}
+        function highlightMenuItem(element) {
+            var items = document.querySelectorAll('.menu li');
+            items.forEach(function (item) {
+                item.classList.remove('highlighted');
+            });
+            element.classList.add('highlighted');
+        }
+        document.getElementById('post-radio').addEventListener('change', function() {
+    if (this.checked) {
+        // Apply the 1:1 aspect ratio for videos and images
+        document.querySelectorAll('.video-card, .image-card').forEach(function(card) {
+            card.classList.add('square');
+        });
+    }
+});
+
+document.getElementById('reel-radio').addEventListener('change', function() {
+    if (this.checked) {
+        // Remove the 1:1 aspect ratio for videos and images
+        document.querySelectorAll('.video-card, .image-card').forEach(function(card) {
+            card.classList.remove('square');
+        });
+    }
+});
+
+
+    </script>
+
+</body>
+
+</html>

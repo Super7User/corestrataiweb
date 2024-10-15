@@ -610,6 +610,13 @@
                         <span class="sidebar-text">Article</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ url_for('media') }}">
+                            <!-- <i class="fa-solid fa-square-instagram"></i> -->
+                            <i class="fa-brands fa-instagram"></i>
+                            <span class="sidebar-text">Media</span>
+                    </a>
+                </li>
                 {% if plan == 'Professional' or plan == 'Starter' %}
                 <li>
                     <a href="{{ url_for('main_routes.imageLanding') }}">
@@ -655,15 +662,14 @@
         document.getElementById("profileBtn").onclick = function () {
             document.getElementById("profileModal").style.display = "flex";
 
-            // Example email value (You should dynamically get this value)
-            const email = "user@example.com"; // Replace with actual user email
+            const email = "user@example.com"; 
 
 
             fetch(`/get_user_data?email=${encodeURIComponent(email)}`)
                 .then(response => response.json())
                 .then(data => {
                     const profileContent = document.getElementById("userProfileContent");
-                    profileContent.innerHTML = ''; // Clear previous content
+                    profileContent.innerHTML = ''; 
 
                     if (data.error) {
                         profileContent.innerHTML = `<p>${data.error}</p>`;
@@ -674,10 +680,8 @@
                         headers.forEach(header => {
                             const p = document.createElement("p");
 
-                            // Create an icon based on the header name
                             const icon = getHeaderIcon(header);
-
-                            // Add the icon and header text
+                            
                             p.innerHTML = `<i class="${icon}"></i> <span class="header-text">${header}:</span> <span class="user-data">${userData[header]}</span>`;
 
                             profileContent.appendChild(p);
@@ -708,7 +712,6 @@
         }
 
 
-        // Close the modal when clicking anywhere outside the modal content
         window.onclick = function (event) {
             const modal = document.getElementById("profileModal");
             if (event.target === modal) {
@@ -722,12 +725,5 @@
 
     </script>
 
-</body>
- 
-      
-
-    </script>
- 
- 
 </body>
 </html>
