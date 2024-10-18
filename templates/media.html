@@ -396,8 +396,9 @@
         .dark-theme .placeholder {
             background-color: #282626;
         }
+
         .dark-theme label {
-            color:#fff;
+            color: #fff;
         }
 
         .media-picker {
@@ -621,17 +622,18 @@
             font-size: 0.9em;
             color: #555;
         }
+
         .image-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 30px;  
-            justify-items: center; 
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            justify-items: center;
             /* margin-top: 20px; */
             width: 100%;
         }
 
         .image-card {
-            width: 250px; 
+            width: 250px;
             margin: -20px;
         }
 
@@ -691,7 +693,8 @@
             background-color: #f0f0f0;
             /* Optional hover effect */
         }
-        .dark-theme .highlighted{
+
+        .dark-theme .highlighted {
             background-color: #323538;
         }
 
@@ -709,34 +712,39 @@
         .menu li img {
             margin-right: 10px;
         }
-        .square {
-    width: 100%;
-    padding-bottom: 100%; /* This makes the height equal to the width */
-    position: relative;
-}
 
-.square video, .square img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+        .square {
+            width: 100%;
+            padding-bottom: 100%;
+            /* This makes the height equal to the width */
+            position: relative;
+        }
+
+        .square video,
+        .square img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 
 <body class="body1">
     {% include 'header.html' %}
     <main style="margin-top: 1%">
-        <img src="{{ url_for('static', filename='images/logonew.png')}}" alt="Logo" style="background: #A5AEAD;" class="logo">
-        
-        
+        <img src="{{ url_for('static', filename='images/logonew.png')}}" alt="Logo" style="background: #A5AEAD;"
+            class="logo">
+
+
         <div class="containerHead">
             <h1>Holygrail</h1>
             <h2>Instagram Partner</h2>
         </div>
-        <div class="scene-type" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;margin-left: inherit;">
+        <div class="scene-type"
+            style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;margin-left: inherit;">
             <label>
                 <input type="radio" name="scene-type" value="reel" id="reel-radio" checked> Reels
             </label>
@@ -745,7 +753,6 @@
             </label>
         </div>
         <div class="containerMedia">
-            <!-- <div class="side"> -->
             <div class="scene-card">
                 <div class="scene-header">
                     <h3>Scene 1</h3>
@@ -779,8 +786,8 @@
             </div>
 
             <div class="video-player">
-                <video controls>
-                    <source src="sample-video.mp4" type="video/mp4">
+                <video id="main-video-player" controls>
+                    <source src="sample-video.mp4" type="video/mp4" id="main-video-source">
                     Your browser does not support the video tag.
                 </video>
             </div>
@@ -804,7 +811,6 @@
                 </div>
 
                 <div id="stock-content" class="modal-section active">
-
                     <div class="container" style="display: flex;">
                         <div class="sidebarb">
                             <h3>Stock Content</h3>
@@ -814,13 +820,12 @@
                                             alt="getty"> Getty</div>
                                 </li>
                                 <li onclick="highlightMenuItem(this); showMedia('pexels')">
-                                    <div><img
-                                            src="{{ url_for('static', filename='images/pexels.png')}}" alt="Pexels">
+                                    <div><img src="{{ url_for('static', filename='images/pexels.png')}}" alt="Pexels">
                                         Pexels</div>
                                 </li>
                                 <li onclick="highlightMenuItem(this);showMedia('giphy')">
-                                    <div><img
-                                            src="{{ url_for('static', filename='images/giphy.png')}}" alt="Giphy"> Giphy
+                                    <div><img src="{{ url_for('static', filename='images/giphy.png')}}" alt="Giphy">
+                                        Giphy
                                     </div>
                                 </li>
                                 <!-- <li><div onclick="showMedia('brandfetch')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Brandfetch_logo.svg/800px-Brandfetch_logo.svg.png" alt="Brandfetch"> Brandfetch</div></li> -->
@@ -829,13 +834,11 @@
 
                         <div class="content" style="padding: 9px 50px; width:100%">
                             <!-- <h2>Add Media</h2> -->
-
                             <!-- <div class="search-bar">
                                 <input type="text" placeholder="Search Stock Media">
                                 <div class="info">Full resolution assets with no watermarks will be used in generated video.</div>
                             </div> -->
 
-                            <!-- Getty Section -->
                             <div id="getty" class="media-section">
                                 <div class="tabs">
                                     <button id="getty-video-btn" onclick="showTab('getty', 'video')">Videos</button>
@@ -853,47 +856,33 @@
                                 </div>
                             </div>
 
-
                             <div id="pexels" class="media-section">
                                 <div class="tabs">
                                     <button id="pexels-video-btn" onclick="showTab('pexels', 'video')">Videos</button>
                                     <button id="pexels-image-btn" onclick="showTab('pexels', 'image')">Images</button>
                                 </div>
-                                <!-- Pexels Videos -->
                                 <div id="pexels-video" class="media-grid1 active">
                                     <div class="video-container">
                                         {% for video in videos %}
                                         <div class="video-card placeholder" onmouseover="playVideo(this)"
-                                            onmouseout="pauseVideo(this)">
-                                            <!-- Video element for hover play -->
+                                            onmouseout="pauseVideo(this)"
+                                            onclick="selectVideo('{{ video.video_files[0].link }}')">
                                             <video loop muted>
                                                 <source src="{{ video.video_files[0].link }}" type="video/mp4">
                                                 Your browser does not support the video tag.
                                             </video>
-                                            <!-- Thumbnail image to display initially -->
                                             <img src="{{ video.image }}" alt="Video Thumbnail">
-
-                                            <!-- <div class="video-title">
-                        <a href="{{ video.url }}" target="_blank">Video ID: {{ video.id }}</a>
-                    </div>
-                    <div class="video-user">
-                        by <a href="{{ video.user.url }}" target="_blank">{{ video.user.name }}</a>
-                    </div> -->
                                         </div>
                                         {% endfor %}
                                     </div>
                                 </div>
-                                <!-- Pexels Images -->
-                                <!-- <div id="pexels-image" class="media-grid1">
-                                    <div class="placeholder">Pexels Image 01</div>
-                                    <div class="placeholder">Pexels Image 02</div>
-                                    <div class="placeholder">Pexels Image 03</div>
-                                </div> -->
                                 <div id="pexels-image" class="media-grid1 active">
                                     <div class="image-container">
                                         {% for image in images %}
-                                        <div class="image-card placeholder" style="top:45px; background: transparent !important;">
-                                            <img src="{{ image.src.medium }}" alt="{{ image.alt }}" style="width: 180px;">
+                                        <div class="image-card placeholder"
+                                            style="top:45px; background: transparent !important;">
+                                            <img src="{{ image.src.medium }}" alt="{{ image.alt }}"
+                                                style="width: 180px;">
                                             <!-- <div class="image-user">
                                                 by <a href="{{ image.photographer_url }}" target="_blank">{{ image.photographer }}</a>
                                             </div> -->
@@ -902,8 +891,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
 
                             <div id="giphy" class="media-section">
                                 <div class="tabs">
@@ -922,7 +909,6 @@
                                 </div>
                             </div>
 
-
                             <div id="brandfetch" class="media-section">
                                 <div class="tabs">
                                     <button id="brandfetch-video-btn"
@@ -940,11 +926,8 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
 
                 <div id="my-content" class="modal-section" style="display:none;">
 
@@ -983,7 +966,6 @@
                 </div>
 
                 <div id="media-picker-content" class="modal-section" style="display:none;">
-
                 </div>
             </div>
         </div>
@@ -1111,11 +1093,9 @@
             document.getElementById(mediaId).style.display = 'block';
         }
 
-
         document.getElementById('gettyBtn').addEventListener('click', function () {
             showMedia('getty');
         });
-
 
         window.onload = function () {
             document.querySelectorAll('.media-section').forEach(function (section) {
@@ -1124,36 +1104,50 @@
             document.getElementById('getty').style.display = 'block';
         };
 
-
         document.getElementById('media-picker-content').style.display = 'block';
     </script>
 
     <script>
         function showTab(section, type) {
-    document.querySelectorAll(`#${section} .media-grid1`).forEach(grid => grid.classList.remove('active'));
-    document.querySelectorAll(`#${section} button`).forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll(`#${section} .media-grid1`).forEach(grid => grid.classList.remove('active'));
+            document.querySelectorAll(`#${section} button`).forEach(btn => btn.classList.remove('active'));
 
-    document.getElementById(`${section}-${type}`).classList.add('active');
-    document.getElementById(`${section}-${type}-btn`).classList.add('active');
-}
+            document.getElementById(`${section}-${type}`).classList.add('active');
+            document.getElementById(`${section}-${type}-btn`).classList.add('active');
+        }
 
-function playVideo(videoCard) {
-    const video = videoCard.querySelector('video');
-    const img = videoCard.querySelector('img');
+        function playVideo(videoCard) {
+            const video = videoCard.querySelector('video');
+            const img = videoCard.querySelector('img');
 
-    img.style.display = 'none';
-    video.style.display = 'block';
-    video.play();
-}
+            img.style.display = 'none';
+            video.style.display = 'block';
+            video.play();
+        }
 
-function pauseVideo(videoCard) {
-    const video = videoCard.querySelector('video');
-    const img = videoCard.querySelector('img');
+        function pauseVideo(videoCard) {
+            const video = videoCard.querySelector('video');
+            const img = videoCard.querySelector('img');
 
-    video.pause();
-    video.style.display = 'none';
-    img.style.display = 'block';
-}
+            video.pause();
+            video.style.display = 'none';
+            img.style.display = 'block';
+        }
+
+        function selectVideo(videoSrc) {
+
+            const videoSource = document.getElementById('main-video-source');
+
+
+            videoSource.src = videoSrc;
+            console.log(videoSrc, "video")
+
+            const videoPlayer = document.getElementById('main-video-player');
+            videoPlayer.load();
+            videoPlayer.play();
+        }
+
+
         function highlightMenuItem(element) {
             var items = document.querySelectorAll('.menu li');
             items.forEach(function (item) {
@@ -1161,25 +1155,21 @@ function pauseVideo(videoCard) {
             });
             element.classList.add('highlighted');
         }
-        document.getElementById('post-radio').addEventListener('change', function() {
-    if (this.checked) {
-        // Apply the 1:1 aspect ratio for videos and images
-        document.querySelectorAll('.video-card, .image-card').forEach(function(card) {
-            card.classList.add('square');
+        document.getElementById('post-radio').addEventListener('change', function () {
+            if (this.checked) {
+                document.querySelectorAll('.video-card, .image-card').forEach(function (card) {
+                    card.classList.add('square');
+                });
+            }
         });
-    }
-});
 
-document.getElementById('reel-radio').addEventListener('change', function() {
-    if (this.checked) {
-        // Remove the 1:1 aspect ratio for videos and images
-        document.querySelectorAll('.video-card, .image-card').forEach(function(card) {
-            card.classList.remove('square');
+        document.getElementById('reel-radio').addEventListener('change', function () {
+            if (this.checked) {
+                document.querySelectorAll('.video-card, .image-card').forEach(function (card) {
+                    card.classList.remove('square');
+                });
+            }
         });
-    }
-});
-
-
     </script>
 
 </body>
