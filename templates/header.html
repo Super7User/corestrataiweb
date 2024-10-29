@@ -659,7 +659,6 @@
         document.getElementById("profileBtn").onclick = function () {
         document.getElementById("profileModal").style.display = "flex";
 
-        // Example email, replace with the dynamic email if available
         const email = "user@example.com"; 
 
         fetch(`/get_user_data?email=${encodeURIComponent(email)}`)
@@ -688,7 +687,6 @@
             });
     };
 
-    // Helper function for icon selection
     function getHeaderIcon(header) {
         switch (header.toLowerCase()) {
             case 'name': return 'fa fa-user';
@@ -700,7 +698,6 @@
         }
     }
 
-    // Close the modal when clicking outside of it
     window.onclick = function (event) {
         const modal = document.getElementById("profileModal");
         if (event.target === modal) {
