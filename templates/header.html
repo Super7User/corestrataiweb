@@ -581,17 +581,15 @@
         </a> -->
         <div class="profile-icon" id="profileIcon" style="display: flex; justify-content: flex-end !important;">
             <i class="fa fa-user-circle" id="profileBtn" style="font-size: 1.5rem !important; cursor: pointer; "></i>
-        </div>
-        
-    
-        <div id="profileModal" class="modal">
-            <div class="modal-content">
-                <div id="userProfileContent"></div>
-                <a href="newlogin">
-                    <i class="fas fa-right-from-bracket" style="font-size: 1.5rem; cursor: pointer;"></i>
-                </a>
+            <div id="profileModal" class="modal">
+                <div class="modal-content">
+                    <div id="userProfileContent"></div>
+                    <a id="logoutLink" href="newlogin">
+                        <i class="fas fa-right-from-bracket" style="font-size: 1.5rem; cursor: pointer; display: block;"></i>
+                    </a>
+                </div>
             </div>
-        </div>
+        </div>   
     </div>
 
 </div>
@@ -659,69 +657,63 @@
         }
 
         document.getElementById("profileBtn").onclick = function () {
-            document.getElementById("profileModal").style.display = "flex";
+        document.getElementById("profileModal").style.display = "flex";
 
-            const email = "user@example.com"; 
+        // Example email, replace with the dynamic email if available
+        const email = "user@example.com"; 
 
+        fetch(`/get_user_data?email=${encodeURIComponent(email)}`)
+            .then(response => response.json())
+            .then(data => {
+                const profileContent = document.getElementById("userProfileContent");
+                profileContent.innerHTML = ''; 
 
-            fetch(`/get_user_data?email=${encodeURIComponent(email)}`)
-                .then(response => response.json())
-                .then(data => {
-                    const profileContent = document.getElementById("userProfileContent");
-                    profileContent.innerHTML = ''; 
+                if (data.error) {
+                    profileContent.innerHTML = `<p>${data.error}</p>`;
+                } else {
+                    const headers = data.headers;
+                    const userData = data.user_data;
 
-                    if (data.error) {
-                        profileContent.innerHTML = `<p>${data.error}</p>`;
-                    } else {
-                        const headers = data.headers;
-                        const userData = data.user_data;
+                    headers.forEach(header => {
+                        const p = document.createElement("p");
+                        const icon = getHeaderIcon(header);
+                        p.innerHTML = `<i class="${icon}"></i> <span class="header-text">${header}:</span> <span class="user-data">${userData[header]}</span>`;
+                        profileContent.appendChild(p);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+                alert("Error fetching user data");
+            });
+    };
 
-                        headers.forEach(header => {
-                            const p = document.createElement("p");
-
-                            const icon = getHeaderIcon(header);
-                            
-                            p.innerHTML = `<i class="${icon}"></i> <span class="header-text">${header}:</span> <span class="user-data">${userData[header]}</span>`;
-
-                            profileContent.appendChild(p);
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching user data:', error);
-                    alert("Error fetching user data");
-                });
-        };
-
-        function getHeaderIcon(header) {
-            switch (header.toLowerCase()) {
-                case 'name':
-                    return 'fa fa-user';
-                case 'email':
-                    return 'fa fa-envelope';
-                case 'phone':
-                    return 'fa fa-phone';
-                case 'address':
-                    return 'fa fa-map-marker-alt';
-                case 'company':
-                    return 'fa fa-building';
-                default:
-                    return 'fa fa-info-circle';
-            }
+    // Helper function for icon selection
+    function getHeaderIcon(header) {
+        switch (header.toLowerCase()) {
+            case 'name': return 'fa fa-user';
+            case 'email': return 'fa fa-envelope';
+            case 'phone': return 'fa fa-phone';
+            case 'address': return 'fa fa-map-marker-alt';
+            case 'company': return 'fa fa-building';
+            default: return 'fa fa-info-circle';
         }
+    }
 
-
-        window.onclick = function (event) {
-            const modal = document.getElementById("profileModal");
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        };
-
-        function closeModal() {
-            document.getElementById("profileModal").style.display = "none";
+    // Close the modal when clicking outside of it
+    window.onclick = function (event) {
+        const modal = document.getElementById("profileModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
         }
+    };
 
+    document.getElementById("logoutLink").addEventListener("click", function () {
+        sessionStorage.removeItem('currentPlan');
+    });
+    function closeModal() {
+        document.getElementById("profileModal").style.display = "none";
+    }
     </script>
 
 </body>
