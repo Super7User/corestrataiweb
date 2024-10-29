@@ -617,15 +617,14 @@
                             <span class="sidebar-text">Media</span>
                     </a>
                 </li>
-                {% if plan == 'Professional' or plan == 'Starter' %}
+                
                 <li>
                     <a href="{{ url_for('main_routes.imageLanding') }}">
                         <i class="fa-solid fa-image"></i>
                         <span class="sidebar-text">Image Generation</span>
                     </a>
                 </li>
-                {% endif %}
-                {% if plan == 'Professional' %}
+                
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-video"></i>
@@ -638,7 +637,7 @@
                         <span class="sidebar-text">My Repository</span>
                     </a>
                 </li>
-                {% endif %}
+
                 <li>
                     <a href="#" data-resize-btn>
                         <i class="fa-solid fa-angles-right"></i>

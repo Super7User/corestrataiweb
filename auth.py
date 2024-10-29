@@ -9,9 +9,12 @@ import requests
 import time
 import pandas as pd
 import csv
+import redis
 
 
 auth_blueprint = Blueprint('auth_blueprint', __name__)
+
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
 
 login_manager = LoginManager()
@@ -76,8 +79,12 @@ def userdetails():
 @auth_blueprint.route('/create-user', methods=['POST'])
 def create_user():
     try:
+
         
-        uid = request.form['uid']
+        user_id = current_user.get_id()
+        print(user_id,"ata")
+
+        # uid = session['userId']
         display_name = request.form['displayName']
         email = request.form['email']
         phone_number = request.form.get('phoneNumber', None)
@@ -116,7 +123,8 @@ def create_user():
         is_active = 'isActive' in request.form
 
         user_data = {
-            'uid': uid,
+            # 'uid': session['userId'],
+            'uid':user_id,
             'displayName': display_name,
             'email': email,
             'phoneNumber': phone_number,
@@ -141,7 +149,7 @@ def create_user():
             'lastLogin': firestore.SERVER_TIMESTAMP
         }
 
-        firebase_db.collection('users').document(uid).set(user_data)
+        firebase_db.collection('users').document(user_id).set(user_data)
         return "User created successfully!", 201
 
     except Exception as e:
@@ -182,7 +190,7 @@ def send_reset_password():
 @auth_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['login_email'].strip().lower()  # Strip any whitespace and convert to lowercase
+        email = request.form['login_email'].strip().lower()  
         password = request.form['login_password']
         keep_logged_in = 'keep_logged_in' in request.form
 
@@ -201,7 +209,7 @@ def login():
                 user = User(id=user_id, email=email)
                 login_user(user, remember=keep_logged_in)
 
-                session['userId'] = user_id
+                # session['userId'] = user_id
                 session.permanent = keep_logged_in
 
                 try:
@@ -213,17 +221,25 @@ def login():
 
                     if not matching_rows.empty:
                         plan = matching_rows['Plan'].values[0]
-                        session['email'] = email
-                        session['plan'] = plan
+                        # session['email'] = email
+                        # session['plan'] = plan
 
                         
                         unique_id = db.reference('generated_streams').push().key
-                        session['firebase_unique_id'] = unique_id
+                        # session['firebase_unique_id'] = unique_id
 
                         ref = db.reference(f'generated_streams/{unique_id}')
                         ref.update({
                             'plan': plan,
                         })
+                        redis_client.hset(user_id, mapping={
+                            "user_id":user_id,
+                            "email": email,
+                            "plan": plan,
+                            "firebase_unique_id": unique_id
+                        })
+                        stored_data = redis_client.hgetall(user_id)
+                        print({key.decode('utf-8'): val.decode('utf-8') for key, val in stored_data.items()}, "loginData")
 
                         return jsonify({"status": "success", "message": f"Login successful. Plan: {plan}"})
                     else:

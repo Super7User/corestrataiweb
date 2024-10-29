@@ -1,6 +1,7 @@
-from flask import Flask ,render_template, request, jsonify
+from flask import Flask ,render_template, request, jsonify,session, url_for, redirect
 from flask_mail import Mail
-from auth import login_manager, auth_blueprint  # Absolute import
+from flask_login import login_required, current_user
+from auth import login_manager, auth_blueprint 
 from tool import tools_blueprint
 from firebase_admin import credentials
 from routes import main_routes
@@ -10,6 +11,7 @@ from media import media_blueprint
 import logging
 from firebase_admin import credentials
 import requests
+import redis
 
 app = Flask(__name__)
 
@@ -28,6 +30,7 @@ mail = Mail(app)
 cred = credentials.Certificate("serviceAccountKey.json")
 
 logging.basicConfig(level=logging.DEBUG)
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
  
 # firebase_admin.initialize_app(cred,{
 #     'databaseURL': 'https://holygrail07-default-rtdb.firebaseio.com/'
@@ -35,6 +38,33 @@ logging.basicConfig(level=logging.DEBUG)
 
 # firebase_db = firestore.client()
 # ref = db.reference('/')
+
+@app.route('/pricingModal')
+def pricing_modal():
+    user_id = current_user.get_id()
+
+    current_plan = redis_client.hget(user_id, "plan")
+
+    if current_plan:
+        current_plan = current_plan.decode('utf-8')
+
+    app.logger.info(f"Current plan for user {user_id}: {current_plan}")
+    
+    return render_template('pricingModal.html', current_plan=current_plan)
+
+
+
+@app.route('/create-checkout', methods=['POST'])
+def create_checkout_session():
+    price_id = request.form.get('price_id')
+    connected_account_id = request.form.get('connected_account_id')
+
+    session['plan'] = 'personal' if price_id == 'price_0000' else 'other'
+    user_id = current_user.get_id()
+    current_plan = redis_client.hget(user_id, "plan")
+    print(current_plan,"plannnn")
+
+    return redirect(url_for('pricingModal'),current_plan=current_plan) 
 
 
 login_manager.init_app(app)

@@ -13,6 +13,11 @@ main_routes = Blueprint('main_routes', __name__)
 def sampleData():
     return render_template('sampleData.html')
 
+@main_routes.route('/deploy')
+def deploy():
+    return render_template('deployment.html')
+
+
 @main_routes.route('/')
 def index_dark():
     return render_template('index.html')

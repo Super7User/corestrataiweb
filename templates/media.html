@@ -8,44 +8,36 @@
     <style>
         .header {
             background-color: #ffffff;
-            /* Light header background */
             padding: 10px;
             text-align: center;
             width: 100%;
             position: fixed;
             top: 0;
             color: #333;
-            /* Dark text color for header */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            /* Light shadow for header */
         }
 
         .containerMedia {
             display: flex;
             flex: 1;
-            padding-top: 30px;
-            /* To account for the fixed header */
+            /* padding-top: 30px; */
         }
 
         .side {
             width: 25%;
             background-color: #ffffff;
-            /* White background for sidebar */
             padding: 20px;
             display: flex;
             flex-direction: column;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            /* Light shadow for sidebar */
         }
 
         .card {
             background-color: #f9f9f9;
-            /* Light card background */
             margin-bottom: 20px;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            /* Light shadow for cards */
         }
 
         .card h3 {
@@ -55,18 +47,15 @@
         .card button {
             padding: 10px;
             background-color: #007bff;
-            /* Primary button color */
             border: none;
             color: white;
             cursor: pointer;
             width: 100%;
             border-radius: 5px;
-            /* Rounded corners for button */
         }
 
         .card button:hover {
             background-color: #0056b3;
-            /* Darker shade on hover */
         }
 
         .video-player {
@@ -82,13 +71,10 @@
             height: auto;
             max-height: 80vh;
             border: 2px solid #ccc;
-            /* Light border for video */
         }
 
-        /* Modal container */
         .modal1 {
             display: none;
-            /* Hidden by default */
             position: fixed;
             z-index: 1;
             left: 0;
@@ -104,20 +90,16 @@
 
         .modal-content1 {
             background-color: #e4dede;
-            /* Dark theme background */
             margin: 10% auto;
             padding: 20px;
             border-radius: 10px;
             width: 70%;
-            /* Adjust the width as per the screenshot */
             max-width: 1200px;
-            /* Set a max width */
             color: rgb(32, 32, 32);
             margin-left: 200px;
             margin-right: 200px;
         }
 
-        /* Modal close button */
         .close {
             color: white;
             float: right;
@@ -132,12 +114,11 @@
             cursor: pointer;
         }
 
-        /* Header with navigation buttons */
+
         .media-nav {
             display: flex;
             justify-content: flex-start;
             gap: 20px;
-            /* Space between buttons */
             margin-bottom: 20px;
         }
 
@@ -157,10 +138,8 @@
 
         .nav-btn.active {
             background-color: #007bff;
-            /* Active button color */
         }
 
-        /* Search bar styling */
         .search-container {
             display: flex;
             justify-content: center;
@@ -188,11 +167,9 @@
             background-color: #0056b3;
         }
 
-        /* Media options styling */
         .media-options {
             display: flex;
             justify-content: space-evenly;
-            /* Equal spacing between radio buttons */
             margin-bottom: 20px;
         }
 
@@ -205,10 +182,8 @@
         .media-options input[type="radio"] {
             margin-right: 10px;
             accent-color: #ff4500;
-            /* Radio button color */
         }
 
-        /* Media picker styling */
         .media-picker {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -225,7 +200,6 @@
 
         .media-picker img:hover {
             transform: scale(1.05);
-            /* Slight zoom effect on hover */
         }
 
 
@@ -250,14 +224,11 @@
 
         .scene-card {
             background-color: #f9f9f9;
-            /* Light background */
             color: #333;
-            /* Dark text color */
             padding: 15px;
             margin-bottom: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            /* Lighter shadow */
             font-family: Arial, sans-serif;
             width: 300px;
             transition: border 0.3s ease;
@@ -274,7 +245,6 @@
             margin: 0;
             font-size: 18px;
             color: #333;
-            /* Darker header text */
         }
 
         .scene-options {
@@ -286,16 +256,13 @@
             cursor: pointer;
             font-size: 16px;
             color: #666;
-            /* Lighter icon color */
         }
 
         .scene-content {
             background-color: #fff;
-            /* Pure white background */
             padding: 10px;
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            /* Subtle shadow */
         }
 
         .scene-section {
@@ -306,7 +273,6 @@
             margin: 0 0 5px 0;
             font-size: 14px;
             color: #555;
-            /* Darker subheading */
             display: flex;
             align-items: center;
             gap: 5px;
@@ -316,14 +282,12 @@
             margin: 0;
             font-size: 12px;
             color: #777;
-            /* Slightly darker text */
         }
 
         .media-thumbnail img {
             width: 100%;
             border-radius: 5px;
             border: 1px solid #ddd;
-            /* Light border around images */
         }
 
         .scene-input {
@@ -332,11 +296,8 @@
             margin-top: 5px;
             border-radius: 5px;
             border: 1px solid #ccc;
-            /* Light gray border */
             background-color: #f5f5f5;
-            /* Light input background */
             color: #333;
-            /* Dark input text */
             font-size: 12px;
         }
 
@@ -344,12 +305,10 @@
             width: 100%;
             margin-top: 5px;
             accent-color: #888;
-            /* Custom range slider color */
         }
 
         .scene-card:hover {
             border: 2px solid #007bff;
-            /* Blue border on hover */
         }
 
         .dark-theme .scene-card {
@@ -382,7 +341,6 @@
 
         .dark-theme .scene-card:hover {
             border: 2px solid #ff4500;
-            /* Red border on hover */
         }
 
         .dark-theme .sidebarb {
@@ -514,9 +472,7 @@
         .media-grid {
             display: flex;
             flex-wrap: wrap;
-            /* This ensures wrapping after 4 items */
             gap: 10px;
-            /* Adds space between the items */
             justify-content: flex-start;
         }
 
@@ -525,7 +481,6 @@
             padding: 10px;
             border-radius: 5px;
             width: calc(25% - 10px);
-            /* Four items per row, considering the gap */
             text-align: center;
             box-sizing: border-box;
         }
@@ -536,16 +491,12 @@
 
         .media-grid1 {
             display: flex;
-            /* Horizontal layout */
             flex-wrap: wrap;
-            /* Items will wrap if the container width is exceeded */
             gap: 10px;
-            /* Space between the items */
         }
 
         .placeholder {
             flex: 0 1 190px;
-            /* Base width for each item */
             padding: 15px;
             background-color: #e0e0e0;
             text-align: center;
@@ -576,17 +527,14 @@
 
         .media-grid1.active {
             display: flex;
-            /* Display flex only for the active tab */
         }
 
         .media-grid1 {
             display: none;
-            /* Hide inactive content */
         }
 
         button.active {
             background-color: #b0b0b0;
-            /* Active button styling */
         }
 
         .video-container {
@@ -691,7 +639,6 @@
 
         .menu li:hover {
             background-color: #f0f0f0;
-            /* Optional hover effect */
         }
 
         .dark-theme .highlighted {
@@ -700,7 +647,6 @@
 
         .highlighted {
             background-color: #d0e1ff;
-            /* Color to indicate it's selected */
             border: 2px solid #989899;
         }
 
@@ -716,7 +662,6 @@
         .square {
             width: 100%;
             padding-bottom: 100%;
-            /* This makes the height equal to the width */
             position: relative;
         }
 
@@ -732,12 +677,11 @@
     </style>
 </head>
 
-<body class="body1">
+<body>
     {% include 'header.html' %}
     <main style="margin-top: 1%">
         <img src="{{ url_for('static', filename='images/logonew.png')}}" alt="Logo" style="background: #A5AEAD;"
             class="logo">
-
 
         <div class="containerHead">
             <h1>Holygrail</h1>

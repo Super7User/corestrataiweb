@@ -7,24 +7,42 @@ import ast
 import time
 from firebase_admin import credentials, auth, db
 import logging
+import redis
 
 tools_blueprint = Blueprint('tools', __name__)
 
 load_dotenv(find_dotenv())
 # client = OpenAI(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
 client = Groq(api_key='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')
-
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
 @tools_blueprint.route('/tools')
 @login_required
 def tools():
+    user_id = current_user.get_id()
+
+    if user_id:
+        redis_user_id = redis_client.hget(user_id, "user_id")
+        redis_email = redis_client.hget(user_id, "email")
+        redis_plan = redis_client.hget(user_id, "plan")
+        
+        if redis_user_id:
+            redis_user_id = redis_user_id.decode('utf-8')
+        if redis_email:
+            redis_email = redis_email.decode('utf-8')
+        if redis_plan:
+            redis_plan = redis_plan.decode('utf-8')
+        
+        if user_id == redis_user_id:
+            print(f"User ID: {redis_user_id}, Email: {redis_email}, Plan: {redis_plan}")
+        else:
+            return jsonify({"status": "error", "message": "User ID mismatch"}), 403
+    else:
+        return jsonify({"status": "error", "message": "User not logged in"}), 401
+
     category = request.args.get('category', None)
     search_query = request.args.get('search', None)
     data = pd.read_csv('alltools.csv')
-    user_emailId = session.get('email')
-    user_plan = session.get('plan')
-    user_id = session.get('userId')
-    print(user_id,user_emailId,user_plan,"userId")
 
     if category and category != "All":
         data = data[data['Category'] == category]
@@ -35,11 +53,7 @@ def tools():
     tools_data = data.to_dict(orient='records')
     categories = data['Category'].dropna().unique().tolist()
 
-    session['tool_ids'] = data['ID'].tolist()
-
-    user_email = current_user.email if current_user.is_authenticated else None
-
-    return render_template('tools2.html', tools_data=tools_data, categories=categories, user_email=user_email, plan= user_plan)
+    return render_template('tools2.html', tools_data=tools_data, categories=categories, user_email=redis_email, plan=redis_plan)
 
 def get_completion(prompt, model="gpt-4"):
     messages = [{"role": "user", "content": prompt}]

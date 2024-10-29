@@ -208,10 +208,11 @@
         }
 
         .login {
-            text-align: center !important;
-            margin-left: 20%;
+            /* text-align: center !important; */
+            /* margin-left: 20%; */
             margin-right: 30%;
-            width: 50%
+            width: 50%;
+            font-weight: bold;
         }
 
         .row {
@@ -256,6 +257,17 @@
         .google-signup-btn:hover {
             background-color: #814AFF;
             color: white;
+        }
+        .login1{
+           background: #f0ffff47;
+           width: 90%;
+           border-radius: 25px; 
+           padding: 10px; 
+           /* border: 2px solid black; */
+           color: white; 
+           display: flex;
+           align-items: center;
+           justify-content: center;
         }
     </style>
 </head>
@@ -304,11 +316,12 @@
             <h6>Enter the credentials to access your account</h6>
             <div class="mt-5">
                 <div class="text-center mt-5">
-                    <button class="login google-signup-btn"
+                    <!-- <button class="login google-signup-btn"
                         style="background: linear-gradient(90deg, #F762D8 25.37%, #814AFF 52.7%, #F762D8 110.76%)"
                         onclick="googleSignUp()"> <img
                             src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                            alt="Google Icon">Sign Up with Google</button>
+                            alt="Google Icon">Sign Up with Google</button> -->
+
                 </div>
                 <form name="login_form" id="login_form" method="post" action="/login" enctype="multipart/form-data"
                     onsubmit="return validateForm()">
@@ -333,9 +346,21 @@
                                     Password?</a></p>
                         </div>
                     </div>
-                    <button type="submit"
-                        style="background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #F762D8 110.76%)"
-                        class="login">Login</button>
+                    <!-- <button type="submit"
+                        style="background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #F762D8 110.76%);border-radius: 25px; "
+                        class="login">Login</button> -->
+                        <div class="button-container col-11" style="display: flex; gap: 10px; align-items: center;">
+                            <button type="submit"
+                                style="background: linear-gradient(90deg, #F762D8 -8.37%, #814AFF 52.7%, #F762D8 110.76%);
+                                       border-radius: 25px;
+                                       flex-grow: 1;"
+                                class="login">
+                                Login
+                            </button>
+                            <button class="login1 google-signup-btn" style="flex-grow: 1;" onclick="googleSignUp()">
+                                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Icon" style="margin-right: 8px;">Sign In with Google
+                            </button>
+                        </div>
                 </form>
             </div>
             <div class="mt-4 text-center">Don't have an account? <a href="register" style="color: #000;">Sign Up</a>
@@ -346,7 +371,7 @@
 
 
     <script>
-
+sessionStorage.removeItem('currentPlan');
         function sendResetPassword() {
             var email = document.getElementById('login_email').value;
 
@@ -425,6 +450,7 @@
                 passwordIcon.classList.add("fa-eye");
             }
         }
+        
     </script>
 </body>
 

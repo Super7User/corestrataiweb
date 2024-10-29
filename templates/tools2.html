@@ -165,7 +165,7 @@
             display: flex;
             width: 100%;
             padding: 1rem;
-            background-color: var(--card-background-color);
+            background-color: var(--card-background-color) !important;
             border-radius: 0 0 12px 12px;
             justify-content: center;
             align-items: center;
@@ -203,7 +203,7 @@
         }
 
         .card__info p {
-            color: #919191;
+            color: #919191 !important;
             font-size: 13px;
             font-weight: 400;
         }
@@ -242,7 +242,7 @@
         }
 
         .btn-space button {
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1rem !important;
             font-size: 1rem;
             background-color: #ba71ff;
             color: #fff;
@@ -270,7 +270,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1rem !important;
             font-size: 1rem;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
@@ -355,13 +355,14 @@
             display: block !important;
             margin-top: 20px
         }
-        .button-container{
+
+        .button-container {
             top: 20px !important
         }
-        .profile-icon{
+
+        .profile-icon {
             margin-top: 10px !important;
         }
-       
     </style>
 </head>
 
@@ -410,14 +411,18 @@
                                     <p>{{ tool['Category'] }}</p>
                                 </div>
                             </div>
-                            {% if tool['Plan'] == 'Professional' %}
-                            <button style="background-color: #FBA834;">{{ tool['Plan'] }}</button>
+                            {% if tool['Plan'] == 'Free' %}
+                            <button style="background-color: #A5DD9B;"
+                                onclick="openPricingModal('{{ tool.ID }}', '{{plan}}','{{ tool.Plan }}')">{{ tool['Plan'] }}</button>
                             {% elif tool['Plan'] == 'Starter' %}
-                            <button style="background-color: #836FFF;">{{ tool['Plan'] }}</button>
-                            {% elif tool['Plan'] == 'Free' %}
-                            <button style="background-color: #A5DD9B;">{{ tool['Plan'] }}</button>
+                            <button style="background-color: #836FFF;"
+                                onclick="openPricingModal('{{ tool.ID }}', '{{plan}}','{{ tool.Plan }}')">{{ tool['Plan'] }}</button>
+                            {% elif tool['Plan'] == 'Professional' %}
+                            <button style="background-color: #FBA834;"
+                                onclick="openPricingModal('{{ tool.ID }}', '{{plan}}','{{ tool.Plan }}')">{{ tool['Plan'] }}</button>
                             {% endif %}
                         </div>
+                        {% include 'pricingModal.html' %}
                     </div>
                 </div>
                 {% endfor %}
@@ -425,6 +430,22 @@
         </div>
     </main>
     <script src="{{ url_for('static', filename='cardscripts.js') }}"></script>
+    <script>
+        function openPricingModal(toolId,plan,toolPlan) {
+            sessionStorage.setItem('currentPlan', plan);
+            console.log(plan)
+            if (plan === toolPlan) {
+                // var myModal = new bootstrap.Modal(document.getElementById('pricingModal'), {});
+                // myModal.show();
+                window.location.href = `/tool-detail/${toolId}`;
+            }
+             else {
+                
+                document.getElementById('pricingModal').style.display = 'block';
+            }
+        }
+    
+    </script>
 </body>
 
 </html>
