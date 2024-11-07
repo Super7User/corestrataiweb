@@ -21,56 +21,63 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 500px !important;
-            margin: 20px;
+            /* width: 500px !important; */
+            width: 90% !important; 
+            max-width: 1200px;
+            margin: 60px;
             text-align: left !important;
         }
 
-        .card h1,
-        h3 {
+        .card h1 {
             text-align: center;
         }
 
-        .card form {
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .form-group .form-item {
+            flex: 1 1 calc(33.333% - 10px); /* Three columns */
+            display: flex;
             flex-direction: column;
         }
 
-        .card label {
-            margin: 10px 0 5px;
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
-        .card input[type="text"],
-        .card input[type="email"],
-        .card input[type="url"],
-        .card input[type="tel"],
-        .card input[type="date"],
-        .card textarea {
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        input[type="tel"],
+        input[type="date"],
+        textarea {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
 
-        .card input[type="checkbox"] {
+        input[type="checkbox"] {
             margin-right: 10px;
         }
 
-        .card input[type="radio"] {
-            margin-right: 10px;
-        }
-
-        .card button {
+        button {
             padding: 10px;
             background-color: #28a745;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 15px !important;
+            height: 30px !important;
         }
 
-        .card button:hover {
+        button:hover {
             background-color: #218838;
         }
 
@@ -90,148 +97,192 @@
         .ac-header-bnt-2 {
             display: none !important;
         }
+        .button-container{
+            top:20px !important
+        }
     </style>
 </head>
+
 
 <body>
     {% include 'header.html' %}
     <main style="margin-top: auto;">
-        <div class="card" style="margin-top: 40px;">
+        <div class="card">
             <h1>Create User</h1>
-            <!-- Form for creating a user -->
-            <form id="create-user-form" method="POST">
-                <!-- Basic Info -->
-                <!-- <label for="uid">UID:</label>
-                <input type="text" id="uid" name="uid" required> -->
 
-                <label for="displayName">Display Name:</label>
-                <input type="text" id="displayName" name="displayName" required>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="phoneNumber">Phone Number:</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" required>
-
-                <label for="photoURL">Profile Image URL:</label>
-                <input type="url" id="photoURL" name="photoURL">
-
-                <label for="dateOfBirth">Date of Birth:</label>
-                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
-
-                <h3>Address</h3>
-                <label for="street">Street:</label>
-                <input type="text" id="street" name="street">
-
-                <label for="city">City:</label>
-                <input type="text" id="city" name="city">
-
-                <label for="state">State:</label>
-                <input type="text" id="state" name="state">
-
-                <label for="postalCode">Postal Code:</label>
-                <input type="text" id="postalCode" name="postalCode">
-
-                <label for="country">Country:</label>
-                <input type="text" id="country" name="country">
-
-                <label for="plan">Plan: &nbsp;</label>
-                <label for="plan-free">
-                    <input type="radio" id="plan-free" name="Plan" value="free" checked> Free
+            {% if session.get('is_admin') %}
+            <!-- Radio buttons for User Profile and Customer Profile -->
+            <div class="form-group">
+                <label>
+                    <input type="radio" name="profileType" value="user" checked onclick="toggleProfileType('user')"> User Profile
                 </label>
-                <label for="plan-starter">
-                    <input type="radio" id="plan-starter" name="Plan" value="starter"> Starter
+                <label>
+                    <input type="radio" name="profileType" value="customer" onclick="toggleProfileType('customer')"> Customer Profile
                 </label>
-                <label for="plan-professional">
-                    <input type="radio" id="plan-professional" name="Plan" value="professional"> Professional
-                </label>
+            </div>
+            {% endif %}
 
-                <h3>Settings</h3>
-                <label for="notificationsEnabled">
-                    <input type="checkbox" id="notificationsEnabled" name="notificationsEnabled" checked>Notifications
-                    Enabled
-                </label>
+            <!-- User Profile Form -->
+            <form id="create-user-form" method="POST" action="{{ url_for('auth_blueprint.create_user') }}">
+                <div class="card">
+                    <h3>Personal Information</h3>
+                    <div class="form-group">
+                        <div class="form-item">
+                            <label for="displayName">Display Name:</label>
+                            <input type="text" id="displayName" name="displayName" value="{{ displayName or '' }}" required>
+                        </div>
+                        <div class="form-item">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" value="{{ current_Email }}" style="background-color: #ccc;" readonly>
+                        </div>
+                        <div class="form-item">
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input type="tel" id="phoneNumber" name="phoneNumber" value="{{ phoneNumber or '' }}" required>
+                        </div>
+                        <div class="form-item">
+                            <label for="photoURL">Profile Image URL:</label>
+                            <input type="url" id="photoURL" name="photoURL" value="{{ photoURL or '' }}">
+                        </div>
+                        <div class="form-item">
+                            <label for="dateOfBirth">Date of Birth:</label>
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" value="{{ dateOfBirth or '' }}" required>
+                        </div>
+                        <div class="form-item">
+                            <label for="plan">Plan:</label>
+                            <input type="text" id="planDisplay" value="{{ current_plan }}" style="background-color: #ccc;" readonly>
+                        </div>
+                    </div>
+                </div>
 
-                <label for="language">Language:</label>
-                <input type="text" id="language" name="language" value="en" required>
-
-                <label for="theme">Theme:</label>
-                <input type="text" id="theme" name="theme" value="dark" required>
-             
-                <h3>Preferences</h3>
-                <label for="newsletterSubscribed">
-                    <input type="checkbox" id="newsletterSubscribed" name="newsletterSubscribed" checked>Newsletter
-                    Subscribed
-                </label>
-
-                <label for="contentFilters">Content Filters:</label>
-                <input type="text" id="contentFilters" name="contentFilters" value="technology,science">
-
-                <label for="bio">Bio:</label>
-                <textarea id="bio" name="bio" rows="4">Passionate developer and tech enthusiast.</textarea>
-
-                <label for="isActive">
-                    <input type="checkbox" id="isActive" name="isActive" checked>Is Active
-                </label>
-
-               
-                <h3>Social Links</h3>
-                <label for="twitter">Twitter URL:</label>
-                <input type="url" id="twitter" name="socialLinks[twitter]" placeholder="https://twitter.com/janedoe">
-
-                <label for="facebook">Facebook URL:</label>
-                <input type="url" id="facebook" name="socialLinks[facebook]" placeholder="https://facebook.com/janedoe">
-
-                <label for="instagram">Instagram URL:</label>
-                <input type="url" id="instagram" name="socialLinks[instagram]"
-                    placeholder="https://instagram.com/janedoe">
-
-                <label for="youtube">YouTube URL:</label>
-                <input type="url" id="youtube" name="socialLinks[youtube]"
-                    placeholder="https://www.youtube.com/@channel1">
+                <!-- Address Card -->
+                <div class="card">
+                    <h3>Address</h3>
+                    <div class="form-group">
+                        <div class="form-item">
+                            <label for="street">Street:</label>
+                            <input type="text" id="street" name="street" value="{{ address.street or '' }}">
+                        </div>
+                        <div class="form-item">
+                            <label for="city">City:</label>
+                            <input type="text" id="city" name="city" value="{{ address.city or '' }}">
+                        </div>
+                        <div class="form-item">
+                            <label for="state">State:</label>
+                            <input type="text" id="state" name="state" value="{{ address.state or '' }}">
+                        </div>
+                        <div class="form-item">
+                            <label for="postalCode">Postal Code:</label>
+                            <input type="text" id="postalCode" name="postalCode" value="{{ address.postalCode or '' }}">
+                        </div>
+                        <div class="form-item">
+                            <label for="country">Country:</label>
+                            <input type="text" id="country" name="country" value="{{ address.country or '' }}">
+                        </div>
+                    </div>
+                </div>
 
                 <button type="submit">Submit</button>
             </form>
-        </div>
 
-    
-        <div id="popupModal">
-            <div id="popupMessage"></div>
-            <button onclick="closePopup()">Close</button>
+            <!-- Customer Profile Table -->
+            <div id="customer-profile-table" style="display: none;">
+                <h3>Customer Profile</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email ID</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customerDetails">
+                        {% for user in all_users %}
+                        <tr>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                <button onclick="editUser('{{ user.id }}')">Edit</button>
+                                <button onclick="deleteUser('{{ user.id }}')">Delete</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <script>
-           
-            document.getElementById('create-user-form').addEventListener('submit', function (event) {
-                event.preventDefault();  
+            // Function to toggle between User Profile form and Customer Profile table
+            function toggleProfileType(type) {
+                if (type === 'user') {
+                    document.getElementById('create-user-form').style.display = 'block';
+                    document.getElementById('customer-profile-table').style.display = 'none';
+                } else if (type === 'customer') {
+                    document.getElementById('create-user-form').style.display = 'none';
+                    document.getElementById('customer-profile-table').style.display = 'block';
 
-                var formData = new FormData(this);
+                    // Fetch customer details from the server
+                    fetch('/all_userdetails')
+                        .then(response => response.json())
+                        .then(data => {
+                            const customerDetailsContainer = document.getElementById('customerDetails');
+                            customerDetailsContainer.innerHTML = ''; // Clear any existing content
 
-                fetch('/create-user', {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => response.text())
+                            // Populate the table with customer data
+                            data.all_users.forEach(user => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td>${user.name || 'N/A'}</td>
+                                    <td>${user.email || 'N/A'}</td>
+                                    <td>
+                                        <button onclick="editUser('${user.id}')">Edit</button>
+                                        <button onclick="deleteUser('${user.id}')">Delete</button>
+                                    </td>
+                                `;
+                                customerDetailsContainer.appendChild(row);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching customer details:', error));
+                }
+            }
+
+            function editUser(userId) {
+                fetch(`/get_user/${userId}`)
+                    .then(response => response.json())
                     .then(data => {
-                        showPopup(data);  
+                        // Pre-fill the form fields with the user data
+                        document.getElementById("displayName").value = data.displayName || '';
+                        document.getElementById("email").value = data.email || '';
+                        document.getElementById("phoneNumber").value = data.phoneNumber || '';
+                        document.getElementById("photoURL").value = data.photoURL || '';
+                        document.getElementById("dateOfBirth").value = data.dateOfBirth || '';
+                        document.getElementById("planDisplay").value = data.plan || '';
+
+                        const address = data.address || {};
+                        document.getElementById("street").value = address.street || '';
+                        document.getElementById("city").value = address.city || '';
+                        document.getElementById("state").value = address.state || '';
+                        document.getElementById("postalCode").value = address.postalCode || '';
+                        document.getElementById("country").value = address.country || '';
+
+                        // Show the form
+                        document.getElementById("create-user-form").style.display = 'block';
                     })
                     .catch(error => {
-                        showPopup('An error occurred: ' + error.message);
+                        console.error('Error fetching user data:', error);
                     });
-            });
-
-            
-            function showPopup(message) {
-                document.getElementById('popupMessage').innerText = message;
-                document.getElementById('popupModal').style.display = 'block';
             }
 
-           
-            function closePopup() {
-                document.getElementById('popupModal').style.display = 'none';
+            function deleteUser(userId) {
+                if (confirm('Are you sure you want to delete this user?')) {
+                    alert('User deleted with ID: ' + userId);
+                }
             }
         </script>
+
     </main>
 </body>
+
+
 
 </html>

@@ -48,11 +48,17 @@ firebaseConfig = {
 
 @auth_blueprint.route('/get_user_data')
 def get_user_data():
-    if 'email' not in session:
+
+    user_id = current_user.get_id()
+    if not user_id:
         return jsonify({"error": "User not logged in"}), 401
- 
-    email = session['email']
-   
+
+    redis_email = redis_client.hget(user_id, "email")
+    if not redis_email:
+        return jsonify({"error": "Email not found in Redis"}), 404
+
+    email = redis_email.decode('utf-8') if isinstance(redis_email, bytes) else redis_email
+
     headers, user_data = fetch_user_data_from_csv(email)
     if user_data:
         return jsonify({
@@ -61,7 +67,8 @@ def get_user_data():
         })
     else:
         return jsonify({"error": "User not found"}), 404
- 
+
+
 def fetch_user_data_from_csv(email):
     with open('demotools.csv', mode='r') as file:
         csv_reader = csv.DictReader(file)
@@ -71,27 +78,122 @@ def fetch_user_data_from_csv(email):
                 return headers, row  
     return headers, None  
 
+# @auth_blueprint.route('/userdetails')
+# def userdetails():
+#         user_id = current_user.get_id()
+#         print(user_id, "ata")
+
+#         if user_id:
+#             redis_user_id = redis_client.hget(user_id, "user_id")
+#             redis_email = redis_client.hget(user_id, "email")
+#             redis_plan = redis_client.hget(user_id, "plan")
+
+#             if redis_user_id:
+#                 redis_user_id = redis_user_id.decode('utf-8')
+#             if redis_email:
+#                 redis_email = redis_email.decode('utf-8')
+#             if redis_plan:
+#                 redis_plan = redis_plan.decode('utf-8')
+
+#             if user_id == redis_user_id:
+#                 print(f"User ID: {redis_user_id}, Email: {redis_email}, Plan: {redis_plan}")
+#             else:
+#                 return jsonify({"status": "error", "message": "User ID mismatch"}), 403
+#         else:
+#             return jsonify({"status": "error", "message": "User not logged in"}), 401
+
+#         return render_template('userdetails.html',current_Email=redis_email,current_plan=redis_plan)
+
 @auth_blueprint.route('/userdetails')
 def userdetails():
-    return render_template('userdetails.html')
+    user_id = current_user.get_id()
 
+    if user_id:
+        redis_user_id = redis_client.hget(user_id, "user_id")
+        redis_email = redis_client.hget(user_id, "email")
+        redis_plan = redis_client.hget(user_id, "plan")
+
+        if redis_user_id:
+            redis_user_id = redis_user_id.decode('utf-8')
+        if redis_email:
+            redis_email = redis_email.decode('utf-8')
+        if redis_plan:
+            redis_plan = redis_plan.decode('utf-8')
+
+        if user_id == redis_user_id:
+            firebase_user = firebase_db.collection('users').document(user_id).get()
+            if firebase_user.exists:
+                user_data = firebase_user.to_dict()
+                # Set a default empty address if address does not exist in user_data
+                user_data['address'] = user_data.get('address', {
+                    'street': '', 'city': '', 'state': '', 'postalCode': '', 'country': ''
+                })
+                return render_template('userdetails.html', current_Email=redis_email, current_plan=redis_plan, **user_data)
+            else:
+                # Default empty address if no data is found in Firebase
+                return render_template('userdetails.html', current_Email=redis_email, current_plan=redis_plan, address={
+                    'street': '', 'city': '', 'state': '', 'postalCode': '', 'country': ''
+                })
+        else:
+            return jsonify({"status": "error", "message": "User ID mismatch"}), 403
+    else:
+        return jsonify({"status": "error", "message": "User not logged in"}), 401
+
+@auth_blueprint.route('/all_userdetails')
+def all_userdetails():
+    # Retrieve all users' data from Firestore
+    users_collection = firebase_db.collection('users').stream()
+    all_users = []
+
+    for user in users_collection:
+        user_data = user.to_dict()
+        user_data['id'] = user.id  # Include Firestore document ID
+        # Ensure address is initialized if not present
+        user_data['address'] = user_data.get('address', {
+            'street': '', 'city': '', 'state': '', 'postalCode': '', 'country': ''
+        })
+        all_users.append(user_data)
+
+    # Return JSON response with all users' data
+    return jsonify(all_users=all_users)
+
+@auth_blueprint.route('/get_user/<user_id>')
+def get_user(user_id):
+    user_data = firebase_db.collection('users').document(user_id).get() 
+    return jsonify(user_data)
 
 @auth_blueprint.route('/create-user', methods=['POST'])
 def create_user():
     try:
-
-        
         user_id = current_user.get_id()
-        print(user_id,"ata")
+        print(user_id, "ata")
 
-        # uid = session['userId']
+        if user_id:
+            redis_user_id = redis_client.hget(user_id, "user_id")
+            redis_email = redis_client.hget(user_id, "email")
+            redis_plan = redis_client.hget(user_id, "plan")
+
+            if redis_user_id:
+                redis_user_id = redis_user_id.decode('utf-8')
+            if redis_email:
+                redis_email = redis_email.decode('utf-8')
+            if redis_plan:
+                redis_plan = redis_plan.decode('utf-8')
+
+            if user_id == redis_user_id:
+                print(f"User ID: {redis_user_id}, Email: {redis_email}, Plan: {redis_plan}")
+            else:
+                return jsonify({"status": "error", "message": "User ID mismatch"}), 403
+        else:
+            return jsonify({"status": "error", "message": "User not logged in"}), 401
+
+        # Form data extraction
         display_name = request.form['displayName']
         email = request.form['email']
         phone_number = request.form.get('phoneNumber', None)
         date_of_birth = request.form.get('dateOfBirth', None)
-        photo_url = request.form.get('photoURL', None)  
+        photo_url = request.form.get('photoURL', None)
 
-        
         address = {
             'street': request.form.get('street', None),
             'city': request.form.get('city', None),
@@ -100,18 +202,14 @@ def create_user():
             'country': request.form.get('country', None)
         }
 
-      
-        plan = request.form.get('Plan', 'free')  
+        plan = request.form.get('Plan', 'free')
         notifications_enabled = 'notificationsEnabled' in request.form
         language = request.form['language']
         theme = request.form['theme']
-
-       
         newsletter_subscribed = 'newsletterSubscribed' in request.form
         content_filters = request.form.get('contentFilters', '')
         bio = request.form.get('bio', '')
 
-     
         social_links = {
             'twitter': request.form.get('socialLinks[twitter]', None),
             'facebook': request.form.get('socialLinks[facebook]', None),
@@ -119,19 +217,17 @@ def create_user():
             'youtube': request.form.get('socialLinks[youtube]', None)
         }
 
-      
         is_active = 'isActive' in request.form
 
         user_data = {
-            # 'uid': session['userId'],
-            'uid':user_id,
+            'uid': redis_user_id,
             'displayName': display_name,
-            'email': email,
+            'email': redis_email,
             'phoneNumber': phone_number,
             'dateOfBirth': date_of_birth,
             'photoURL': photo_url,
             'address': address,
-            'plan': [plan], 
+            'plan': redis_plan,
             'settings': {
                 'notificationsEnabled': notifications_enabled,
                 'language': language,
@@ -154,6 +250,7 @@ def create_user():
 
     except Exception as e:
         return f"An error occurred: {e}", 400
+
 
 
 @login_manager.user_loader
@@ -211,6 +308,10 @@ def login():
 
                 # session['userId'] = user_id
                 session.permanent = keep_logged_in
+                if email == "admin@gmail.com":
+                    session['is_admin'] = True
+                else:
+                    session['is_admin'] = False
 
                 try:
                     
@@ -240,11 +341,11 @@ def login():
                         })
                         stored_data = redis_client.hgetall(user_id)
                         print({key.decode('utf-8'): val.decode('utf-8') for key, val in stored_data.items()}, "loginData")
-
+                        print("newlogin")
                         return jsonify({"status": "success", "message": f"Login successful. Plan: {plan}"})
                     else:
                         return jsonify({"status": "error", "message": "No plan associated with this user."})
-
+                    
                 except Exception as e:
                     return jsonify({"status": "error", "message": f"Error reading plan data: {str(e)}"})
             else:
@@ -252,7 +353,7 @@ def login():
 
         except Exception as e:
             return jsonify({"status": "error", "message": str(e)})
-
+       
     return render_template('login.html')
 
 
@@ -298,11 +399,61 @@ def register():
 
     return render_template('register.html')
 
+@auth_blueprint.route('/update', methods=['POST'])
+def update_user():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    plan = data.get('plan')
+
+    # Fetch the user ID and provider
+    user = firebase_auth.get_user_by_email(email)
+    provider = user.provider_data[0].provider_id
+
+    # Only allow update if the provider is 'password' (email-based sign-up)
+    if provider != 'password':
+        return jsonify({"status": "error", "message": "Cannot update Google sign-in users."})
+
+    try:
+        # Update email and password if provided
+        if email:
+            firebase_auth.update_user(user.uid, email=email)
+        if password:
+            firebase_auth.update_user(user.uid, password=password)
+
+        # Update custom claims if necessary
+        firebase_auth.set_custom_user_claims(user.uid, {'plan': plan})
+        
+        return jsonify({"status": "success", "message": "User updated successfully."})
+    except firebase_auth.AuthError as e:
+        return jsonify({"status": "error", "message": str(e)})
+
 
 @auth_blueprint.route('/repository', methods=['GET'])
 def repository():
-    user_plan = session.get('plan')
-    user_id = session.get('userId')
+    # user_plan = session.get('plan')
+    # user_id = session.get('userId')
+    user_id = current_user.get_id()
+
+    if user_id:
+        redis_user_id = redis_client.hget(user_id, "user_id")
+        redis_email = redis_client.hget(user_id, "email")
+        redis_plan = redis_client.hget(user_id, "plan")
+        
+        if redis_user_id:
+            redis_user_id = redis_user_id.decode('utf-8')
+        if redis_email:
+            redis_email = redis_email.decode('utf-8')
+        if redis_plan:
+            redis_plan = redis_plan.decode('utf-8')
+        
+        if user_id == redis_user_id:
+            print(f"User ID: {redis_user_id}, Email: {redis_email}, Plan: {redis_plan}")
+        else:
+            return jsonify({"status": "error", "message": "User ID mismatch"}), 403
+    else:
+        return jsonify({"status": "error", "message": "User not logged in"}), 401
+
 
     if not user_id:
         return jsonify({'error': 'User ID not found in session'}), 400
@@ -322,10 +473,36 @@ def repository():
             value['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(value['timestamp'] / 1000))
             formatted_data.append(value)
 
-        return render_template('repository.html', data=formatted_data, plan=user_plan)
+        return render_template('repository.html', data=formatted_data, plan= redis_plan)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@auth_blueprint.route('/profile')
+def profile():
+    user_id = current_user.get_id()
+
+    if user_id:
+        redis_user_id = redis_client.hget(user_id, "user_id")
+        redis_email = redis_client.hget(user_id, "email")
+        redis_plan = redis_client.hget(user_id, "plan")
+        
+        if redis_user_id:
+            redis_user_id = redis_user_id.decode('utf-8')
+        if redis_email:
+            redis_email = redis_email.decode('utf-8')
+        if redis_plan:
+            redis_plan = redis_plan.decode('utf-8')
+        
+        if user_id == redis_user_id:
+            print(f"User ID: {redis_user_id}, Email: {redis_email}, Plan: {redis_plan}")
+        else:
+            return jsonify({"status": "error", "message": "User ID mismatch"}), 403
+    else:
+        return jsonify({"status": "error", "message": "User not logged in"}), 401
+
+    return render_template('profile.html',current_Email=redis_email,current_plan=redis_plan)
 
 
 logging.basicConfig(level=logging.DEBUG)

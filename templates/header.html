@@ -584,18 +584,28 @@
             <div id="profileModal" class="modal">
                 <div class="modal-content">
                     <div id="userProfileContent"></div>
+                    <i class="fa-regular fa-address-card" onclick="navigateToProfile()" >&nbsp;<span style="font-weight: normal; text-transform: none !important;">about</span></i>
                     <a id="logoutLink" href="newlogin">
-                        <i class="fas fa-right-from-bracket" style="font-size: 1.5rem; cursor: pointer; display: block;"></i>
+                        <i class="fas fa-right-from-bracket" style="font-size: 1.5rem; cursor: pointer; display: block; margin-top: 16px;"></i>
                     </a>
                 </div>
             </div>
-        </div>   
+        </div>          
+          
     </div>
 
 </div>
     <aside>
         <nav>
             <ul>
+                {% if session.get('is_admin') %}
+                <li>
+                    <a href="{{ url_for('tools.tools') }}">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span class="sidebar-text">Admin</span>
+                    </a>
+                </li>
+                {% endif %}
                 <li>
                     <a href="{{ url_for('tools.tools') }}">
                         <i class="fa-brands fa-microsoft"></i>
@@ -676,7 +686,7 @@
                     headers.forEach(header => {
                         const p = document.createElement("p");
                         const icon = getHeaderIcon(header);
-                        p.innerHTML = `<i class="${icon}"></i> <span class="header-text">${header}:</span> <span class="user-data">${userData[header]}</span>`;
+                        p.innerHTML = `<i class="${icon}"></i></span> <span class="user-data">${userData[header]}</span>`;
                         profileContent.appendChild(p);
                     });
                 }
@@ -706,12 +716,17 @@
     };
 
     document.getElementById("logoutLink").addEventListener("click", function () {
-        sessionStorage.removeItem('currentPlan');
+        sessionStorage.removeItem('currentPlan');   
+        session.clear()
     });
     function closeModal() {
         document.getElementById("profileModal").style.display = "none";
     }
     </script>
-
+    <script>
+        function navigateToProfile() {
+            window.location.href = 'userdetails'; 
+        }
+    </script>    
 </body>
 </html>

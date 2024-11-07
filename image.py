@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, send_file, Response
-from flask_login import login_required, current_user
 from dotenv import load_dotenv, find_dotenv
 from groq import Groq
 import pandas as pd

@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template,session, request, redirect, url_for, jsonify
-from flask_login import login_required, logout_user, login_user
-import pandas as pd
+
 
 main_routes = Blueprint('main_routes', __name__)
 

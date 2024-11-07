@@ -44,6 +44,7 @@ def pricing_modal():
     user_id = current_user.get_id()
 
     current_plan = redis_client.hget(user_id, "plan")
+    print(current_plan,"plannnn")
 
     if current_plan:
         current_plan = current_plan.decode('utf-8')

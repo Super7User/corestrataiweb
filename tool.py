@@ -73,10 +73,31 @@ def tool_detail(tool_id_str):
     try:
         tool_id = int(float(tool_id_str))
         session['tool_id'] = tool_id
-        user_emailId = session.get('email')
-        user_plan = session.get('plan')
+        user_id = current_user.get_id()
+
+        if user_id:
+            redis_user_id = redis_client.hget(user_id, "user_id")
+            redis_email = redis_client.hget(user_id, "email")
+            redis_plan = redis_client.hget(user_id, "plan")
+            
+            
+            if redis_user_id:
+                redis_user_id = redis_user_id.decode('utf-8')
+            if redis_email:
+                redis_email = redis_email.decode('utf-8')
+            if redis_plan:
+                redis_plan = redis_plan.decode('utf-8')
+            
+            
+            if user_id == redis_user_id:
+                print(f"User ID: {redis_user_id}, Email: {redis_email}, Plan: {redis_plan}")
+            else:
+                return jsonify({"status": "error", "message": "User ID mismatch"}), 403
+        else:
+            return jsonify({"status": "error", "message": "User not logged in"}), 401
+
     except ValueError:
-        return "Invalid Tool ID", 400   
+        return "Invalid Tool ID", 400
 
     data = pd.read_csv('alltools.csv')
     tool_details = data.to_dict(orient='records')
@@ -90,8 +111,15 @@ def tool_detail(tool_id_str):
     titleName = tool.get('Title')
     print(font_family, "tool")
     print(titleName, "titleName")
-    
-    return render_template('tool_details.html', tool=tool, tool_id=tool_id, fontDynamic=font_family, titleName=titleName,plan=user_plan)
+
+    return render_template(
+        'tool_details.html',
+        tool=tool,
+        tool_id=tool_id,
+        fontDynamic=font_family,
+        titleName=titleName,
+        plan=redis_plan
+    )
 
 @tools_blueprint.route('/generate-content', methods=['POST'])
 def generate_content():
@@ -104,9 +132,32 @@ def generate_content():
 def generate_stream():
     data = request.get_json()
     prompt = data.get('prompt')
-    user_id = session.get('userId')
+    # user_id = session.get('userId')
     # user_plan = session.get('plan')
     unique_id = session.get('firebase_unique_id')
+    user_id = current_user.get_id()
+
+    if user_id:
+            redis_user_id = redis_client.hget(user_id, "user_id")
+            redis_email = redis_client.hget(user_id, "email")
+            redis_plan = redis_client.hget(user_id, "plan")
+            
+            
+            if redis_user_id:
+                redis_user_id = redis_user_id.decode('utf-8')
+            if redis_email:
+                redis_email = redis_email.decode('utf-8')
+            if redis_plan:
+                redis_plan = redis_plan.decode('utf-8')
+            
+            
+            if user_id == redis_user_id:
+                print(f"User ID: {redis_user_id}, Email: {redis_email}, Plan: {redis_plan}")
+            else:
+                return jsonify({"status": "error", "message": "User ID mismatch"}), 403
+    else:
+            return jsonify({"status": "error", "message": "User not logged in"}), 401
+
 
     if not prompt:
         return jsonify({'error': 'Prompt is missing'}), 400
@@ -181,8 +232,26 @@ def generate_stream():
 @tools_blueprint.route('/tooldetailoutput/<int:tool_id>', methods=['GET'])
 def tool_details_output(tool_id):
     user_id = session.get('userId')
-    user_emailId = session.get('email')
-    user_plan = session.get('plan')
+    user_id = current_user.get_id()
+
+    if user_id:
+        redis_user_id = redis_client.hget(user_id, "user_id")
+        redis_email = redis_client.hget(user_id, "email")
+        redis_plan = redis_client.hget(user_id, "plan")
+        
+        if redis_user_id:
+            redis_user_id = redis_user_id.decode('utf-8')
+        if redis_email:
+            redis_email = redis_email.decode('utf-8')
+        if redis_plan:
+            redis_plan = redis_plan.decode('utf-8')
+        
+        if user_id == redis_user_id:
+            print(f"User ID: {redis_user_id}, Email: {redis_email}, Plan: {redis_plan}")
+        else:
+            return jsonify({"status": "error", "message": "User ID mismatch"}), 403
+    else:
+        return jsonify({"status": "error", "message": "User not logged in"}), 401
 
     if not user_id:
         return jsonify({'error': 'User ID not found in session'}), 400
@@ -203,7 +272,7 @@ def tool_details_output(tool_id):
 
         last_entry['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_entry['timestamp'] / 1000))
 
-        return render_template('tooldetail_Ouput.html', data=last_entry,plan=user_plan)
+        return render_template('tooldetail_Ouput.html', data=last_entry, plan=redis_plan)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
