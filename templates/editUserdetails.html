@@ -39,7 +39,7 @@
         }
 
         .form-group .form-item {
-            flex: 1 1 calc(33.333% - 10px);
+            flex: 1 1 calc(33.333% - 10px); /* Three columns */
             display: flex;
             flex-direction: column;
         }
@@ -100,9 +100,6 @@
         .button-container{
             top:20px !important
         }
-        tr, th{
-            padding:10px !important
-        }
     </style>
 </head>
 
@@ -111,50 +108,8 @@
     {% include 'header.html' %}
     <main style="margin-top: auto;">
         <div class="card">
-            <h1> User Profile</h1>
+            <h1>Create User</h1>
 
-            {% if session.get('is_admin') %}
-     
-            <div class="form-group">
-                <label>
-                    <input type="radio" name="profileType" value="user" checked onclick="toggleProfileType('user')"> User Profile
-                </label>
-                <label>
-                    <input type="radio" name="profileType" value="customer" onclick="toggleProfileType('customer')"> Customer Profile
-                </label>
-            </div>
-            {% endif %}
-
-              
-               <div id="customer-profile-table" style="display: none;">
-                <h3>Customer Profile</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email ID</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="customerDetails">
-                        {% for user in all_users %}
-                        <tr>
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>
-                                <!-- <button onclick="editUser('{{ user.id }}')">Edit</button> -->
-                                <a href="{{ url_for('edit_user', user_id=user.id) }}">
-                                    <button>Edit</button>
-                                </a>
-                                <button onclick="deleteUser('{{ user.id }}')">Delete</button>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-    
             <form id="create-user-form" method="POST" action="{{ url_for('auth_blueprint.create_user') }}">
                 <div class="card">
                     <h3>Personal Information</h3>
@@ -186,7 +141,7 @@
                     </div>
                 </div>
 
-       
+                <!-- Address Card -->
                 <div class="card">
                     <h3>Address</h3>
                     <div class="form-group">
@@ -212,7 +167,7 @@
                         </div>
                     </div>
                 </div>
-            
+                 <!-- Settings Card -->
                  <div class="card">
                     <h3>Settings</h3>
                     <label><input type="checkbox" id="notificationsEnabled" name="notificationsEnabled" checked> Notifications Enabled</label>
@@ -230,7 +185,7 @@
                     <button type="button" onclick="cancelEdit(this)">Cancel</button> -->
                 </div>
 
-            
+                <!-- Preferences Card -->
                 <div class="card">
                     <h3>Preferences</h3>
                     <label><input type="checkbox" id="newsletterSubscribed" name="newsletterSubscribed" checked> Newsletter Subscribed</label>
@@ -242,7 +197,7 @@
                     <button type="button" onclick="cancelEdit(this)">Cancel</button> -->
                 </div>
 
-             
+                <!-- Social Links Card -->
                 <div class="card">
                     <h3>Social Links</h3>
                     <div class="form-group">
@@ -268,45 +223,41 @@
                 <button type="submit">Submit</button>
             </form>
 
-         
+            
+            
         </div>
 
         <script>
             function toggleProfileType(type) {
-    if (type === 'user') {
-        document.getElementById('create-user-form').style.display = 'block';
-        document.getElementById('customer-profile-table').style.display = 'none';
+                if (type === 'user') {
+                    document.getElementById('create-user-form').style.display = 'block';
+                    document.getElementById('customer-profile-table').style.display = 'none';
+                } else if (type === 'customer') {
+                    document.getElementById('create-user-form').style.display = 'none';
+                    document.getElementById('customer-profile-table').style.display = 'block';
 
-        document.getElementById('create-user-form').reset();
+                    fetch('/all_userdetails')
+                        .then(response => response.json())
+                        .then(data => {
+                            const customerDetailsContainer = document.getElementById('customerDetails');
+                            customerDetailsContainer.innerHTML = ''; 
 
-        document.getElementById('customerDetails').innerHTML = '';
-    } else if (type === 'customer') {
-        document.getElementById('create-user-form').style.display = 'none';
-        document.getElementById('customer-profile-table').style.display = 'block';
-
-        fetch('/all_userdetails')
-            .then(response => response.json())
-            .then(data => {
-                const customerDetailsContainer = document.getElementById('customerDetails');
-
-                customerDetailsContainer.innerHTML = '';
-
-                data.all_users.forEach(user => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${user.name || 'N/A'}</td>
-                        <td>${user.email || 'N/A'}</td>
-                        <td>
-                            <button onclick="editUser('${user.id}')">Edit</button>
-                            <button onclick="deleteUser('${user.id}')">Delete</button>
-                        </td>
-                    `;
-                    customerDetailsContainer.appendChild(row);
-                });
-            })
-            .catch(error => console.error('Error fetching customer details:', error));
-    }
-}
+                            data.all_users.forEach(user => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td>${user.name || 'N/A'}</td>
+                                    <td>${user.email || 'N/A'}</td>
+                                    <td>
+                                        <button onclick="editUser('${user.id}')">Edit</button>
+                                        <button onclick="deleteUser('${user.id}')">Delete</button>
+                                    </td>
+                                `;
+                                customerDetailsContainer.appendChild(row);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching customer details:', error));
+                }
+            }
 
             function editUser(userId) {
                 fetch(`/get_user/${userId}`)

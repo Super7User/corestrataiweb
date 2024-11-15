@@ -124,13 +124,11 @@ def userdetails():
             firebase_user = firebase_db.collection('users').document(user_id).get()
             if firebase_user.exists:
                 user_data = firebase_user.to_dict()
-                # Set a default empty address if address does not exist in user_data
                 user_data['address'] = user_data.get('address', {
                     'street': '', 'city': '', 'state': '', 'postalCode': '', 'country': ''
                 })
                 return render_template('userdetails.html', current_Email=redis_email, current_plan=redis_plan, **user_data)
             else:
-                # Default empty address if no data is found in Firebase
                 return render_template('userdetails.html', current_Email=redis_email, current_plan=redis_plan, address={
                     'street': '', 'city': '', 'state': '', 'postalCode': '', 'country': ''
                 })
@@ -141,26 +139,30 @@ def userdetails():
 
 @auth_blueprint.route('/all_userdetails')
 def all_userdetails():
-    # Retrieve all users' data from Firestore
     users_collection = firebase_db.collection('users').stream()
     all_users = []
 
     for user in users_collection:
         user_data = user.to_dict()
-        user_data['id'] = user.id  # Include Firestore document ID
-        # Ensure address is initialized if not present
+        user_data['id'] = user.id  
         user_data['address'] = user_data.get('address', {
             'street': '', 'city': '', 'state': '', 'postalCode': '', 'country': ''
         })
         all_users.append(user_data)
 
-    # Return JSON response with all users' data
     return jsonify(all_users=all_users)
 
 @auth_blueprint.route('/get_user/<user_id>')
 def get_user(user_id):
-    user_data = firebase_db.collection('users').document(user_id).get() 
-    return jsonify(user_data)
+    # user_data = firebase_db.collection('users').document(user_id).get() 
+    # return jsonify(user_data)
+    user_snapshot = firebase_db.collection('users').document(user_id).get()
+    
+    if user_snapshot.exists:
+        user_data = user_snapshot.to_dict()
+        return jsonify(user_data)  
+    else:
+        return jsonify({"error": "User not found"}), 404
 
 @auth_blueprint.route('/create-user', methods=['POST'])
 def create_user():
@@ -187,7 +189,6 @@ def create_user():
         else:
             return jsonify({"status": "error", "message": "User not logged in"}), 401
 
-        # Form data extraction
         display_name = request.form['displayName']
         email = request.form['email']
         phone_number = request.form.get('phoneNumber', None)
@@ -251,6 +252,16 @@ def create_user():
     except Exception as e:
         return f"An error occurred: {e}", 400
 
+
+@auth_blueprint.route('/edit_user/<user_id>')
+def edit_user(user_id):
+    user_data =  get_user(user_id)
+    return render_template('editUserdetails.html', user=user_data)
+
+# @auth_blueprint.route('/update_user/<user_id>', methods=['POST'])
+# def update_user(user_id):
+#     print("Updated data:", request.form)
+#     return redirect(url_for('edit_user', user_id=user_id))
 
 
 @login_manager.user_loader
@@ -406,22 +417,18 @@ def update_user():
     password = data.get('password')
     plan = data.get('plan')
 
-    # Fetch the user ID and provider
     user = firebase_auth.get_user_by_email(email)
     provider = user.provider_data[0].provider_id
 
-    # Only allow update if the provider is 'password' (email-based sign-up)
     if provider != 'password':
         return jsonify({"status": "error", "message": "Cannot update Google sign-in users."})
 
     try:
-        # Update email and password if provided
         if email:
             firebase_auth.update_user(user.uid, email=email)
         if password:
             firebase_auth.update_user(user.uid, password=password)
 
-        # Update custom claims if necessary
         firebase_auth.set_custom_user_claims(user.uid, {'plan': plan})
         
         return jsonify({"status": "success", "message": "User updated successfully."})

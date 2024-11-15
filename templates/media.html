@@ -17,11 +17,11 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .containerMedia {
+        /* .containerMedia {
             display: flex;
             flex: 1;
-            /* padding-top: 30px; */
-        }
+            padding-top: 30px;
+        } */
 
         .side {
             width: 25%;
@@ -67,7 +67,7 @@
         }
 
         .video-player video {
-            width: 80%;
+            width: 100%;
             height: auto;
             max-height: 80vh;
             border: 2px solid #ccc;
@@ -674,6 +674,119 @@
             height: 100%;
             object-fit: cover;
         }
+
+        .overlay-text {
+            transition: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* .layer-list {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        } */
+
+        .containerMedia {
+            display: flex;
+            gap: 20px;
+            /* Adds space between each main component */
+            align-items: flex-start;
+            /* Aligns all items to the top */
+        }
+
+        .scene-card {
+            width: 25%;
+            /* height:340px; */
+            border: 1px solid #ddd;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 8px;
+        }
+
+        .video-player {
+            max-width: 500px;
+            position: relative;
+        }
+
+        .scene-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .scene-content {
+            padding: 10px;
+        }
+
+        .scene-section {
+            margin-bottom: 10px;
+        }
+    </style>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        /* .layer-list ul {
+            list-style-type: none;
+            padding: 0;
+        } */
+
+        .overlay-text {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .add-layer-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 5px;
+            /* Adds space between icon and text */
+        }
+
+        .layer-list {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            margin-top: 5px;
+            /* padding: 10px; */
+            width: 100px;
+            z-index: 100;
+        }
+
+        .layer-list ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .layer-list li {
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .layer-list li:hover {
+            background-color: #f0f0f0;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -684,7 +797,7 @@
             class="logo">
 
         <div class="containerHead">
-            <h1>Holygrail</h1>
+            <!-- <h1>Holygrail</h1> -->
             <h2>Instagram Partner</h2>
         </div>
         <div class="scene-type"
@@ -696,32 +809,44 @@
                 <input type="radio" name="scene-type" value="post" id="post-radio"> Post
             </label>
         </div>
-        <div class="containerMedia">
+        <div class="containerMedia" style="display: flex; gap: 20px; align-items: flex-start;">
+
+
             <div class="scene-card">
                 <div class="scene-header">
                     <h3>Scene 1</h3>
                     <div class="scene-options">
+                        <div class="add-layer-container" onclick="toggleLayerList()">
+                            <i title="Add Layer" class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <div id="layerList" class="layer-list hidden">
+                            <ul>
+                                <li onclick="addLayer('text')">Text</li>
+                                <li onclick="addLayer('media')">Media</li>
+                                <li onclick="addLayer('effect')">Effect</li>
+                            </ul>
+                        </div>
                         <i class="fa fa-cog"></i>
                         <i class="fa fa-trash"></i>
                     </div>
+
                 </div>
                 <div class="scene-content">
                     <div class="scene-section">
                         <h4>Voiceover <i class="fa fa-microphone"></i></h4>
                         <input type="text" placeholder="Enter voiceover text..." class="scene-input">
                     </div>
-
+                    <div id="textInputContainer" class="scene-section hidden">
+                        <h4>Text Layer <i class="fa fa-font"></i></h4>
+                        <input type="text" placeholder="Enter text to display" class="scene-input"
+                            oninput="updateOverlayText(this)">
+                    </div>
                     <div class="scene-section">
                         <h4>Media <i class="fa fa-image"></i></h4>
-
                         <div class="media-thumbnail" style="width: 34px;">
                             <img src="{{ url_for('static', filename='images/media.png')}}" alt="Media Thumbnail">
                         </div>
-
-                        <!-- <input type="text" placeholder="Media description..." class="scene-input"> -->
                     </div>
-
-
                     <div class="scene-section">
                         <h4>Effect <i class="fa fa-magic"></i></h4>
                         <input type="range" min="0" max="100" value="45" class="scene-range">
@@ -729,13 +854,56 @@
                 </div>
             </div>
 
-            <div class="video-player">
-                <video id="main-video-player" controls>
-                    <source src="sample-video.mp4" type="video/mp4" id="main-video-source">
+            <div class="video-player" id="dragContainer" style="position: relative;">
+                <video id="main-video-player" controls crossorigin="anonymous">
+                    <source src="{{ url_for('static', filename='sample.mp4') }}" type="video/mp4"
+                        id="main-video-source">
                     Your browser does not support the video tag.
                 </video>
+                <div id="overlayText" class="overlay-text"
+                    style="position: absolute; top: 30px; left: 200px; color: rgb(26, 25, 25); font-size: 24px; cursor: pointer;">
+
+                </div>
             </div>
+
+            <canvas id="canvas" style="display: none;"></canvas>
+            <span id="downloadButton" title="Download"><i class="fa-solid fa-download"></i></span>
+
+            <div class="scene-card" id="fontControlCard">
+                <div class="scene-header">
+                    <h3>Font Settings</h3>
+                    <div class="scene-options">
+                        <i class="fa fa-cog"></i>
+                        <i class="fa fa-trash"></i>
+                    </div>
+                </div>
+                <div class="scene-content">
+                    <div class="scene-section">
+                        <h4>Font Size <i class="fa fa-text-height"></i></h4>
+                        <input type="number" id="fontSizeInput" value="24" class="scene-input" min="10" max="72"
+                            style="width: 100%;">
+                    </div>
+                    <div class="scene-section">
+                        <h4>Font Style <i class="fa fa-font"></i></h4>
+                        <select id="fontStyleSelect" class="scene-input" style="width: 100%;">
+                            <option value="Arial">Arial</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Tahoma">Tahoma</option>
+                        </select>
+                    </div>
+                    <div class="scene-section">
+                        <h4>Font Color <i class="fa fa-paint-brush"></i></h4>
+                        <input type="color" id="fontColorInput" value="#1a1919" class="scene-input"
+                            style="width: 100%; margin-bottom: 10px;">
+                    </div>
+                </div>
+            </div>
+
         </div>
+
 
         <div id="media-modal" class="modal1">
             <div class="modal-content1">
@@ -816,6 +984,7 @@
                                                 Your browser does not support the video tag.
                                             </video>
                                             <img src="{{ video.image }}" alt="Video Thumbnail">
+                                            <div id="overlayText" class="overlay-text"></div>
                                         </div>
                                         {% endfor %}
                                     </div>
@@ -926,6 +1095,64 @@
             </div>
         </div>
     </main>
+
+
+    <script>
+        // function toggleLayerList() {
+        //     const layerList = document.getElementById('layerList');
+        //     layerList.classList.toggle('hidden');
+        // }
+
+        function toggleLayerList() {
+            const layerList = document.getElementById('layerList');
+            layerList.classList.toggle('hidden');
+
+            if (!layerList.classList.contains('hidden')) {
+                document.addEventListener('click', closeLayerListOnClickOutside);
+            } else {
+                document.removeEventListener('click', closeLayerListOnClickOutside);
+            }
+        }
+
+        function closeLayerListOnClickOutside(event) {
+            const layerList = document.getElementById('layerList');
+            const addLayerContainer = document.querySelector('.add-layer-container');
+
+            if (!layerList.contains(event.target) && !addLayerContainer.contains(event.target)) {
+                layerList.classList.add('hidden');
+                document.removeEventListener('click', closeLayerListOnClickOutside); 
+            }
+        }
+
+
+        function addLayer(type) {
+            toggleLayerList();
+
+            if (type === 'text') {
+
+                let existingInput = document.querySelector('.scene-content .text-layer-input');
+
+                if (!existingInput) {
+                    const inputField = document.createElement('input');
+                    inputField.setAttribute('type', 'text');
+                    inputField.setAttribute('placeholder', 'Enter text to display');
+                    inputField.classList.add('scene-input', 'text-layer-input');
+                    inputField.addEventListener('input', (e) => {
+                        document.getElementById('overlayText').innerText = e.target.value;
+                    });
+
+                    document.querySelector('.scene-content').appendChild(inputField);
+                }
+            }
+        }
+
+
+        function updateOverlayText(inputElement) {
+            const overlayTextDiv = document.getElementById('overlayText');
+            overlayTextDiv.textContent = inputElement.value;
+            console.log(overlayTextDiv, overlayTextDiv.textContent, "overlayTextDiv")
+        }
+    </script>
     <script>
         const mediaThumbnail = document.querySelector('.media-thumbnail');
         const mediaModal = document.getElementById('media-modal');
@@ -1006,7 +1233,7 @@
         document.querySelectorAll('.nav-btn').forEach(button => {
             button.addEventListener('click', function () {
 
-                // Remove 'active' class from all buttons
+               
                 document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
 
                 this.classList.add('active');
@@ -1023,12 +1250,11 @@
                 } else if (this.id === 'stock-btn') {
                     document.getElementById('stock-content').style.display = 'block';
                 } else if (this.id === 'generate-btn') {
-                    document.getElementById('content').style.display = 'block'; // Only show content on Generate button click
+                    document.getElementById('content').style.display = 'block'; 
                 }
             });
         });
         function showMedia(mediaId) {
-            // Hide all media sections
             document.querySelectorAll('.media-section').forEach(function (section) {
                 section.style.display = 'none';
             });
@@ -1050,14 +1276,15 @@
 
         document.getElementById('media-picker-content').style.display = 'block';
     </script>
-
     <script>
         function showTab(section, type) {
+            const overlayTextDiv = document.getElementById('overlayText');
             document.querySelectorAll(`#${section} .media-grid1`).forEach(grid => grid.classList.remove('active'));
             document.querySelectorAll(`#${section} button`).forEach(btn => btn.classList.remove('active'));
 
             document.getElementById(`${section}-${type}`).classList.add('active');
             document.getElementById(`${section}-${type}-btn`).classList.add('active');
+            overlayTextDiv.style.display = 'block';
         }
 
         function playVideo(videoCard) {
@@ -1079,12 +1306,8 @@
         }
 
         function selectVideo(videoSrc) {
-
             const videoSource = document.getElementById('main-video-source');
-
-
             videoSource.src = videoSrc;
-            console.log(videoSrc, "video")
 
             const videoPlayer = document.getElementById('main-video-player');
             videoPlayer.load();
@@ -1114,6 +1337,133 @@
                 });
             }
         });
+    </script>
+    <script>
+        const overlayText = document.getElementById("overlayText");
+        const dragContainer = document.getElementById("dragContainer");
+        const fontSizeInput = document.getElementById("fontSizeInput");
+        const fontStyleSelect = document.getElementById("fontStyleSelect");
+        const fontColorInput = document.getElementById("fontColorInput");
+
+        let offsetX, offsetY;
+        let isDragging = false;
+
+        overlayText.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            const rect = overlayText.getBoundingClientRect();
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (isDragging) {
+                const containerRect = dragContainer.getBoundingClientRect();
+                const textRect = overlayText.getBoundingClientRect();
+
+                let x = e.clientX - containerRect.left - offsetX;
+                let y = e.clientY - containerRect.top - offsetY;
+
+                if (x < 0) x = 0;
+                if (x + textRect.width > containerRect.width) x = containerRect.width - textRect.width;
+
+                if (y < 0) y = 0;
+                if (y + textRect.height > containerRect.height) y = containerRect.height - textRect.height;
+
+                overlayText.style.left = `${x}px`;
+                overlayText.style.top = `${y}px`;
+            }
+        });
+
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+        });
+
+        fontSizeInput.addEventListener("input", (e) => {
+            overlayText.style.fontSize = `${e.target.value}px`;
+        });
+
+        fontStyleSelect.addEventListener("change", (e) => {
+            overlayText.style.fontFamily = e.target.value;
+        });
+
+        fontColorInput.addEventListener("input", (e) => {
+            overlayText.style.color = e.target.value;
+        });
+    </script>
+
+    <script>
+        const video = document.getElementById('main-video-player');
+        // const overlayText = document.getElementById('overlayText');
+        const canvas = document.getElementById('canvas');
+        const downloadButton = document.getElementById('downloadButton');
+
+        video.addEventListener('loadedmetadata', () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+        });
+
+        function downloadVideoWithOverlay() {
+            let recordedChunks = [];
+            const context = canvas.getContext('2d');
+
+            const stream = canvas.captureStream();
+            const mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'video_with_overlay.webm';
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+            };
+
+            mediaRecorder.start();
+            captureFramesWithOverlay(mediaRecorder, context);
+        }
+
+        function captureFramesWithOverlay(mediaRecorder, context) {
+            video.play();
+
+            const drawFrame = () => {
+                if (mediaRecorder.state === 'inactive') return;
+
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                const overlayStyles = window.getComputedStyle(overlayText);
+                context.font = `${overlayStyles.fontSize} ${overlayStyles.fontFamily}`;
+                context.fillStyle = overlayStyles.color;
+                context.textAlign = overlayStyles.textAlign;
+                context.textBaseline = 'top';
+
+                const x = parseFloat(overlayStyles.left) || 0;
+                const y = parseFloat(overlayStyles.top) || 0;
+
+                context.fillText(overlayText.textContent, x, y);
+
+                requestAnimationFrame(drawFrame);
+            };
+
+            drawFrame();
+
+            video.onended = () => {
+                mediaRecorder.stop();
+            };
+        }
+
+        downloadButton.addEventListener('click', downloadVideoWithOverlay);
     </script>
 
 </body>
