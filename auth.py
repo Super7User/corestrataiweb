@@ -295,10 +295,82 @@ def send_reset_password():
         return jsonify({'status': 'error', 'message': f'An unexpected error occurred: {str(e)}'}), 500
 
 
+# @auth_blueprint.route('/login', methods=['GET', 'POST'])
+# def login():
+#     if request.method == 'POST':
+#         email = request.form['login_email'].strip().lower()  
+#         password = request.form['login_password']
+#         keep_logged_in = 'keep_logged_in' in request.form
+
+#         try:
+#             url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={firebaseConfig['apiKey']}"
+#             payload = {
+#                 "email": email,
+#                 "password": password,
+#                 "returnSecureToken": True
+#             }
+#             response = requests.post(url, json=payload)
+#             response_data = response.json()
+
+#             if response.status_code == 200:
+#                 user_id = response_data['localId']
+#                 user = User(id=user_id, email=email)
+#                 login_user(user, remember=keep_logged_in)
+
+#                 # session['userId'] = user_id
+#                 session.permanent = keep_logged_in
+#                 if email == "admin@gmail.com":
+#                     session['is_admin'] = True
+#                 else:
+#                     session['is_admin'] = False
+
+#                 try:
+                    
+#                     plan_data = pd.read_csv('plan.csv')
+#                     plan_data['mail_Id'] = plan_data['mail_Id'].str.strip().str.lower()
+
+#                     matching_rows = plan_data[plan_data['mail_Id'] == email]
+
+#                     if not matching_rows.empty:
+#                         plan = matching_rows['Plan'].values[0]
+#                         # session['email'] = email
+#                         # session['plan'] = plan
+
+                        
+#                         unique_id = db.reference('generated_streams').push().key
+#                         # session['firebase_unique_id'] = unique_id
+
+#                         ref = db.reference(f'generated_streams/{unique_id}')
+#                         ref.update({
+#                             'plan': plan,
+#                         })
+#                         redis_client.hset(user_id, mapping={
+#                             "user_id":user_id,
+#                             "email": email,
+#                             "plan": plan,
+#                             "firebase_unique_id": unique_id
+#                         })
+#                         stored_data = redis_client.hgetall(user_id)
+#                         print({key.decode('utf-8'): val.decode('utf-8') for key, val in stored_data.items()}, "loginData")
+#                         print("newlogin")
+#                         return jsonify({"status": "success", "message": f"Login successful. Plan: {plan}"})
+#                     else:
+#                         return jsonify({"status": "error", "message": "No plan associated with this user."})
+                    
+#                 except Exception as e:
+#                     return jsonify({"status": "error", "message": f"Error reading plan data: {str(e)}"})
+#             else:
+#                 return jsonify({"status": "error", "message": response_data.get("error", {}).get("message", "Invalid login credentials.")})
+
+#         except Exception as e:
+#             return jsonify({"status": "error", "message": str(e)})
+       
+#     return render_template('login.html')
+
 @auth_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['login_email'].strip().lower()  
+        email = request.form['login_email'].strip().lower()
         password = request.form['login_password']
         keep_logged_in = 'keep_logged_in' in request.form
 
@@ -317,54 +389,36 @@ def login():
                 user = User(id=user_id, email=email)
                 login_user(user, remember=keep_logged_in)
 
-                # session['userId'] = user_id
                 session.permanent = keep_logged_in
-                if email == "admin@gmail.com":
-                    session['is_admin'] = True
-                else:
-                    session['is_admin'] = False
+                session['is_admin'] = (email == "admin@gmail.com")
 
                 try:
-                    
-                    plan_data = pd.read_csv('plan.csv')
-                    plan_data['mail_Id'] = plan_data['mail_Id'].str.strip().str.lower()
+                    default_plan = "Free"
 
-                    matching_rows = plan_data[plan_data['mail_Id'] == email]
+                    unique_id = db.reference('generated_streams').push().key
 
-                    if not matching_rows.empty:
-                        plan = matching_rows['Plan'].values[0]
-                        # session['email'] = email
-                        # session['plan'] = plan
+                    ref = db.reference(f'generated_streams/{unique_id}')
+                    ref.update({
+                        'plan': default_plan,
+                    })
 
-                        
-                        unique_id = db.reference('generated_streams').push().key
-                        # session['firebase_unique_id'] = unique_id
+                    redis_client.hset(user_id, mapping={
+                        "user_id": user_id,
+                        "email": email,
+                        "plan": default_plan,
+                        "firebase_unique_id": unique_id
+                    })
 
-                        ref = db.reference(f'generated_streams/{unique_id}')
-                        ref.update({
-                            'plan': plan,
-                        })
-                        redis_client.hset(user_id, mapping={
-                            "user_id":user_id,
-                            "email": email,
-                            "plan": plan,
-                            "firebase_unique_id": unique_id
-                        })
-                        stored_data = redis_client.hgetall(user_id)
-                        print({key.decode('utf-8'): val.decode('utf-8') for key, val in stored_data.items()}, "loginData")
-                        print("newlogin")
-                        return jsonify({"status": "success", "message": f"Login successful. Plan: {plan}"})
-                    else:
-                        return jsonify({"status": "error", "message": "No plan associated with this user."})
-                    
+                    return jsonify({"status": "success", "message": "Login successful.", "plan": default_plan})
+
                 except Exception as e:
-                    return jsonify({"status": "error", "message": f"Error reading plan data: {str(e)}"})
+                    return jsonify({"status": "error", "message": f"Error saving user data: {str(e)}"})
             else:
                 return jsonify({"status": "error", "message": response_data.get("error", {}).get("message", "Invalid login credentials.")})
 
         except Exception as e:
             return jsonify({"status": "error", "message": str(e)})
-       
+
     return render_template('login.html')
 
 
