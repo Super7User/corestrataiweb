@@ -139,7 +139,7 @@
                     <tbody id="customerDetails">
                         {% for user in all_users %}
                         <tr>
-                            <td>{{ user.name }}</td>
+                            <td>{{ user.displayName }}</td>
                             <td>{{ user.email }}</td>
                             <td>
                                 <!-- <button onclick="editUser('{{ user.id }}')">Edit</button> -->
@@ -180,9 +180,18 @@
                             <input type="date" id="dateOfBirth" name="dateOfBirth" value="{{ dateOfBirth or '' }}" required>
                         </div>
                         <div class="form-item">
-                            <label for="plan">Plan:</label>
-                            <input type="text" id="planDisplay" value="{{ current_plan }}" style="background-color: #ccc;" readonly>
+                            <label for="plan">Plan:{{plan}}</label>
+                            {% if email == 'admin@gmail.com' %}
+                                <select id="planDisplay" name="plan" style="height:35px;">
+                                    <option value="Free" {% if plan == 'Free' %}selected{% endif %}>Free</option>
+                                    <option value="Starter" {% if plan == 'Starter' %}selected{% endif %}>Starter</option>
+                                    <option value="Professional" {% if plan == 'Professional' %}selected{% endif %}>Professional</option>
+                                </select>
+                            {% else %}
+                                <input type="text" id="planDisplay" name="plan" value="{{ plan }}" readonly style="background-color: #ccc;">
+                            {% endif %}
                         </div>
+                        
                     </div>
                 </div>
 
@@ -284,6 +293,7 @@
         document.getElementById('create-user-form').style.display = 'none';
         document.getElementById('customer-profile-table').style.display = 'block';
 
+    }
         fetch('/all_userdetails')
             .then(response => response.json())
             .then(data => {
@@ -294,7 +304,7 @@
                 data.all_users.forEach(user => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${user.name || 'N/A'}</td>
+                        <td>${user.displayName || 'N/A'}</td>
                         <td>${user.email || 'N/A'}</td>
                         <td>
                             <button onclick="editUser('${user.id}')">Edit</button>
@@ -305,7 +315,7 @@
                 });
             })
             .catch(error => console.error('Error fetching customer details:', error));
-    }
+    
 }
 
             function editUser(userId) {
@@ -335,7 +345,16 @@
 
             function deleteUser(userId) {
                 if (confirm('Are you sure you want to delete this user?')) {
-                    alert('User deleted with ID: ' + userId);
+                    fetch(`/delete_user/${userId}`, { method: 'DELETE' })
+                        .then(response => {
+                            if (response.ok) {
+                                alert('User deleted successfully');
+                                toggleProfileType('customer'); // Refresh table
+                            } else {
+                                alert('Failed to delete user');
+                            }
+                        })
+                        .catch(error => console.error('Error deleting user:', error));
                 }
             }
         </script>

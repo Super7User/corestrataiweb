@@ -10,6 +10,7 @@ import time
 import pandas as pd
 import csv
 import redis
+from datetime import datetime
 
 
 auth_blueprint = Blueprint('auth_blueprint', __name__)
@@ -48,7 +49,6 @@ firebaseConfig = {
 
 @auth_blueprint.route('/get_user_data')
 def get_user_data():
-
     user_id = current_user.get_id()
     if not user_id:
         return jsonify({"error": "User not logged in"}), 401
@@ -59,24 +59,60 @@ def get_user_data():
 
     email = redis_email.decode('utf-8') if isinstance(redis_email, bytes) else redis_email
 
-    headers, user_data = fetch_user_data_from_csv(email)
-    if user_data:
+    firebase_user = firebase_db.collection('users').document(user_id).get()
+
+    if firebase_user.exists:
+        user_data = firebase_user.to_dict()
+        
+        filtered_data = {
+            "name": user_data.get("displayName", "N/A"),
+            "email": user_data.get("email", "N/A"),
+            "plan": user_data.get("plan", "N/A"),
+            "phone": user_data.get("phoneNumber", "N/A"),
+            "address": user_data.get("address", {}).get("city", "N/A")
+        }
+
+        headers = list(filtered_data.keys())  
         return jsonify({
             "headers": headers,
-            "user_data": user_data
+            "user_data": filtered_data
         })
     else:
-        return jsonify({"error": "User not found"}), 404
+        return jsonify({"error": "User not found in Firebase"}), 404
 
 
-def fetch_user_data_from_csv(email):
-    with open('demotools.csv', mode='r') as file:
-        csv_reader = csv.DictReader(file)
-        headers = csv_reader.fieldnames  
-        for row in csv_reader:
-            if row['Email'] == email:
-                return headers, row  
-    return headers, None  
+
+# @auth_blueprint.route('/get_user_data')
+# def get_user_data():
+
+#     user_id = current_user.get_id()
+#     if not user_id:
+#         return jsonify({"error": "User not logged in"}), 401
+
+#     redis_email = redis_client.hget(user_id, "email")
+#     if not redis_email:
+#         return jsonify({"error": "Email not found in Redis"}), 404
+
+#     email = redis_email.decode('utf-8') if isinstance(redis_email, bytes) else redis_email
+
+#     headers, user_data = fetch_user_data_from_csv(email)
+#     if user_data:
+#         return jsonify({
+#             "headers": headers,
+#             "user_data": user_data
+#         })
+#     else:
+#         return jsonify({"error": "User not found"}), 404
+
+
+# def fetch_user_data_from_csv(email):
+#     with open('demotools.csv', mode='r') as file:
+#         csv_reader = csv.DictReader(file)
+#         headers = csv_reader.fieldnames  
+#         for row in csv_reader:
+#             if row['Email'] == email:
+#                 return headers, row  
+#     return headers, None  
 
 # @auth_blueprint.route('/userdetails')
 # def userdetails():
@@ -164,93 +200,175 @@ def get_user(user_id):
     else:
         return jsonify({"error": "User not found"}), 404
 
-@auth_blueprint.route('/create-user', methods=['POST'])
+# @auth_blueprint.route('/create-user', methods=['POST'])
+# def create_user():
+#     try:
+#         user_id = current_user.get_id()
+#         print(user_id, "ata")
+
+#         if user_id:
+#             redis_user_id = redis_client.hget(user_id, "user_id")
+#             redis_email = redis_client.hget(user_id, "email")
+#             redis_plan = redis_client.hget(user_id, "plan")
+
+#             if redis_user_id:
+#                 redis_user_id = redis_user_id.decode('utf-8')
+#             if redis_email:
+#                 redis_email = redis_email.decode('utf-8')
+#             if redis_plan:
+#                 redis_plan = redis_plan.decode('utf-8')
+
+#             if user_id == redis_user_id:
+#                 print(f"User ID: {redis_user_id}, Email: {redis_email}, Plan: {redis_plan}")
+#             else:
+#                 return jsonify({"status": "error", "message": "User ID mismatch"}), 403
+#         else:
+#             return jsonify({"status": "error", "message": "User not logged in"}), 401
+
+#         display_name = request.form['displayName']
+#         email = request.form['email']
+#         phone_number = request.form.get('phoneNumber', None)
+#         date_of_birth = request.form.get('dateOfBirth', None)
+#         photo_url = request.form.get('photoURL', None)
+
+#         address = {
+#             'street': request.form.get('street', None),
+#             'city': request.form.get('city', None),
+#             'state': request.form.get('state', None),
+#             'postalCode': request.form.get('postalCode', None),
+#             'country': request.form.get('country', None)
+#         }
+
+#         plan = request.form.get('Plan', 'free')
+#         notifications_enabled = 'notificationsEnabled' in request.form
+#         language = request.form['language']
+#         theme = request.form['theme']
+#         newsletter_subscribed = 'newsletterSubscribed' in request.form
+#         content_filters = request.form.get('contentFilters', '')
+#         bio = request.form.get('bio', '')
+
+#         social_links = {
+#             'twitter': request.form.get('socialLinks[twitter]', None),
+#             'facebook': request.form.get('socialLinks[facebook]', None),
+#             'instagram': request.form.get('socialLinks[instagram]', None),
+#             'youtube': request.form.get('socialLinks[youtube]', None)
+#         }
+
+#         is_active = 'isActive' in request.form
+
+#         user_data = {
+#             'uid': redis_user_id,
+#             'displayName': display_name,
+#             'email': redis_email,
+#             'phoneNumber': phone_number,
+#             'dateOfBirth': date_of_birth,
+#             'photoURL': photo_url,
+#             'address': address,
+#             'plan': redis_plan,
+#             'settings': {
+#                 'notificationsEnabled': notifications_enabled,
+#                 'language': language,
+#                 'theme': theme
+#             },
+#             'socialLinks': social_links,
+#             'bio': bio,
+#             'preferences': {
+#                 'newsletterSubscribed': newsletter_subscribed,
+#                 'contentFilters': content_filters.split(',')
+#             },
+#             'isActive': is_active,
+#             'createdAt': firestore.SERVER_TIMESTAMP,
+#             'updatedAt': firestore.SERVER_TIMESTAMP,
+#             'lastLogin': firestore.SERVER_TIMESTAMP
+#         }
+
+#         firebase_db.collection('users').document(user_id).set(user_data)
+#         return "User created successfully!", 201
+
+#     except Exception as e:
+#         return f"An error occurred: {e}", 400
+
+@auth_blueprint.route('/create-user', methods=['GET', 'POST'])
 def create_user():
     try:
         user_id = current_user.get_id()
-        print(user_id, "ata")
 
-        if user_id:
-            redis_user_id = redis_client.hget(user_id, "user_id")
-            redis_email = redis_client.hget(user_id, "email")
-            redis_plan = redis_client.hget(user_id, "plan")
-
-            if redis_user_id:
-                redis_user_id = redis_user_id.decode('utf-8')
-            if redis_email:
-                redis_email = redis_email.decode('utf-8')
-            if redis_plan:
-                redis_plan = redis_plan.decode('utf-8')
-
-            if user_id == redis_user_id:
-                print(f"User ID: {redis_user_id}, Email: {redis_email}, Plan: {redis_plan}")
-            else:
-                return jsonify({"status": "error", "message": "User ID mismatch"}), 403
-        else:
+        if not user_id:
             return jsonify({"status": "error", "message": "User not logged in"}), 401
 
-        display_name = request.form['displayName']
-        email = request.form['email']
-        phone_number = request.form.get('phoneNumber', None)
-        date_of_birth = request.form.get('dateOfBirth', None)
-        photo_url = request.form.get('photoURL', None)
+        redis_user_id = redis_client.hget(user_id, "user_id")
+        redis_plan = redis_client.hget(user_id, "plan")
 
-        address = {
-            'street': request.form.get('street', None),
-            'city': request.form.get('city', None),
-            'state': request.form.get('state', None),
-            'postalCode': request.form.get('postalCode', None),
-            'country': request.form.get('country', None)
-        }
+        if redis_user_id:
+            redis_user_id = redis_user_id.decode('utf-8')
+        if redis_plan:
+            redis_plan = redis_plan.decode('utf-8')
 
-        plan = request.form.get('Plan', 'free')
-        notifications_enabled = 'notificationsEnabled' in request.form
-        language = request.form['language']
-        theme = request.form['theme']
-        newsletter_subscribed = 'newsletterSubscribed' in request.form
-        content_filters = request.form.get('contentFilters', '')
-        bio = request.form.get('bio', '')
+        if request.method == 'POST':
+            plan = request.form.get('plan', redis_plan)
+            display_name = request.form['displayName']
+            email = request.form['email']
+            phone_number = request.form.get('phoneNumber', None)
+            date_of_birth = request.form.get('dateOfBirth', None)
+            photo_url = request.form.get('photoURL', None)
+            address = {
+                'street': request.form.get('street', None),
+                'city': request.form.get('city', None),
+                'state': request.form.get('state', None),
+                'postalCode': request.form.get('postalCode', None),
+                'country': request.form.get('country', None)
+            }
+            notifications_enabled = 'notificationsEnabled' in request.form
+            language = request.form['language']
+            theme = request.form['theme']
+            newsletter_subscribed = 'newsletterSubscribed' in request.form
+            content_filters = request.form.get('contentFilters', '')
+            bio = request.form.get('bio', '')
 
-        social_links = {
-            'twitter': request.form.get('socialLinks[twitter]', None),
-            'facebook': request.form.get('socialLinks[facebook]', None),
-            'instagram': request.form.get('socialLinks[instagram]', None),
-            'youtube': request.form.get('socialLinks[youtube]', None)
-        }
+            social_links = {
+                'twitter': request.form.get('socialLinks[twitter]', None),
+                'facebook': request.form.get('socialLinks[facebook]', None),
+                'instagram': request.form.get('socialLinks[instagram]', None),
+                'youtube': request.form.get('socialLinks[youtube]', None)
+            }
 
-        is_active = 'isActive' in request.form
+            is_active = 'isActive' in request.form
 
-        user_data = {
-            'uid': redis_user_id,
-            'displayName': display_name,
-            'email': redis_email,
-            'phoneNumber': phone_number,
-            'dateOfBirth': date_of_birth,
-            'photoURL': photo_url,
-            'address': address,
-            'plan': redis_plan,
-            'settings': {
-                'notificationsEnabled': notifications_enabled,
-                'language': language,
-                'theme': theme
-            },
-            'socialLinks': social_links,
-            'bio': bio,
-            'preferences': {
-                'newsletterSubscribed': newsletter_subscribed,
-                'contentFilters': content_filters.split(',')
-            },
-            'isActive': is_active,
-            'createdAt': firestore.SERVER_TIMESTAMP,
-            'updatedAt': firestore.SERVER_TIMESTAMP,
-            'lastLogin': firestore.SERVER_TIMESTAMP
-        }
+            user_data = {
+                'uid': redis_user_id,
+                'displayName': display_name,
+                'email': email,
+                'phoneNumber': phone_number,
+                'dateOfBirth': date_of_birth,
+                'photoURL': photo_url,
+                'address': address,
+                'plan': plan,
+                'settings': {
+                    'notificationsEnabled': notifications_enabled,
+                    'language': language,
+                    'theme': theme
+                },
+                'socialLinks': social_links,
+                'bio': bio,
+                'preferences': {
+                    'newsletterSubscribed': newsletter_subscribed,
+                    'contentFilters': content_filters.split(',')
+                },
+                'isActive': is_active,
+                'createdAt': firestore.SERVER_TIMESTAMP,
+                'updatedAt': firestore.SERVER_TIMESTAMP,
+                'lastLogin': firestore.SERVER_TIMESTAMP
+            }
 
-        firebase_db.collection('users').document(user_id).set(user_data)
-        return "User created successfully!", 201
+            firebase_db.collection('users').document(user_id).set(user_data)
+
+            return render_template('userdetails.html', plan=plan, user_id=redis_user_id)
+
+        return render_template('userdetails.html', plan=redis_plan, user_id=redis_user_id)
 
     except Exception as e:
         return f"An error occurred: {e}", 400
+
 
 
 @auth_blueprint.route('/edit_user/<user_id>')
@@ -367,10 +485,11 @@ def send_reset_password():
        
 #     return render_template('login.html')
 
+
 @auth_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['login_email'].strip().lower()
+        email = request.form['login_email'].strip().lower()  
         password = request.form['login_password']
         keep_logged_in = 'keep_logged_in' in request.form
 
@@ -389,37 +508,42 @@ def login():
                 user = User(id=user_id, email=email)
                 login_user(user, remember=keep_logged_in)
 
+                # session['userId'] = user_id
                 session.permanent = keep_logged_in
-                session['is_admin'] = (email == "admin@gmail.com")
+                if email == "admin@gmail.com":
+                    session['is_admin'] = True
+                else:
+                    session['is_admin'] = False
 
                 try:
-                    default_plan = "Free"
 
                     unique_id = db.reference('generated_streams').push().key
+                    # session['firebase_unique_id'] = unique_id
 
                     ref = db.reference(f'generated_streams/{unique_id}')
-                    ref.update({
-                        'plan': default_plan,
-                    })
-
+                    # ref.update({
+                    #     'plan': 'Default'  # Use a default value like 'Default' or set as required
+                    # })
                     redis_client.hset(user_id, mapping={
                         "user_id": user_id,
                         "email": email,
-                        "plan": default_plan,
                         "firebase_unique_id": unique_id
                     })
-
-                    return jsonify({"status": "success", "message": "Login successful.", "plan": default_plan})
-
+                    stored_data = redis_client.hgetall(user_id)
+                    print({key.decode('utf-8'): val.decode('utf-8') for key, val in stored_data.items()}, "loginData")
+                    print("newlogin")
+                    return jsonify({"status": "success", "message": "Login successful."})
+                    
                 except Exception as e:
-                    return jsonify({"status": "error", "message": f"Error saving user data: {str(e)}"})
+                    return jsonify({"status": "error", "message": f"Error updating Firebase: {str(e)}"})
             else:
                 return jsonify({"status": "error", "message": response_data.get("error", {}).get("message", "Invalid login credentials.")})
 
         except Exception as e:
             return jsonify({"status": "error", "message": str(e)})
-
+       
     return render_template('login.html')
+
 
 
 @auth_blueprint.route('/signup', methods=['POST'])
@@ -449,6 +573,22 @@ def logout():
     return redirect(url_for('auth_blueprint.login'))
 
 
+# @auth_blueprint.route('/register', methods=['GET', 'POST'])
+# def register():
+#     if request.method == 'POST':
+#         email = request.form['email']
+#         password = request.form['password']
+
+#         try:
+#             user = firebase_auth.create_user(email=email, password=password)
+#             firebase_auth.set_custom_user_claims(user.uid, {'signed_in': True})
+#             return jsonify({"status": "success", "message": f"User {email} registered successfully."})
+#         except firebase_auth.AuthError as e:
+#             return jsonify({"status": "error", "message": str(e)})
+
+#     return render_template('register.html')
+
+
 @auth_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -457,12 +597,22 @@ def register():
 
         try:
             user = firebase_auth.create_user(email=email, password=password)
+            
             firebase_auth.set_custom_user_claims(user.uid, {'signed_in': True})
+            
+            firebase_db.collection('users').document(user.uid).set({
+                'email': email,
+                'plan': 'Free',
+                'created_at': datetime.utcnow()
+            })
+            
             return jsonify({"status": "success", "message": f"User {email} registered successfully."})
         except firebase_auth.AuthError as e:
             return jsonify({"status": "error", "message": str(e)})
 
     return render_template('register.html')
+
+
 
 @auth_blueprint.route('/update', methods=['POST'])
 def update_user():
