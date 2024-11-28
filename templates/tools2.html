@@ -398,7 +398,7 @@
             <div class="games">
                 {% for tool in tools_data %}
                 <div class="banner__wrapper">
-                    <div class="banner">
+                    <div class="banner"  onclick="openPricingModal('{{ tool.ID }}', '{{plan}}','{{ tool.Plan }}')">                       
                         <!-- <a href="/tool-detail/{{ tool['ID'] }}" class="stretched-link"> -->
                             <img src="{{ url_for('static', filename=tool['Image']) }}" alt="{{ tool['Title'] }} Logo"
                                 class="tool-img">
