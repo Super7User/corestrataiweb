@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -103,7 +104,9 @@
             justify-content: space-between;
         }
 
-        .col-xl-3, .col-md-6, .col-sm-12 {
+        .col-xl-3,
+        .col-md-6,
+        .col-sm-12 {
             flex-basis: 23%;
             margin-bottom: 20px;
         }
@@ -135,13 +138,14 @@
                     <div class="tab-pane fade show active" id="monthly">
                         <div class="row">
                             <div class="col-xl-4 col-md-6 col-sm-12" id="free-plan">
-                                <div class="pricing-item" >
+                                <div class="pricing-item">
                                     <div class="pricing-head">
                                         <span class="package">Free</span>
                                         <h3><span class="currency">$</span>00.00</h3>
                                         <form action="/create-checkout" method="POST">
                                             <input type="hidden" name="price_id" value="{{ price_id }}">
-                                            <input type="hidden" name="connected_account_id" value="{{ connected_account_id }}">
+                                            <input type="hidden" name="connected_account_id"
+                                                value="{{ connected_account_id }}">
                                             <a href="#" class="theme-btn">Start Free Trial</a>
                                         </form>
                                     </div>
@@ -193,41 +197,46 @@
                             </div>
                         </div>
                     </div>
-                  
+
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             window.openPricingModal = openPricingModal;
             const currentPlan = sessionStorage.getItem('currentPlan');
-            console.log(currentPlan,"currentPlan")
-            if (currentPlan === 'Free') {
-        document.getElementById('free-plan').classList.add('highlight');
-        document.querySelector('#free-plan .theme-btn').textContent = 'Current Plan';
-        document.querySelector('#starter-plan .theme-btn').textContent = 'Upgrade';
-        document.querySelector('#professional-plan .theme-btn').textContent = 'Upgrade';
-    } else if (currentPlan === 'Starter') {
-        document.getElementById('starter-plan').classList.add('highlight');
-        document.querySelector('#free-plan .theme-btn').textContent = 'Downgrade';
-        document.querySelector('#starter-plan .theme-btn').textContent = 'Current Plan';
-        document.querySelector('#professional-plan .theme-btn').textContent = 'Upgrade';
-    } else if (currentPlan === 'Professional') {
-        document.getElementById('professional-plan').classList.add('highlight');
-        document.querySelector('#free-plan .theme-btn').textContent = 'Downgrade';
-        document.querySelector('#starter-plan .theme-btn').textContent = 'Downgrade';
-        document.querySelector('#professional-plan .theme-btn').textContent = 'Current Plan';
-    }
+            console.log(currentPlan, "currentPlan");
+
+            const normalizedPlan = currentPlan.charAt(0).toUpperCase() + currentPlan.slice(1).toLowerCase();
+            console.log(normalizedPlan, "Normalized currentPlan");
+
+            if (normalizedPlan === 'Free') {
+                document.getElementById('free-plan').classList.add('highlight');
+                document.querySelector('#free-plan .theme-btn').textContent = 'Current Plan';
+                document.querySelector('#starter-plan .theme-btn').textContent = 'Upgrade';
+                document.querySelector('#professional-plan .theme-btn').textContent = 'Upgrade';
+            } else if (normalizedPlan === 'Starter') {
+                document.getElementById('starter-plan').classList.add('highlight');
+                document.querySelector('#free-plan .theme-btn').textContent = 'Downgrade';
+                document.querySelector('#starter-plan .theme-btn').textContent = 'Current Plan';
+                document.querySelector('#professional-plan .theme-btn').textContent = 'Upgrade';
+            } else if (normalizedPlan === 'Professional') {
+                document.getElementById('professional-plan').classList.add('highlight');
+                document.querySelector('#free-plan .theme-btn').textContent = 'Downgrade';
+                document.querySelector('#starter-plan .theme-btn').textContent = 'Downgrade';
+                document.querySelector('#professional-plan .theme-btn').textContent = 'Current Plan';
+            }
         });
 
         function closeModal() {
-           
+
             document.getElementById('pricingModal').style.display = 'none';
         }
         // sessionStorage.removeItem('currentPlan');
         // console.log( sessionStorage.removeItem('currentPlan'),"remove")
     </script>
 </body>
+
 </html>

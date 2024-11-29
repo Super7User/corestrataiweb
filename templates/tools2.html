@@ -368,6 +368,14 @@
 </head>
 
 <body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const userPlan = "{{ plan }}";
+            sessionStorage.setItem('currentPlan', userPlan);
+            const currentPlannnn = sessionStorage.getItem('currentPlan');
+            console.log("User's current plan:", currentPlannnn, userPlan);
+        });
+    </script>
     {% include 'header.html' %}
     <main style="margin-top: 5%">
         <div class="banner__wrapper">
@@ -398,14 +406,15 @@
             <div class="games">
                 {% for tool in tools_data %}
                 <div class="banner__wrapper">
-                    <div class="banner"  onclick="openPricingModal('{{ tool.ID }}', '{{plan}}','{{ tool.Plan }}')">                       
+                    <div class="banner" onclick="openPricingModal('{{ tool.ID }}', '{{plan}}','{{ tool.Plan }}')">
                         <!-- <a href="/tool-detail/{{ tool['ID'] }}" class="stretched-link"> -->
-                            <img src="{{ url_for('static', filename=tool['Image']) }}" alt="{{ tool['Title'] }} Logo"
-                                class="tool-img">
+                        <img src="{{ url_for('static', filename=tool['Image']) }}" alt="{{ tool['Title'] }} Logo"
+                            class="tool-img">
                         <!-- </a> -->
+
                     </div>
                     <div class="card__wrapper">
-                        <div class="card1">
+                        <div class="card1" onclick="openPricingModal('{{ tool.ID }}', '{{plan}}','{{ tool.Plan }}')">
                             <div class="card__info">
                                 <div>
                                     <span>{{ tool['Title'] }}</span>
@@ -413,14 +422,11 @@
                                 </div>
                             </div>
                             {% if tool['Plan'] == 'Free' %}
-                            <button style="background-color: #A5DD9B;"
-                                onclick="openPricingModal('{{ tool.ID }}', '{{plan}}','{{ tool.Plan }}')">{{ tool['Plan'] }}</button>
+                            <button style="background-color: #A5DD9B;">{{ tool['Plan'] }}</button>
                             {% elif tool['Plan'] == 'Starter' %}
-                            <button style="background-color: #836FFF;"
-                                onclick="openPricingModal('{{ tool.ID }}', '{{plan}}','{{ tool.Plan }}')">{{ tool['Plan'] }}</button>
+                            <button style="background-color: #836FFF;">{{ tool['Plan'] }}</button>
                             {% elif tool['Plan'] == 'Professional' %}
-                            <button style="background-color: #FBA834;"
-                                onclick="openPricingModal('{{ tool.ID }}', '{{plan}}','{{ tool.Plan }}')">{{ tool['Plan'] }}</button>
+                            <button style="background-color: #FBA834;">{{ tool['Plan'] }}</button>
                             {% endif %}
                         </div>
                         {% include 'pricingModal.html' %}
@@ -432,20 +438,41 @@
     </main>
     <script src="{{ url_for('static', filename='cardscripts.js') }}"></script>
     <script>
-        function openPricingModal(toolId,plan,toolPlan) {
-            sessionStorage.setItem('currentPlan', plan);
-            console.log(plan)
-            if (plan === toolPlan) {
-                // var myModal = new bootstrap.Modal(document.getElementById('pricingModal'), {});
-                // myModal.show();
-                window.location.href = `/tool-detail/${toolId}`;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const userPlan = "{{ plan }}";
+            sessionStorage.setItem('currentPlan', userPlan);
+            const currentPlannnn = sessionStorage.getItem('currentPlan');
+            console.log("User's current plan:", currentPlannnn, userPlan);
+        });
+
+        function openPricingModal(toolId, currentPlan, toolPlan) {
+            const planHierarchy = ['Free', 'Starter', 'Professional'];
+            const currentPlanIndex = planHierarchy.indexOf(currentPlan);
+            const toolPlanIndex = planHierarchy.indexOf(toolPlan);
+
+            console.log('Current Plan:', currentPlan, 'Index:', currentPlanIndex);
+            console.log('Tool Plan:', toolPlan, 'Index:', toolPlanIndex);
+
+
+            if (currentPlanIndex === -1 || toolPlanIndex === -1) {
+                console.error('Invalid plan provided. Check plan values.');
+                return;
             }
-             else {
-                
-                document.getElementById('pricingModal').style.display = 'block';
+
+            if (currentPlanIndex >= toolPlanIndex) {
+                console.log('Access granted. Navigating to tool details page.');
+                window.location.href = `/tool-detail/${toolId}`;
+            } else {
+                console.log('Access denied. Showing pricing modal.');
+                const modal = document.getElementById('pricingModal');
+                if (modal) {
+                    modal.style.display = 'block';
+                } else {
+                    console.error('Pricing modal not found in DOM.');
+                }
             }
         }
-    
     </script>
 </body>
 

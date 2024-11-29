@@ -12,6 +12,7 @@ import logging
 from firebase_admin import credentials
 import requests
 import redis
+import holygrailutils
 
 app = Flask(__name__)
 
@@ -31,6 +32,8 @@ cred = credentials.Certificate("serviceAccountKey.json")
 
 logging.basicConfig(level=logging.DEBUG)
 redis_client = redis.Redis(host='localhost', port=6379, db=0)
+redis_client = holygrailutils.get_redis_client()
+
  
 # firebase_admin.initialize_app(cred,{
 #     'databaseURL': 'https://holygrail07-default-rtdb.firebaseio.com/'

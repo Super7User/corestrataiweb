@@ -11,11 +11,12 @@ import pandas as pd
 import csv
 import redis
 from datetime import datetime
-
+import holygrailutils
 
 auth_blueprint = Blueprint('auth_blueprint', __name__)
 
 redis_client = redis.Redis(host='localhost', port=6379, db=0)
+redis_client = holygrailutils.get_redis_client()
 
 
 login_manager = LoginManager()
@@ -527,7 +528,8 @@ def login():
                     redis_client.hset(user_id, mapping={
                         "user_id": user_id,
                         "email": email,
-                        "firebase_unique_id": unique_id
+                        "firebase_unique_id": unique_id,
+                        
                     })
                     stored_data = redis_client.hgetall(user_id)
                     print({key.decode('utf-8'): val.decode('utf-8') for key, val in stored_data.items()}, "loginData")

@@ -5,16 +5,21 @@ from groq import Groq
 import pandas as pd
 import ast
 import time
-from firebase_admin import credentials, auth, db
+from firebase_admin import credentials, auth, db,firestore
 import logging
 import redis
+import holygrailutils
+
 
 tools_blueprint = Blueprint('tools', __name__)
+
 
 load_dotenv(find_dotenv())
 # client = OpenAI(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
 client = Groq(api_key='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')
 redis_client = redis.Redis(host='localhost', port=6379, db=0)
+redis_client = holygrailutils.get_redis_client()
+
 
 @tools_blueprint.route('/tools')
 @login_required
@@ -22,19 +27,23 @@ def tools():
     user_id = current_user.get_id()
 
     if user_id:
+
         redis_user_id = redis_client.hget(user_id, "user_id")
         redis_email = redis_client.hget(user_id, "email")
-        redis_plan = redis_client.hget(user_id, "plan")
-        
-        if redis_user_id:
-            redis_user_id = redis_user_id.decode('utf-8')
-        if redis_email:
-            redis_email = redis_email.decode('utf-8')
-        if redis_plan:
-            redis_plan = redis_plan.decode('utf-8')
-        
-        if user_id == redis_user_id:
-            print(f"User ID: {redis_user_id}, Email: {redis_email}, Plan: {redis_plan}")
+
+        redis_user_id = redis_user_id.decode('utf-8') if redis_user_id else None
+        redis_email = redis_email.decode('utf-8') if redis_email else None
+
+        if redis_user_id and user_id == redis_user_id:
+            db = firestore.client()
+            user_doc = db.collection('users').document(user_id).get()
+            
+            
+            user_data = user_doc.to_dict()
+            firestore_plan = user_data.get('plan')  
+            if not firestore_plan:
+                return jsonify({"status": "error", "message": "Plan not found for user in Firestore"}), 404
+            print(f"Plan from Firestore: {firestore_plan}")
         else:
             return jsonify({"status": "error", "message": "User ID mismatch"}), 403
     else:
@@ -52,8 +61,17 @@ def tools():
 
     tools_data = data.to_dict(orient='records')
     categories = data['Category'].dropna().unique().tolist()
+    session['currentPlan'] = firestore_plan
+    print(firestore_plan, "Fetched plan...")
 
-    return render_template('tools2.html', tools_data=tools_data, categories=categories, user_email=redis_email, plan=redis_plan)
+    return render_template(
+        'tools2.html',
+        tools_data=tools_data,
+        categories=categories,
+        user_email=redis_email,
+        plan=firestore_plan
+    )
+
 
 def get_completion(prompt, model="gpt-4"):
     messages = [{"role": "user", "content": prompt}]
