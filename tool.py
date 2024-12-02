@@ -16,7 +16,7 @@ tools_blueprint = Blueprint('tools', __name__)
 
 load_dotenv(find_dotenv())
 # client = OpenAI(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
-client = Groq(api_key='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')
+clientg = Groq(api_key='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')
 redis_client = redis.Redis(host='localhost', port=6379, db=0)
 redis_client = holygrailutils.get_redis_client()
 
@@ -64,6 +64,7 @@ def tools():
     session['currentPlan'] = firestore_plan
     print(firestore_plan, "Fetched plan...")
 
+   
     return render_template(
         'tools2.html',
         tools_data=tools_data,
@@ -76,7 +77,7 @@ def tools():
 def get_completion(prompt, model="gpt-4"):
     messages = [{"role": "user", "content": prompt}]
     try:
-        response =client.chat.completions.create(
+        response =clientg.chat.completions.create(
             model=model,
             messages=messages,
             temperature=0,
@@ -194,7 +195,7 @@ def generate_stream():
         return jsonify({'error': str(e)}), 500
 
     try:
-        response = client.chat.completions.create(
+        response = clientg.chat.completions.create(
             model="llama3-8b-8192",
             messages=[
                 {

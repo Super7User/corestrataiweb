@@ -299,26 +299,27 @@
             color: #e0e0e0;
         }
 
-        button {
+        .button1 {
             margin-top: 20px;
             height: 30px;
-            padding: 5px 10px;
+            padding: 2px 10px;
             border-radius: 10px;
             font-size: 14px;
             background-color: var(--btn-background);
             font-weight: 400;
             color: #fff;
-            cursor: pointer;
+            border: 2px solid #3c3737;
+            cursor:default;
             transition: 0.3s all ease;
         }
 
-        button:hover {
+        /* button:hover {
             opacity: var(--btn-hover-opacity);
         }
 
         button:active {
             transform: scale(var(--btn-active-scale));
-        }
+        } */
 
         .theme-toggle {
             position: absolute;
@@ -422,11 +423,11 @@
                                 </div>
                             </div>
                             {% if tool['Plan'] == 'Free' %}
-                            <button style="background-color: #A5DD9B;">{{ tool['Plan'] }}</button>
+                            <span class="button1" style="background-color: #A5DD9B;">{{ tool['Plan'] }}</span>
                             {% elif tool['Plan'] == 'Starter' %}
-                            <button style="background-color: #836FFF;">{{ tool['Plan'] }}</button>
+                            <span class="button1" style="background-color: #836FFF;">{{ tool['Plan'] }}</span>
                             {% elif tool['Plan'] == 'Professional' %}
-                            <button style="background-color: #FBA834;">{{ tool['Plan'] }}</button>
+                            <span class="button1" style="background-color: #FBA834;">{{ tool['Plan'] }}</span>
                             {% endif %}
                         </div>
                         {% include 'pricingModal.html' %}
