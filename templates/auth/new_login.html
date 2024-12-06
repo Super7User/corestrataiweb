@@ -50,7 +50,7 @@
                             .then(data => {
                                 console.log(data);
                                 if (data.success) {
-                                    window.location.href = "/tools";
+                                    window.location.href = "/newLanding";
                                 } else {
                                     console.error("Signup failed");
                                 }
@@ -341,7 +341,7 @@
                                     name="keep_logged_in">&nbsp;Keep me logged in </p>
                         </div>
                         <div class="col-4">
-                            <p class="text-right"><a href="{{ url_for('main_routes.password_reset') }}"
+                            <p class="text-right"><a href="password_reset"
                                     style="color: #000;">Forgot
                                     Password?</a></p>
                         </div>
@@ -425,7 +425,7 @@
                     data: $(this).serialize(),
                     success: function (response) {
                         if (response.status === "success") {
-                            window.location.href = "/tools";
+                            window.location.href = "/newLanding";
                         } else {
                             alert(response.message);
                         }
