@@ -10,12 +10,12 @@ import holygrailutils
 # redis_client = redis.Redis(host='localhost', port=6379, db=0)
 redis_client = holygrailutils.get_redis_client()
 """
-def get_redis_client():
-    return redis.Redis(
-        host=REDIS_HOST,
-        port=6379, 
-        password=REDIS_PASS
-    )
+# def get_redis_client():
+#     return redis.Redis(
+#         host=REDIS_HOST,
+#         port=6379, 
+#         password=REDIS_PASS
+#     )
     
     
 """

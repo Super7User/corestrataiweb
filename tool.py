@@ -18,7 +18,7 @@ load_dotenv(find_dotenv())
 # client = OpenAI(api_key="sk-proj-jJllTB6aYWrrwO7DLLm9T3BlbkFJO7PocWpToNQ1rD77LXWf")
 clientg = Groq(api_key='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')
 redis_client = redis.Redis(host='localhost', port=6379, db=0)
-redis_client = holygrailutils.get_redis_client()
+# redis_client = holygrailutils.get_redis_client()
 
 
 @tools_blueprint.route('/tools')

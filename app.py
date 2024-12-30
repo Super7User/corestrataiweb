@@ -8,13 +8,71 @@ from routes import main_routes
 from image import image_blueprint
 from payment import stripe_blueprint
 from media import media_blueprint
+from shapes import shapes_blueprint
 import logging
 from firebase_admin import credentials
 import requests
 import redis
 import holygrailutils
+import json
+import os
 
 app = Flask(__name__)
+
+
+
+SAVE_FILE = "D:/shapes.json"
+
+@app.route('/load_shapes', methods=['GET'])
+def load_shapes():
+    if os.path.exists(SAVE_FILE):
+        with open(SAVE_FILE, 'r') as file:
+            data = json.load(file)
+
+        return jsonify(data)
+
+    return jsonify({"shapes": [], "textObject": {}, "videoLink": None})
+
+@app.route('/save_shapes', methods=['POST'])
+def save_shapes():
+    data = request.json
+    if "shapes" in data and "textObject" in data and "videoLink" in data:
+        try:
+            with open(SAVE_FILE, 'w') as file:
+                json.dump(data, file, indent=4)
+            return jsonify({"message": "Shapes and video link saved successfully!"})
+        except Exception as e:
+            return jsonify({"error": f"Could not save data: {str(e)}"}), 500
+    return jsonify({"error": "Invalid data"}), 400
+
+@app.route('/save_video_link', methods=['POST'])
+def save_video_link():
+    data = request.json
+    if "videoLink" in data:
+        try:
+
+            if os.path.exists(SAVE_FILE):
+                with open(SAVE_FILE, 'r') as file:
+                    existing_data = json.load(file)
+            else:
+                existing_data = {"shapes": [], "textObject": {}, "videoLink": None}
+
+            existing_data["videoLink"] = data["videoLink"]
+
+
+            with open(SAVE_FILE, 'w') as file:
+                json.dump(existing_data, file, indent=4)
+
+            return jsonify({"message": "Video link saved successfully!"})
+        except Exception as e:
+            return jsonify({"error": f"Could not save video link: {str(e)}"}), 500
+    return jsonify({"error": "Invalid data"}), 400
+
+
+@app.route('/videodownloadsample')
+def videodownloadsample():
+    return render_template('videodownloadsample.html')
+
 
 
 app.secret_key = 'your_secret_key'
@@ -32,7 +90,25 @@ cred = credentials.Certificate("serviceAccountKey.json")
 
 logging.basicConfig(level=logging.DEBUG)
 redis_client = redis.Redis(host='localhost', port=6379, db=0)
-redis_client = holygrailutils.get_redis_client()
+# redis_client = holygrailutils.get_redis_client()
+
+
+# @app.route('/test-firebase-connection', methods=['GET'])
+# def test_firebase_connection():
+#     url = "https://holygrail07-default-rtdb.firebaseio.com/.json"
+#     try:
+#         # Make a GET request to the Firebase endpoint
+#         response = requests.get(url, timeout=10)  # Timeout after 10 seconds
+#         response.raise_for_status()  # Raise exception for HTTP errors
+#         return jsonify({
+#             "status": "success",
+#             "response": response.json()
+#         }), 200
+#     except requests.exceptions.RequestException as e:
+#         return jsonify({
+#             "status": "error",
+#             "message": str(e)
+#         }), 500
 
  
 # firebase_admin.initialize_app(cred,{
@@ -81,6 +157,8 @@ app.register_blueprint(main_routes)
 app.register_blueprint(image_blueprint)
 app.register_blueprint(stripe_blueprint)
 app.register_blueprint(media_blueprint)
+# app.register_blueprint(shapes_blueprint)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

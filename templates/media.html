@@ -68,6 +68,23 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .video-player {
+            position: relative;
+            width: 100%;
+            /* Ensure the video container takes up space */
+            height: auto;
+            /* Maintain aspect ratio */
+        }
+
+        #main-video-player {
+            width: 100%;
+            /* Adjust the video to fill the container */
+            height: auto;
+            /* Maintain aspect ratio */
         }
 
         .video-player video {
@@ -437,7 +454,7 @@
             background-color: #2e2e2e;
             color: white;
             text-align: center;
-            padding: 50px;
+            /* padding: 50px; */
         }
 
         .sidebarb {
@@ -870,7 +887,147 @@
             background-color: #ccc;
             /* cursor: not-allowed; */
         }
+
+        .shape-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .shape-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .shape-item:hover {
+            background-color: #ddd;
+        }
+
+        .white-container {
+            top: 0px !important;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .scene-section {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .shape-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .shape-button {
+            cursor: pointer;
+            font-size: 24px;
+            text-align: center;
+            border: 1px solid #aaa;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+        }
+
+        .shape-button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .overlay-shape {
+            display: inline-block;
+            user-select: none;
+        }
     </style>
+    <style>
+        #videoContainer {
+            position: relative;
+            width: 640px;
+            height: 360px;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: auto;
+        }
+
+        #controls {
+            margin: 20px 0;
+        }
+
+        #controls input,
+        #controls button {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .resize-handle {
+            position: absolute;
+            background-color: blue;
+            width: 10px;
+            height: 10px;
+            cursor: se-resize;
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 10px;
+            display: none;
+        }
+
+        .video-controls input[type="range"] {
+            width: 100px;
+        }
+
+        #canvasContainer:hover .video-controls {
+            display: flex;
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            margin: 0 10px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-bar .progress {
+            height: 100%;
+            background-color: red;
+            width: 0;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -907,6 +1064,7 @@
                                 <li onclick="addLayer('text')">Text</li>
                                 <li onclick="addLayer('media')">Media</li>
                                 <li onclick="addLayer('effect')">Effect</li>
+                                <li onclick="addLayer('shape')">Shape</li>
                             </ul>
                         </div>
                         <i class="fa fa-cog"></i>
@@ -921,8 +1079,9 @@
                     </div>
                     <div id="textInputContainer" class="scene-section hidden">
                         <h4>Text Layer <i class="fa fa-font"></i></h4>
-                        <input type="text" placeholder="Enter text to display" class="scene-input"
-                            oninput="updateOverlayText(this)">
+                        <input id="textInput" type="text" placeholder="Enter text to display" class="scene-input" />
+                        <!-- <input type="text" id="textInput" placeholder="Enter text to display" class="scene-input"
+                            oninput="updateOverlayText(this)"> -->
                     </div>
                     <div class="scene-section">
                         <h4>Media <i class="fa fa-image"></i></h4>
@@ -934,22 +1093,49 @@
                         <h4>Effect <i class="fa fa-magic"></i></h4>
                         <input type="range" min="0" max="100" value="45" class="scene-range">
                     </div>
+                    <div id="shapeContainer" class="scene-section hidden">
+                        <h4>Shapes <i class="fa fa-shapes"></i></h4>
+                        <div class="shape-options" id="controls">
+                            <div class="shape-item" id="addCircle">⬤</div>
+                            <div class="shape-item" id="addRectangle">■</div>
+                            <div class="shape-item" id="addTriangle">▲</div>
+                            <!-- <div class="shape-item" onclick="addShape('ellipse')">◯</div> -->
+                            <div class="shape-item" onclick="addShape('star')">★</div>
+                            <!-- <div class="shape-item" onclick="addShape('hexagon')">⬢</div> -->
+                            <!-- <div class="shape-item" onclick="addShape('pentagon')">⬟</div> -->
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="video-player" id="dragContainer" style="position: relative;">
-                <video id="main-video-player" controls crossorigin="anonymous">
+            <div id="videoContainer">
+                <video id="videoPlayer" controls>
                     <source src="{{ url_for('static', filename='sample.mp4') }}" type="video/mp4"
                         id="main-video-source">
                     Your browser does not support the video tag.
                 </video>
-                <div id="overlayText" class="overlay-text"
-                    style="position: absolute; top: 30px; left: 200px; color: rgb(26, 25, 25); font-size: 24px; cursor: pointer;">
-
-                </div>
+                <canvas id="canvas"></canvas>
             </div>
 
-            <canvas id="canvas" style="display: none;"></canvas>
+
+            <!-- <div class="video-player" id="dragContainer1" style="position: relative;">
+
+                <video id="main-video-player" controls>
+                    <source src="{{ url_for('static', filename='sample.mp4') }}" type="video/mp4"
+                    id="main-video-source">
+                    Your browser does not support the video tag.
+                </video>
+                <div id="overlayText" class="overlay-text"
+                style="position: absolute; top: 30px; left: 200px; color: rgb(26, 25, 25); font-size: 24px; cursor: pointer;">
+            </div>
+
+
+
+            </div> -->
+
+            <!-- <canvas id="canvas" style="display: none;"></canvas> -->
+            <button id="undo">Undo</button>
             <span id="downloadButton" title="Download"><i class="fa-solid fa-download"></i></span>
 
             <div class="scene-card" id="fontControlCard">
@@ -1060,8 +1246,7 @@
                                 <div id="pexels-video" class="media-grid1 active">
                                     <div class="video-container">
                                         {% for video in videos %}
-                                        <div class="video-card media-card"
-                                            onclick="selectMedia(this, '{{ video.video_files[0].link }}', 'video')">
+                                        <div class="video-card media-card" onclick="selectMedia(this, '{{ video.video_files[0].link }}', 'video')">
                                             <div class="media-wrapper">
                                                 <video loop muted>
                                                     <source src="{{ video.video_files[0].link }}" type="video/mp4">
@@ -1085,7 +1270,7 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                                <button id="select-btn" style="margin-top: 10px;" disabled>Select</button>
+                                <button id="select-btn" style="margin-top: 10px;" disabled  >Select</button>
                             </div>
 
 
@@ -1182,13 +1367,32 @@
         </div>
     </main>
 
+    <!-- <script>
+           
+           document.addEventListener('DOMContentLoaded', () => {
+            const videoPlayer = document.getElementById('main-video-player');
+            const overlayText = document.getElementById('overlayText');
+
+            if (!videoPlayer) {
+                console.error('Video player element not found.');
+                return;
+            }
+
+            if (overlayText) {
+                console.log('Overlay text is present.');
+            } else {
+                console.error('Overlay text element not found.');
+            }
+
+            videoPlayer.addEventListener('loadeddata', () => {
+                console.log('Video loaded successfully.');
+            });
+        });
+  
+
+    </script> -->
 
     <script>
-        // function toggleLayerList() {
-        //     const layerList = document.getElementById('layerList');
-        //     layerList.classList.toggle('hidden');
-        // }
-
         function toggleLayerList() {
             const layerList = document.getElementById('layerList');
             layerList.classList.toggle('hidden');
@@ -1210,158 +1414,855 @@
             }
         }
 
-
         function addLayer(type) {
             toggleLayerList();
 
+            const sceneContent = document.querySelector('.scene-content');
             if (type === 'text') {
+                const textInputContainer = document.getElementById('textInputContainer');
+                textInputContainer.classList.remove('hidden');
+            } else if (type === 'shape') {
 
-                let existingInput = document.querySelector('.scene-content .text-layer-input');
-
-                if (!existingInput) {
-                    const inputField = document.createElement('input');
-                    inputField.setAttribute('type', 'text');
-                    inputField.setAttribute('placeholder', 'Enter text to display');
-                    inputField.classList.add('scene-input', 'text-layer-input');
-                    inputField.addEventListener('input', (e) => {
-                        document.getElementById('overlayText').innerText = e.target.value;
-                    });
-
-                    document.querySelector('.scene-content').appendChild(inputField);
+                const shapeContainer = document.getElementById('shapeContainer');
+                if (shapeContainer) {
+                    shapeContainer.classList.toggle('hidden');
+                } else {
+                    console.error('Shape container not found!');
                 }
             }
-        }
-
-
-        function updateOverlayText(inputElement) {
-            const overlayTextDiv = document.getElementById('overlayText');
-            overlayTextDiv.textContent = inputElement.value;
-            console.log(overlayTextDiv, overlayTextDiv.textContent, "overlayTextDiv")
         }
     </script>
-    <script>
-        const mediaThumbnail = document.querySelector('.media-thumbnail');
-        const mediaModal = document.getElementById('media-modal');
-        const closeMedia = document.getElementById('close-media');
-        const searchBtn = document.getElementById('search-btn');
-        const mediaPicker = document.getElementById('media-picker');
-        const mediaTypeRadios = document.querySelectorAll('input[name="media-type"]');
 
-        const videoContent = `
-            <img src="media1.jpg" alt="Video 1">
-            <img src="media2.jpg" alt="Video 2">
-            <img src="media3.jpg" alt="Video 3">
-        `;
+    <!-- <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const video = document.getElementById("videoPlayer");
+        const textInput = document.getElementById("textInput");
+        const addRectangleButton = document.getElementById("addRectangle");
+        const addCircleButton = document.getElementById("addCircle");
+        const addTriangleButton = document.getElementById("addTriangle");
+        const undoButton = document.getElementById("undo");
 
-        const imageContent = `
-            <img src="image1.jpg" alt="Image 1">
-            <img src="image2.jpg" alt="Image 2">
-            <img src="image3.jpg" alt="Image 3">
-        `;
+        canvas.width = video.offsetWidth;
+        canvas.height = video.offsetHeight;
 
-        const gifContent = `
-            <img src="gif1.gif" alt="GIF 1">
-            <img src="gif2.gif" alt="GIF 2">
-            <img src="gif3.gif" alt="GIF 3">
-        `;
-
-        const stickerContent = `
-            <img src="sticker1.png" alt="Sticker 1">
-            <img src="sticker2.png" alt="Sticker 2">
-            <img src="sticker3.png" alt="Sticker 3">
-        `;
-
-        function updateMediaPickerContent(mediaType) {
-            if (mediaType === 'video') {
-                mediaPicker.innerHTML = videoContent;
-            } else if (mediaType === 'image') {
-                mediaPicker.innerHTML = imageContent;
-            } else if (mediaType === 'gif') {
-                mediaPicker.innerHTML = gifContent;
-            } else if (mediaType === 'sticker') {
-                mediaPicker.innerHTML = stickerContent;
-            }
-        }
-
-        mediaTypeRadios.forEach(radio => {
-            radio.addEventListener('change', function () {
-                updateMediaPickerContent(this.value);
-            });
-        });
-
-        if (mediaThumbnail) {
-            mediaThumbnail.addEventListener('click', function () {
-                mediaModal.style.display = 'block';
-                updateMediaPickerContent(document.querySelector('input[name="media-type"]:checked').value);
-            });
-        }
-
-        if (closeMedia) {
-            closeMedia.addEventListener('click', function () {
-                mediaModal.style.display = 'none';
-            });
-        }
-
-        window.addEventListener('click', function (event) {
-            if (event.target == mediaModal) {
-                mediaModal.style.display = 'none';
-            }
-        });
-
-        if (searchBtn) {
-            searchBtn.addEventListener('click', function () {
-                const searchQuery = document.getElementById('media-search').value;
-                const mediaType = document.querySelector('input[name="media-type"]:checked').value;
-                alert(`Searching for ${mediaType}: "${searchQuery}"`);
-            });
-        }
-
-        document.querySelectorAll('.nav-btn').forEach(button => {
-            button.addEventListener('click', function () {
-
-
-                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-
-                this.classList.add('active');
-
-                document.querySelectorAll('.modal-section').forEach(section => section.style.display = 'none');
-
-                document.getElementById('content').style.display = 'none';
-
-
-                if (this.id === 'media-picker-btn') {
-                    document.getElementById('media-picker-content').style.display = 'block';
-                } else if (this.id === 'my-btn') {
-                    document.getElementById('my-content').style.display = 'block';
-                } else if (this.id === 'stock-btn') {
-                    document.getElementById('stock-content').style.display = 'block';
-                } else if (this.id === 'generate-btn') {
-                    document.getElementById('content').style.display = 'block';
-                }
-            });
-        });
-        function showMedia(mediaId) {
-            document.querySelectorAll('.media-section').forEach(function (section) {
-                section.style.display = 'none';
-            });
-
-
-            document.getElementById(mediaId).style.display = 'block';
-        }
-
-        document.getElementById('gettyBtn').addEventListener('click', function () {
-            showMedia('getty');
-        });
-
-        window.onload = function () {
-            document.querySelectorAll('.media-section').forEach(function (section) {
-                section.style.display = 'none';
-            });
-            document.getElementById('getty').style.display = 'block';
+        let shapes = [];
+        let moveHistory = [];
+        let textObject = {
+            content: "",
+            x: 100,
+            y: 100,
+            font: "20px Arial",
+            color: "black",
+            isDragging: false,
+            offsetX: 0,
+            offsetY: 0,
         };
 
-        document.getElementById('media-picker-content').style.display = 'block';
+        let isPlaying = false;
+        let dragTarget = null;
+        let offsetX, offsetY;
+
+        function drawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            shapes.forEach(shape => {
+                ctx.beginPath();
+                if (shape.type === "rectangle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.fillRect(shape.x, shape.y, shape.width, shape.height);
+                } else if (shape.type === "circle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (shape.type === "triangle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.moveTo(shape.x, shape.y);
+                    ctx.lineTo(shape.x + shape.width / 2, shape.y + shape.height);
+                    ctx.lineTo(shape.x - shape.width / 2, shape.y + shape.height);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                ctx.closePath();
+            });
+
+            ctx.fillStyle = textObject.color;
+            ctx.font = textObject.font;
+            ctx.textBaseline = "top";
+            ctx.fillText(textObject.content, textObject.x, textObject.y);
+        }
+
+        function saveShapes() {
+            const data = {
+                shapes: shapes,
+                textObject: textObject,
+            };
+            fetch('/save_shapes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => console.log(data.message || data.error))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function loadShapes() {
+            fetch('/load_shapes')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.shapes) {
+                        shapes = data.shapes;
+                    }
+                    if (data.textObject) {
+                        textObject = {
+                            ...textObject,
+                            ...data.textObject,
+                            x: data.textObject.x || 100,
+                            y: data.textObject.y || 100,
+                            font: data.textObject.font || "20px Arial",
+                            color: data.textObject.color || "black",
+                        };
+                    }
+                    drawCanvas();
+                })
+                .catch(error => console.error('Error loading shapes:', error));
+        }
+
+        function updateCanvas() {
+            if (!video.paused) {
+                drawCanvas();
+                saveShapes();
+                requestAnimationFrame(updateCanvas);
+            }
+        }
+
+        canvas.addEventListener("click", () => {
+            if (video.paused) {
+                video.play();
+                isPlaying = true;
+                requestAnimationFrame(updateCanvas);
+            } else {
+                video.pause();
+                isPlaying = false;
+                drawCanvas();
+            }
+            
+        });
+        function deleteShape(shape) {
+        const index = shapes.indexOf(shape);
+        if (index > -1) {
+            shapes.splice(index, 1);
+            saveShapes();
+            drawCanvas();
+        }
+    }
+
+        function addShape(shape) {
+            saveShapeState();
+            shapes.push(shape);
+            drawCanvas();
+            saveShapes();
+        }
+
+        addRectangleButton.addEventListener("click", () => {
+            addShape({
+                type: "rectangle",
+                x: 50,
+                y: 50,
+                width: 100,
+                height: 50,
+                color: "red",
+            });
+        });
+
+        addCircleButton.addEventListener("click", () => {
+            addShape({
+                type: "circle",
+                x: 150,
+                y: 150,
+                radius: 40,
+                color: "blue",
+            });
+        });
+
+        addTriangleButton.addEventListener("click", () => {
+            addShape({
+                type: "triangle",
+                x: 300,
+                y: 200,
+                width: 100,
+                height: 100,
+                color: "green",
+            });
+        });
+
+        undoButton.addEventListener("click", () => {
+            if (moveHistory.length > 0) {
+                const lastMove = moveHistory.pop();
+                shapes = lastMove;
+                drawCanvas();
+                saveShapes();
+            }
+        });
+
+        function saveShapeState() {
+            moveHistory.push(JSON.parse(JSON.stringify(shapes)));
+        }
+
+        textInput.addEventListener("input", () => {
+            textObject.content = textInput.value;
+            drawCanvas();
+            saveShapes();
+        });
+
+        canvas.addEventListener("mousedown", (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            dragTarget = null;
+
+            shapes.forEach(shape => {
+                if (shape.type === "rectangle" &&
+                    mouseX > shape.x &&
+                    mouseX < shape.x + shape.width &&
+                    mouseY > shape.y &&
+                    mouseY < shape.y + shape.height) {
+                    dragTarget = shape;
+                } else if (shape.type === "circle" &&
+                    Math.sqrt((mouseX - shape.x) ** 2 + (mouseY - shape.y) ** 2) < shape.radius) {
+                    dragTarget = shape;
+                } else if (shape.type === "triangle" &&
+                    mouseX > shape.x - shape.width / 2 &&
+                    mouseX < shape.x + shape.width / 2 &&
+                    mouseY > shape.y &&
+                    mouseY < shape.y + shape.height) {
+                    dragTarget = shape;
+                }
+            });
+
+            const textWidth = ctx.measureText(textObject.content).width;
+            const textHeight = parseInt(textObject.font, 10);
+            if (mouseX > textObject.x && mouseX < textObject.x + textWidth && mouseY > textObject.y && mouseY < textObject.y + textHeight) {
+                dragTarget = textObject;
+                dragTarget.isDragging = true;
+                offsetX = mouseX - dragTarget.x;
+                offsetY = mouseY - dragTarget.y;
+            }
+
+            if (dragTarget) {
+                dragTarget.isDragging = true;
+                offsetX = mouseX - dragTarget.x;
+                offsetY = mouseY - dragTarget.y;
+            }
+        });
+        canvas.addEventListener("mousemove", (e) => {
+            if (dragTarget && dragTarget.isDragging) {
+                const rect = canvas.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                dragTarget.x = mouseX - offsetX;
+                dragTarget.y = mouseY - offsetY;
+                drawCanvas();
+                saveShapes();
+            }
+        });
+
+        canvas.addEventListener("mouseup", () => {
+            if (dragTarget) dragTarget.isDragging = false;
+        });
+
+        canvas.addEventListener("mouseout", () => {
+            if (dragTarget) dragTarget.isDragging = false;
+        });
+
+        window.onload = () => {
+            loadShapes();
+            drawCanvas();
+            video.load();
+        };
+
+    </script> -->
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const video = document.getElementById("videoPlayer");
+        const textInput = document.getElementById("textInput");
+        const addRectangleButton = document.getElementById("addRectangle");
+        const addCircleButton = document.getElementById("addCircle");
+        const addTriangleButton = document.getElementById("addTriangle");
+        const undoButton = document.getElementById("undo");
+
+        canvas.width = video.offsetWidth;
+        canvas.height = video.offsetHeight;
+
+        let shapes = [];
+        let moveHistory = [];
+        let textObject = {
+            content: "",
+            x: 100,
+            y: 100,
+            font: "20px Arial",
+            color: "black",
+            isDragging: false,
+            offsetX: 0,
+            offsetY: 0,
+        };
+
+        let isPlaying = false;
+        let dragTarget = null;
+        let offsetX, offsetY;
+        let resizeTarget = null;  // For resize target
+
+        function drawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            shapes.forEach(shape => {
+                ctx.beginPath();
+                if (shape.type === "rectangle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.fillRect(shape.x, shape.y, shape.width, shape.height);
+                    drawResizeHandles(shape);
+                    drawDeleteIcon(shape);
+                } else if (shape.type === "circle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    drawResizeHandles(shape);
+                    drawDeleteIcon(shape);
+                } else if (shape.type === "triangle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.moveTo(shape.x, shape.y);
+                    ctx.lineTo(shape.x + shape.width / 2, shape.y + shape.height);
+                    ctx.lineTo(shape.x - shape.width / 2, shape.y + shape.height);
+                    ctx.closePath();
+                    ctx.fill();
+                    drawResizeHandles(shape);
+                    drawDeleteIcon(shape);
+                }
+                ctx.closePath();
+            });
+
+            ctx.fillStyle = textObject.color;
+            ctx.font = textObject.font;
+            ctx.textBaseline = "top";
+            ctx.fillText(textObject.content, textObject.x, textObject.y);
+        }
+
+        function drawResizeHandles(shape) {
+            const handleSize = 10;
+
+            ctx.fillStyle = "black";
+
+            if (shape.type === "rectangle") {
+ 
+                ctx.fillRect(shape.x + shape.width - handleSize, shape.y + shape.height - handleSize, handleSize, handleSize);
+            } else if (shape.type === "circle") {
+   
+                ctx.beginPath();
+                ctx.arc(shape.x + shape.radius, shape.y + shape.radius, handleSize / 2, 0, Math.PI * 2);
+                ctx.fill();
+            } else if (shape.type === "triangle") {
+
+                ctx.fillRect(shape.x - handleSize / 2, shape.y + shape.height - handleSize, handleSize, handleSize);
+            }
+        }
+
+        function drawDeleteIcon(shape) {
+            const deleteIconSize = 15;
+            const iconX = shape.x + (shape.width || shape.radius) - deleteIconSize; // Right edge of the shape
+            const iconY = shape.y; 
+
+            ctx.fillStyle = "red";
+            ctx.fillRect(iconX, iconY, deleteIconSize, deleteIconSize);
+            ctx.fillStyle = "white";
+            ctx.font = "12px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("X", iconX + deleteIconSize / 2, iconY + deleteIconSize / 2);
+        }
+
+        function saveShapes() {
+    const data = {
+        shapes: shapes,
+        textObject: textObject,
+        videoLink: selectedVideoLink, 
+    };
+
+    fetch('/save_shapes', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => response.json())
+        .then(data => console.log(data.message || data.error))
+        .catch(error => console.error('Error:', error));
+}
+
+function loadShapes() {
+    fetch('/load_shapes')
+        .then(response => response.json())
+        .then(data => {
+            if (data.shapes) {
+                shapes = data.shapes;
+            }
+            if (data.textObject) {
+                textObject = {
+                    ...textObject,
+                    ...data.textObject,
+                    x: data.textObject.x || 100,
+                    y: data.textObject.y || 100,
+                    font: data.textObject.font || "20px Arial",
+                    color: data.textObject.color || "black",
+                };
+            }
+            if (data.videoLink) {
+                selectedVideoLink = data.videoLink;
+                const videoPlayer = document.getElementById('videoPlayer');
+                const videoSource = document.getElementById('main-video-source');
+                videoSource.src = selectedVideoLink;
+                videoPlayer.load();
+            }
+            drawCanvas();
+        })
+        .catch(error => console.error('Error loading shapes:', error));
+}
+
+        function updateCanvas() {
+            if (!video.paused) {
+                drawCanvas();
+                saveShapes();
+                requestAnimationFrame(updateCanvas);
+            }
+        }
+
+        canvas.addEventListener("click", (e) => {
+            if (video.paused) {
+                video.play();
+                isPlaying = true;
+                requestAnimationFrame(updateCanvas);
+            } else {
+                video.pause();
+                isPlaying = false;
+                drawCanvas();
+            }
+        });
+
+        function deleteShape(shape) {
+            const index = shapes.indexOf(shape);
+            if (index > -1) {
+                shapes.splice(index, 1);
+                saveShapes();
+                drawCanvas();
+            }
+        }
+
+        function addShape(shape) {
+            saveShapeState();
+            shapes.push(shape);
+            drawCanvas();
+            saveShapes();
+        }
+
+        addRectangleButton.addEventListener("click", () => {
+            addShape({
+                type: "rectangle",
+                x: 50,
+                y: 50,
+                width: 100,
+                height: 50,
+                color: "red",
+            });
+        });
+
+        addCircleButton.addEventListener("click", () => {
+            addShape({
+                type: "circle",
+                x: 150,
+                y: 150,
+                radius: 40,
+                color: "blue",
+            });
+        });
+
+        addTriangleButton.addEventListener("click", () => {
+            addShape({
+                type: "triangle",
+                x: 300,
+                y: 200,
+                width: 100,
+                height: 100,
+                color: "green",
+            });
+        });
+
+        undoButton.addEventListener("click", () => {
+            if (moveHistory.length > 0) {
+                const lastMove = moveHistory.pop();
+                shapes = lastMove;
+                drawCanvas();
+                saveShapes();
+            }
+        });
+
+        function saveShapeState() {
+            moveHistory.push(JSON.parse(JSON.stringify(shapes)));
+        }
+
+        textInput.addEventListener("input", () => {
+            textObject.content = textInput.value;
+            drawCanvas();
+            saveShapes();
+        });
+
+        canvas.addEventListener("mousedown", (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            dragTarget = null;
+            resizeTarget = null;
+
+            const textWidth = ctx.measureText(textObject.content).width;
+            const textHeight = parseInt(textObject.font, 10);
+            if (
+                mouseX > textObject.x &&
+                mouseX < textObject.x + textWidth &&
+                mouseY > textObject.y &&
+                mouseY < textObject.y + textHeight
+            ) {
+                dragTarget = textObject;
+                textObject.isDragging = true;
+                offsetX = mouseX - textObject.x;
+                offsetY = mouseY - textObject.y;
+                return;
+            }
+
+            shapes.forEach((shape) => {
+
+                const deleteIconSize = 15;
+                const iconX = shape.x + (shape.width || shape.radius) - deleteIconSize;
+                const iconY = shape.y;
+                if (
+                    mouseX > iconX &&
+                    mouseX < iconX + deleteIconSize &&
+                    mouseY > iconY &&
+                    mouseY < iconY + deleteIconSize
+                ) {
+                    deleteShape(shape);
+                    return;
+                }
+
+                if (shape.type === "rectangle" &&
+                    mouseX > shape.x &&
+                    mouseX < shape.x + shape.width &&
+                    mouseY > shape.y &&
+                    mouseY < shape.y + shape.height
+                ) {
+                    dragTarget = shape;
+                    offsetX = mouseX - shape.x;
+                    offsetY = mouseY - shape.y;
+                } else if (shape.type === "circle" &&
+                    Math.sqrt((mouseX - shape.x) ** 2 + (mouseY - shape.y) ** 2) < shape.radius
+                ) {
+                    dragTarget = shape;
+                    offsetX = mouseX - shape.x;
+                    offsetY = mouseY - shape.y;
+                } else if (shape.type === "triangle" &&
+                    mouseX > shape.x - shape.width / 2 &&
+                    mouseX < shape.x + shape.width / 2 &&
+                    mouseY > shape.y &&
+                    mouseY < shape.y + shape.height
+                ) {
+                    dragTarget = shape;
+                    offsetX = mouseX - shape.x;
+                    offsetY = mouseY - shape.y;
+                }
+
+                const handleSize = 10;
+                if (shape.type === "rectangle" &&
+                    mouseX > shape.x + shape.width - handleSize &&
+                    mouseX < shape.x + shape.width &&
+                    mouseY > shape.y + shape.height - handleSize &&
+                    mouseY < shape.y + shape.height
+                ) {
+                    resizeTarget = shape;
+                    offsetX = mouseX - (shape.x + shape.width);
+                    offsetY = mouseY - (shape.y + shape.height);
+                    return;
+                } else if (shape.type === "circle" &&
+                    Math.sqrt((mouseX - (shape.x + shape.radius)) ** 2 + (mouseY - (shape.y + shape.radius)) ** 2) < handleSize
+                ) {
+                    resizeTarget = shape;
+                    offsetX = mouseX - (shape.x + shape.radius);
+                    offsetY = mouseY - (shape.y + shape.radius);
+                    return;
+                } else if (shape.type === "triangle" &&
+                    mouseX > shape.x + shape.width / 2 - handleSize / 2 &&
+                    mouseX < shape.x + shape.width / 2 + handleSize / 2 &&
+                    mouseY > shape.y + shape.height - handleSize &&
+                    mouseY < shape.y + shape.height
+                ) {
+                    resizeTarget = shape;
+                    offsetX = mouseX - shape.x;
+                    offsetY = mouseY - shape.y;
+                    return;
+                }
+            });
+        });
+
+        canvas.addEventListener("mousemove", (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            if (dragTarget) {
+                dragTarget.x = mouseX - offsetX;
+                dragTarget.y = mouseY - offsetY;
+                drawCanvas();
+                saveShapes();
+            }
+
+            if (resizeTarget) {
+                if (resizeTarget.type === "rectangle") {
+                    resizeTarget.width = Math.max(mouseX - resizeTarget.x, 20);
+                    resizeTarget.height = Math.max(mouseY - resizeTarget.y, 20);
+                } else if (resizeTarget.type === "circle") {
+                    resizeTarget.radius = Math.max(
+                        Math.sqrt((mouseX - resizeTarget.x) ** 2 + (mouseY - resizeTarget.y) ** 2),
+                        10
+                    );
+                } else if (resizeTarget.type === "triangle") {
+                    resizeTarget.width = Math.max(mouseX - resizeTarget.x, 20);
+                    resizeTarget.height = Math.max(mouseY - resizeTarget.y, 20);
+                }
+                drawCanvas();
+                saveShapes();
+            }
+        });
+
+
+        canvas.addEventListener("mouseup", () => {
+            if (dragTarget) dragTarget.isDragging = false;
+            dragTarget = null;
+            resizeTarget = null;
+        });
+
+        canvas.addEventListener("mouseout", () => {
+            if (dragTarget) dragTarget.isDragging = false;
+            dragTarget = null;
+            resizeTarget = null;
+        });
+
+        window.onload = () => {
+            loadShapes();
+            drawCanvas();
+            video.load();
+        };
+
     </script>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const overlayText = document.getElementById("overlayText");
+            const dragContainer = document.getElementById("dragContainer1");
+            const fontSizeInput = document.getElementById("fontSizeInput");
+            const fontStyleSelect = document.getElementById("fontStyleSelect");
+            const fontColorInput = document.getElementById("fontColorInput");
+
+            if (!overlayText || !dragContainer || !fontSizeInput || !fontStyleSelect || !fontColorInput) {
+                console.error("One or more required elements are missing from the DOM.");
+                return;
+            }
+
+            let offsetX, offsetY;
+            let isDragging = false;
+
+
+            overlayText.addEventListener("mousedown", (e) => {
+                isDragging = true;
+                const rect = overlayText.getBoundingClientRect();
+                offsetX = e.clientX - rect.left;
+                offsetY = e.clientY - rect.top;
+            });
+
+            document.addEventListener("mousemove", (e) => {
+                if (isDragging) {
+                    const containerRect = dragContainer.getBoundingClientRect();
+                    const textRect = overlayText.getBoundingClientRect();
+
+                    let x = e.clientX - containerRect.left - offsetX;
+                    let y = e.clientY - containerRect.top - offsetY;
+
+                    if (x < 0) x = 0;
+                    if (x + textRect.width > containerRect.width) x = containerRect.width - textRect.width;
+
+                    if (y < 0) y = 0;
+                    if (y + textRect.height > containerRect.height) y = containerRect.height - textRect.height;
+
+                    overlayText.style.left = `${x}px`;
+                    overlayText.style.top = `${y}px`;
+                }
+            });
+
+            document.addEventListener("mouseup", () => {
+                isDragging = false;
+            });
+
+            fontSizeInput.addEventListener("input", (e) => {
+                overlayText.style.fontSize = `${e.target.value}px`;
+            });
+
+            fontStyleSelect.addEventListener("change", (e) => {
+                overlayText.style.fontFamily = e.target.value;
+            });
+
+            fontColorInput.addEventListener("input", (e) => {
+                overlayText.style.color = e.target.value;
+            });
+        });
+
+    </script>
+
+
+    <script>
+         const mediaThumbnail = document.querySelector('.media-thumbnail');
+         const mediaModal = document.getElementById('media-modal');
+         const closeMedia = document.getElementById('close-media');
+         const searchBtn = document.getElementById('search-btn');
+         const mediaPicker = document.getElementById('media-picker');
+         const mediaTypeRadios = document.querySelectorAll('input[name="media-type"]');
+ 
+         const videoContent = `
+             <img src="media1.jpg" alt="Video 1">
+             <img src="media2.jpg" alt="Video 2">
+             <img src="media3.jpg" alt="Video 3">
+         `;
+ 
+         const imageContent = `
+             <img src="image1.jpg" alt="Image 1">
+             <img src="image2.jpg" alt="Image 2">
+             <img src="image3.jpg" alt="Image 3">
+         `;
+ 
+         const gifContent = `
+             <img src="gif1.gif" alt="GIF 1">
+             <img src="gif2.gif" alt="GIF 2">
+             <img src="gif3.gif" alt="GIF 3">
+         `;
+ 
+         const stickerContent = `
+             <img src="sticker1.png" alt="Sticker 1">
+             <img src="sticker2.png" alt="Sticker 2">
+             <img src="sticker3.png" alt="Sticker 3">
+         `;
+ 
+         function updateMediaPickerContent(mediaType) {
+             if (mediaType === 'video') {
+                 mediaPicker.innerHTML = videoContent;
+             } else if (mediaType === 'image') {
+                 mediaPicker.innerHTML = imageContent;
+             } else if (mediaType === 'gif') {
+                 mediaPicker.innerHTML = gifContent;
+             } else if (mediaType === 'sticker') {
+                 mediaPicker.innerHTML = stickerContent;
+             }
+         }
+ 
+         mediaTypeRadios.forEach(radio => {
+             radio.addEventListener('change', function () {
+                 updateMediaPickerContent(this.value);
+             });
+         });
+ 
+         if (mediaThumbnail) {
+             mediaThumbnail.addEventListener('click', function () {
+                 mediaModal.style.display = 'block';
+                 updateMediaPickerContent(document.querySelector('input[name="media-type"]:checked').value);
+             });
+         }
+ 
+         if (closeMedia) {
+             closeMedia.addEventListener('click', function () {
+                 mediaModal.style.display = 'none';
+             });
+         }
+ 
+         window.addEventListener('click', function (event) {
+             if (event.target == mediaModal) {
+                 mediaModal.style.display = 'none';
+             }
+         });
+ 
+         if (searchBtn) {
+             searchBtn.addEventListener('click', function () {
+                 const searchQuery = document.getElementById('media-search').value;
+                 const mediaType = document.querySelector('input[name="media-type"]:checked').value;
+                 alert(`Searching for ${mediaType}: "${searchQuery}"`);
+             });
+         }
+ 
+         document.querySelectorAll('.nav-btn').forEach(button => {
+             button.addEventListener('click', function () {
+ 
+ 
+                 document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+ 
+                 this.classList.add('active');
+ 
+                 document.querySelectorAll('.modal-section').forEach(section => section.style.display = 'none');
+ 
+                 document.getElementById('content').style.display = 'none';
+ 
+ 
+                 if (this.id === 'media-picker-btn') {
+                     document.getElementById('media-picker-content').style.display = 'block';
+                 } else if (this.id === 'my-btn') {
+                     document.getElementById('my-content').style.display = 'block';
+                 } else if (this.id === 'stock-btn') {
+                     document.getElementById('stock-content').style.display = 'block';
+                 } else if (this.id === 'generate-btn') {
+                     document.getElementById('content').style.display = 'block';
+                 }
+             });
+         });
+         function showMedia(mediaId) {
+             document.querySelectorAll('.media-section').forEach(function (section) {
+                 section.style.display = 'none';
+             });
+ 
+ 
+             document.getElementById(mediaId).style.display = 'block';
+         }
+ 
+         document.getElementById('gettyBtn').addEventListener('click', function () {
+             showMedia('getty');
+         });
+ 
+        //  window.onload = function () {
+        //      document.querySelectorAll('.media-section').forEach(function (section) {
+        //          section.style.display = 'none';
+        //      });
+        //      document.getElementById('getty').style.display = 'block';
+        //  };
+
+        
+ 
+         document.getElementById('media-picker-content').style.display = 'block';
+     </script> 
+    
+    
     <script>
         let selectedMedia = null;
         document.getElementById('select-btn').addEventListener('click', function () {
@@ -1386,28 +2287,70 @@
         });
 
 
+function selectMedia(element, mediaLink, mediaType) {
 
-        function selectMedia(element, mediaLink, mediaType) {
-            document.querySelectorAll('.media-card').forEach(card => {
-                card.classList.remove('selected');
-            });
+    document.querySelectorAll('.media-card').forEach(card => card.classList.remove('selected'));
+    element.classList.add('selected');
 
-            element.classList.add('selected');
-            selectedMedia = mediaLink;
+    selectedMedia = { link: mediaLink, type: mediaType };
 
-            const selectBtn = document.getElementById('select-btn');
-            selectBtn.disabled = mediaType !== 'video';
+    document.getElementById('select-btn').disabled = false;
+}
 
-            selectBtn.onclick = function () {
-                if (selectBtn.disabled) {
-                    toastr.warning('Please select a video before proceeding!');
-                } else {
-                    const modal = document.getElementById('media-modal');
-                    modal.style.display = 'none'; // Close the modal
-                }
-            };
+document.getElementById('select-btn').addEventListener('click', function () {
+    if (selectedMedia && selectedMedia.type === 'video') {
+        const videoPlayer = document.getElementById('videoPlayer');
+        const videoSource = document.getElementById('main-video-source');
+        videoSource.src = selectedMedia.link;
+        videoPlayer.load();
+        saveVideoLink(selectedMedia.link);
+    }
+
+    selectedMedia = null;
+    this.disabled = true;
+});
+
+function saveVideoLink(videoLink) {
+    const data = {
+        videoLink: videoLink
+    };
+
+    fetch('/save_video_link', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => response.json())
+        .then(data => console.log(data.message || data.error))
+        .catch(error => console.error('Error:', error));
+}
+
+
+function applySelectedMedia() {
+    if (selectedMedia && selectedMedia.type === 'video') {
+
+        const videoPlayer = document.getElementById('videoPlayer');
+        const videoSource = document.getElementById('main-video-source');
+
+        videoSource.src = selectedMedia.link;
+
+        videoPlayer.load();
+
+        videoPlayer.play();
+
+        selectedVideoLink = selectedMedia.link;
+
+        const mediaModal = document.getElementById('media-modal');
+        if (mediaModal) {
+            mediaModal.style.display = 'none';
         }
+    }
+}
 
+
+document.getElementById('select-btn').addEventListener('click', applySelectedMedia);
 
         document.querySelectorAll('.video-card').forEach(card => {
             const video = card.querySelector('video');
@@ -1490,68 +2433,19 @@
             }
         });
     </script>
-    <script>
-        const overlayText = document.getElementById("overlayText");
-        const dragContainer = document.getElementById("dragContainer");
-        const fontSizeInput = document.getElementById("fontSizeInput");
-        const fontStyleSelect = document.getElementById("fontStyleSelect");
-        const fontColorInput = document.getElementById("fontColorInput");
 
-        let offsetX, offsetY;
-        let isDragging = false;
 
-        overlayText.addEventListener("mousedown", (e) => {
-            isDragging = true;
-            const rect = overlayText.getBoundingClientRect();
-            offsetX = e.clientX - rect.left;
-            offsetY = e.clientY - rect.top;
-        });
 
-        document.addEventListener("mousemove", (e) => {
-            if (isDragging) {
-                const containerRect = dragContainer.getBoundingClientRect();
-                const textRect = overlayText.getBoundingClientRect();
-
-                let x = e.clientX - containerRect.left - offsetX;
-                let y = e.clientY - containerRect.top - offsetY;
-
-                if (x < 0) x = 0;
-                if (x + textRect.width > containerRect.width) x = containerRect.width - textRect.width;
-
-                if (y < 0) y = 0;
-                if (y + textRect.height > containerRect.height) y = containerRect.height - textRect.height;
-
-                overlayText.style.left = `${x}px`;
-                overlayText.style.top = `${y}px`;
-            }
-        });
-
-        document.addEventListener("mouseup", () => {
-            isDragging = false;
-        });
-
-        fontSizeInput.addEventListener("input", (e) => {
-            overlayText.style.fontSize = `${e.target.value}px`;
-        });
-
-        fontStyleSelect.addEventListener("change", (e) => {
-            overlayText.style.fontFamily = e.target.value;
-        });
-
-        fontColorInput.addEventListener("input", (e) => {
-            overlayText.style.color = e.target.value;
-        });
-    </script>
 
     <script>
-        const video = document.getElementById('main-video-player');
+        const video1 = document.getElementById('main-video-player');
         // const overlayText = document.getElementById('overlayText');
-        const canvas = document.getElementById('canvas');
+        // const canvas = document.getElementById('canvas');
         const downloadButton = document.getElementById('downloadButton');
 
-        video.addEventListener('loadedmetadata', () => {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
+        video1.addEventListener('loadedmetadata', () => {
+            canvas.width = video1.videoWidth;
+            canvas.height = video1.videoHeight;
         });
 
         function downloadVideoWithOverlay() {
@@ -1587,12 +2481,12 @@
         }
 
         function captureFramesWithOverlay(mediaRecorder, context) {
-            video.play();
+            video1.play();
 
             const drawFrame = () => {
                 if (mediaRecorder.state === 'inactive') return;
 
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                context.drawImage(video1, 0, 0, canvas.width, canvas.height);
 
                 const overlayStyles = window.getComputedStyle(overlayText);
                 context.font = `${overlayStyles.fontSize} ${overlayStyles.fontFamily}`;
@@ -1610,14 +2504,13 @@
 
             drawFrame();
 
-            video.onended = () => {
+            video1.onended = () => {
                 mediaRecorder.stop();
             };
         }
 
         downloadButton.addEventListener('click', downloadVideoWithOverlay);
     </script>
-
 </body>
 
 </html>

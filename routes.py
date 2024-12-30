@@ -7,6 +7,14 @@ main_routes = Blueprint('main_routes', __name__)
 # def media():
 #     return render_template('media.html')
 
+# @main_routes.route('/videodownloadsample')
+# def videodownloadsample():
+#     return render_template('videodownloadsample.html')
+
+
+@main_routes.route('/video_landing')
+def video_landing():
+    return render_template('video_landing.html')
 
 @main_routes.route('/sampleData')
 def sampleData():

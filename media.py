@@ -63,17 +63,32 @@ def get_video():
     video_id = request.json.get('video_id')
     if not video_id:
         return jsonify({'error': 'No video ID provided'}), 400
+    
+    query = request.json.get('query', '')  
+    orientation = request.json.get('orientation', 'landscape')  
+    per_page = request.json.get('per_page', 10) 
+    page = request.json.get('page', 1) 
+
+    params = {
+        "query": query,
+        "orientation": orientation,
+        "per_page": per_page,
+        "page": page
+    }
 
     headers = {
         'Authorization': PEXELS_API_KEY
     }
     
-    response = requests.get(f"{PEXELS_VIDEO_API_BASE}{video_id}", headers=headers)
+   
+    # response = requests.get(url, headers=headers, params=params)
+    
+    response = requests.get(f"{PEXELS_VIDEO_API_BASE}{video_id}", headers=headers,params=params)
     print(response)
     if response.status_code == 200:
         video_data = response.json()
         return jsonify({
-            'video_url': video_data['video_files'][0]['link'],  # SD/HD video link
+            'video_url': video_data['video_files'][0]['link'],  
             'author_name': video_data['user']['name'],
             'author_url': video_data['user']['url'],
             'thumbnails': [picture['picture'] for picture in video_data['video_pictures']]

@@ -1,0 +1,1760 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Drag and Drop</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+            background-color: yellow;
+        }
+        #download {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="mycanvas"></canvas>
+    <button id="download">Download Animation</button>
+    <script>
+        let hsl = (h, s, l) => `hsl(${h},${s}%,${l}%)`;
+
+        let canvas = document.getElementById('mycanvas');
+        let ctx = canvas.getContext('2d');
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+
+        class Shape {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+            }
+
+            draw(context) {}
+            isInside(mx, my) {}
+        }
+
+        class Square extends Shape {
+            constructor(x, y, edge, color) {
+                super(x, y, color);
+                this.edge = edge;
+            }
+
+            draw(context) {
+                context.fillStyle = this.color;
+                context.fillRect(this.x, this.y, this.edge, this.edge);
+            }
+
+            isInside(mx, my) {
+                return (
+                    mx >= this.x &&
+                    mx <= this.x + this.edge &&
+                    my >= this.y &&
+                    my <= this.y + this.edge
+                );
+            }
+        }
+
+        class Circle extends Shape {
+            constructor(x, y, radius, color) {
+                super(x, y, color);
+                this.radius = radius;
+            }
+
+            draw(context) {
+                context.fillStyle = this.color;
+                context.beginPath();
+                context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                context.fill();
+            }
+
+            isInside(mx, my) {
+                let dx = mx - this.x;
+                let dy = my - this.y;
+                return dx * dx + dy * dy <= this.radius * this.radius;
+            }
+        }
+
+        class Triangle extends Shape {
+            constructor(x, y, size, color) {
+                super(x, y, color);
+                this.size = size;
+            }
+
+            draw(context) {
+                context.fillStyle = this.color;
+                context.beginPath();
+                context.moveTo(this.x, this.y);
+                context.lineTo(this.x + this.size / 2, this.y + this.size);
+                context.lineTo(this.x - this.size / 2, this.y + this.size);
+                context.closePath();
+                context.fill();
+            }
+
+            isInside(mx, my) {
+                let b1 = sign(mx, my, this.x, this.y, this.x + this.size / 2, this.y + this.size) < 0.0;
+                let b2 = sign(mx, my, this.x + this.size / 2, this.y + this.size, this.x - this.size / 2, this.y + this.size) < 0.0;
+                let b3 = sign(mx, my, this.x - this.size / 2, this.y + this.size, this.x, this.y) < 0.0;
+                return b1 === b2 && b2 === b3;
+            }
+        }
+
+        class Star extends Shape {
+            constructor(x, y, radius, color) {
+                super(x, y, color);
+                this.radius = radius;
+            }
+
+            draw(context) {
+                context.fillStyle = this.color;
+                context.beginPath();
+                for (let i = 0; i < 10; i++) {
+                    let angle = (i * Math.PI) / 5;
+                    let r = i % 2 === 0 ? this.radius : this.radius / 2;
+                    context.lineTo(this.x + r * Math.cos(angle), this.y + r * Math.sin(angle));
+                }
+                context.closePath();
+                context.fill();
+            }
+
+            isInside(mx, my) {
+                // Simple bounding box check for simplicity
+                return (
+                    mx >= this.x - this.radius &&
+                    mx <= this.x + this.radius &&
+                    my >= this.y - this.radius &&
+                    my <= this.y + this.radius
+                );
+            }
+        }
+
+        function sign(x1, y1, x2, y2, x3, y3) {
+            return (x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3);
+        }
+
+        let shapes = [
+            ...new Array(3).fill().map(() => new Square(Math.random() * (w - 60), Math.random() * (h - 60), 60, hsl(Math.random() * 360, 100, 50))),
+            ...new Array(3).fill().map(() => new Circle(Math.random() * (w - 60), Math.random() * (h - 60), 30, hsl(Math.random() * 360, 100, 50))),
+            ...new Array(2).fill().map(() => new Triangle(Math.random() * (w - 60), Math.random() * (h - 60), 60, hsl(Math.random() * 360, 100, 50))),
+            ...new Array(2).fill().map(() => new Star(Math.random() * (w - 60), Math.random() * (h - 60), 30, hsl(Math.random() * 360, 100, 50)))
+        ];
+
+        let selectedShape = null;
+        let offsetX = 0, offsetY = 0;
+
+        canvas.addEventListener('mousedown', (e) => {
+            const mouseX = e.offsetX;
+            const mouseY = e.offsetY;
+
+            selectedShape = shapes.find(shape => shape.isInside(mouseX, mouseY));
+
+            if (selectedShape) {
+                offsetX = mouseX - selectedShape.x;
+                offsetY = mouseY - selectedShape.y;
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (selectedShape) {
+                const mouseX = e.offsetX;
+                const mouseY = e.offsetY;
+
+                selectedShape.x = mouseX - offsetX;
+                selectedShape.y = mouseY - offsetY;
+
+                redrawCanvas();
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            selectedShape = null;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            selectedShape = null;
+        });
+
+        function redrawCanvas() {
+            ctx.clearRect(0, 0, w, h);
+            shapes.forEach(shape => shape.draw(ctx));
+        }
+
+        redrawCanvas();
+
+        let chunks = [];
+        let stream = canvas.captureStream(30);
+        let recorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9' });
+
+        recorder.ondataavailable = e => chunks.push(e.data);
+        recorder.onstop = () => {
+            let blob = new Blob(chunks, { type: 'video/webm' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = 'animation.webm';
+            a.click();
+            URL.revokeObjectURL(url);
+            chunks = [];
+        };
+
+        document.getElementById('download').addEventListener('click', () => {
+            if (recorder.state === "inactive") {
+                recorder.start();
+                setTimeout(() => recorder.stop(), 5000);
+            }
+        });
+    </script>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Drag and Drop with Undo</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 20px auto;
+        }
+        button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <button id="undoButton">Undo</button>
+        <canvas id="canvas" width="800" height="400"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const undoButton = document.getElementById('undoButton');
+
+        let shapes = [
+            { x: 50, y: 50, width: 100, height: 100, color: 'red' },
+            { x: 200, y: 150, width: 100, height: 100, color: 'blue' },
+        ];
+        let moveHistory = [];
+        let selectedShape = null;
+        let offsetX, offsetY;
+        let isDragging = false;
+
+        function drawShapes() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const shape of shapes) {
+                ctx.fillStyle = shape.color;
+                ctx.fillRect(shape.x, shape.y, shape.width, shape.height);
+            }
+        }
+
+        function getShapeAt(x, y) {
+            for (let i = shapes.length - 1; i >= 0; i--) {
+                const shape = shapes[i];
+                if (
+                    x > shape.x &&
+                    x < shape.x + shape.width &&
+                    y > shape.y &&
+                    y < shape.y + shape.height
+                ) {
+                    return { shape, index: i };
+                }
+            }
+            return null;
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const hit = getShapeAt(x, y);
+            if (hit) {
+                selectedShape = hit.shape;
+                offsetX = x - selectedShape.x;
+                offsetY = y - selectedShape.y;
+                isDragging = true;
+
+                // Save the current state for undo
+                moveHistory.push({ ...selectedShape });
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDragging || !selectedShape) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            selectedShape.x = x - offsetX;
+            selectedShape.y = y - offsetY;
+
+            drawShapes();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDragging = false;
+            selectedShape = null;
+        });
+
+        undoButton.addEventListener('click', () => {
+            if (moveHistory.length > 0) {
+                const lastMove = moveHistory.pop();
+                const shapeIndex = shapes.findIndex(
+                    (shape) => shape.color === lastMove.color
+                );
+                if (shapeIndex !== -1) {
+                    shapes[shapeIndex] = lastMove;
+                    drawShapes();
+                }
+            }
+        });
+
+        drawShapes();
+    </script>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Drag and Drop with Multiple Shapes</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 20px auto;
+        }
+        button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <button id="undoButton">Undo</button>
+        <canvas id="canvas" width="800" height="600"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const undoButton = document.getElementById('undoButton');
+
+        let shapes = [];
+        let moveHistory = [];
+        let selectedShape = null;
+        let offsetX, offsetY;
+        let isDragging = false;
+
+        // Default shapes, including star, triangle, hexagon, circle, and rectangle
+        const defaultShapes = [
+            { type: 'rectangle', x: 50, y: 50, width: 100, height: 100, color: 'red' },
+            { type: 'circle', x: 200, y: 150, radius: 50, color: 'blue' },
+            { type: 'triangle', x: 400, y: 200, size: 80, color: 'green' },
+            { type: 'star', x: 300, y: 100, radius: 50, color: 'gold' },
+            { type: 'hexagon', x: 500, y: 300, size: 60, color: 'purple' },
+        ];
+
+        // Fetch shapes from the backend
+        async function loadShapes() {
+            try {
+                const response = await fetch('/load_shapes');
+                if (response.ok) {
+                    shapes = await response.json();
+                    if (shapes.length === 0) {
+                        shapes = defaultShapes; // Use default shapes if no shapes are loaded
+                        saveShapes();
+                    }
+                    drawShapes();
+                } else {
+                    console.error("Failed to load shapes");
+                }
+            } catch (error) {
+                console.error("Error loading shapes:", error);
+                shapes = defaultShapes;
+                saveShapes();
+                drawShapes();
+            }
+        }
+
+        // Save shapes to the backend
+        async function saveShapes() {
+            try {
+                const response = await fetch('/save_shapes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ shapes }),
+                });
+                if (!response.ok) {
+                    console.error("Failed to save shapes");
+                }
+            } catch (error) {
+                console.error("Error saving shapes:", error);
+            }
+        }
+
+        function drawShapes() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const shape of shapes) {
+                ctx.fillStyle = shape.color;
+                switch (shape.type) {
+                    case 'rectangle':
+                        ctx.fillRect(shape.x, shape.y, shape.width, shape.height);
+                        break;
+                    case 'circle':
+                        ctx.beginPath();
+                        ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                        ctx.fill();
+                        break;
+                    case 'triangle':
+                        ctx.beginPath();
+                        ctx.moveTo(shape.x, shape.y);
+                        ctx.lineTo(shape.x + shape.size / 2, shape.y + shape.size);
+                        ctx.lineTo(shape.x - shape.size / 2, shape.y + shape.size);
+                        ctx.closePath();
+                        ctx.fill();
+                        break;
+                    case 'star':
+                        drawStar(ctx, shape.x, shape.y, 5, shape.radius, shape.radius / 2);
+                        break;
+                    case 'hexagon':
+                        drawHexagon(ctx, shape.x, shape.y, shape.size);
+                        break;
+                }
+            }
+        }
+
+        function drawStar(ctx, x, y, points, outerRadius, innerRadius) {
+            const angle = Math.PI / points;
+            ctx.beginPath();
+            for (let i = 0; i < 2 * points; i++) {
+                const r = i % 2 === 0 ? outerRadius : innerRadius;
+                const a = i * angle;
+                ctx.lineTo(x + r * Math.cos(a), y + r * Math.sin(a));
+            }
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function drawHexagon(ctx, x, y, size) {
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const angle = Math.PI / 3 * i;
+                const dx = x + size * Math.cos(angle);
+                const dy = y + size * Math.sin(angle);
+                if (i === 0) {
+                    ctx.moveTo(dx, dy);
+                } else {
+                    ctx.lineTo(dx, dy);
+                }
+            }
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function getShapeAt(x, y) {
+            for (let i = shapes.length - 1; i >= 0; i--) {
+                const shape = shapes[i];
+                switch (shape.type) {
+                    case 'rectangle':
+                        if (
+                            x > shape.x &&
+                            x < shape.x + shape.width &&
+                            y > shape.y &&
+                            y < shape.y + shape.height
+                        ) return { shape, index: i };
+                        break;
+                    case 'circle':
+                        const dx = x - shape.x;
+                        const dy = y - shape.y;
+                        if (Math.sqrt(dx * dx + dy * dy) <= shape.radius) return { shape, index: i };
+                        break;
+                    case 'triangle':
+                        // Triangle bounding box check for simplicity
+                        if (
+                            x > shape.x - shape.size / 2 &&
+                            x < shape.x + shape.size / 2 &&
+                            y > shape.y &&
+                            y < shape.y + shape.size
+                        ) return { shape, index: i };
+                        break;
+                    case 'star':
+                    case 'hexagon':
+                        if (
+                            x > shape.x - shape.radius &&
+                            x < shape.x + shape.radius &&
+                            y > shape.y - shape.radius &&
+                            y < shape.y + shape.radius
+                        ) return { shape, index: i };
+                        break;
+                }
+            }
+            return null;
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const hit = getShapeAt(x, y);
+            if (hit) {
+                selectedShape = hit.shape;
+                offsetX = x - selectedShape.x;
+                offsetY = y - selectedShape.y;
+                isDragging = true;
+
+                // Save the current state for undo
+                moveHistory.push({ ...selectedShape });
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDragging || !selectedShape) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            selectedShape.x = x - offsetX;
+            selectedShape.y = y - offsetY;
+
+            drawShapes();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            if (isDragging) {
+                saveShapes(); // Save changes when dragging ends
+            }
+            isDragging = false;
+            selectedShape = null;
+        });
+
+        undoButton.addEventListener('click', () => {
+            if (moveHistory.length > 0) {
+                const lastMove = moveHistory.pop();
+                const shapeIndex = shapes.findIndex(
+                    (shape) => shape.color === lastMove.color
+                );
+                if (shapeIndex !== -1) {
+                    shapes[shapeIndex] = lastMove;
+                    drawShapes();
+                    saveShapes(); // Save changes after undo
+                }
+            }
+        });
+
+        // Initial load of shapes
+        loadShapes();
+    </script>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Shapes</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 20px auto;
+        }
+        .shape-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .shape-button {
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #000;
+            cursor: pointer;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="shape-container">
+        <div class="shape-button" data-shape="rectangle">Rectangle</div>
+        <div class="shape-button" data-shape="circle">Circle</div>
+        <div class="shape-button" data-shape="triangle">Triangle</div>
+        <div class="shape-button" data-shape="star">Star</div>
+        <div class="shape-button" data-shape="hexagon">Hexagon</div>
+    </div>
+    <button  id="undoButton">Undo</button>
+
+    <canvas id="canvas" width="800" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const undoButton = document.getElementById('undoButton');
+        const shapeButtons = document.querySelectorAll('.shape-button');
+
+        let shapes = [];
+        let moveHistory = [];
+        let selectedShape = null;
+        let offsetX, offsetY;
+        let isDragging = false;
+
+
+        async function loadShapes() {
+            try {
+                const response = await fetch('/load_shapes');
+                if (response.ok) {
+                    shapes = await response.json();
+                    drawShapes();
+                } else {
+                    console.error("Failed to load shapes");
+                }
+            } catch (error) {
+                console.error("Error loading shapes:", error);
+            }
+        }
+
+
+        async function saveShapes() {
+            try {
+                const response = await fetch('/save_shapes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ shapes }),
+                });
+                if (!response.ok) {
+                    console.error("Failed to save shapes");
+                }
+            } catch (error) {
+                console.error("Error saving shapes:", error);
+            }
+        }
+
+
+        function drawShapes() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const shape of shapes) {
+                ctx.fillStyle = shape.color;
+                switch (shape.type) {
+                    case 'rectangle':
+                        ctx.fillRect(shape.x, shape.y, shape.width, shape.height);
+                        break;
+                    case 'circle':
+                        ctx.beginPath();
+                        ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                        ctx.fill();
+                        break;
+                    case 'triangle':
+                        ctx.beginPath();
+                        ctx.moveTo(shape.x, shape.y);
+                        ctx.lineTo(shape.x + shape.size, shape.y + shape.size);
+                        ctx.lineTo(shape.x - shape.size, shape.y + shape.size);
+                        ctx.closePath();
+                        ctx.fill();
+                        break;
+                    case 'star':
+                        drawStar(ctx, shape.x, shape.y, 5, shape.radius, shape.radius / 2);
+                        break;
+                    case 'hexagon':
+                        drawHexagon(ctx, shape.x, shape.y, shape.size);
+                        break;
+                }
+            }
+        }
+
+
+        function drawStar(ctx, x, y, points, outerRadius, innerRadius) {
+            const angle = Math.PI / points;
+            ctx.beginPath();
+            for (let i = 0; i < 2 * points; i++) {
+                const r = i % 2 === 0 ? outerRadius : innerRadius;
+                const a = i * angle;
+                ctx.lineTo(x + r * Math.cos(a), y + r * Math.sin(a));
+            }
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function drawHexagon(ctx, x, y, size) {
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const angle = Math.PI / 3 * i;
+                const dx = x + size * Math.cos(angle);
+                const dy = y + size * Math.sin(angle);
+                if (i === 0) {
+                    ctx.moveTo(dx, dy);
+                } else {
+                    ctx.lineTo(dx, dy);
+                }
+            }
+            ctx.closePath();
+            ctx.fill();
+        }
+
+      
+        function getShapeAt(x, y) {
+            for (let i = shapes.length - 1; i >= 0; i--) {
+                const shape = shapes[i];
+                switch (shape.type) {
+                    case 'rectangle':
+                        if (
+                            x > shape.x &&
+                            x < shape.x + shape.width &&
+                            y > shape.y &&
+                            y < shape.y + shape.height
+                        ) return { shape, index: i };
+                        break;
+                    case 'circle':
+                        const dx = x - shape.x;
+                        const dy = y - shape.y;
+                        if (Math.sqrt(dx * dx + dy * dy) <= shape.radius) return { shape, index: i };
+                        break;
+                    case 'triangle':
+                        if (
+                            x > shape.x - shape.size &&
+                            x < shape.x + shape.size &&
+                            y > shape.y &&
+                            y < shape.y + shape.size
+                        ) return { shape, index: i };
+                        break;
+                    case 'star':
+                    case 'hexagon':
+                        const dist = Math.sqrt((x - shape.x) ** 2 + (y - shape.y) ** 2);
+                        if (dist <= shape.radius || dist <= shape.size) return { shape, index: i };
+                        break;
+                }
+            }
+            return null;
+        }
+
+       
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const hit = getShapeAt(x, y);
+            if (hit) {
+                selectedShape = hit.shape;
+                offsetX = x - selectedShape.x;
+                offsetY = y - selectedShape.y;
+                isDragging = true;
+
+                // Save the current state for undo
+                moveHistory.push({ ...selectedShape });
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDragging || !selectedShape) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            selectedShape.x = x - offsetX;
+            selectedShape.y = y - offsetY;
+
+            drawShapes();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            if (isDragging) {
+                saveShapes(); 
+            }
+            isDragging = false;
+            selectedShape = null;
+        });
+
+    
+        undoButton.addEventListener('click', () => {
+            if (moveHistory.length > 0) {
+                const lastMove = moveHistory.pop();
+                const shapeIndex = shapes.findIndex(
+                    (shape) => shape.color === lastMove.color
+                );
+                if (shapeIndex !== -1) {
+                    shapes[shapeIndex] = lastMove;
+                    drawShapes();
+                    saveShapes();
+                }
+            }
+        });
+
+
+        shapeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const type = button.getAttribute('data-shape');
+                const newShape = {
+                    type,
+                    x: 100,
+                    y: 100,
+                    size: 50,
+                    radius: 50,
+                    width: 100,
+                    height: 100,
+                    color: '#' + Math.floor(Math.random() * 16777215).toString(16),
+                };
+                shapes.push(newShape);
+                drawShapes();
+                saveShapes();
+            });
+        });
+
+        
+        loadShapes();
+    </script>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draggable Shapes on Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #videoContainer {
+            position: relative;
+            width: 640px;
+            height: 360px;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #controls {
+            margin: 20px 0;
+        }
+        #controls button {
+            margin-right: 10px;
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Draggable Shapes on Video</h1>
+    <div id="controls">
+        <button id="rectangle">Rectangle</button>
+        <button id="circle">Circle</button>
+        <button id="triangle">Triangle</button>
+        <button id="undo">Undo</button>
+    </div>
+    <div id="videoContainer">
+        <video id="videoPlayer" controls>
+            <source src="sample-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <canvas id="canvas"></canvas>
+    </div>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const video = document.getElementById("videoPlayer");
+        const rectangleButton = document.getElementById("rectangle");
+        const circleButton = document.getElementById("circle");
+        const triangleButton = document.getElementById("triangle");
+        const undoButton = document.getElementById("undo");
+
+        canvas.width = video.offsetWidth;
+        canvas.height = video.offsetHeight;
+
+        let shapes = [];
+        let moveHistory = []; // Track individual shape position changes (move history)
+        let isDragging = false;
+        let dragIndex = null;
+        let offsetX = 0, offsetY = 0;
+
+        // Draw all shapes
+        function drawShapes() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+            shapes.forEach(shape => {
+                ctx.beginPath();
+                if (shape.type === "rectangle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.fillRect(shape.x, shape.y, shape.width, shape.height);
+                } else if (shape.type === "circle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (shape.type === "triangle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.moveTo(shape.x, shape.y);
+                    ctx.lineTo(shape.x + shape.width / 2, shape.y + shape.height);
+                    ctx.lineTo(shape.x - shape.width / 2, shape.y + shape.height);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                ctx.closePath();
+            });
+        }
+
+        // Save the previous state (position) of a shape
+        function saveShapeState() {
+            const shapeState = shapes.map(shape => ({
+                ...shape,  // Create a copy of each shape
+                x: shape.x, // Store current position
+                y: shape.y  // Store current position
+            }));
+            moveHistory.push(shapeState); // Save the state to history
+        }
+
+        // Add rectangle
+        rectangleButton.addEventListener("click", () => {
+            addShape({
+                type: "rectangle",
+                x: 50,
+                y: 50,
+                width: 100,
+                height: 50,
+                color: "red",
+            });
+        });
+
+        // Add circle
+        circleButton.addEventListener("click", () => {
+            addShape({
+                type: "circle",
+                x: 150,
+                y: 150,
+                radius: 40,
+                color: "blue",
+            });
+        });
+
+        // Add triangle
+        triangleButton.addEventListener("click", () => {
+            addShape({
+                type: "triangle",
+                x: 300,
+                y: 200,
+                width: 100,
+                height: 100,
+                color: "green",
+            });
+        });
+
+        // Function to add shape and save the current state
+        function addShape(shape) {
+            saveShapeState(); // Save the current state before adding a new shape
+            shapes.push(shape); // Add the new shape
+            drawShapes(); // Redraw the canvas
+            autoSaveShapes(); // Save shapes
+        }
+
+        // Undo last move
+        undoButton.addEventListener("click", () => {
+            if (moveHistory.length > 0) {
+                const lastMove = moveHistory.pop(); // Get the last state of the shapes
+                shapes = lastMove; // Restore the shapes to the last saved state
+                drawShapes(); // Redraw the canvas with the restored shapes
+                autoSaveShapes(); // Save the restored shapes
+            }
+        });
+
+        // Automatically save shapes
+        function autoSaveShapes() {
+            fetch("/save_shapes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ shapes }),
+            }).catch(error => console.error("Error saving shapes:", error));
+        }
+
+        // Load shapes on page load
+        function loadShapes() {
+            fetch("/load_shapes")
+                .then(response => response.json())
+                .then(data => {
+                    shapes = data;
+                    moveHistory = [[...shapes]]; // Initialize move history with loaded shapes
+                    drawShapes();
+                })
+                .catch(error => console.error("Error loading shapes:", error));
+        }
+
+        // Check if a point is inside a shape
+        function isInsideShape(shape, x, y) {
+            if (shape.type === "rectangle") {
+                return x >= shape.x && x <= shape.x + shape.width && y >= shape.y && y <= shape.y + shape.height;
+            } else if (shape.type === "circle") {
+                const dx = x - shape.x;
+                const dy = y - shape.y;
+                return Math.sqrt(dx * dx + dy * dy) <= shape.radius;
+            } else if (shape.type === "triangle") {
+                return (
+                    x >= shape.x - shape.width / 2 &&
+                    x <= shape.x + shape.width / 2 &&
+                    y >= shape.y &&
+                    y <= shape.y + shape.height
+                );
+            }
+            return false;
+        }
+
+        // Handle dragging
+        canvas.addEventListener("mousedown", e => {
+            const mouseX = e.offsetX;
+            const mouseY = e.offsetY;
+
+            for (let i = shapes.length - 1; i >= 0; i--) {
+                if (isInsideShape(shapes[i], mouseX, mouseY)) {
+                    isDragging = true;
+                    dragIndex = i;
+                    offsetX = mouseX - shapes[i].x;
+                    offsetY = mouseY - shapes[i].y;
+                    break;
+                }
+            }
+        });
+
+        canvas.addEventListener("mousemove", e => {
+            if (isDragging && dragIndex !== null) {
+                const mouseX = e.offsetX;
+                const mouseY = e.offsetY;
+
+                const shape = shapes[dragIndex];
+                saveShapeState(); // Save the state before moving the shape
+                shape.x = mouseX - offsetX;
+                shape.y = mouseY - offsetY;
+
+                drawShapes();
+            }
+        });
+
+        canvas.addEventListener("mouseup", () => {
+            if (isDragging) {
+                isDragging = false;
+                dragIndex = null;
+                autoSaveShapes(); // Save shapes after dragging
+            }
+        });
+
+        // Load shapes when the page loads
+        window.onload = loadShapes;
+    </script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shapes and Editable Text on Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #videoContainer {
+            position: relative;
+            width: 640px;
+            height: 360px;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #controls {
+            margin: 20px 0;
+        }
+        #controls input,
+        #controls button {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shapes and Editable Text on Video</h1>
+    <div id="controls">
+        <input id="textInput" type="text" placeholder="Enter text to display" />
+        <button id="addRectangle">Rectangle</button>
+        <button id="addCircle">Circle</button>
+        <button id="addTriangle">Triangle</button>
+        <button id="undo">Undo</button>
+    </div>
+    <div id="videoContainer">
+        <video id="videoPlayer" controls>
+            <source src="{{ url_for('static', filename='sample.mp4') }}" type="video/mp4" id="main-video-source">
+            Your browser does not support the video tag.
+        </video>
+        <canvas id="canvas"></canvas>
+    </div>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const video = document.getElementById("videoPlayer");
+        const textInput = document.getElementById("textInput");
+        const addRectangleButton = document.getElementById("addRectangle");
+        const addCircleButton = document.getElementById("addCircle");
+        const addTriangleButton = document.getElementById("addTriangle");
+        const undoButton = document.getElementById("undo");
+
+        canvas.width = video.offsetWidth;
+        canvas.height = video.offsetHeight;
+
+        let shapes = [];
+        let moveHistory = [];
+        let textObject = {
+            content: "Sample Text",  // Default text to display
+            x: 100,
+            y: 100,
+            font: "20px Arial",
+            color: "black",
+            isDragging: false,
+            offsetX: 0,
+            offsetY: 0,
+        };
+
+        // Function to draw shapes and text on the canvas
+        function drawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+
+            // Draw the video frame (it must be drawn before shapes and text)
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Draw the shapes
+            shapes.forEach(shape => {
+                ctx.beginPath();
+                if (shape.type === "rectangle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.fillRect(shape.x, shape.y, shape.width, shape.height);
+                } else if (shape.type === "circle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (shape.type === "triangle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.moveTo(shape.x, shape.y);
+                    ctx.lineTo(shape.x + shape.width / 2, shape.y + shape.height);
+                    ctx.lineTo(shape.x - shape.width / 2, shape.y + shape.height);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                ctx.closePath();
+            });
+
+            // Draw the text
+            ctx.fillStyle = textObject.color;
+            ctx.font = textObject.font;
+            ctx.textBaseline = "top";  // Make sure text aligns from the top
+            ctx.fillText(textObject.content, textObject.x, textObject.y);
+        }
+
+        // Save the shapes and text to the server
+        function saveShapes() {
+            const data = {
+                shapes: shapes,
+                textObject: textObject,
+            };
+            fetch('/save_shapes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => console.log(data.message || data.error))
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Load the saved shapes and text from the server
+        function loadShapes() {
+    fetch('/load_shapes')
+        .then(response => response.json())
+        .then(data => {
+            if (data.shapes) {
+                shapes = data.shapes;
+            }
+            if (data.textObject) {
+                // Set missing properties with default values if not provided
+                textObject = {
+                    ...textObject,  // Preserve any existing properties
+                    ...data.textObject,  // Update with the loaded data
+                    x: data.textObject.x || 100,  // Default position if not present
+                    y: data.textObject.y || 100,  // Default position if not present
+                    font: data.textObject.font || "20px Arial",  // Default font if not present
+                    color: data.textObject.color || "black",  // Default color if not present
+                };
+            }
+            drawCanvas();  // Redraw after loading shapes and text
+        })
+        .catch(error => console.error('Error loading shapes:', error));
+}
+        // Add shape to the canvas and save the state
+        function addShape(shape) {
+            saveShapeState();
+            shapes.push(shape);
+            drawCanvas();
+            saveShapes();  // Save after adding a shape
+        }
+
+        // Handle adding shapes
+        addRectangleButton.addEventListener("click", () => {
+            addShape({
+                type: "rectangle",
+                x: 50,
+                y: 50,
+                width: 100,
+                height: 50,
+                color: "red",
+            });
+        });
+
+        addCircleButton.addEventListener("click", () => {
+            addShape({
+                type: "circle",
+                x: 150,
+                y: 150,
+                radius: 40,
+                color: "blue",
+            });
+        });
+
+        addTriangleButton.addEventListener("click", () => {
+            addShape({
+                type: "triangle",
+                x: 300,
+                y: 200,
+                width: 100,
+                height: 100,
+                color: "green",
+            });
+        });
+
+        // Handle undo button click
+        undoButton.addEventListener("click", () => {
+            if (moveHistory.length > 0) {
+                const lastMove = moveHistory.pop();
+                shapes = lastMove;
+                drawCanvas();
+                saveShapes();  // Save after undo
+            }
+        });
+
+        // Save the state of the shapes before making changes
+        function saveShapeState() {
+            moveHistory.push(JSON.parse(JSON.stringify(shapes)));
+        }
+
+        // Handle text input changes
+        textInput.addEventListener("input", () => {
+            textObject.content = textInput.value;
+            drawCanvas();
+            saveShapes();  // Save text changes to the server
+        });
+
+        // Handle mouse events for dragging text and shapes
+        canvas.addEventListener("mousedown", (e) => {
+            const mouseX = e.offsetX;
+            const mouseY = e.offsetY;
+            const textWidth = ctx.measureText(textObject.content).width;
+            const textHeight = parseInt(textObject.font, 10);
+
+            // Check if mouse is inside the text object
+            if (
+                mouseX >= textObject.x &&
+                mouseX <= textObject.x + textWidth &&
+                mouseY >= textObject.y &&
+                mouseY <= textObject.y + textHeight
+            ) {
+                textObject.isDragging = true;
+                textObject.offsetX = mouseX - textObject.x;
+                textObject.offsetY = mouseY - textObject.y;
+            }
+
+            // Check if mouse is inside a shape
+            for (let i = shapes.length - 1; i >= 0; i--) {
+                const shape = shapes[i];
+                if (isInsideShape(shape, mouseX, mouseY)) {
+                    shape.isDragging = true;
+                    shape.offsetX = mouseX - shape.x;
+                    shape.offsetY = mouseY - shape.y;
+                    break;
+                }
+            }
+        });
+
+        // Handle dragging of shapes and text
+        canvas.addEventListener("mousemove", (e) => {
+            if (textObject.isDragging) {
+                textObject.x = e.offsetX - textObject.offsetX;
+                textObject.y = e.offsetY - textObject.offsetY;
+                drawCanvas();
+                saveShapes();  // Autosave after dragging text
+            }
+
+            shapes.forEach(shape => {
+                if (shape.isDragging) {
+                    shape.x = e.offsetX - shape.offsetX;
+                    shape.y = e.offsetY - shape.offsetY;
+                    drawCanvas();
+                    saveShapes();  // Autosave after dragging shapes
+                }
+            });
+        });
+
+        // Stop dragging when mouse is released
+        canvas.addEventListener("mouseup", () => {
+            textObject.isDragging = false;
+            shapes.forEach(shape => (shape.isDragging = false));
+        });
+
+        // Check if mouse is inside a shape
+        function isInsideShape(shape, x, y) {
+            if (shape.type === "rectangle") {
+                return x >= shape.x && x <= shape.x + shape.width && y >= shape.y && y <= shape.y + shape.height;
+            } else if (shape.type === "circle") {
+                const dx = x - shape.x;
+                const dy = y - shape.y;
+                return Math.sqrt(dx * dx + dy * dy) <= shape.radius;
+            } else if (shape.type === "triangle") {
+                return (
+                    x >= shape.x - shape.width / 2 &&
+                    x <= shape.x + shape.width / 2 &&
+                    y >= shape.y &&
+                    y <= shape.y + shape.height
+                );
+            }
+            return false;
+        }
+
+        // Load shapes and text on page load
+        window.onload = () => {
+            loadShapes();  // Load shapes on page load
+            drawCanvas();
+        };
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shapes and Editable Text on Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #videoContainer {
+            position: relative;
+            width: 640px;
+            height: 360px;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #controls {
+            margin: 20px 0;
+        }
+        #controls input,
+        #controls button {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shapes and Editable Text on Video</h1>
+    <div id="controls">
+        <input id="textInput" type="text" placeholder="Enter text to display" />
+        <button id="addRectangle">Rectangle</button>
+        <button id="addCircle">Circle</button>
+        <button id="addTriangle">Triangle</button>
+        <button id="undo">Undo</button>
+    </div>
+    <div id="videoContainer">
+        <video id="videoPlayer" controls>
+            <source src="{{ url_for('static', filename='sample.mp4') }}" type="video/mp4" id="main-video-source">
+            Your browser does not support the video tag.
+        </video>
+        <canvas id="canvas"></canvas>
+    </div>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const video = document.getElementById("videoPlayer");
+        const textInput = document.getElementById("textInput");
+        const addRectangleButton = document.getElementById("addRectangle");
+        const addCircleButton = document.getElementById("addCircle");
+        const addTriangleButton = document.getElementById("addTriangle");
+        const undoButton = document.getElementById("undo");
+
+        canvas.width = video.offsetWidth;
+        canvas.height = video.offsetHeight;
+
+        let shapes = [];
+        let moveHistory = [];
+        let textObject = {
+            content: "",  
+            x: 100,
+            y: 100,
+            font: "20px Arial",
+            color: "black",
+            isDragging: false,
+            offsetX: 0,
+            offsetY: 0,
+        };
+
+        
+        function drawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            shapes.forEach(shape => {
+                ctx.beginPath();
+                if (shape.type === "rectangle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.fillRect(shape.x, shape.y, shape.width, shape.height);
+                } else if (shape.type === "circle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (shape.type === "triangle") {
+                    ctx.fillStyle = shape.color;
+                    ctx.moveTo(shape.x, shape.y);
+                    ctx.lineTo(shape.x + shape.width / 2, shape.y + shape.height);
+                    ctx.lineTo(shape.x - shape.width / 2, shape.y + shape.height);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                ctx.closePath();
+            });
+
+            ctx.fillStyle = textObject.color;
+            ctx.font = textObject.font;
+            ctx.textBaseline = "top"; 
+            ctx.fillText(textObject.content, textObject.x, textObject.y);
+        }
+
+        function saveShapes() {
+            const data = {
+                shapes: shapes,
+                textObject: textObject,
+            };
+            fetch('/save_shapes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => console.log(data.message || data.error))
+            .catch(error => console.error('Error:', error));
+        }
+
+        function loadShapes() {
+            fetch('/load_shapes')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.shapes) {
+                        shapes = data.shapes;
+                    }
+                    if (data.textObject) {
+                        textObject = {
+                            ...textObject,
+                            ...data.textObject,
+                            x: data.textObject.x || 100,
+                            y: data.textObject.y || 100,
+                            font: data.textObject.font || "20px Arial",
+                            color: data.textObject.color || "black",
+                        };
+                    }
+                    drawCanvas();
+                })
+                .catch(error => console.error('Error loading shapes:', error));
+        }
+
+        function addShape(shape) {
+            saveShapeState();
+            shapes.push(shape);
+            drawCanvas();
+            saveShapes();  
+            updateResizeHandles();  
+        }
+
+        addRectangleButton.addEventListener("click", () => {
+            addShape({
+                type: "rectangle",
+                x: 50,
+                y: 50,
+                width: 100,
+                height: 50,
+                color: "red",
+            });
+        });
+
+        addCircleButton.addEventListener("click", () => {
+            addShape({
+                type: "circle",
+                x: 150,
+                y: 150,
+                radius: 40,
+                color: "blue",
+            });
+        });
+
+        addTriangleButton.addEventListener("click", () => {
+            addShape({
+                type: "triangle",
+                x: 300,
+                y: 200,
+                width: 100,
+                height: 100,
+                color: "green",
+            });
+        });
+
+        undoButton.addEventListener("click", () => {
+            if (moveHistory.length > 0) {
+                const lastMove = moveHistory.pop();
+                shapes = lastMove;
+                drawCanvas();
+                saveShapes();  
+            }
+        });
+
+        function saveShapeState() {
+            moveHistory.push(JSON.parse(JSON.stringify(shapes)));
+        }
+
+        textInput.addEventListener("input", () => {
+            textObject.content = textInput.value;
+            drawCanvas();
+            saveShapes();
+        });
+
+        canvas.addEventListener("mousedown", (e) => {
+            const mouseX = e.offsetX;
+            const mouseY = e.offsetY;
+            const textWidth = ctx.measureText(textObject.content).width;
+            const textHeight = parseInt(textObject.font, 10);
+
+            if (
+                mouseX >= textObject.x &&
+                mouseX <= textObject.x + textWidth &&
+                mouseY >= textObject.y &&
+                mouseY <= textObject.y + textHeight
+            ) {
+                textObject.isDragging = true;
+                textObject.offsetX = mouseX - textObject.x;
+                textObject.offsetY = mouseY - textObject.y;
+            }
+
+            for (let i = shapes.length - 1; i >= 0; i--) {
+                const shape = shapes[i];
+                if (isInsideShape(shape, mouseX, mouseY)) {
+                    shape.isDragging = true;
+                    shape.offsetX = mouseX - shape.x;
+                    shape.offsetY = mouseY - shape.y;
+                    break;
+                }
+            }
+        });
+
+        canvas.addEventListener("mousemove", (e) => {
+            if (textObject.isDragging) {
+                textObject.x = e.offsetX - textObject.offsetX;
+                textObject.y = e.offsetY - textObject.offsetY;
+                drawCanvas();
+                saveShapes(); 
+            }
+
+            shapes.forEach(shape => {
+                if (shape.isDragging) {
+                    shape.x = e.offsetX - shape.offsetX;
+                    shape.y = e.offsetY - shape.offsetY;
+                    drawCanvas();
+                    saveShapes();  
+                }
+            });
+        });
+
+        canvas.addEventListener("mouseup", () => {
+            textObject.isDragging = false;
+            shapes.forEach(shape => (shape.isDragging = false));
+            updateResizeHandles(); 
+        });
+
+
+        function isInsideShape(shape, x, y) {
+            if (shape.type === "rectangle") {
+                return x >= shape.x && x <= shape.x + shape.width && y >= shape.y && y <= shape.y + shape.height;
+            } else if (shape.type === "circle") {
+                const dx = x - shape.x;
+                const dy = y - shape.y;
+                return Math.sqrt(dx * dx + dy * dy) <= shape.radius;
+            } else if (shape.type === "triangle") {
+                return (
+                    x >= shape.x - shape.width / 2 &&
+                    x <= shape.x + shape.width / 2 &&
+                    y >= shape.y &&
+                    y <= shape.y + shape.height
+                );
+            }
+            return false;
+        }
+
+        function drawResizeHandle(shape) {
+    let handleX = 0;
+    let handleY = 0;
+
+    if (shape.type === "rectangle") {
+        handleX = shape.x + shape.width - 10 - 20;  
+        handleY = shape.y + shape.height - 10 + 50; 
+    } else if (shape.type === "circle") {
+        handleX = shape.x + shape.radius - 10 - 5;  
+        handleY = shape.y + shape.radius - 10 + 50; 
+    } else if (shape.type === "triangle") {
+        handleX = shape.x + shape.width / 2 - 10 - 5; 
+        handleY = shape.y + shape.height - 10 + 50;   
+    }
+
+    shape.resizeHandle = { x: handleX, y: handleY };
+    const handle = document.createElement("div");
+    handle.classList.add("resize-handle");
+    handle.style.position = "absolute";
+    handle.style.left = `${handleX}px`;
+    handle.style.top = `${handleY}px`;
+    handle.style.width = "10px";
+    handle.style.height = "10px";
+    handle.style.backgroundColor = "blue"; 
+    handle.style.cursor = "se-resize";
+    document.body.appendChild(handle);
+
+    handle.addEventListener("mousedown", (e) => {
+        e.stopPropagation();  
+        startResizing(shape, e);
+    });
+}
+
+        function startResizing(shape, e) {
+            const offsetX = e.clientX - shape.resizeHandle.x;
+            const offsetY = e.clientY - shape.resizeHandle.y;
+
+            function resizeMove(e) {
+                const dx = e.clientX - offsetX;
+                const dy = e.clientY - offsetY;
+
+                if (shape.type === "rectangle") {
+                    shape.width = dx - shape.x;
+                    shape.height = dy - shape.y;
+                } else if (shape.type === "circle") {
+                    shape.radius = Math.sqrt(dx * dx + dy * dy);
+                } else if (shape.type === "triangle") {
+                    shape.width = dx - shape.x;
+                    shape.height = dy - shape.y;
+                }
+
+                drawCanvas();
+            }
+
+            function stopResizing() {
+                document.removeEventListener("mousemove", resizeMove);
+                document.removeEventListener("mouseup", stopResizing);
+                saveShapes(); 
+            }
+
+            document.addEventListener("mousemove", resizeMove);
+            document.addEventListener("mouseup", stopResizing);
+        }
+
+       
+        function updateResizeHandles() {
+            document.querySelectorAll(".resize-handle").forEach(handle => handle.remove()); // Remove previous handles
+            shapes.forEach(shape => {
+                drawResizeHandle(shape);
+            });
+        }
+
+        window.onload = () => {
+            loadShapes(); 
+            drawCanvas();
+        };
+    </script>
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
